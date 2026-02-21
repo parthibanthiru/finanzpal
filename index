@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Money Guide – Clear Finance for Life in Germany</title>
+  <meta name="description" content="Independent, simple money tips for people living and working in Germany. Learn about investing, insurance and everyday money decisions.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="logo">
+      <a href="index.html">Simple Money Guide</a>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="#guides">Guides</a>
+      <a href="#newsletter">Newsletter</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <h1>Clear money advice for life in Germany</h1>
+        <p class="hero-subtitle">
+          Simple, independent guides to help you choose the right bank, start investing, and protect yourself with the right insurance.
+        </p>
+        <a class="btn-primary" href="#guides">Start with a guide</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key benefits -->
+  <section class="section-light">
+    <div class="container">
+      <h2>Why this site exists</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Independent</h3>
+          <p>No paywalls, no complicated jargon. We explain what really matters so you can decide with confidence.</p>
+        </div>
+        <div class="card">
+          <h3>For everyday people</h3>
+          <p>Focused on people who work and live in Germany, including expats and international professionals.</p>
+        </div>
+        <div class="card">
+          <h3>Actionable</h3>
+          <p>Each guide ends with clear steps you can follow today – not just theory.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guides overview -->
+  <section class="section" id="guides">
+    <div class="container">
+      <h2>Popular guides</h2>
+      <p class="section-intro">
+        Start with one of these core topics. Each guide includes a short summary, examples, and a step‑by‑step checklist.
+      </p>
+      <div class="grid-3">
+        <a class="card card-link" href="guide-etf-savings-plan.html">
+          <h3>ETF savings plan in Germany</h3>
+          <p>How ETF savings plans work, which costs to watch, and how to set up your first plan.</p>
+          <span class="card-link-more">Read guide →</span>
+        </a>
+        <div class="card card-disabled">
+          <h3>Coming soon: Liability insurance</h3>
+          <p>Why private liability insurance is essential and what good coverage looks like.</p>
+          <span class="card-link-more">Guide in progress</span>
+        </div>
+        <div class="card card-disabled">
+          <h3>Coming soon: Choosing a broker</h3>
+          <p>What to check before opening an investment account with a German broker.</p>
+          <span class="card-link-more">Guide in progress</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="section-accent" id="newsletter">
+    <div class="container">
+      <h2>Free email newsletter</h2>
+      <p class="section-intro">
+        Get simple money tips, short explanations and checklists directly in your inbox. About 1–2 times per month.
+      </p>
+      <form class="newsletter-form">
+        <div class="newsletter-row">
+          <input type="email" name="email" placeholder="Your email address" required>
+          <button type="submit">Join the list</button>
+        </div>
+        <p class="newsletter-note">
+          No spam. You can unsubscribe at any time with one click.
+        </p>
+      </form>
+      <!-- Replace the form above later with your email provider's embed code (MailerLite, Mailchimp, etc.) -->
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2>About this project</h2>
+      <p>
+        Simple Money Guide is an independent personal project. The goal is to help people in Germany make better decisions
+        about investing, insurance and everyday money, using clear and honest explanations.
+      </p>
+      <p>
+        This website does not offer individual investment or tax advice. Please double‑check important decisions and, if needed,
+        speak to a professional advisor.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>© <span id="year"></span> Simple Money Guide</div>
+    <div class="footer-links">
+      <a href="#">Legal notice</a>
+      <a href="#">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Simple current year in footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
