@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ETF Savings Plan Calculator – Finanzpal</title>
+  <meta name="description" content="Calculate your ETF savings plan returns in Germany. See how €200/month grows over 20 years with realistic assumptions.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="logo">
+      <a href="index.html">Finanz<span class="logo-pal">pal</span></a>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#guides">Guides</a>
+      <a href="calculator.html">Calculator</a>
+      <a href="index.html#newsletter">Newsletter</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero hero-calculator">
+    <div class="container">
+      <div class="hero-content">
+        <p class="eyebrow eyebrow-green">ETF Sparplan Rechner</p>
+        <h1>ETF Savings Plan Calculator</h1>
+        <p class="hero-subtitle">
+          See how your monthly ETF investments grow over time. Realistic assumptions for Germany.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section calculator-section">
+    <div class="container">
+      <div class="calculator-grid">
+        <!-- Inputs -->
+        <div class="calculator-inputs">
+          <h2>Enter your numbers</h2>
+          
+          <div class="input-group">
+            <label>Initial investment (€)</label>
+            <input type="number" id="initial" value="1000" min="0" step="100">
+          </div>
+          
+          <div class="input-row">
+            <div class="input-group">
+              <label>Monthly contribution (€)</label>
+              <input type="number" id="monthly" value="200" min="0" step="10">
+            </div>
+            <div class="input-group">
+              <label>Years</label>
+              <input type="number" id="years" value="20" min="1" max="50">
+            </div>
+          </div>
+          
+          <div class="input-row">
+            <div class="input-group">
+              <label>Expected return (%/year)</label>
+              <input type="number" id="returnRate" value="6" min="0" max="20" step="0.5">
+            </div>
+            <div class="input-group">
+              <label>ETF costs (TER %/year)</label>
+              <input type="number" id="costs" value="0.2" min="0" max="2" step="0.05">
+            </div>
+          </div>
+          
+          <button class="btn-primary btn-large" onclick="calculate()">Calculate</button>
+        </div>
+
+        <!-- Results -->
+        <div class="calculator-results">
+          <h2>Your results</h2>
+          
+          <div class="result-card result-main">
+            <div class="result-number" id="futureValue">€0</div>
+            <div class="result-label">Future value</div>
+          </div>
+          
+          <div class="results-grid">
+            <div class="result-card">
+              <div class="result-number" id="totalInvested">€0</div>
+              <div>Total invested</div>
+            </div>
+            <div class="result-card">
+              <div class="result-number" id="totalProfit">€0</div>
+              <div>Total profit</div>
+            </div>
+            <div class="result-card result-highlight">
+              <div class="result-number" id="annualizedReturn">0%</div>
+              <div>Annual return</div>
+            </div>
+          </div>
+          
+          <div class="disclaimer">
+            <strong>Disclaimer:</strong> This is a simulation based on historical averages. 
+            Past performance does not guarantee future results. Investments involve risk.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>© <span id="year"></span> Finanzpal</div>
+    <div class="footer-links">
+      <a href="legal-notice.html">Legal notice</a>
+      <a href="privacy-policy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function calculate() {
+  // Get inputs
+  const initial = parseFloat(document.getElementById('initial').value) || 0;
+  const monthly = parseFloat(document.getElementById('monthly').value) || 0;
+  const years = parseFloat(document.getElementById('years').value) || 0;
+  const annualReturn = parseFloat(document.getElementById('returnRate').value) / 100 || 0;
+  const annualCosts = parseFloat(document.getElementById('costs').value) / 100 || 0;
+  
+  const months = years * 12;
+  const monthlyRate = (annualReturn - annualCosts) / 12;
+  
+  // Future value calculation (ETF savings plan formula)
+  let futureValue = initial * Math.pow(1 + monthlyRate, months);
+  
+  for (let i = 1; i <= months; i++) {
+    futureValue += monthly * Math.pow(1 + monthlyRate, months - i);
+  }
+  
+  const totalInvested = initial + (monthly * months);
+  const totalProfit = futureValue - totalInvested;
+  const annualizedReturn = ((Math.pow(futureValue / initial, 1/years) - 1) * 100).toFixed(1);
+  
+  // Display results
+  document.getElementById('futureValue').textContent = `€${futureValue.toLocaleString('de-DE', {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+  document.getElementById('totalInvested').textContent = `€${totalInvested.toLocaleString('de-DE', {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+  document.getElementById('totalProfit').textContent = `€${totalProfit.toLocaleString('de-DE', {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+  document.getElementById('annualizedReturn').textContent = `${annualizedReturn}%`;
+}
+
+// Auto-calculate on input change
+document.querySelectorAll('input').forEach(input => {
+  input.addEventListener('input', calculate);
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
