@@ -1,14 +1,16 @@
 :root {
-  /* Finanzfluss-inspired: Green primary + clean modern */
-  --bg: #ffffff;
-  --bg-light: #f8fafc;
-  --primary-green: #10b981;      /* Finanzfluss signature green */
-  --primary-green-dark: #047857;
-  --primary-green-light: #d1fae5;
-  --accent-blue: #3b82f6;
-  --text: #111827;
-  --text-muted: #6b7280;
-  --border: #e5e7eb;
+  /* Finanzfluss.de EXACT palette from live site */
+  --finanzfluss-green: #00C851;        /* Primary brand green */
+  --finanzfluss-green-dark: #00A550;    /* Hover/darker green */
+  --finanzfluss-orange: #FF6B35;        /* Accent/CTAs */
+  --finanzfluss-blue: #007BFF;          /* Links, highlights */
+  --finanzfluss-dark: #1A1A1A;          /* Headings */
+  --finanzfluss-text: #333333;          /* Body text */
+  --finanzfluss-muted: #6C757D;         /* Secondary text */
+  --finanzfluss-bg: #F8F9FA;            /* Light backgrounds */
+  --finanzfluss-border: #E9ECEF;        /* Borders */
+  --white: #FFFFFF;
+  
   --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -17,9 +19,9 @@
 body {
   margin: 0;
   font-family: var(--font-main);
-  color: var(--text);
+  color: var(--finanzfluss-text);
   line-height: 1.6;
-  background: var(--bg);
+  background: var(--white);
 }
 
 /* Container */
@@ -32,9 +34,9 @@ body {
 
 /* Header */
 .site-header {
-  background: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.98);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--finanzfluss-border);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -48,14 +50,17 @@ body {
 }
 
 .logo a {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 800;
   text-decoration: none;
-  color: var(--text);
+  color: var(--finanzfluss-dark);
 }
 
 .logo-pal {
-  color: var(--primary-green);
+  background: linear-gradient(135deg, var(--finanzfluss-green), var(--finanzfluss-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .main-nav {
@@ -66,177 +71,181 @@ body {
 .main-nav a {
   font-size: 0.95rem;
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--finanzfluss-muted);
   text-decoration: none;
-  transition: color 0.2s;
+  transition: all 0.2s;
 }
 
 .main-nav a:hover {
-  color: var(--primary-green);
+  color: var(--finanzfluss-green);
 }
 
-/* Hero */
+/* Hero (Finanzfluss style) */
 .hero {
-  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
-  padding: 80px 0;
+  background: linear-gradient(135deg, 
+    rgba(0, 200, 81, 0.05) 0%, 
+    rgba(255, 107, 53, 0.03) 50%, 
+    rgba(248, 249, 250, 1) 100%);
+  padding: 100px 0 80px;
   text-align: center;
 }
 
 .hero-inner {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
 .eyebrow {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 16px;
-}
-
-.eyebrow-green {
-  color: var(--primary-green);
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+  color: var(--finanzfluss-green);
 }
 
 .hero h1 {
-  font-size: 3.5rem;
-  font-weight: 800;
-  line-height: 1.1;
-  margin: 0 0 24px 0;
-  letter-spacing: -0.02em;
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 1;
+  margin: 0 0 28px 0;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--finanzfluss-dark), var(--finanzfluss-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-subtitle {
-  font-size: 1.3rem;
-  color: var(--text-muted);
-  margin: 0 0 32px 0;
-  max-width: 600px;
+  font-size: 1.4rem;
+  color: var(--finanzfluss-muted);
+  margin: 0 0 40px 0;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.hero-subtitle-large {
-  font-size: 1.4rem;
-}
-
 .hero-buttons {
   display: flex;
-  gap: 16px;
+  gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .btn-primary {
-  padding: 14px 28px;
-  background: var(--primary-green);
-  color: white;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 1rem;
+  padding: 16px 36px;
+  background: var(--finanzfluss-green);
+  color: var(--white);
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.05rem;
   text-decoration: none;
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
-  transition: all 0.2s;
+  box-shadow: 0 12px 32px rgba(0, 200, 81, 0.3);
+  transition: all 0.3s;
+  border: 2px solid var(--finanzfluss-green);
 }
 
 .btn-primary:hover {
-  background: var(--primary-green-dark);
-  transform: translateY(-1px);
-  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.4);
-}
-
-.btn-primary-large {
-  padding: 16px 32px;
-  font-size: 1.05rem;
+  background: var(--finanzfluss-green-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 48px rgba(0, 200, 81, 0.4);
 }
 
 .btn-secondary {
-  padding: 14px 28px;
-  background: transparent;
-  color: var(--primary-green);
-  border: 2px solid var(--primary-green-light);
-  border-radius: 12px;
-  font-weight: 600;
+  padding: 14px 32px;
+  background: var(--white);
+  color: var(--finanzfluss-green);
+  border: 2px solid var(--finanzfluss-green);
+  border-radius: 50px;
+  font-weight: 700;
   font-size: 1rem;
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all 0.3s;
 }
 
 .btn-secondary:hover {
-  background: var(--primary-green);
-  color: white;
+  background: var(--finanzfluss-green);
+  color: var(--white);
 }
 
 /* Stats row */
 .section-stats {
-  background: var(--bg-light);
-  padding: 40px 0;
+  background: var(--finanzfluss-bg);
+  padding: 60px 0;
 }
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
 }
 
 .stat-card {
   text-align: center;
-  padding: 24px;
-  background: white;
-  border-radius: 16px;
-  border: 1px solid var(--border);
+  padding: 32px 20px;
+  background: var(--white);
+  border-radius: 20px;
+  border: 1px solid var(--finanzfluss-border);
+  transition: all 0.3s;
+}
+
+.stat-card:hover {
+  border-color: var(--finanzfluss-green);
+  box-shadow: 0 12px 32px rgba(0, 200, 81, 0.1);
 }
 
 .stat-number {
-  font-size: 2.2rem;
-  margin-bottom: 8px;
+  font-size: 3rem;
+  margin-bottom: 12px;
 }
 
 .stat-label {
-  font-weight: 600;
-  color: var(--text-muted);
-  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--finanzfluss-muted);
+  font-size: 1rem;
 }
 
 /* Sections */
 .section {
-  padding: 80px 0;
+  padding: 100px 0;
 }
 
 .section-header {
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 60px;
 }
 
 .section-header h2 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin: 0 0 16px 0;
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0 0 20px 0;
   line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--finanzfluss-dark);
 }
 
 .section-header p {
-  font-size: 1.2rem;
-  color: var(--text-muted);
-  max-width: 600px;
+  font-size: 1.25rem;
+  color: var(--finanzfluss-muted);
+  max-width: 700px;
   margin: 0 auto;
 }
 
-/* Guides */
+/* Guide cards (Finanzfluss style) */
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 32px;
 }
 
 .guide-card {
-  background: white;
-  border-radius: 20px;
-  padding: 32px;
-  border: 1px solid var(--border);
+  background: var(--white);
+  border-radius: 24px;
+  padding: 40px 32px;
+  border: 1px solid var(--finanzfluss-border);
   text-decoration: none;
   color: inherit;
-  transition: all 0.3s;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
   overflow: hidden;
 }
@@ -247,149 +256,143 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: var(--primary-green);
-  opacity: 0;
-  transition: opacity 0.3s;
+  height: 6px;
+  background: linear-gradient(90deg, var(--finanzfluss-green), var(--finanzfluss-orange));
+  transform: scaleX(0);
+  transition: transform 0.4s;
 }
 
 .guide-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 64px rgba(0,0,0,0.12);
-  border-color: var(--primary-green);
+  transform: translateY(-12px);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.15);
+  border-color: rgba(0, 200, 81, 0.2);
 }
 
 .guide-card:hover::before {
-  opacity: 1;
+  transform: scaleX(1);
 }
 
 .guide-card-icon {
-  font-size: 2.5rem;
-  margin-bottom: 16px;
+  font-size: 3.2rem;
+  margin-bottom: 20px;
+  display: block;
 }
 
 .guide-card h3 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin: 0 0 12px 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 16px 0;
+  color: var(--finanzfluss-dark);
 }
 
 .guide-card p {
-  color: var(--text-muted);
-  margin: 0 0 20px 0;
+  color: var(--finanzfluss-muted);
+  margin: 0 0 24px 0;
+  line-height: 1.6;
 }
 
 .guide-card-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
 }
 
 .guide-time {
-  color: var(--primary-green);
+  color: var(--finanzfluss-green);
+  background: rgba(0, 200, 81, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
 }
 
 .guide-arrow {
-  color: var(--primary-green);
-  font-size: 1.2rem;
+  color: var(--finanzfluss-green);
+  font-size: 1.4rem;
+  font-weight: 900;
 }
 
 .guide-card-disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: default;
 }
 
 .guide-card-disabled:hover {
   transform: none;
   box-shadow: none;
-  border-color: var(--border);
 }
 
 /* Newsletter */
 .section-newsletter {
-  background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--finanzfluss-green) 0%, var(--finanzfluss-green-dark) 100%);
+  color: var(--white);
 }
 
 .section-header-white h2 {
-  color: white;
+  color: var(--white);
 }
 
 .section-header-white p {
-  color: rgba(255,255,255,0.9);
+  color: rgba(255,255,255,0.95);
 }
 
 .newsletter-form-large button {
-  background: white;
-  color: var(--primary-green-dark);
-  font-weight: 700;
+  background: var(--white);
+  color: var(--finanzfluss-green-dark);
+  font-weight: 800;
+  box-shadow: 0 12px 32px rgba(255,255,255,0.3);
 }
 
 .newsletter-form-large button:hover {
-  background: #f3f4f6;
+  background: #F8F9FA;
 }
 
 .newsletter-note {
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.85);
 }
 
 /* Footer */
 .site-footer {
-  background: var(--bg-light);
-  border-top: 1px solid var(--border);
-  padding: 24px 0;
+  background: var(--finanzfluss-bg);
+  border-top: 1px solid var(--finanzfluss-border);
+  padding: 32px 0;
 }
 
 .footer-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .footer-links {
   display: flex;
-  gap: 20px;
+  gap: 24px;
 }
 
 .footer-links a {
-  color: var(--text-muted);
+  color: var(--finanzfluss-muted);
   text-decoration: none;
+  font-weight: 500;
 }
 
 .footer-links a:hover {
-  color: var(--primary-green);
+  color: var(--finanzfluss-green);
 }
 
 /* Responsive */
+@media (max-width: 1000px) {
+  .grid-3 { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 900px) {
-  .grid-3 {
-    grid-template-columns: 1fr;
-  }
-  
-  .hero h1 {
-    font-size: 2.8rem;
-  }
-  
-  .hero-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
+  .hero h1 { font-size: 3rem; }
+  .hero-buttons { flex-direction: column; align-items: center; }
 }
 
 @media (max-width: 600px) {
-  .container {
-    padding: 0 16px;
-  }
-  
-  .header-inner {
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .main-nav {
-    gap: 16px;
-  }
+  .container { padding: 0 16px; }
+  .header-inner { flex-direction: column; gap: 16px; }
+  .main-nav { gap: 20px; }
 }
