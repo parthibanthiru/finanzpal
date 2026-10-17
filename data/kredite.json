@@ -1,9 +1,53 @@
 {
-  "updated": "2026-09",
+  "updated": "2026-10",
   "items": [
-    { "id": "anbieter-a", "name": "Anbieter A", "initials": "A", "color": "#1F4E36", "recommended": true, "affiliateUrl": "#", "rate": "3,49 %", "amount": "1.000 – 65.000 €", "term": "12 – 84 Monate", "sondertilgung": "jederzeit kostenlos" },
-    { "id": "anbieter-b", "name": "Anbieter B", "initials": "B", "color": "#2F5C8A", "recommended": false, "affiliateUrl": "#", "rate": "3,79 %", "amount": "1.500 – 50.000 €", "term": "12 – 96 Monate", "sondertilgung": "bis 50 % p.a. kostenlos" },
-    { "id": "anbieter-c", "name": "Anbieter C", "initials": "C", "color": "#7A5230", "recommended": false, "affiliateUrl": "#", "rate": "4,15 %", "amount": "2.000 – 80.000 €", "term": "12 – 120 Monate", "sondertilgung": "gegen Gebühr" },
-    { "id": "anbieter-d", "name": "Anbieter D", "initials": "D", "color": "#5B5F63", "recommended": false, "affiliateUrl": "#", "rate": "4,39 %", "amount": "1.000 – 100.000 €", "term": "12 – 84 Monate", "sondertilgung": "jederzeit kostenlos" }
+    {
+      "id": "anbieter-a",
+      "name": "Anbieter A",
+      "initials": "A",
+      "color": "#1F4E36",
+      "recommended": true,
+      "affiliateUrl": "#",
+      "rate": "3,49 %",
+      "amount": "1.000 – 65.000 €",
+      "term": "12 – 84 Monate",
+      "sondertilgung": "jederzeit kostenlos"
+    },
+    {
+      "id": "anbieter-b",
+      "name": "Anbieter B",
+      "initials": "B",
+      "color": "#2F5C8A",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "3,79 %",
+      "amount": "1.500 – 50.000 €",
+      "term": "12 – 96 Monate",
+      "sondertilgung": "bis 50 % p.a. kostenlos"
+    },
+    {
+      "id": "anbieter-c",
+      "name": "Anbieter C",
+      "initials": "C",
+      "color": "#7A5230",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "4,15 %",
+      "amount": "2.000 – 80.000 €",
+      "term": "12 – 120 Monate",
+      "sondertilgung": "gegen Gebühr"
+    },
+    {
+      "id": "anbieter-d",
+      "name": "Anbieter D",
+      "initials": "D",
+      "color": "#5B5F63",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "4,39 %",
+      "amount": "1.000 – 100.000 €",
+      "term": "12 – 84 Monate",
+      "sondertilgung": "jederzeit kostenlos"
+    }
   ]
 }

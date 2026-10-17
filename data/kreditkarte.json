@@ -1,10 +1,75 @@
 {
-  "updated": "2026-09",
+  "updated": "2026-10",
   "items": [
-    { "id": "consorsbank-visa", "name": "Consorsbank Visa Karte", "initials": "CB", "color": "#7A5230", "recommended": true, "affiliateUrl": "#", "jahresgebuehr": "0 €", "fremdwaehrung": "0 %", "abhebung": "weltweit kostenlos", "kartentyp": "Visa", "rating": 4.5, "ratingStars": "★★★★★" },
-    { "id": "barclays-visa", "name": "Barclays Visa", "initials": "BC", "color": "#1F4E36", "recommended": false, "affiliateUrl": "#", "jahresgebuehr": "0 €", "fremdwaehrung": "0 %", "abhebung": "4× pro Monat kostenlos", "kartentyp": "Visa", "rating": 4.3, "ratingStars": "★★★★☆" },
-    { "id": "dkb-visa", "name": "DKB Visa", "initials": "DKB", "color": "#2F5C8A", "recommended": false, "affiliateUrl": "#", "jahresgebuehr": "0 € (bei aktiver Nutzung)", "fremdwaehrung": "0 %", "abhebung": "weltweit kostenlos (EUR)", "kartentyp": "Visa", "rating": 4.2, "ratingStars": "★★★★☆" },
-    { "id": "hanseatic-genialcard", "name": "Hanseatic GenialCard", "initials": "HB", "color": "#5B5F63", "recommended": false, "affiliateUrl": "#", "jahresgebuehr": "0 €", "fremdwaehrung": "0 %", "abhebung": "kostenlos in der Euro-Zone", "kartentyp": "Mastercard", "rating": 4.0, "ratingStars": "★★★★☆" },
-    { "id": "c24-mastercard", "name": "C24 Mastercard", "initials": "C24", "color": "#8A3F2F", "recommended": false, "affiliateUrl": "#", "jahresgebuehr": "0 € (Smart-Konto)", "fremdwaehrung": "0 %", "abhebung": "4× pro Monat kostenlos", "kartentyp": "Mastercard", "rating": 3.9, "ratingStars": "★★★★☆" }
+    {
+      "id": "consorsbank-visa",
+      "name": "Consorsbank Visa Karte",
+      "initials": "CB",
+      "color": "#7A5230",
+      "recommended": true,
+      "affiliateUrl": "#",
+      "jahresgebuehr": "0 €",
+      "fremdwaehrung": "0 %",
+      "abhebung": "weltweit kostenlos",
+      "kartentyp": "Visa",
+      "rating": 4.5,
+      "ratingStars": "★★★★★"
+    },
+    {
+      "id": "barclays-visa",
+      "name": "Barclays Visa",
+      "initials": "BC",
+      "color": "#1F4E36",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "jahresgebuehr": "0 €",
+      "fremdwaehrung": "0 %",
+      "abhebung": "4× pro Monat kostenlos",
+      "kartentyp": "Visa",
+      "rating": 4.3,
+      "ratingStars": "★★★★☆"
+    },
+    {
+      "id": "dkb-visa",
+      "name": "DKB Visa",
+      "initials": "DKB",
+      "color": "#2F5C8A",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "jahresgebuehr": "0 € (bei aktiver Nutzung)",
+      "fremdwaehrung": "0 %",
+      "abhebung": "weltweit kostenlos (EUR)",
+      "kartentyp": "Visa",
+      "rating": 4.2,
+      "ratingStars": "★★★★☆"
+    },
+    {
+      "id": "hanseatic-genialcard",
+      "name": "Hanseatic GenialCard",
+      "initials": "HB",
+      "color": "#5B5F63",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "jahresgebuehr": "0 €",
+      "fremdwaehrung": "0 %",
+      "abhebung": "kostenlos in der Euro-Zone",
+      "kartentyp": "Mastercard",
+      "rating": 4.0,
+      "ratingStars": "★★★★☆"
+    },
+    {
+      "id": "c24-mastercard",
+      "name": "C24 Mastercard",
+      "initials": "C24",
+      "color": "#8A3F2F",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "jahresgebuehr": "0 € (Smart-Konto)",
+      "fremdwaehrung": "0 %",
+      "abhebung": "4× pro Monat kostenlos",
+      "kartentyp": "Mastercard",
+      "rating": 3.9,
+      "ratingStars": "★★★★☆"
+    }
   ]
 }

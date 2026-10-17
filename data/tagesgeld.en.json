@@ -1,10 +1,65 @@
 {
-  "updated": "2026-09",
+  "updated": "2026-10",
   "items": [
-    { "id": "anbieter-a", "name": "Provider A", "initials": "A", "color": "#1F4E36", "recommended": true, "affiliateUrl": "#", "rate": "3.25%", "guarantee": "12 months", "minDeposit": "none", "protection": "€100,000 (DE)" },
-    { "id": "anbieter-b", "name": "Provider B", "initials": "B", "color": "#2F5C8A", "recommended": false, "affiliateUrl": "#", "rate": "3.10%", "guarantee": "6 months", "minDeposit": "€500", "protection": "€100,000 (DE)" },
-    { "id": "anbieter-c", "name": "Provider C", "initials": "C", "color": "#7A5230", "recommended": false, "affiliateUrl": "#", "rate": "2.95%", "guarantee": "none (variable)", "minDeposit": "none", "protection": "€100,000 (DE)" },
-    { "id": "anbieter-d", "name": "Provider D", "initials": "D", "color": "#5B5F63", "recommended": false, "affiliateUrl": "#", "rate": "2.80%", "guarantee": "3 months", "minDeposit": "€1,000", "protection": "€100,000 (EU)" },
-    { "id": "anbieter-e", "name": "Provider E", "initials": "E", "color": "#8A3F2F", "recommended": false, "affiliateUrl": "#", "rate": "2.60%", "guarantee": "none (variable)", "minDeposit": "none", "protection": "€100,000 (DE)" }
+    {
+      "id": "anbieter-a",
+      "name": "Provider A",
+      "initials": "A",
+      "color": "#1F4E36",
+      "recommended": true,
+      "affiliateUrl": "#",
+      "rate": "3.25%",
+      "guarantee": "12 months",
+      "minDeposit": "none",
+      "protection": "€100,000 (DE)"
+    },
+    {
+      "id": "anbieter-b",
+      "name": "Provider B",
+      "initials": "B",
+      "color": "#2F5C8A",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "3.10%",
+      "guarantee": "6 months",
+      "minDeposit": "€500",
+      "protection": "€100,000 (DE)"
+    },
+    {
+      "id": "anbieter-c",
+      "name": "Provider C",
+      "initials": "C",
+      "color": "#7A5230",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "2.95%",
+      "guarantee": "none (variable)",
+      "minDeposit": "none",
+      "protection": "€100,000 (DE)"
+    },
+    {
+      "id": "anbieter-d",
+      "name": "Provider D",
+      "initials": "D",
+      "color": "#5B5F63",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "2.80%",
+      "guarantee": "3 months",
+      "minDeposit": "€1,000",
+      "protection": "€100,000 (EU)"
+    },
+    {
+      "id": "anbieter-e",
+      "name": "Provider E",
+      "initials": "E",
+      "color": "#8A3F2F",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "2.60%",
+      "guarantee": "none (variable)",
+      "minDeposit": "none",
+      "protection": "€100,000 (DE)"
+    }
   ]
 }

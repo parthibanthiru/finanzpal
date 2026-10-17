@@ -9,6 +9,19 @@
       error: function (msg) { return 'Could not load data (' + msg + '). Running locally? Please serve the files via a local server, e.g. <code>python3 -m http.server</code> — opening the file directly (file://) blocks the request in the browser.'; } }
   };
 
+  var MONTHS = {
+    de: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+    en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  };
+
+  function formatUpdated(str) {
+    var m = /^(\d{4})-(\d{2})$/.exec(str || '');
+    if (!m) return str;
+    var monthName = MONTHS[LANG][parseInt(m[2], 10) - 1];
+    if (!monthName) return str;
+    return LANG === 'en' ? monthName + ' ' + m[1] : monthName + ' ' + m[1];
+  }
+
   function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
@@ -107,7 +120,7 @@
         .then(function (data) {
           tbody.innerHTML = data.items.map(renderRow).join('');
           var updatedEl = document.getElementById('last-updated');
-          if (updatedEl && data.updated) updatedEl.textContent = data.updated;
+          if (updatedEl && data.updated) updatedEl.textContent = formatUpdated(data.updated);
         })
         .catch(function (err) {
           tbody.innerHTML = '<tr class="loading-row"><td colspan="6">' + STR[LANG].error(escapeHtml(err.message)) + '</td></tr>';
