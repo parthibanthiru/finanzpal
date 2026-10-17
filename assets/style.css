@@ -157,7 +157,7 @@ nav.top a.active { color: var(--ink); border-bottom-color: var(--green); }
 
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table.compare { width: 100%; border-collapse: collapse; min-width: 780px; background: var(--bg-raised); border: 1px solid var(--line); }
-table.compare thead th { text-align: left; font-weight: 600; font-size: 13px; color: var(--ink-soft); padding: 14px 16px; border-bottom: 1px solid var(--line); position: sticky; top: 76px; background: var(--bg-raised); }
+table.compare thead th { text-align: left; font-weight: 600; font-size: 13px; color: var(--ink-soft); padding: 14px 16px; border-bottom: 1px solid var(--line); background: var(--bg-raised); }
 table.compare tbody tr { border-bottom: 1px solid var(--line); }
 table.compare tbody tr:nth-child(even) { background: var(--row-alt); }
 table.compare tbody tr.pick { background: var(--tag-bg); }
