@@ -373,8 +373,8 @@ section.block p { font-size: 15.5px; color: var(--ink); margin: 0 0 16px; }
 @media (max-width: 600px) { .method-row { grid-template-columns: 1fr; gap: 6px; } }
 .method-row .cat { font-weight: 600; font-size: 14px; color: var(--green-deep); text-decoration: none; }
 .method-row p { margin: 0; font-size: 14px; color: var(--ink); }
-.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding-bottom: 56px; }
-@media (max-width: 780px) { .team-grid { grid-template-columns: 1fr 1fr; } }
+.team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 240px)); gap: 24px; padding-bottom: 56px; }
+@media (max-width: 480px) { .team-grid { grid-template-columns: 1fr; } }
 .team-card { display: flex; flex-direction: column; gap: 8px; }
 .team-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--tag-bg); color: var(--green-deep); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; font-weight: 600; }
 .team-card h3 { font-size: 14.5px; margin: 0; }
