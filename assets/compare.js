@@ -67,6 +67,16 @@
         '<td>' + ctaHtml(item) + '</td>' +
         '</tr>';
     },
+    kreditkarte: function (item) {
+      return '<tr class="' + (item.recommended ? 'pick' : '') + '">' +
+        '<td>' + brokerCell(item) + '</td>' +
+        '<td class="num-cell">' + item.jahresgebuehr + '</td>' +
+        '<td class="num-cell">' + item.fremdwaehrung + '</td>' +
+        '<td class="num-cell">' + item.abhebung + '</td>' +
+        '<td>' + ratingHtml(item.ratingStars, item.rating) + '</td>' +
+        '<td>' + ctaHtml(item) + '</td>' +
+        '</tr>';
+    },
     versicherungen: function (item) {
       return '<tr class="' + (item.recommended ? 'pick' : '') + '">' +
         '<td>' + brokerCell(item) + '</td>' +

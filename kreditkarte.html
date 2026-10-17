@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kreditkarten-Vergleich — Finanzpal</title>
+<meta name="description" content="Wir vergleichen Jahresgebühren, Fremdwährungsgebühren und Bedingungen für kostenlose Bargeldabhebung von Kreditkarten — unabhängig von Provisionen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="alternate" hreflang="de" href="/kreditkarte.html">
+<link rel="alternate" hreflang="en" href="/en/kreditkarte.html">
+<link rel="alternate" hreflang="x-default" href="/kreditkarte.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-512.png">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a>
+    <nav class="top">
+      <a href="broker.html">Broker</a>
+      <a href="kreditkarte.html" class="active">Kreditkarte</a>
+      <a href="tagesgeld.html">Tagesgeld</a>
+      <a href="kredite.html">Kredite</a>
+      <a href="versicherungen.html">Versicherungen</a>
+      <a href="sparplanrechner.html">Rechner</a>
+      <a href="ratgeber.html">Ratgeber</a>
+      <a href="ueber-uns.html">Über uns</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch" aria-label="Sprache wählen"><span class="lang-opt active" aria-current="true">DE</span><a href="en/kreditkarte.html" class="lang-opt" hreflang="en" lang="en">EN</a></div>
+      <div class="search-btn">⌕</div>
+      <button class="nav-toggle" aria-label="Menü">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="breadcrumb"><a href="index.html">Start</a> &nbsp;/&nbsp; Kreditkarte</p>
+  <section class="hero">
+    <h1>Die beste Kreditkarte im Vergleich</h1>
+    <p class="lede">Wir vergleichen Jahresgebühren, Fremdwährungsgebühren und Bedingungen für kostenlose Bargeldabhebung — unabhängig von der Provision, die wir erhalten, wenn du dich über uns anmeldest.</p>
+    <div class="trust-bar">
+      <div class="trust-item"><span class="num">5</span><span class="lbl">Karten verglichen</span></div>
+      <div class="trust-item"><span class="num">0 €</span><span class="lbl">häufigste Jahresgebühr</span></div>
+      <div class="trust-item"><span class="num" id="last-updated">—</span><span class="lbl">Zuletzt aktualisiert</span></div>
+    </div>
+    <div class="best-rate-banner">
+      <div><div class="brl">Aktuell beste Empfehlung</div><div class="brv">Consorsbank Visa Karte — 0 € Jahresgebühr, weltweit kostenlose Abhebung</div></div>
+      <a href="#" class="cta-btn" rel="sponsored nofollow">Zum Angebot</a>
+    </div>
+  </section>
+  <section class="filters"><span class="chip active">Alle</span><span class="chip">Ohne Jahresgebühr</span><span class="chip">0 % Fremdwährungsgebühr</span><span class="chip">Weltweit kostenlose Abhebung</span></section>
+  <section class="table-scroll">
+    <table class="compare" data-source="data/kreditkarte.json" data-type="kreditkarte">
+      <thead><tr><th>Anbieter</th><th>Jahresgebühr</th><th>Fremdwährung</th><th>Bargeldabhebung</th><th>Bewertung</th><th></th></tr></thead>
+      <tbody><tr class="loading-row"><td colspan="6">Lade Vergleichsdaten …</td></tr></tbody>
+    </table>
+    <p class="disclosure-note">Werbung: Finanzpal erhält ggf. eine Provision, wenn du über einen Link eine Karte beantragst. Das beeinflusst unsere Bewertung nicht — Details siehe <a href="ueber-uns.html" style="text-decoration:underline;">Methodik</a>. <strong>Beispieldaten in data/kreditkarte.json — vor Veröffentlichung durch echte, aktuelle Konditionen ersetzen.</strong></p>
+  </section>
+  <section class="method">
+    <div><h2>Wie wir vergleichen</h2><p>Wir bewerten jede Kreditkarte nach denselben Kriterien, unabhängig von einer möglichen Provision. Gebühren und Abhebungsbedingungen prüfen wir regelmäßig, da Anbieter ihre Konditionen häufiger anpassen als bei klassischen Konten.</p></div>
+    <div class="criteria">
+      <div class="criterion"><h3>Jahresgebühr</h3><p>Ob und unter welchen Bedingungen die Karte dauerhaft kostenlos bleibt — manche Anbieter verlangen einen Mindestgeldeingang oder ein gebührenpflichtiges Girokonto.</p></div>
+      <div class="criterion"><h3>Fremdwährungsgebühr</h3><p>Kosten beim Bezahlen oder Abheben außerhalb der Eurozone — bei den besten Karten liegt dieser Aufschlag bei 0 %.</p></div>
+      <div class="criterion"><h3>Bargeldabhebung</h3><p>Wie oft und wo du kostenlos Bargeld abheben kannst, sowohl in Deutschland als auch im Ausland.</p></div>
+    </div>
+  </section>
+  <section class="faq">
+    <h2>Häufige Fragen</h2>
+    <div class="faq-item"><h3>Kreditkarte oder Girokonto-Debitkarte — was ist der Unterschied?</h3><p>Eine Kreditkarte bucht Umsätze meist gesammelt zum Monatsende ab und wird weltweit von mehr Akzeptanzstellen angenommen. Eine Debitkarte bucht sofort vom Girokonto ab. Für Reisen und Online-Zahlungen im Ausland ist eine Kreditkarte oft die praktischere Wahl.</p></div>
+    <div class="faq-item"><h3>Was ist eine Fremdwährungsgebühr?</h3><p>Ein prozentualer Aufschlag, den manche Banken beim Bezahlen oder Abheben in einer anderen Währung als Euro berechnen — oft 1,5 bis 2 %. Die besten kostenlosen Kreditkarten verzichten komplett darauf.</p></div>
+    <div class="faq-item"><h3>Gibt es einen Haken bei kostenlosen Kreditkarten?</h3><p>Oft ist die Gebührenfreiheit an Bedingungen geknüpft, etwa einen monatlichen Mindestgeldeingang oder ein bestimmtes Girokonto beim selben Anbieter. Das lohnt sich zu prüfen, bevor du dich entscheidest.</p></div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a><p class="tag">Unabhängige Vergleiche und Ratgeber für deine Finanzen.</p></div>
+      <div class="footer-col"><h4>Vergleiche</h4>
+        <a href="broker.html">Broker</a>
+        <a href="kreditkarte.html">Kreditkarte</a>
+        <a href="tagesgeld.html">Tagesgeld</a>
+        <a href="kredite.html">Kredite</a>
+        <a href="versicherungen.html">Versicherungen</a>
+      </div>
+      <div class="footer-col"><h4>Ratgeber & Rechner</h4>
+        <a href="ratgeber.html">Alle Artikel</a>
+        <a href="sparplanrechner.html">Sparplanrechner</a>
+      </div>
+      <div class="footer-col"><h4>Über uns</h4>
+        <a href="ueber-uns.html">Methodik</a>
+        <a href="ueber-uns.html">Werbepartner</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+    <div class="footer-legal">Finanzpal erhält teils Provisionen von Partnern, wenn du über unsere Links ein Konto eröffnest. Das beeinflusst unsere Bewertungen nicht. Alle Angaben ohne Gewähr, keine Anlageberatung. © 2026 Finanzpal</div>
+  </div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/compare.js"></script>
+</body>
+</html>

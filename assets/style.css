@@ -90,7 +90,8 @@ nav.top a.active { color: var(--ink); border-bottom-color: var(--green); }
 .section-head h2 { font-family: var(--font-display); font-weight: 500; font-size: 28px; margin: 0; }
 .section-head a.all-link { font-size: 13.5px; font-weight: 600; color: var(--green-deep); text-decoration: none; }
 
-.cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.cat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+@media (max-width: 980px) { .cat-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 780px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
 .cat-card { background: var(--bg-raised); padding: 24px 20px 26px; text-decoration: none; color: var(--ink); display: flex; flex-direction: column; gap: 8px; min-height: 164px; justify-content: space-between; transition: background-color .15s ease; }
 .cat-card:hover { background: var(--row-alt); }
