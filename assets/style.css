@@ -66,7 +66,8 @@ nav.top a.active { color: var(--ink); border-bottom-color: var(--green); }
 .hero.home-hero { padding-top: 48px; }
 .hero h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(30px, 5vw, 46px); line-height: 1.12; margin: 0 0 16px; }
 .hero.home-hero h1 { max-width: 16ch; }
-.hero p.lede { font-size: 17px; color: var(--ink-soft); max-width: 56ch; margin: 0 0 24px; }
+.hero p.lede { font-size: 17px; color: var(--ink-soft); max-width: 76ch; margin: 0 0 24px; }
+.hero.home-hero p.lede { max-width: 56ch; }
 .hero-chart { display: block; width: 100%; max-width: 360px; height: 56px; color: var(--green); }
 @media (max-width: 780px) { .hero-chart { max-width: 260px; } }
 .trust-bar { display: flex; gap: 0; flex-wrap: wrap; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -201,7 +202,7 @@ td.num-cell { font-variant-numeric: tabular-nums; }
 .faq h2 { font-family: var(--font-display); font-weight: 500; font-size: 28px; margin: 0 0 24px; }
 .faq-item { border-bottom: 1px solid var(--line); padding: 18px 0; }
 .faq-item h3 { font-size: 15.5px; margin: 0 0 8px; font-weight: 600; }
-.faq-item p { margin: 0; color: var(--ink-soft); font-size: 14.5px; max-width: 62ch; }
+.faq-item p { margin: 0; color: var(--ink-soft); font-size: 14.5px; }
 
 /* Broker detail page */
 .broker-hero { padding: 24px 0 32px; }
@@ -227,7 +228,7 @@ td.num-cell { font-variant-numeric: tabular-nums; }
 @media (max-width: 860px) { .body-layout { grid-template-columns: 1fr; } }
 .main-col section { margin-bottom: 40px; }
 .main-col h2 { font-family: var(--font-display); font-weight: 500; font-size: 24px; margin: 0 0 16px; }
-.main-col p { font-size: 15.5px; color: var(--ink); margin: 0 0 16px; max-width: 62ch; }
+.main-col p { font-size: 15.5px; color: var(--ink); margin: 0 0 16px; }
 .verdict-box { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 8px; padding: 22px 24px; }
 .verdict-box p { margin: 0; font-size: 15px; }
 .verdict-box .verdict-label { font-size: 12px; font-weight: 700; color: var(--green-deep); margin-bottom: 8px; }
@@ -266,7 +267,7 @@ table.fees td.num { font-variant-numeric: tabular-nums; text-align: right; }
 .alt-mark { width: 26px; height: 26px; border-radius: 6px; background: var(--tag-bg); color: var(--green-deep); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
 
 /* Article page */
-.article-head { padding: 22px 0 36px; max-width: 66ch; }
+.article-head { padding: 22px 0 36px; }
 .cat-pill { display: inline-block; font-size: 12.5px; font-weight: 600; color: var(--green-deep); background: var(--tag-bg); padding: 5px 12px; border-radius: 100px; margin-bottom: 16px; }
 .article-head h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(30px, 4.6vw, 44px); line-height: 1.14; margin: 0 0 16px; }
 .article-head p.dek { font-size: 17px; color: var(--ink-soft); margin: 0 0 24px; }
@@ -280,7 +281,7 @@ table.fees td.num { font-variant-numeric: tabular-nums; text-align: right; }
 .toc h4 { font-size: 12px; font-weight: 600; color: var(--ink-soft); margin: 0 0 12px; }
 .toc a { display: block; font-size: 13.5px; text-decoration: none; color: var(--ink-soft); margin-bottom: 10px; line-height: 1.4; }
 .toc a.active { color: var(--green-deep); font-weight: 600; }
-.article-body { max-width: 66ch; font-size: 16.5px; }
+.article-body { font-size: 16.5px; }
 .article-body p { margin: 0 0 20px; color: var(--ink); }
 .article-body h2 { font-family: var(--font-display); font-weight: 500; font-size: 25px; margin: 40px 0 16px; scroll-margin-top: 92px; }
 .article-body h3 { font-size: 17px; font-weight: 600; margin: 28px 0 12px; }
@@ -311,7 +312,7 @@ blockquote { margin: 28px 0; padding-left: 20px; border-left: 3px solid var(--go
 .related-card h3 { font-size: 15px; margin: 0; font-weight: 600; line-height: 1.3; }
 
 /* Ratgeber index */
-.ratgeber-hero { padding: 40px 0 8px; max-width: 62ch; }
+.ratgeber-hero { padding: 40px 0 8px; max-width: 80ch; }
 .ratgeber-hero h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(30px, 4.6vw, 42px); margin: 0 0 14px; }
 .ratgeber-hero p { font-size: 16px; color: var(--ink-soft); margin: 0; }
 .rat-filters { display: flex; gap: 8px; flex-wrap: wrap; padding: 24px 0 32px; }
@@ -349,7 +350,7 @@ blockquote { margin: 28px 0; padding-left: 20px; border-left: 3px solid var(--go
 .calc-disclaimer { font-size: 12.5px; color: var(--ink-soft); }
 
 /* About / legal pages */
-.page-hero { padding: 40px 0 40px; max-width: 62ch; }
+.page-hero { padding: 40px 0 40px; max-width: 80ch; }
 .page-hero .eyebrow { font-size: 12.5px; font-weight: 600; color: var(--green-deep); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
 .page-hero h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(30px, 4.6vw, 42px); line-height: 1.15; margin: 0 0 18px; }
 .page-hero p.lede { font-size: 17px; color: var(--ink-soft); margin: 0; }
@@ -359,10 +360,10 @@ blockquote { margin: 28px 0; padding-left: 20px; border-left: 3px solid var(--go
 .stat-bar .num { font-family: var(--font-display); font-size: 24px; color: var(--green-deep); display: block; }
 .stat-bar .lbl { font-size: 13px; color: var(--ink-soft); }
 @media (max-width: 700px) { .stat-bar { flex-wrap: wrap; } .stat-bar .stat { flex: 1 1 50%; } }
-section.block { padding-bottom: 56px; max-width: 68ch; }
+section.block { padding-bottom: 56px; max-width: 80ch; }
 section.block h2 { font-family: var(--font-display); font-weight: 500; font-size: 27px; margin: 0 0 16px; }
 section.block p { font-size: 15.5px; color: var(--ink); margin: 0 0 16px; }
-.income-box { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 8px; padding: 24px 26px; max-width: 68ch; margin-bottom: 56px; }
+.income-box { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 8px; padding: 24px 26px; max-width: 80ch; margin-bottom: 56px; }
 .income-box .lbl { font-size: 12px; font-weight: 700; color: var(--green-deep); margin-bottom: 10px; }
 .income-box p { margin: 0 0 12px; font-size: 14.5px; }
 .income-box p:last-child { margin-bottom: 0; }
@@ -372,7 +373,7 @@ section.block p { font-size: 15.5px; color: var(--ink); margin: 0 0 16px; }
 .principle .principle-icon { width: 22px; height: 22px; color: var(--green-deep); display: block; margin-bottom: 10px; }
 .principle h3 { font-size: 15.5px; margin: 0 0 8px; }
 .principle p { font-size: 14px; color: var(--ink-soft); margin: 0; }
-.method-table { border: 1px solid var(--line); background: var(--bg-raised); max-width: 68ch; margin-bottom: 56px; }
+.method-table { border: 1px solid var(--line); background: var(--bg-raised); max-width: 80ch; margin-bottom: 56px; }
 .method-row { display: grid; grid-template-columns: 180px 1fr; gap: 20px; padding: 18px 22px; border-bottom: 1px solid var(--line); }
 .method-row:last-child { border-bottom: none; }
 @media (max-width: 600px) { .method-row { grid-template-columns: 1fr; gap: 6px; } }
