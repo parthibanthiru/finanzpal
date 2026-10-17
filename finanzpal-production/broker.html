@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Broker-Vergleich — Finanzpal</title>
+<meta name="description" content="Wir vergleichen Depotgebühren, Ordergebühren und ETF-Sparpläne führender Online-Broker — unabhängig von Provisionen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <a href="index.html" class="wordmark">Finanzpal</a>
+    <nav class="top">
+      <a href="broker.html" class="active">Broker</a>
+      <a href="tagesgeld.html">Tagesgeld</a>
+      <a href="kredite.html">Kredite</a>
+      <a href="versicherungen.html">Versicherungen</a>
+      <a href="sparplanrechner.html">Rechner</a>
+      <a href="ratgeber.html">Ratgeber</a>
+      <a href="ueber-uns.html">Über uns</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-btn">⌕</div>
+      <button class="nav-toggle" aria-label="Menü">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="breadcrumb"><a href="index.html">Start</a> &nbsp;/&nbsp; Broker</p>
+  <section class="hero">
+    <h1>Welcher Online-Broker passt zu dir?</h1>
+    <p class="lede">Wir vergleichen Depotgebühren, Ordergebühren und ETF-Sparpläne — unabhängig von der Provision, die wir erhalten, wenn du dich über uns anmeldest.</p>
+    <div class="trust-bar">
+      <div class="trust-item"><span class="num">5</span><span class="lbl">Broker verglichen</span></div>
+      <div class="trust-item"><span class="num">240+</span><span class="lbl">Gebührenpunkte geprüft</span></div>
+      <div class="trust-item"><span class="num" id="last-updated">—</span><span class="lbl">Zuletzt aktualisiert</span></div>
+    </div>
+  </section>
+  <section class="filters">
+    <span class="chip active">Alle</span><span class="chip">Aktien &amp; ETF</span><span class="chip">Sparplanfähig</span><span class="chip">Ohne Depotgebühr</span><span class="chip">Für Einsteiger</span>
+  </section>
+  <section class="table-scroll">
+    <table class="compare" data-source="data/broker.json" data-type="broker">
+      <thead><tr><th>Broker</th><th>Depotgebühr</th><th>Order (Aktie)</th><th>ETF-Sparplan</th><th>Bewertung</th><th></th></tr></thead>
+      <tbody><tr class="loading-row"><td colspan="6">Lade Vergleichsdaten …</td></tr></tbody>
+    </table>
+    <p class="disclosure-note">¹ Bei mind. 1 Trade pro Quartal oder ab 25.000 € Depotwert. Werbung: Finanzpal erhält ggf. eine Provision, wenn du über einen Link ein Konto eröffnest. Das beeinflusst unsere Bewertung nicht — Details siehe <a href="ueber-uns.html" style="text-decoration:underline;">Methodik</a>. <strong>Beispieldaten in data/broker.json — vor Veröffentlichung durch echte, aktuelle Konditionen ersetzen.</strong></p>
+  </section>
+  <section class="method">
+    <div><h2>Wie wir vergleichen</h2><p>Jeder Broker wird anhand derselben Kriterien geprüft, unabhängig davon, ob und wie viel Provision wir erhalten. Die Rohdaten aktualisieren wir vierteljährlich direkt aus den Preisverzeichnissen der Anbieter.</p></div>
+    <div class="criteria">
+      <div class="criterion"><h3>Kosten</h3><p>Depotführung, Orderentgelte und Sparplankosten über typische Anlagesummen hinweg.</p></div>
+      <div class="criterion"><h3>Angebot</h3><p>Verfügbare ETFs, Aktienmärkte und Sparplan-Mindestbeiträge.</p></div>
+      <div class="criterion"><h3>Nutzung</h3><p>App-Bedienbarkeit, Kontoeröffnung und Erfahrungsberichte aus unserer Leserschaft.</p></div>
+    </div>
+  </section>
+  <section class="faq">
+    <h2>Häufige Fragen</h2>
+    <div class="faq-item"><h3>Warum ist Trade Republic eure Empfehlung?</h3><p>Für die meisten Einsteiger überwiegt die Kombination aus niedrigen Ordergebühren und kostenlosen Sparplänen. Wer viele Einzelorders pro Monat aufgibt, fährt bei anderen Brokern teils günstiger — siehe Tabelle.</p></div>
+    <div class="faq-item"><h3>Verdient Finanzpal an eurer Empfehlung?</h3><p>Ja, über Partnerlinks. Die Reihenfolge in der Tabelle richtet sich nach unseren Kriterien, nicht nach der Provisionshöhe.</p></div>
+    <div class="faq-item"><h3>Wie oft aktualisiert ihr die Daten?</h3><p>Mindestens vierteljährlich, bei größeren Preisänderungen der Anbieter sofort.</p></div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a href="index.html" class="wordmark">Finanzpal</a><p class="tag">Unabhängige Vergleiche und Ratgeber für deine Finanzen.</p></div>
+      <div class="footer-col"><h4>Vergleiche</h4>
+        <a href="broker.html">Broker</a>
+        <a href="tagesgeld.html">Tagesgeld</a>
+        <a href="kredite.html">Kredite</a>
+        <a href="versicherungen.html">Versicherungen</a>
+      </div>
+      <div class="footer-col"><h4>Ratgeber & Rechner</h4>
+        <a href="ratgeber.html">Alle Artikel</a>
+        <a href="sparplanrechner.html">Sparplanrechner</a>
+      </div>
+      <div class="footer-col"><h4>Über uns</h4>
+        <a href="ueber-uns.html">Methodik</a>
+        <a href="ueber-uns.html">Werbepartner</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+    <div class="footer-legal">Finanzpal erhält teils Provisionen von Partnern, wenn du über unsere Links ein Konto eröffnest. Das beeinflusst unsere Bewertungen nicht. Alle Angaben ohne Gewähr, keine Anlageberatung. © 2026 Finanzpal</div>
+  </div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/compare.js"></script>
+</body>
+</html>
