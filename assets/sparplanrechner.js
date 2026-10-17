@@ -1,6 +1,12 @@
 (function () {
+  var LANG = (document.documentElement.lang || 'de').toLowerCase().indexOf('en') === 0 ? 'en' : 'de';
+  var LOCALE = LANG === 'en' ? 'en-IE' : 'de-DE';
+  var STR = LANG === 'en'
+    ? { year: 'Year', years: function (n) { return n + ' ' + (n === 1 ? 'year' : 'years'); }, pct: function (v) { return v.toFixed(1) + ' %'; } }
+    : { year: 'Jahr', years: function (n) { return n + ' ' + (n === 1 ? 'Jahr' : 'Jahre'); }, pct: function (v) { return v.toFixed(1).replace('.', ',') + ' %'; } };
+
   function formatEUR(n) {
-    return n.toLocaleString('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+    return n.toLocaleString(LOCALE, { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
   }
 
   function calcSeries(initial, monthly, years, annualRatePct) {
@@ -27,7 +33,7 @@
       if (idx % step !== 0 && idx !== series.length - 1) return;
       var col = document.createElement('div');
       col.className = 'bar-col';
-      col.title = 'Jahr ' + point.year + ': ' + formatEUR(point.balance);
+      col.title = STR.year + ' ' + point.year + ': ' + formatEUR(point.balance);
 
       var contribPct = Math.max(2, (point.contributed / maxVal) * 100);
       var interestPct = Math.max(0, (point.interest / maxVal) * 100);
@@ -70,8 +76,8 @@
 
       initialVal.textContent = formatEUR(initial);
       monthlyVal.textContent = formatEUR(monthly);
-      yearsVal.textContent = years + ' Jahre';
-      rateVal.textContent = rate.toFixed(1).replace('.', ',') + ' %';
+      yearsVal.textContent = STR.years(years);
+      rateVal.textContent = STR.pct(rate);
 
       var series = calcSeries(initial, monthly, years, rate);
       var last = series[series.length - 1];

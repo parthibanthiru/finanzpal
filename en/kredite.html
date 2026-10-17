@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loan Comparison — Finanzpal</title>
+<meta name="description" content="We compare effective annual interest rates, free overpayment rights and processing time across loan providers — independent of commissions.">
+<link rel="alternate" hreflang="de" href="/kredite.html">
+<link rel="alternate" hreflang="en" href="/en/kredite.html">
+<link rel="alternate" hreflang="x-default" href="/kredite.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/icon-512.png">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a>
+    <nav class="top">
+      <a href="broker.html">Broker</a>
+      <a href="tagesgeld.html">Savings</a>
+      <a href="kredite.html" class="active">Loans</a>
+      <a href="versicherungen.html">Insurance</a>
+      <a href="sparplanrechner.html">Calculator</a>
+      <a href="ratgeber.html">Guides</a>
+      <a href="ueber-uns.html">About us</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch" aria-label="Choose language"><a href="../kredite.html" class="lang-opt" hreflang="de" lang="de">DE</a><span class="lang-opt active" aria-current="true">EN</span></div>
+      <div class="search-btn">⌕</div>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Loans</p>
+  <section class="hero">
+    <h1>The cheapest installment loan, compared</h1>
+    <p class="lede">We compare effective annual interest rates, free overpayment rights and processing time — independent of the commission we receive if you apply through us.</p>
+    <div class="trust-bar">
+      <div class="trust-item"><span class="num">4</span><span class="lbl">Providers compared</span></div>
+      <div class="trust-item"><span class="num">€1,000 – €100,000</span><span class="lbl">Loan amount covered</span></div>
+      <div class="trust-item"><span class="num" id="last-updated">—</span><span class="lbl">Last updated</span></div>
+    </div>
+    <div class="calc-panel">
+      <div class="cp-label">QUICK CALCULATOR</div>
+      <div class="calc-row">
+        <div class="calc-field"><label>Loan amount</label><div class="field-input">€10,000</div></div>
+        <div class="calc-field"><label>Term</label><div class="field-input">48 months</div></div>
+        <div class="calc-field"><label>Purpose</label><div class="field-input">Freely usable</div></div>
+        <a href="#" class="cta-btn">Show rates</a>
+      </div>
+    </div>
+  </section>
+  <section class="filters"><span class="chip active">All</span><span class="chip">No processing fee</span><span class="chip">Free overpayment</span><span class="chip">Instant approval possible</span></section>
+  <section class="table-scroll">
+    <table class="compare" data-source="../data/kredite.json" data-type="kredite">
+      <thead><tr><th>Provider</th><th>Eff. annual rate from</th><th>Loan amount</th><th>Term</th><th>Overpayment</th><th></th></tr></thead>
+      <tbody><tr class="loading-row"><td colspan="6">Loading comparison data …</td></tr></tbody>
+    </table>
+    <p class="disclosure-note">Advertisement: Finanzpal may receive a commission if you take out a loan via a link. This does not affect our rating — see <a href="ueber-uns.html" style="text-decoration:underline;">Methodology</a> for details. The actual rate depends on your creditworthiness (example for a representative customer). <strong>Sample data in data/kredite.json — replace with real, current terms before launch.</strong></p>
+  </section>
+  <section class="method">
+    <div><h2>How we compare</h2><p>Loan rates depend heavily on individual creditworthiness — we therefore compare the effective annual rate for a representative example customer, as well as the terms that apply equally to all borrowers.</p></div>
+    <div class="criteria">
+      <div class="criterion"><h3>Effective rate</h3><p>The actual annual rate including all costs, not just the advertised starting rate.</p></div>
+      <div class="criterion"><h3>Flexibility</h3><p>Free overpayment and the ability to adjust the installment if needed.</p></div>
+      <div class="criterion"><h3>Transparency</h3><p>How clearly costs and terms are communicated before you apply.</p></div>
+    </div>
+  </section>
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item"><h3>Why does my rate differ from the advertised one?</h3><p>The advertised “from” rate usually applies only to about two-thirds of customers with good creditworthiness. Your actual rate depends on your individual credit check.</p></div>
+    <div class="faq-item"><h3>How long does loan approval take?</h3><p>With most providers compared here, a preliminary approval arrives within minutes; final payout takes 1–3 business days depending on the provider.</p></div>
+    <div class="faq-item"><h3>What does free overpayment mean?</h3><p>You can repay additional amounts beyond the agreed installment without the provider charging an early-repayment penalty.</p></div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a><p class="tag">Independent comparisons and guides for your finances.</p></div>
+      <div class="footer-col"><h4>Compare</h4>
+        <a href="broker.html">Broker</a>
+        <a href="tagesgeld.html">Savings</a>
+        <a href="kredite.html">Loans</a>
+        <a href="versicherungen.html">Insurance</a>
+      </div>
+      <div class="footer-col"><h4>Guides & Calculator</h4>
+        <a href="ratgeber.html">All articles</a>
+        <a href="sparplanrechner.html">Savings Plan Calculator</a>
+      </div>
+      <div class="footer-col"><h4>About us</h4>
+        <a href="ueber-uns.html">Methodology</a>
+        <a href="ueber-uns.html">Advertising partners</a>
+        <a href="impressum.html">Legal Notice</a>
+        <a href="datenschutz.html">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-legal">Finanzpal receives commission from some partners when you open an account through our links. This does not affect our ratings. All information without guarantee; not investment advice. © 2026 Finanzpal</div>
+  </div>
+</footer>
+
+<script src="../assets/nav.js"></script>
+<script src="../assets/compare.js"></script>
+</body>
+</html>

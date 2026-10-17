@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ETF Savings Plan Calculator — Finanzpal</title>
+<meta name="description" content="Free savings plan calculator: see how your ETF savings plan grows with compound interest over the years.">
+<link rel="alternate" hreflang="de" href="/sparplanrechner.html">
+<link rel="alternate" hreflang="en" href="/en/sparplanrechner.html">
+<link rel="alternate" hreflang="x-default" href="/sparplanrechner.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/icon-512.png">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a>
+    <nav class="top">
+      <a href="broker.html">Broker</a>
+      <a href="tagesgeld.html">Savings</a>
+      <a href="kredite.html">Loans</a>
+      <a href="versicherungen.html">Insurance</a>
+      <a href="sparplanrechner.html" class="active">Calculator</a>
+      <a href="ratgeber.html">Guides</a>
+      <a href="ueber-uns.html">About us</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch" aria-label="Choose language"><a href="../sparplanrechner.html" class="lang-opt" hreflang="de" lang="de">DE</a><span class="lang-opt active" aria-current="true">EN</span></div>
+      <div class="search-btn">⌕</div>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Calculator &nbsp;/&nbsp; ETF Savings Plan Calculator</p>
+  <section class="hero" style="padding-bottom:8px;">
+    <h1>ETF Savings Plan Calculator</h1>
+    <p class="lede">See instantly how much of your final savings-plan amount comes from your own deposits — and how much compound interest adds.</p>
+  </section>
+
+  <div class="calc-page-layout">
+    <div class="calc-inputs">
+      <h2>YOUR INPUTS</h2>
+      <div class="calc-field-group">
+        <label>One-off investment <span class="live-val" id="initial-val">€1,000</span></label>
+        <input type="range" id="initial" min="0" max="50000" step="500" value="1000">
+      </div>
+      <div class="calc-field-group">
+        <label>Monthly savings rate <span class="live-val" id="monthly-val">€100</span></label>
+        <input type="range" id="monthly" min="0" max="2000" step="25" value="100">
+      </div>
+      <div class="calc-field-group">
+        <label>Investment horizon <span class="live-val" id="years-val">15 years</span></label>
+        <input type="range" id="years" min="1" max="40" step="1" value="15">
+      </div>
+      <div class="calc-field-group">
+        <label>Expected return p.a. <span class="live-val" id="rate-val">7.0 %</span></label>
+        <input type="range" id="rate" min="0" max="12" step="0.5" value="7">
+      </div>
+      <p class="calc-disclaimer">The expected return is an assumption, not a guarantee. Historically, broad world ETFs often returned around 6–8% p.a. before costs and inflation — the future may differ.</p>
+    </div>
+
+    <div class="calc-results">
+      <div class="result-cards">
+        <div class="result-card highlight"><div class="rc-label">Projected final value</div><div class="rc-val" id="result-final">€0</div></div>
+        <div class="result-card"><div class="rc-label">Capital paid in</div><div class="rc-val" id="result-contributed">€0</div></div>
+        <div class="result-card"><div class="rc-label">Of which interest</div><div class="rc-val" id="result-interest">€0</div></div>
+      </div>
+
+      <div class="chart-card">
+        <h3>GROWTH OVER TIME</h3>
+        <div class="bar-chart" id="bar-chart"></div>
+        <div class="chart-legend">
+          <span><span class="dot contrib"></span>Capital paid in</span>
+          <span><span class="dot interest"></span>Interest earned</span>
+        </div>
+      </div>
+
+      <section class="method" style="padding:0 0 8px;grid-template-columns:1fr;">
+        <div>
+          <h2 style="font-size:20px;">How is this calculated?</h2>
+          <p style="max-width:70ch;">The calculator assumes monthly compounding and monthly deposits. The expected return is a simplified, constant annual rate — real markets naturally fluctuate from year to year. Taxes (capital gains tax, advance lump-sum tax) and product costs (TER) are not included in this simple version.</p>
+        </div>
+      </section>
+
+      <section class="faq" style="margin-top:0;padding-top:32px;">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item"><h3>Why does the result differ from other calculators?</h3><p>Different calculators make slightly different assumptions (annual vs. monthly compounding, taxes yes/no). For a rough estimate, these differences are usually small.</p></div>
+        <div class="faq-item"><h3>Should I account for taxes?</h3><p>Yes, for a more realistic net view you should factor in capital gains tax (a flat 25% plus solidarity surcharge, minus the tax-free allowance) separately — this calculator deliberately shows the gross growth.</p></div>
+        <div class="faq-item"><h3>How do I find a suitable broker for the savings plan?</h3><p>Check out our <a href="broker.html" style="text-decoration:underline;">broker comparison</a> — there you’ll find which providers offer savings plans from €1.</p></div>
+      </section>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a><p class="tag">Independent comparisons and guides for your finances.</p></div>
+      <div class="footer-col"><h4>Compare</h4>
+        <a href="broker.html">Broker</a>
+        <a href="tagesgeld.html">Savings</a>
+        <a href="kredite.html">Loans</a>
+        <a href="versicherungen.html">Insurance</a>
+      </div>
+      <div class="footer-col"><h4>Guides & Calculator</h4>
+        <a href="ratgeber.html">All articles</a>
+        <a href="sparplanrechner.html">Savings Plan Calculator</a>
+      </div>
+      <div class="footer-col"><h4>About us</h4>
+        <a href="ueber-uns.html">Methodology</a>
+        <a href="ueber-uns.html">Advertising partners</a>
+        <a href="impressum.html">Legal Notice</a>
+        <a href="datenschutz.html">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-legal">Finanzpal receives commission from some partners when you open an account through our links. This does not affect our ratings. All information without guarantee; not investment advice. © 2026 Finanzpal</div>
+  </div>
+</footer>
+
+<script src="../assets/nav.js"></script>
+<script src="../assets/sparplanrechner.js"></script>
+</body>
+</html>

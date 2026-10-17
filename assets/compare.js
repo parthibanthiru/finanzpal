@@ -1,6 +1,14 @@
 // Renders a comparison table from a JSON data file.
 // Usage: <table class="compare" data-source="data/broker.json" data-type="broker">
 (function () {
+  var LANG = (document.documentElement.lang || 'de').toLowerCase().indexOf('en') === 0 ? 'en' : 'de';
+  var STR = {
+    de: { pick: 'Unsere Empfehlung', cta: 'Zum Anbieter', loading: 'Lade Vergleichsdaten …',
+      error: function (msg) { return 'Daten konnten nicht geladen werden (' + msg + '). Lokal? Bitte über einen lokalen Server öffnen, z. B. <code>python3 -m http.server</code> — direktes Öffnen der Datei (file://) blockiert den Datenabruf im Browser.'; } },
+    en: { pick: 'Our pick', cta: 'View offer', loading: 'Loading comparison data …',
+      error: function (msg) { return 'Could not load data (' + msg + '). Running locally? Please serve the files via a local server, e.g. <code>python3 -m http.server</code> — opening the file directly (file://) blocks the request in the browser.'; } }
+  };
+
   function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
@@ -9,7 +17,7 @@
 
   function brokerCell(item) {
     var nameHtml = item.recommended
-      ? '<div class="broker-name linked">' + escapeHtml(item.name) + '</div><span class="broker-tag">Unsere Empfehlung</span>'
+      ? '<div class="broker-name linked">' + escapeHtml(item.name) + '</div><span class="broker-tag">' + STR[LANG].pick + '</span>'
       : '<div class="broker-name">' + escapeHtml(item.name) + '</div>';
     var markStyle = item.color ? ' style="background:' + item.color + ';"' : '';
     if (item.detailUrl) {
@@ -19,12 +27,13 @@
   }
 
   function ratingHtml(stars, score) {
-    return '<div class="rating"><span class="stars">' + stars + '</span><span class="score">' + score.toFixed(1).replace('.', ',') + '</span></div>';
+    var scoreStr = LANG === 'en' ? score.toFixed(1) : score.toFixed(1).replace('.', ',');
+    return '<div class="rating"><span class="stars">' + stars + '</span><span class="score">' + scoreStr + '</span></div>';
   }
 
   function ctaHtml(item) {
     var cls = item.recommended ? 'cta-btn2' : 'cta-btn2 secondary';
-    return '<a href="' + item.affiliateUrl + '" class="' + cls + '" rel="sponsored nofollow">Zum Anbieter</a>';
+    return '<a href="' + item.affiliateUrl + '" class="' + cls + '" rel="sponsored nofollow">' + STR[LANG].cta + '</a>';
   }
 
   var renderers = {
@@ -74,6 +83,7 @@
     var tables = document.querySelectorAll('table.compare[data-source]');
     tables.forEach(function (table) {
       var src = table.getAttribute('data-source');
+      if (LANG === 'en') src = src.replace(/\.json$/, '.en.json');
       var type = table.getAttribute('data-type');
       var tbody = table.querySelector('tbody');
       var renderRow = renderers[type];
@@ -90,7 +100,7 @@
           if (updatedEl && data.updated) updatedEl.textContent = data.updated;
         })
         .catch(function (err) {
-          tbody.innerHTML = '<tr class="loading-row"><td colspan="6">Daten konnten nicht geladen werden (' + escapeHtml(err.message) + '). Lokal? Bitte über einen lokalen Server öffnen, z. B. <code>python3 -m http.server</code> — direktes Öffnen der Datei (file://) blockiert den Datenabruf im Browser.</td></tr>';
+          tbody.innerHTML = '<tr class="loading-row"><td colspan="6">' + STR[LANG].error(escapeHtml(err.message)) + '</td></tr>';
         });
     });
   });

@@ -38,6 +38,10 @@ nav.top { display: flex; gap: 18px; flex-wrap: nowrap; }
 nav.top a { color: var(--ink-soft); text-decoration: none; font-size: 13.5px; font-weight: 500; padding: 4px 0; border-bottom: 2px solid transparent; white-space: nowrap; }
 nav.top a.active { color: var(--ink); border-bottom-color: var(--green); }
 .header-actions { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
+.lang-switch { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; flex-shrink: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.02em; }
+.lang-switch .lang-opt { padding: 7px 10px; text-decoration: none; color: var(--ink-soft); line-height: 1; }
+.lang-switch .lang-opt.active { background: var(--tag-bg); color: var(--green-deep); }
+.lang-switch .lang-opt:not(.active):hover { color: var(--ink); background: var(--bg-raised); }
 .search-btn { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-raised); display: flex; align-items: center; justify-content: center; color: var(--ink-soft); flex-shrink: 0; }
 .nav-toggle { display: none; width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-raised); align-items: center; justify-content: center; }
 @media (max-width: 920px) {
