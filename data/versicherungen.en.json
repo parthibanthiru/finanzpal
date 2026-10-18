@@ -1,57 +1,9 @@
 {
   "updated": "2026-10",
   "items": [
-    {
-      "id": "versicherer-a",
-      "name": "Insurer A",
-      "initials": "A",
-      "color": "#1F4E36",
-      "recommended": true,
-      "affiliateUrl": "#",
-      "beitrag": "€58/year",
-      "deckung": "€50m",
-      "leistungen": "Property damage · Key loss<br>Uncollectible claims · worldwide",
-      "rating": 4.7,
-      "ratingStars": "★★★★★"
-    },
-    {
-      "id": "versicherer-b",
-      "name": "Insurer B",
-      "initials": "B",
-      "color": "#2F5C8A",
-      "recommended": false,
-      "affiliateUrl": "#",
-      "beitrag": "€49/year",
-      "deckung": "€30m",
-      "leistungen": "Property damage<br>Germany-wide",
-      "rating": 4.2,
-      "ratingStars": "★★★★☆"
-    },
-    {
-      "id": "versicherer-c",
-      "name": "Insurer C",
-      "initials": "C",
-      "color": "#7A5230",
-      "recommended": false,
-      "affiliateUrl": "#",
-      "beitrag": "€72/year",
-      "deckung": "€100m",
-      "leistungen": "Property damage · Key loss<br>Uncollectible claims · worldwide",
-      "rating": 4.6,
-      "ratingStars": "★★★★★"
-    },
-    {
-      "id": "versicherer-d",
-      "name": "Insurer D",
-      "initials": "D",
-      "color": "#5B5F63",
-      "recommended": false,
-      "affiliateUrl": "#",
-      "beitrag": "€39/year",
-      "deckung": "€15m",
-      "leistungen": "Property damage<br>Germany-wide",
-      "rating": 3.8,
-      "ratingStars": "★★★☆☆"
-    }
+    { "id": "huk24", "name": "HUK24", "initials": "HUK", "color": "#007A3D", "recommended": true, "affiliateUrl": "#", "beitrag": "€34/year", "deckung": "€100m", "leistungen": "Key cover · rental car<br>Loss of claims cover up to €50m · worldwide", "rating": 4.6, "ratingStars": "★★★★★" },
+    { "id": "devk", "name": "DEVK", "initials": "DEVK", "color": "#E2001A", "recommended": false, "affiliateUrl": "#", "beitrag": "from €42/year", "deckung": "€50m", "leistungen": "Tenant liability · loss of claims cover<br>Germany-wide", "rating": 4.4, "ratingStars": "★★★★☆" },
+    { "id": "hansemerkur", "name": "HanseMerkur", "initials": "HM", "color": "#8B1E3F", "recommended": false, "affiliateUrl": "#", "beitrag": "€59/year", "deckung": "€50m", "leistungen": "Key cover · rental car<br>Loss of claims cover with legal aid · worldwide", "rating": 4.5, "ratingStars": "★★★★★" },
+    { "id": "allianz", "name": "Allianz", "initials": "ALZ", "color": "#003781", "recommended": false, "affiliateUrl": "#", "beitrag": "€59/year", "deckung": "€50m", "leistungen": "Tenant liability · loss of claims cover<br>Germany-wide", "rating": 4.1, "ratingStars": "★★★★☆" }
   ]
 }
