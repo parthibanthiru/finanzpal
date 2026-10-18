@@ -3,9 +3,9 @@
 (function () {
   var LANG = (document.documentElement.lang || 'de').toLowerCase().indexOf('en') === 0 ? 'en' : 'de';
   var STR = {
-    de: { pick: 'Unsere Empfehlung', cta: 'Zum Anbieter', loading: 'Lade Vergleichsdaten …',
+    de: { pick: 'Unsere Empfehlung', cta: 'Zum Anbieter', loading: 'Lade Vergleichsdaten …', notRated: 'noch nicht bewertet',
       error: function (msg) { return 'Daten konnten nicht geladen werden (' + msg + '). Lokal? Bitte über einen lokalen Server öffnen, z. B. <code>python3 -m http.server</code> — direktes Öffnen der Datei (file://) blockiert den Datenabruf im Browser.'; } },
-    en: { pick: 'Our pick', cta: 'View offer', loading: 'Loading comparison data …',
+    en: { pick: 'Our pick', cta: 'View offer', loading: 'Loading comparison data …', notRated: 'not yet rated',
       error: function (msg) { return 'Could not load data (' + msg + '). Running locally? Please serve the files via a local server, e.g. <code>python3 -m http.server</code> — opening the file directly (file://) blocks the request in the browser.'; } }
   };
 
@@ -40,6 +40,9 @@
   }
 
   function ratingHtml(stars, score) {
+    if (score === null || score === undefined) {
+      return '<div class="rating"><span class="score-na">' + STR[LANG].notRated + '</span></div>';
+    }
     var scoreStr = LANG === 'en' ? score.toFixed(1) : score.toFixed(1).replace('.', ',');
     return '<div class="rating"><span class="stars">' + stars + '</span><span class="score">' + scoreStr + '</span></div>';
   }
@@ -101,30 +104,42 @@
         '</tr>';
     }
   };
+  // Hausrat, BU and Rechtsschutz share the same row shape (beitrag/deckung/leistungen) as versicherungen.
+  renderers.hausrat = renderers.versicherungen;
+  renderers.bu = renderers.versicherungen;
+  renderers.rechtsschutz = renderers.versicherungen;
+
+  function renderTable(table) {
+    var src = table.getAttribute('data-source');
+    if (LANG === 'en') src = src.replace(/\.json$/, '.en.json');
+    var type = table.getAttribute('data-type');
+    var tbody = table.querySelector('tbody');
+    var renderRow = renderers[type];
+    if (!tbody || !renderRow) return;
+
+    tbody.innerHTML = '<tr class="loading-row"><td colspan="6">' + STR[LANG].loading + '</td></tr>';
+
+    fetch(src)
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        tbody.innerHTML = data.items.map(renderRow).join('');
+        var updatedEl = document.getElementById('last-updated');
+        if (updatedEl && data.updated) updatedEl.textContent = formatUpdated(data.updated);
+      })
+      .catch(function (err) {
+        tbody.innerHTML = '<tr class="loading-row"><td colspan="6">' + STR[LANG].error(escapeHtml(err.message)) + '</td></tr>';
+      });
+  }
+
+  // Exposed so a page-specific script (e.g. insurance type-tab switching) can
+  // re-render a table after changing its data-source/data-type attributes.
+  window.FPCompare = { renderTable: renderTable };
 
   document.addEventListener('DOMContentLoaded', function () {
     var tables = document.querySelectorAll('table.compare[data-source]');
-    tables.forEach(function (table) {
-      var src = table.getAttribute('data-source');
-      if (LANG === 'en') src = src.replace(/\.json$/, '.en.json');
-      var type = table.getAttribute('data-type');
-      var tbody = table.querySelector('tbody');
-      var renderRow = renderers[type];
-      if (!tbody || !renderRow) return;
-
-      fetch(src)
-        .then(function (res) {
-          if (!res.ok) throw new Error('HTTP ' + res.status);
-          return res.json();
-        })
-        .then(function (data) {
-          tbody.innerHTML = data.items.map(renderRow).join('');
-          var updatedEl = document.getElementById('last-updated');
-          if (updatedEl && data.updated) updatedEl.textContent = formatUpdated(data.updated);
-        })
-        .catch(function (err) {
-          tbody.innerHTML = '<tr class="loading-row"><td colspan="6">' + STR[LANG].error(escapeHtml(err.message)) + '</td></tr>';
-        });
-    });
+    tables.forEach(renderTable);
   });
 })();

@@ -1,0 +1,9 @@
+{
+  "updated": "2026-10",
+  "items": [
+    { "id": "arag", "name": "ARAG", "initials": "ARG", "color": "#003C7A", "recommended": false, "affiliateUrl": "#", "beitrag": "ab 299 €/Jahr*", "deckung": "Privat + Beruf + Verkehr", "leistungen": "Privatrechtsschutz · Berufsrechtsschutz<br>Verkehrsrechtsschutz", "rating": null, "ratingStars": null },
+    { "id": "ergo-rs", "name": "ERGO", "initials": "ERG", "color": "#7A1E3C", "recommended": false, "affiliateUrl": "#", "beitrag": "ab 299 €/Jahr*", "deckung": "Privat + Beruf + Verkehr", "leistungen": "Privatrechtsschutz · Berufsrechtsschutz<br>Verkehrsrechtsschutz", "rating": null, "ratingStars": null },
+    { "id": "devk-rs", "name": "DEVK", "initials": "DEVK", "color": "#E2001A", "recommended": false, "affiliateUrl": "#", "beitrag": "ab 299 €/Jahr*", "deckung": "Privat + Beruf + Verkehr", "leistungen": "Privatrechtsschutz · Berufsrechtsschutz<br>Verkehrsrechtsschutz", "rating": null, "ratingStars": null },
+    { "id": "huk24-rs", "name": "HUK24", "initials": "HUK", "color": "#007A3D", "recommended": false, "affiliateUrl": "#", "beitrag": "ab 299 €/Jahr*", "deckung": "Privat + Beruf + Verkehr", "leistungen": "Privatrechtsschutz · Berufsrechtsschutz<br>Verkehrsrechtsschutz", "rating": null, "ratingStars": null }
+  ]
+}

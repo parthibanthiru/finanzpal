@@ -1,0 +1,9 @@
+{
+  "updated": "2026-10",
+  "items": [
+    { "id": "dialog", "name": "Dialog", "initials": "DLG", "color": "#13395E", "recommended": true, "affiliateUrl": "#", "beitrag": "individuell, altersabhängig", "deckung": "BU-Rente frei wählbar", "leistungen": "Franke & Bornberg FFF+ · DFSI „Hervorragend“<br>IVFP „Exzellent“ · Gesamtscore 98/100", "rating": 4.9, "ratingStars": "★★★★★" },
+    { "id": "allianz-bu", "name": "Allianz", "initials": "ALZ", "color": "#003781", "recommended": false, "affiliateUrl": "#", "beitrag": "individuell, altersabhängig", "deckung": "BU-Rente frei wählbar", "leistungen": "Franke & Bornberg FFF+ · DFSI „Hervorragend“<br>Gesamtscore 93/100", "rating": 4.7, "ratingStars": "★★★★★" },
+    { "id": "lv1871", "name": "LV 1871", "initials": "LV", "color": "#8B1E3F", "recommended": false, "affiliateUrl": "#", "beitrag": "individuell, altersabhängig", "deckung": "BU-Rente frei wählbar", "leistungen": "Franke & Bornberg FFF · DFSI „Hervorragend“<br>Gesamtscore 92/100", "rating": 4.6, "ratingStars": "★★★★★" },
+    { "id": "hannoversche", "name": "Hannoversche", "initials": "HAN", "color": "#5B5F63", "recommended": false, "affiliateUrl": "#", "beitrag": "individuell, altersabhängig", "deckung": "BU-Rente frei wählbar", "leistungen": "Franke & Bornberg FFF+ · Gesamtscore 87/100", "rating": 4.3, "ratingStars": "★★★★☆" }
+  ]
+}

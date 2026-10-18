@@ -1,0 +1,10 @@
+{
+  "updated": "2026-10",
+  "profileNote": "Modellhaushalt Stiftung Warentest 2026: 40-jähriger Angestellter, 100 m²-Wohnung im 2. Stock, Jahreszahlung, Standort Ingolstadt (niedrigeres Risikogebiet).",
+  "items": [
+    { "id": "interrisk", "name": "InterRisk", "initials": "IR", "color": "#1F5C3D", "recommended": true, "affiliateUrl": "#", "beitrag": "71 €/Jahr", "deckung": "individuell nach Wohnfläche", "leistungen": "Feuer · Leitungswasser · Einbruch<br>Sturm/Hagel · Elementarschäden optional", "rating": 4.6, "ratingStars": "★★★★★" },
+    { "id": "huk24-hausrat", "name": "HUK24", "initials": "HUK", "color": "#007A3D", "recommended": false, "affiliateUrl": "#", "beitrag": "70 €/Jahr", "deckung": "individuell nach Wohnfläche", "leistungen": "Feuer · Leitungswasser · Einbruch<br>Sturm/Hagel", "rating": 4.2, "ratingStars": "★★★★☆" },
+    { "id": "mvk", "name": "MVK Versicherung", "initials": "MVK", "color": "#5B5F63", "recommended": false, "affiliateUrl": "#", "beitrag": "69 €/Jahr", "deckung": "individuell nach Wohnfläche", "leistungen": "Feuer · Leitungswasser · Einbruch<br>Sturm/Hagel", "rating": 4.0, "ratingStars": "★★★★☆" },
+    { "id": "schleswiger", "name": "Schleswiger Versicherung", "initials": "SV", "color": "#8A3F2F", "recommended": false, "affiliateUrl": "#", "beitrag": "61 €/Jahr", "deckung": "individuell nach Wohnfläche", "leistungen": "Feuer · Leitungswasser · Einbruch<br>Sturm/Hagel", "rating": 3.9, "ratingStars": "★★★★☆" }
+  ]
+}

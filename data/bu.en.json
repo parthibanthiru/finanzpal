@@ -1,0 +1,9 @@
+{
+  "updated": "2026-10",
+  "items": [
+    { "id": "dialog", "name": "Dialog", "initials": "DLG", "color": "#13395E", "recommended": true, "affiliateUrl": "#", "beitrag": "individual, age-dependent", "deckung": "BU pension amount chosen freely", "leistungen": "Franke & Bornberg FFF+ · DFSI \"Outstanding\"<br>IVFP \"Excellent\" · Combined score 98/100", "rating": 4.9, "ratingStars": "★★★★★" },
+    { "id": "allianz-bu", "name": "Allianz", "initials": "ALZ", "color": "#003781", "recommended": false, "affiliateUrl": "#", "beitrag": "individual, age-dependent", "deckung": "BU pension amount chosen freely", "leistungen": "Franke & Bornberg FFF+ · DFSI \"Outstanding\"<br>Combined score 93/100", "rating": 4.7, "ratingStars": "★★★★★" },
+    { "id": "lv1871", "name": "LV 1871", "initials": "LV", "color": "#8B1E3F", "recommended": false, "affiliateUrl": "#", "beitrag": "individual, age-dependent", "deckung": "BU pension amount chosen freely", "leistungen": "Franke & Bornberg FFF · DFSI \"Outstanding\"<br>Combined score 92/100", "rating": 4.6, "ratingStars": "★★★★★" },
+    { "id": "hannoversche", "name": "Hannoversche", "initials": "HAN", "color": "#5B5F63", "recommended": false, "affiliateUrl": "#", "beitrag": "individual, age-dependent", "deckung": "BU pension amount chosen freely", "leistungen": "Franke & Bornberg FFF+ · Combined score 87/100", "rating": 4.3, "ratingStars": "★★★★☆" }
+  ]
+}
