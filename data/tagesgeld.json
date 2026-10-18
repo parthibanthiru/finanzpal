@@ -1,10 +1,10 @@
 {
   "updated": "2026-10",
   "items": [
-    { "id": "ing", "name": "ING", "initials": "ING", "color": "#FF6200", "recommended": true, "affiliateUrl": "#", "rate": "2,70 %", "guarantee": "4 Monate (Neukunden)", "minDeposit": "keine", "protection": "100.000 € (DE)" },
-    { "id": "suresse-direkt", "name": "Suresse Direkt Bank", "initials": "SD", "color": "#0057A0", "recommended": false, "affiliateUrl": "#", "rate": "3,00 %", "guarantee": "keine (variabel)", "minDeposit": "1 €", "protection": "100.000 € (FR, EU-weit)" },
-    { "id": "openbank", "name": "Openbank", "initials": "OB", "color": "#6B2FA0", "recommended": false, "affiliateUrl": "#", "rate": "2,80 %", "guarantee": "4 Monate", "minDeposit": "keine", "protection": "100.000 € (ES, EU-weit)" },
-    { "id": "consorsbank-tagesgeld", "name": "Consorsbank", "initials": "CB", "color": "#13395E", "recommended": false, "affiliateUrl": "#", "rate": "2,50 %", "guarantee": "6 Monate", "minDeposit": "keine", "protection": "100.000 € (DE)" },
-    { "id": "dkb-tagesgeld", "name": "DKB", "initials": "DKB", "color": "#004F9F", "recommended": false, "affiliateUrl": "#", "rate": "2,25 %", "guarantee": "keine (variabel)", "minDeposit": "keine", "protection": "100.000 € (DE)" }
+    { "id": "openbank", "name": "Openbank", "initials": "OB", "color": "#6B2FA0", "recommended": true, "affiliateUrl": "#", "rate": "4,00 %", "guarantee": "4 Monate (bis 100.000 €)", "minDeposit": "keine", "protection": "100.000 € (DE)" },
+    { "id": "consorsbank-tagesgeld", "name": "Consorsbank", "initials": "CB", "color": "#13395E", "recommended": false, "affiliateUrl": "#", "rate": "3,80 %", "guarantee": "5 Monate (bis 1.000.000 €)", "minDeposit": "keine", "protection": "100.000 € (FR, FGDR)" },
+    { "id": "suresse-direkt", "name": "Suresse Direkt Bank", "initials": "SD", "color": "#0057A0", "recommended": false, "affiliateUrl": "#", "rate": "3,70 %", "guarantee": "6 Monate", "minDeposit": "1 €", "protection": "100.000 € (ES, EU-weit)" },
+    { "id": "ing", "name": "ING", "initials": "ING", "color": "#FF6200", "recommended": false, "affiliateUrl": "#", "rate": "3,20 %", "guarantee": "4 Monate (bis 250.000 €)", "minDeposit": "keine", "protection": "100.000 € (DE)" },
+    { "id": "dkb-tagesgeld", "name": "DKB", "initials": "DKB", "color": "#004F9F", "recommended": false, "affiliateUrl": "#", "rate": "1,00 %", "guarantee": "keine (variabler Basiszins)", "minDeposit": "keine", "protection": "100.000 € (DE)" }
   ]
 }

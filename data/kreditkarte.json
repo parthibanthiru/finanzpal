@@ -2,15 +2,29 @@
   "updated": "2026-10",
   "items": [
     {
+      "id": "trade-republic-visa",
+      "name": "Trade Republic Visa",
+      "initials": "TR",
+      "color": "#1F4E36",
+      "recommended": true,
+      "affiliateUrl": "#",
+      "jahresgebuehr": "0 € (dauerhaft)",
+      "fremdwaehrung": "0 %",
+      "abhebung": "weltweit kostenlos (ab 100 €)",
+      "kartentyp": "Visa",
+      "rating": 4.6,
+      "ratingStars": "★★★★★"
+    },
+    {
       "id": "consorsbank-visa",
       "name": "Consorsbank Visa Karte",
       "initials": "CB",
-      "color": "#7A5230",
-      "recommended": true,
+      "color": "#13395E",
+      "recommended": false,
       "affiliateUrl": "#",
-      "jahresgebuehr": "0 €",
+      "jahresgebuehr": "0 € (dauerhaft)",
       "fremdwaehrung": "0 %",
-      "abhebung": "weltweit kostenlos",
+      "abhebung": "weltweit kostenlos (Visa-Automaten)",
       "kartentyp": "Visa",
       "rating": 4.5,
       "ratingStars": "★★★★★"
@@ -19,29 +33,15 @@
       "id": "barclays-visa",
       "name": "Barclays Visa",
       "initials": "BC",
-      "color": "#1F4E36",
-      "recommended": false,
-      "affiliateUrl": "#",
-      "jahresgebuehr": "0 €",
-      "fremdwaehrung": "0 %",
-      "abhebung": "4× pro Monat kostenlos",
-      "kartentyp": "Visa",
-      "rating": 4.3,
-      "ratingStars": "★★★★☆"
-    },
-    {
-      "id": "dkb-visa",
-      "name": "DKB Visa",
-      "initials": "DKB",
       "color": "#2F5C8A",
       "recommended": false,
       "affiliateUrl": "#",
-      "jahresgebuehr": "0 € (bei aktiver Nutzung)",
+      "jahresgebuehr": "0 € (dauerhaft, ohne Bedingungen)",
       "fremdwaehrung": "0 %",
-      "abhebung": "weltweit kostenlos (EUR)",
+      "abhebung": "weltweit kostenlos",
       "kartentyp": "Visa",
-      "rating": 4.2,
-      "ratingStars": "★★★★☆"
+      "rating": 4.5,
+      "ratingStars": "★★★★★"
     },
     {
       "id": "hanseatic-genialcard",
@@ -50,11 +50,11 @@
       "color": "#5B5F63",
       "recommended": false,
       "affiliateUrl": "#",
-      "jahresgebuehr": "0 €",
+      "jahresgebuehr": "0 € (dauerhaft)",
       "fremdwaehrung": "0 %",
-      "abhebung": "kostenlos in der Euro-Zone",
+      "abhebung": "weltweit kostenlos",
       "kartentyp": "Mastercard",
-      "rating": 4.0,
+      "rating": 4.3,
       "ratingStars": "★★★★☆"
     },
     {
@@ -64,11 +64,11 @@
       "color": "#8A3F2F",
       "recommended": false,
       "affiliateUrl": "#",
-      "jahresgebuehr": "0 € (Smart-Konto)",
+      "jahresgebuehr": "0 € (alle Kontomodelle)",
       "fremdwaehrung": "0 %",
-      "abhebung": "4× pro Monat kostenlos",
+      "abhebung": "4×/Monat kostenlos (Smart), 20×/Monat (Plus/Max)",
       "kartentyp": "Mastercard",
-      "rating": 3.9,
+      "rating": 4.0,
       "ratingStars": "★★★★☆"
     }
   ]

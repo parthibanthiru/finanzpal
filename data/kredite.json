@@ -1,9 +1,9 @@
 {
   "updated": "2026-10",
   "items": [
-    { "id": "consorsbank-kredit", "name": "Consorsbank", "initials": "CB", "color": "#13395E", "recommended": true, "affiliateUrl": "#", "rate": "3,49 %", "amount": "1.500 – 75.000 €", "term": "12 – 84 Monate", "sondertilgung": "jederzeit kostenlos" },
-    { "id": "ing-kredit", "name": "ING", "initials": "ING", "color": "#FF6200", "recommended": false, "affiliateUrl": "#", "rate": "3,99 %", "amount": "2.000 – 75.000 €", "term": "12 – 120 Monate", "sondertilgung": "jederzeit kostenlos" },
-    { "id": "santander", "name": "Santander Consumer Bank", "initials": "SC", "color": "#EC0000", "recommended": false, "affiliateUrl": "#", "rate": "4,29 %", "amount": "1.000 – 80.000 €", "term": "12 – 96 Monate", "sondertilgung": "bis 50 %/Jahr kostenlos" },
-    { "id": "swk-bank", "name": "SWK Bank", "initials": "SWK", "color": "#5B5F63", "recommended": false, "affiliateUrl": "#", "rate": "4,59 %", "amount": "1.000 – 50.000 €", "term": "12 – 84 Monate", "sondertilgung": "gebührenpflichtig" }
+    { "id": "openbank-kredit", "name": "Openbank", "initials": "OB", "color": "#6B2FA0", "recommended": true, "affiliateUrl": "#", "rate": "ab 2,99 %", "amount": "1.000 – 75.000 €", "term": "12 – 96 Monate", "sondertilgung": "jederzeit möglich, ggf. Vorfälligkeitsentschädigung bei Volltilgung" },
+    { "id": "consorsbank-kredit", "name": "Consorsbank", "initials": "CB", "color": "#13395E", "recommended": false, "affiliateUrl": "#", "rate": "ab 3,49 %", "amount": "1.500 – 80.000 €", "term": "6 – 120 Monate", "sondertilgung": "bis 100 % jederzeit kostenlos" },
+    { "id": "ing-kredit", "name": "ING", "initials": "ING", "color": "#FF6200", "recommended": false, "affiliateUrl": "#", "rate": "ab 3,69 %", "amount": "5.000 – 75.000 €", "term": "12 – 96 Monate", "sondertilgung": "jederzeit unbegrenzt kostenlos" },
+    { "id": "swk-bank", "name": "SWK Bank", "initials": "SWK", "color": "#5B5F63", "recommended": false, "affiliateUrl": "#", "rate": "ab 5,29 %", "amount": "7.500 – 100.000 €", "term": "24 – 120 Monate", "sondertilgung": "Teiltilgung unbegrenzt kostenlos, Volltilgung ggf. Vorfälligkeitsentschädigung" }
   ]
 }

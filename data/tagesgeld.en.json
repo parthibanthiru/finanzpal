@@ -1,65 +1,10 @@
 {
   "updated": "2026-10",
   "items": [
-    {
-      "id": "anbieter-a",
-      "name": "Provider A",
-      "initials": "A",
-      "color": "#1F4E36",
-      "recommended": true,
-      "affiliateUrl": "#",
-      "rate": "3.25%",
-      "guarantee": "12 months",
-      "minDeposit": "none",
-      "protection": "€100,000 (DE)"
-    },
-    {
-      "id": "anbieter-b",
-      "name": "Provider B",
-      "initials": "B",
-      "color": "#2F5C8A",
-      "recommended": false,
-      "affiliateUrl": "#",
-      "rate": "3.10%",
-      "guarantee": "6 months",
-      "minDeposit": "€500",
-      "protection": "€100,000 (DE)"
-    },
-    {
-      "id": "anbieter-c",
-      "name": "Provider C",
-      "initials": "C",
-      "color": "#7A5230",
-      "recommended": false,
-      "affiliateUrl": "#",
-      "rate": "2.95%",
-      "guarantee": "none (variable)",
-      "minDeposit": "none",
-      "protection": "€100,000 (DE)"
-    },
-    {
-      "id": "anbieter-d",
-      "name": "Provider D",
-      "initials": "D",
-      "color": "#5B5F63",
-      "recommended": false,
-      "affiliateUrl": "#",
-      "rate": "2.80%",
-      "guarantee": "3 months",
-      "minDeposit": "€1,000",
-      "protection": "€100,000 (EU)"
-    },
-    {
-      "id": "anbieter-e",
-      "name": "Provider E",
-      "initials": "E",
-      "color": "#8A3F2F",
-      "recommended": false,
-      "affiliateUrl": "#",
-      "rate": "2.60%",
-      "guarantee": "none (variable)",
-      "minDeposit": "none",
-      "protection": "€100,000 (DE)"
-    }
+    { "id": "openbank", "name": "Openbank", "initials": "OB", "color": "#6B2FA0", "recommended": true, "affiliateUrl": "#", "rate": "4.00%", "guarantee": "4 months (up to €100,000)", "minDeposit": "none", "protection": "€100,000 (DE)" },
+    { "id": "consorsbank-tagesgeld", "name": "Consorsbank", "initials": "CB", "color": "#13395E", "recommended": false, "affiliateUrl": "#", "rate": "3.80%", "guarantee": "5 months (up to €1,000,000)", "minDeposit": "none", "protection": "€100,000 (FR, FGDR)" },
+    { "id": "suresse-direkt", "name": "Suresse Direkt Bank", "initials": "SD", "color": "#0057A0", "recommended": false, "affiliateUrl": "#", "rate": "3.70%", "guarantee": "6 months", "minDeposit": "€1", "protection": "€100,000 (ES, EU-wide)" },
+    { "id": "ing", "name": "ING", "initials": "ING", "color": "#FF6200", "recommended": false, "affiliateUrl": "#", "rate": "3.20%", "guarantee": "4 months (up to €250,000)", "minDeposit": "none", "protection": "€100,000 (DE)" },
+    { "id": "dkb-tagesgeld", "name": "DKB", "initials": "DKB", "color": "#004F9F", "recommended": false, "affiliateUrl": "#", "rate": "1.00%", "guarantee": "none (variable base rate)", "minDeposit": "none", "protection": "€100,000 (DE)" }
   ]
 }

@@ -6,42 +6,42 @@
       "name": "Trade Republic",
       "initials": "TR",
       "color": "#1F4E36",
-      "recommended": true,
+      "recommended": false,
       "detailUrl": "broker-trade-republic.html",
       "affiliateUrl": "#",
       "depotfee": "0 €/Jahr",
       "orderfee": "1,00 €",
       "sparplanAb": "ab 1 €",
-      "rating": 4.6,
-      "ratingStars": "★★★★★"
+      "rating": 4.3,
+      "ratingStars": "★★★★☆"
     },
     {
       "id": "scalable-capital",
       "name": "Scalable Capital",
       "initials": "SC",
       "color": "#2F5C8A",
-      "recommended": false,
+      "recommended": true,
       "detailUrl": "broker-scalable-capital.html",
       "affiliateUrl": "#",
-      "depotfee": "0 € / 4,99 €/Monat (Prime+)",
-      "orderfee": "0,99 €",
+      "depotfee": "0 € (Free Broker) / 4,99 €/Monat (Prime+)",
+      "orderfee": "0,99 € (Free) / 0 € ab 250 € (Prime+)",
       "sparplanAb": "ab 1 €",
-      "rating": 4.3,
-      "ratingStars": "★★★★☆"
+      "rating": 5.0,
+      "ratingStars": "★★★★★"
     },
     {
       "id": "consorsbank",
       "name": "Consorsbank",
       "initials": "CB",
-      "color": "#7A5230",
+      "color": "#13395E",
       "recommended": false,
       "detailUrl": "broker-consorsbank.html",
       "affiliateUrl": "#",
       "depotfee": "0 €/Jahr",
       "orderfee": "4,95 € + 0,25 %",
       "sparplanAb": "ab 10 €",
-      "rating": 4.0,
-      "ratingStars": "★★★★☆"
+      "rating": 4.6,
+      "ratingStars": "★★★★★"
     },
     {
       "id": "comdirect",
@@ -52,9 +52,9 @@
       "detailUrl": null,
       "affiliateUrl": "#",
       "depotfee": "0 €/Jahr¹",
-      "orderfee": "3,90 € + 0,25 %",
-      "sparplanAb": "ab 25 €",
-      "rating": 4.1,
+      "orderfee": "4,90 € + 0,25 %",
+      "sparplanAb": "ab 1 €",
+      "rating": 4.0,
       "ratingStars": "★★★★☆"
     },
     {
@@ -68,8 +68,8 @@
       "depotfee": "0 €/Jahr",
       "orderfee": "5,90 €",
       "sparplanAb": "ab 25 €",
-      "rating": 3.7,
-      "ratingStars": "★★★☆☆"
+      "rating": 4.4,
+      "ratingStars": "★★★★☆"
     }
   ]
 }
