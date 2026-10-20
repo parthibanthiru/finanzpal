@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tax Software Comparison: file your German tax return online — Finanzpal</title>
+<meta name="description" content="We compare German tax-filing software and apps like WISO Steuer, smartsteuer, Taxfix and Wundertax by price, target group and features — filterable by your situation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="alternate" hreflang="de" href="/steuerprogramm.html">
+<link rel="alternate" hreflang="en" href="/en/steuerprogramm.html">
+<link rel="alternate" hreflang="x-default" href="/steuerprogramm.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/icon-512.png">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a>
+    <nav class="top">
+      <a href="broker.html">Broker</a>
+      <a href="kreditkarte.html">Credit cards</a>
+      <a href="tagesgeld.html">Savings</a>
+      <a href="kredite.html">Loans</a>
+      <a href="versicherungen.html">Insurance</a>
+      <a href="sparplanrechner.html">Calculator</a>
+      <a href="ratgeber.html">Guides</a>
+      <a href="ueber-uns.html">About us</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch" aria-label="Choose language"><a href="../steuerprogramm.html" class="lang-opt" hreflang="de" lang="de">DE</a><span class="lang-opt active" aria-current="true">EN</span></div>
+      <div class="search-btn">⌕</div>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Tax Software Comparison</p>
+  <section class="hero">
+    <h1>Tax software comparison: find the right tax-filing tool</h1>
+    <p class="lede">We compare well-known German tax software and apps by price, target group and features — filterable by your situation (employee, self-employed, rental income …). Not a purchase recommendation, just an overview for your own comparison.</p>
+    <div class="trust-bar">
+      <div class="trust-item"><span class="num">7</span><span class="lbl">programs compared</span></div>
+      <div class="trust-item"><span class="num">€29.95</span><span class="lbl">lowest starting price</span></div>
+      <div class="trust-item"><span class="num" id="steuer-last-updated">—</span><span class="lbl">Last updated</span></div>
+    </div>
+  </section>
+
+  <section class="kk-layout">
+    <aside class="kk-filters">
+      <div class="kk-filters-head"><h2>Filters</h2><button type="button" id="steuer-reset" class="kk-reset-btn">Reset filters</button></div>
+      <div class="kk-filter-group">
+        <h3>Target group</h3>
+        <label class="kk-check"><input type="checkbox" data-filter="zielgruppe" value="angestellte"> Employees</label>
+        <label class="kk-check"><input type="checkbox" data-filter="zielgruppe" value="selbststaendige"> Self-employed</label>
+        <label class="kk-check"><input type="checkbox" data-filter="zielgruppe" value="vermietung"> Rental income</label>
+        <label class="kk-check"><input type="checkbox" data-filter="zielgruppe" value="kapitalertraege"> Investment income</label>
+        <label class="kk-check"><input type="checkbox" data-filter="zielgruppe" value="rente"> Pensioners</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Platform</h3>
+        <label class="kk-check"><input type="checkbox" data-filter="plattform" value="web"> Web (browser)</label>
+        <label class="kk-check"><input type="checkbox" data-filter="plattform" value="app"> App (iOS/Android)</label>
+        <label class="kk-check"><input type="checkbox" data-filter="plattform" value="desktop"> Desktop (Windows/Mac)</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Payment</h3>
+        <label class="kk-check"><input type="checkbox" id="steuer-filter-zahlung"> Payment only on submission</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Max. price</h3>
+        <select id="steuer-preis-select" class="kk-select">
+          <option value="alle">All</option>
+          <option value="30">up to €30</option>
+          <option value="40">up to €40</option>
+          <option value="50">up to €50</option>
+        </select>
+      </div>
+    </aside>
+    <div class="kk-main">
+      <div class="kk-toolbar">
+        <span id="steuer-count" class="kk-count"></span>
+        <select id="steuer-sort-select" class="kk-select" style="width:auto;">
+          <option value="preis">Sort: Price ascending</option>
+          <option value="name">Sort: Name A–Z</option>
+        </select>
+      </div>
+      <div id="steuer-app" data-source="../data/steuerprogramm.en.json">
+        <div id="steuer-results" class="kk-results"></div>
+      </div>
+      <p class="disclosure-note">Advertising: Finanzpal may earn a commission if you purchase a program through a link. This does not affect our selection. Figures on price, target groups and features as of October 2026, compiled from provider information and independent reviews — prices for the 2025 tax year often change with new program versions and promotions. Some details (e.g. on the ELSTER certificate requirement or exact platform support) were not clearly stated in the sources checked and are marked accordingly. Please verify price and feature scope directly with the provider before buying.</p>
+    </div>
+  </section>
+
+  <section class="method">
+    <div><h2>What to look for when choosing tax software</h2><p>These criteria help you find the right program for your situation.</p></div>
+    <div class="criteria">
+      <div class="criterion"><h3>Target group</h3><p>Some programs only cover employees, others also handle rental income, investment income or self-employment. Check in advance whether your situation is supported.</p></div>
+      <div class="criterion"><h3>Price and payment timing</h3><p>Many providers only charge when you actually submit your tax return — so you can estimate your refund beforehand without commitment.</p></div>
+      <div class="criterion"><h3>ELSTER connection</h3><p>Most programs file directly through the ELSTER interface. Whether you need your own ELSTER certificate for that varies by provider.</p></div>
+      <div class="criterion"><h3>Platform</h3><p>Pure web programs run in the browser; others also offer apps or installable desktop software.</p></div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item"><h3>Is it even worth filing a tax return?</h3><p>For most employees, yes: the Federal Fiscal Court (Bundesfinanzhof) estimates an average refund in the three-digit range. A voluntary tax return can be filed retroactively for up to four years.</p></div>
+    <div class="faq-item"><h3>Tax app or classic software — what's the difference?</h3><p>Apps like Taxfix or Steuerbot guide you through the return with a question dialog and usually suit simpler cases. Classic software like WISO Steuer often offers more depth for more complex cases such as rental income or self-employment.</p></div>
+    <div class="faq-item"><h3>Do I need my own ELSTER certificate?</h3><p>That depends on the program — some file without one, for others it's unclear or required. You'll find details in the expandable program view above.</p></div>
+    <div class="faq-item"><h3>Isn't ELSTER free?</h3><p>Yes, the tax office provides ELSTER as a free portal for filing your return. Tax software usually costs extra, but in exchange offers guided data entry, plausibility checks, and often a higher refund through automatically identified deductions.</p></div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a><p class="tag">Independent comparisons and guides for your finances.</p></div>
+      <div class="footer-col"><h4>Compare</h4>
+        <a href="broker.html">Broker</a>
+        <a href="kreditkarte.html">Credit cards</a>
+        <a href="tagesgeld.html">Savings</a>
+        <a href="kredite.html">Loans</a>
+        <a href="versicherungen.html">Insurance</a>
+        <a href="etf-suche.html">ETF search</a>
+        <a href="steuerprogramm.html">Tax software</a>
+      </div>
+      <div class="footer-col"><h4>Guides & Calculator</h4>
+        <a href="ratgeber.html">All articles</a>
+        <a href="sparplanrechner.html">Savings Plan Calculator</a>
+        <a href="zinseszinsrechner.html">Compound Interest Calculator</a>
+        <a href="kreditrechner.html">Loan Calculator</a>
+      </div>
+      <div class="footer-col"><h4>About us</h4>
+        <a href="ueber-uns.html">Methodology</a>
+        <a href="ueber-uns.html">Advertising partners</a>
+        <a href="impressum.html">Legal Notice</a>
+        <a href="datenschutz.html">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-legal">Finanzpal may earn commission from partners when you open an account via our links. This does not affect our ratings. All figures without guarantee, not investment advice. © 2026 Finanzpal</div>
+  </div>
+</footer>
+
+<script src="../assets/nav.js"></script>
+<script src="../assets/steuer-compare.js"></script>
+</body>
+</html>
