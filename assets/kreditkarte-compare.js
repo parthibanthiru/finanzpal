@@ -181,7 +181,8 @@
         return '<li class="' + (b.ok ? 'ok' : 'info') + '"><span class="cc-icon">' + (b.ok ? '✓' : 'ⓘ') + '</span>' + escapeHtml(b.text) + '</li>';
       }).join('');
 
-      return '<div class="kk-card' + (item.recommended ? ' pick' : '') + '">' +
+      var crossLinkHtml = window.kkCrossLinkHtml ? window.kkCrossLinkHtml('kreditkarte', item.id, LANG) : '';
+      return '<div class="kk-card' + (item.recommended ? ' pick' : '') + '" id="' + escapeHtml(item.id) + '">' +
         '<div class="cc-badges">' +
           '<span class="cc-badge' + (isDebit ? ' debit' : '') + '">' + (isDebit ? STR.typeDebit : STR.typeCredit) + '</span>' +
           (item.ohneBedingungen ? '<span class="cc-badge">' + STR.filterOhneBedingungen + '</span>' : '') +
@@ -191,7 +192,7 @@
           cardArtHtml(item) +
           '<div class="cc-main">' +
             '<div class="cc-name">' + escapeHtml(item.name) + '</div>' +
-            '<ul class="cc-bullets">' + bullets + '</ul>' +
+            '<ul class="cc-bullets">' + bullets + '</ul>' + crossLinkHtml +
           '</div>' +
           '<div class="cc-facts">' +
             '<div class="cc-fact"><span class="k">' + STR.payment + '</span><span class="v">' + escapeHtml(paymentVal) + '</span></div>' +
@@ -275,7 +276,7 @@
     viewCardsBtn.addEventListener('click', function () { view = 'cards'; render(); });
     viewTableBtn.addEventListener('click', function () { view = 'table'; render(); });
 
-    resultsEl.innerHTML = '<p class="kk-empty">' + STR.loading + '</p>';
+    resultsEl.innerHTML = window.kkSkeletonHtml ? window.kkSkeletonHtml(5) : '<p class="kk-empty">' + STR.loading + '</p>';
     fetch(src)
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -286,6 +287,7 @@
         var updatedEl = document.getElementById('last-updated');
         if (updatedEl && data.updated) updatedEl.textContent = formatUpdated(data.updated);
         render();
+        if (window.kkScrollToHash) window.kkScrollToHash();
       })
       .catch(function (err) {
         resultsEl.innerHTML = '<p class="kk-empty">' + STR.error(escapeHtml(err.message)) + '</p>';

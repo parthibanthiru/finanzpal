@@ -106,13 +106,14 @@
         return '<li class="' + (b.ok ? 'ok' : 'info') + '"><span class="cc-icon">' + (b.ok ? '✓' : 'ⓘ') + '</span>' + escapeHtml(b.text) + '</li>';
       }).join('');
       var dispoText = item.dispozins != null ? item.dispozins.toFixed(2).replace('.', LANG === 'de' ? ',' : '.') + ' %' : STR.keinDispo;
-      return '<div class="kk-card">' +
+      var crossLinkHtml = window.kkCrossLinkHtml ? window.kkCrossLinkHtml('girokonto', item.id, LANG) : '';
+      return '<div class="kk-card" id="' + escapeHtml(item.id) + '">' +
         '<div class="cc-badges"><span class="cc-badge debit">' + escapeHtml(item.anbieter) + '</span>' +
           (item.bedingungslos ? '<span class="cc-badge">' + (LANG === 'en' ? 'Unconditionally free' : 'Bedingungslos kostenlos') + '</span>' : '') +
         '</div>' +
         '<div class="cc-body">' +
           cardArtHtml(item) +
-          '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + '</div><ul class="cc-bullets">' + bullets + '</ul></div>' +
+          '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + '</div><ul class="cc-bullets">' + bullets + '</ul>' + crossLinkHtml + '</div>' +
           '<div class="cc-facts">' +
             '<div class="cc-fact"><span class="k">' + STR.kontofuehrung + '</span><span class="v">' + escapeHtml(item.kontofuehrung) + '</span></div>' +
             '<div class="cc-fact"><span class="k">' + STR.dispozins + '</span><span class="v">' + dispoText + '</span></div>' +
@@ -162,12 +163,13 @@
       render();
     });
 
-    resultsEl.innerHTML = '<div class="kk-empty">' + STR.loading + '</div>';
+    resultsEl.innerHTML = window.kkSkeletonHtml ? window.kkSkeletonHtml(4) : '<div class="kk-empty">' + STR.loading + '</div>';
     fetch(src).then(function (r) { return r.json(); }).then(function (data) {
       allItems = data.items;
       var updatedEl = document.getElementById('giro-last-updated');
       if (updatedEl) updatedEl.textContent = data.updated;
       render();
+      if (window.kkScrollToHash) window.kkScrollToHash();
     }).catch(function () {
       resultsEl.innerHTML = '<div class="kk-empty">' + STR.error + '</div>';
     });

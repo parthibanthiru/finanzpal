@@ -182,7 +182,7 @@
       render();
     });
 
-    resultsEl.innerHTML = '<div class="kk-empty">' + STR.loading + '</div>';
+    resultsEl.innerHTML = window.kkSkeletonHtml ? window.kkSkeletonHtml(5) : '<div class="kk-empty">' + STR.loading + '</div>';
     fetch(src).then(function (r) { return r.json(); }).then(function (data) {
       allItems = data.items;
       var lastUpdatedEl = document.getElementById('etf-last-updated');

@@ -81,15 +81,16 @@
     var bulletsHtml = bullets.map(function (b) {
       return '<li class="' + (b.ok ? 'ok' : 'info') + '"><span class="cc-icon">' + (b.ok ? '✓' : 'i') + '</span>' + escapeHtml(b.text) + '</li>';
     }).join('');
+    var crossLinkHtml = window.kkCrossLinkHtml ? window.kkCrossLinkHtml('depot', item.id, LANG) : '';
     return (
-      '<article class="kk-card">' +
+      '<article class="kk-card" id="' + escapeHtml(item.id) + '">' +
       '<div class="cc-badges"><span class="cc-badge">' + escapeHtml(item.name) + '</span>' +
       (item.depotgebuehrBedingungslos ? '<span class="cc-badge debit">' + escapeHtml(STR.depotfree) + '</span>' : '') +
       '</div>' +
       '<div class="cc-body">' +
       cardArtHtml(item) +
       '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + '</div>' +
-      '<ul class="cc-bullets">' + bulletsHtml + '</ul></div>' +
+      '<ul class="cc-bullets">' + bulletsHtml + '</ul>' + crossLinkHtml + '</div>' +
       '<div class="cc-facts">' +
       '<div class="cc-fact"><span class="k">' + STR.feeLabel + '</span><span class="v">' + escapeHtml(item.depotgebuehrText) + '</span></div>' +
       '<div class="cc-fact"><span class="k">' + STR.rateLabel + '</span><span class="v">' + item.mindestsparrate + ' €</span></div>' +
@@ -171,11 +172,13 @@
       render();
     });
 
+    if (window.kkSkeletonHtml) resultsEl.innerHTML = window.kkSkeletonHtml(5);
     fetch(source).then(function (r) { return r.json(); }).then(function (data) {
       allItems = data.items;
       var lastUpdatedEl = document.getElementById('depot-last-updated');
       if (lastUpdatedEl) lastUpdatedEl.textContent = data.updated;
       render();
+      if (window.kkScrollToHash) window.kkScrollToHash();
     });
   });
 })();

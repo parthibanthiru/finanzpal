@@ -457,6 +457,22 @@ h3.quiz-question { font-family: var(--font-display); font-weight: 500; font-size
 .kk-view-btn.active { background: var(--green-deep); color: #fff; }
 .kk-results { display: flex; flex-direction: column; gap: 14px; }
 .kk-empty { padding: 40px 20px; text-align: center; color: var(--ink-soft); font-size: 14px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px; }
+.kk-skel { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.kk-skel-badges { display: flex; gap: 6px; margin-bottom: 14px; }
+.kk-skel-line { border-radius: 100px; background: linear-gradient(90deg, var(--row-alt) 25%, var(--line) 37%, var(--row-alt) 63%); background-size: 400% 100%; animation: kk-skel-shimmer 1.4s ease infinite; }
+.kk-skel-badges .kk-skel-line:nth-child(1) { width: 110px; height: 20px; }
+.kk-skel-badges .kk-skel-line:nth-child(2) { width: 150px; height: 20px; }
+.kk-skel-body { display: flex; gap: 22px; align-items: flex-start; }
+.kk-skel-art { width: 84px; height: 54px; border-radius: 8px; flex-shrink: 0; }
+.kk-skel-main { flex: 1 1 240px; min-width: 220px; display: flex; flex-direction: column; gap: 10px; }
+.kk-skel-main .kk-skel-line:nth-child(1) { width: 40%; height: 16px; margin-bottom: 4px; }
+.kk-skel-main .kk-skel-line { width: 100%; height: 13px; }
+.kk-skel-facts { flex: 0 0 170px; display: flex; flex-direction: column; gap: 18px; }
+.kk-skel-facts .kk-skel-line { width: 80px; height: 13px; }
+.kk-skel-cta { flex: 0 0 160px; display: flex; justify-content: flex-end; }
+.kk-skel-cta .kk-skel-line { width: 140px; height: 38px; border-radius: 8px; }
+@keyframes kk-skel-shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) { .kk-skel-line { animation: none; } }
 .kk-card { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
 .kk-card.pick { border-color: var(--green); background: var(--tag-bg); }
 .kk-card-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -501,4 +517,7 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .cc-cta-col .cta-btn { width: 100%; text-align: center; }
 .cc-divider { border: none; border-top: 1px solid var(--line); margin: 16px 0 0; }
 .kk-card .kk-toggle { display: inline-block; margin-top: 12px; }
+.cc-crosslink { margin-top: 10px; font-size: 12.5px; }
+.cc-crosslink a { color: var(--green-deep); font-weight: 600; text-decoration: underline; }
+.kk-card.cc-highlight, .kk-card:target { outline: 2px solid var(--green); outline-offset: 2px; transition: outline-color 0.3s ease; }
 .mp-chip { display: inline-block; font-size: 12px; font-weight: 600; color: var(--green-deep); background: var(--tag-bg); padding: 3px 10px; border-radius: 100px; margin-right: 6px; }
