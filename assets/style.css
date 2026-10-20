@@ -356,6 +356,10 @@ blockquote { margin: 28px 0; padding-left: 20px; border-left: 3px solid var(--go
 .chart-legend .dot { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
 .chart-legend .dot.contrib { background: var(--green); }
 .chart-legend .dot.interest { background: var(--gold); }
+.bar-chart .bar-seg-payout { background: var(--logo-pal); border-radius: 2px 2px 0 0; }
+.chart-legend .dot.payout { background: var(--logo-pal); }
+.chart-phase-split { position: relative; }
+.chart-phase-label { font-size: 11px; color: var(--ink-soft); text-align: center; margin-top: 6px; }
 .calc-disclaimer { font-size: 12.5px; color: var(--ink-soft); }
 
 /* About / legal pages */

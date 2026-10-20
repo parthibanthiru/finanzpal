@@ -308,6 +308,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/kreditrechner.html" />
   </url>
   <url>
+    <loc>https://finanzpal.de/altersvorsorge-rechner.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/altersvorsorge-rechner.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/altersvorsorge-rechner.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/altersvorsorge-rechner.html" />
+  </url>
+  <url>
+    <loc>https://finanzpal.de/en/altersvorsorge-rechner.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/altersvorsorge-rechner.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/altersvorsorge-rechner.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/altersvorsorge-rechner.html" />
+  </url>
+  <url>
     <loc>https://finanzpal.de/ratgeber.html</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>monthly</changefreq>
