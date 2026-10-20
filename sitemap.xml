@@ -110,6 +110,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/etf-suche.html" />
   </url>
   <url>
+    <loc>https://finanzpal.de/girokonto.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/girokonto.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/girokonto.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/girokonto.html" />
+  </url>
+  <url>
+    <loc>https://finanzpal.de/en/girokonto.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/girokonto.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/girokonto.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/girokonto.html" />
+  </url>
+  <url>
     <loc>https://finanzpal.de/steuerprogramm.html</loc>
     <lastmod>2026-10-20</lastmod>
     <changefreq>weekly</changefreq>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Current Account Comparison: find the right German bank account — Finanzpal</title>
+<meta name="description" content="We compare current accounts (Girokonto) from direct banks and neobanks like DKB, ING, Consorsbank, C24, Trade Republic and N26 by fees, cards, overdraft rate and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="alternate" hreflang="de" href="/girokonto.html">
+<link rel="alternate" hreflang="en" href="/en/girokonto.html">
+<link rel="alternate" hreflang="x-default" href="/girokonto.html">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/icon-512.png">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a>
+    <nav class="top">
+      <a href="broker.html">Broker</a>
+      <a href="kreditkarte.html">Credit cards</a>
+      <a href="tagesgeld.html">Savings</a>
+      <a href="kredite.html">Loans</a>
+      <a href="versicherungen.html">Insurance</a>
+      <a href="sparplanrechner.html">Calculator</a>
+      <a href="ratgeber.html">Guides</a>
+      <a href="ueber-uns.html">About us</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch" aria-label="Choose language"><a href="../girokonto.html" class="lang-opt" hreflang="de" lang="de">DE</a><span class="lang-opt active" aria-current="true">EN</span></div>
+      <div class="search-btn">⌕</div>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Current Account Comparison</p>
+  <section class="hero">
+    <h1>Current account comparison: find the right account</h1>
+    <p class="lede">We compare current accounts (Girokonto) from direct banks and neobanks by account fee, cards, overdraft rate, cash withdrawals and interest on balance — filterable by what you need.</p>
+    <div class="trust-bar">
+      <div class="trust-item"><span class="num">8</span><span class="lbl">accounts compared</span></div>
+      <div class="trust-item"><span class="num">€0</span><span class="lbl">most common account fee</span></div>
+      <div class="trust-item"><span class="num" id="giro-last-updated">—</span><span class="lbl">Last updated</span></div>
+    </div>
+  </section>
+
+  <section class="kk-layout">
+    <aside class="kk-filters">
+      <div class="kk-filters-head"><h2>Filters</h2><button type="button" id="giro-reset" class="kk-reset-btn">Reset filters</button></div>
+      <div class="kk-filter-group">
+        <h3>Features</h3>
+        <label class="kk-check"><input type="checkbox" id="giro-filter-bedingungslos"> Unconditionally free</label>
+        <label class="kk-check"><input type="checkbox" id="giro-filter-kreditkarte"> Credit card included</label>
+        <label class="kk-check"><input type="checkbox" id="giro-filter-zins"> Interest-bearing balance</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Card network</h3>
+        <label class="kk-check"><input type="checkbox" data-filter="netzwerk" value="Visa"> Visa</label>
+        <label class="kk-check"><input type="checkbox" data-filter="netzwerk" value="Mastercard"> Mastercard</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Max. overdraft rate</h3>
+        <select id="giro-dispo-select" class="kk-select">
+          <option value="alle">All</option>
+          <option value="8">up to 8%</option>
+          <option value="9">up to 9%</option>
+          <option value="10">up to 10%</option>
+        </select>
+      </div>
+    </aside>
+    <div class="kk-main">
+      <div class="kk-toolbar">
+        <span id="giro-count" class="kk-count"></span>
+        <select id="giro-sort-select" class="kk-select" style="width:auto;">
+          <option value="preis">Sort: Account fee ascending</option>
+          <option value="dispo">Sort: Overdraft rate ascending</option>
+          <option value="name">Sort: Name A–Z</option>
+        </select>
+      </div>
+      <div id="giro-app" data-source="../data/girokonto.en.json">
+        <div id="giro-results" class="kk-results"></div>
+      </div>
+      <p class="disclosure-note">Advertising: Finanzpal may earn a commission if you open an account through a link. This does not affect our selection. Figures as of October 2026, compiled from provider and third-party conditions databases. Several sources disagree on some details (e.g. exact free cash-withdrawal allowances) — those spots are marked accordingly. Please verify the account fee, overdraft rate and terms directly with the provider before opening an account.</p>
+    </div>
+  </section>
+
+  <section class="method">
+    <div><h2>What to look for when choosing a current account</h2><p>These criteria help you find the right account for everyday use.</p></div>
+    <div class="criteria">
+      <div class="criterion"><h3>Account fee</h3><p>Many banks only waive the fee with a minimum monthly incoming payment or for younger account holders — check whether you meet the condition.</p></div>
+      <div class="criterion"><h3>Overdraft rate</h3><p>The interest rate for overdrawing your account. An overdraft should only be used for short gaps, since the rate is usually well above that of an installment loan.</p></div>
+      <div class="criterion"><h3>Cards and cash withdrawal</h3><p>Not every account has a classic credit card — many modern accounts rely on a free debit card instead. How often you can withdraw cash for free varies widely.</p></div>
+      <div class="criterion"><h3>Deposit protection</h3><p>Within the EU, deposits are legally protected up to €100,000 per customer and bank — this also applies to banks based in another EU country.</p></div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item"><h3>Debit card or credit card — what's the difference?</h3><p>A debit card charges transactions directly to your account; a credit card usually bundles them and settles once a month. Many modern current accounts now rely on a free Visa or Mastercard debit card instead of a classic credit card.</p></div>
+    <div class="faq-item"><h3>Is my money safe with a neobank?</h3><p>Banks with their own banking license (e.g. N26, Trade Republic, C24) are subject to the same statutory deposit protection as traditional banks — up to €100,000 per customer.</p></div>
+    <div class="faq-item"><h3>Is it worth paying for an account?</h3><p>Only if the extras (e.g. a branch network, bonus program, personal advice) are worth the price to you. For plain account-keeping, there are now many permanently free alternatives.</p></div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a><p class="tag">Independent comparisons and guides for your finances.</p></div>
+      <div class="footer-col"><h4>Compare</h4>
+        <a href="broker.html">Broker</a>
+        <a href="girokonto.html">Current account</a>
+        <a href="kreditkarte.html">Credit cards</a>
+        <a href="tagesgeld.html">Savings</a>
+        <a href="kredite.html">Loans</a>
+        <a href="versicherungen.html">Insurance</a>
+        <a href="etf-suche.html">ETF search</a>
+        <a href="steuerprogramm.html">Tax software</a>
+      </div>
+      <div class="footer-col"><h4>Guides & Calculator</h4>
+        <a href="ratgeber.html">All articles</a>
+        <a href="sparplanrechner.html">Savings Plan Calculator</a>
+        <a href="zinseszinsrechner.html">Compound Interest Calculator</a>
+        <a href="kreditrechner.html">Loan Calculator</a>
+      </div>
+      <div class="footer-col"><h4>About us</h4>
+        <a href="ueber-uns.html">Methodology</a>
+        <a href="ueber-uns.html">Advertising partners</a>
+        <a href="impressum.html">Legal Notice</a>
+        <a href="datenschutz.html">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-legal">Finanzpal may earn commission from partners when you open an account via our links. This does not affect our ratings. All figures without guarantee, not investment advice. © 2026 Finanzpal</div>
+  </div>
+</footer>
+
+<script src="../assets/nav.js"></script>
+<script src="../assets/girokonto-compare.js"></script>
+</body>
+</html>

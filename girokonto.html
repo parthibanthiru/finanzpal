@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Girokonto-Vergleich: das passende Konto finden — Finanzpal</title>
+<meta name="description" content="Wir vergleichen Girokonten von Direktbanken und Neobanken wie DKB, ING, Consorsbank, C24, Trade Republic und N26 nach Gebühren, Karten, Dispozins und mehr.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="alternate" hreflang="de" href="/girokonto.html">
+<link rel="alternate" hreflang="en" href="/en/girokonto.html">
+<link rel="alternate" hreflang="x-default" href="/girokonto.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-512.png">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a>
+    <nav class="top">
+      <a href="broker.html">Broker</a>
+      <a href="kreditkarte.html">Kreditkarte</a>
+      <a href="tagesgeld.html">Tagesgeld</a>
+      <a href="kredite.html">Kredite</a>
+      <a href="versicherungen.html">Versicherungen</a>
+      <a href="sparplanrechner.html">Rechner</a>
+      <a href="ratgeber.html">Ratgeber</a>
+      <a href="ueber-uns.html">Über uns</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch" aria-label="Sprache wählen"><span class="lang-opt active" aria-current="true">DE</span><a href="en/girokonto.html" class="lang-opt" hreflang="en" lang="en">EN</a></div>
+      <div class="search-btn">⌕</div>
+      <button class="nav-toggle" aria-label="Menü">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="breadcrumb"><a href="index.html">Start</a> &nbsp;/&nbsp; Girokonto-Vergleich</p>
+  <section class="hero">
+    <h1>Girokonto-Vergleich: das passende Konto finden</h1>
+    <p class="lede">Wir vergleichen Girokonten von Direktbanken und Neobanken nach Kontoführungsgebühr, Karten, Dispozins, Bargeldabhebung und Guthabenverzinsung — filterbar nach deinen Anforderungen.</p>
+    <div class="trust-bar">
+      <div class="trust-item"><span class="num">8</span><span class="lbl">Konten verglichen</span></div>
+      <div class="trust-item"><span class="num">0 €</span><span class="lbl">häufigste Kontoführungsgebühr</span></div>
+      <div class="trust-item"><span class="num" id="giro-last-updated">—</span><span class="lbl">Zuletzt aktualisiert</span></div>
+    </div>
+  </section>
+
+  <section class="kk-layout">
+    <aside class="kk-filters">
+      <div class="kk-filters-head"><h2>Filter</h2><button type="button" id="giro-reset" class="kk-reset-btn">Filter zurücksetzen</button></div>
+      <div class="kk-filter-group">
+        <h3>Eigenschaften</h3>
+        <label class="kk-check"><input type="checkbox" id="giro-filter-bedingungslos"> Bedingungslos kostenlos</label>
+        <label class="kk-check"><input type="checkbox" id="giro-filter-kreditkarte"> Kreditkarte enthalten</label>
+        <label class="kk-check"><input type="checkbox" id="giro-filter-zins"> Verzinstes Guthaben</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Kartennetzwerk</h3>
+        <label class="kk-check"><input type="checkbox" data-filter="netzwerk" value="Visa"> Visa</label>
+        <label class="kk-check"><input type="checkbox" data-filter="netzwerk" value="Mastercard"> Mastercard</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Max. Dispozins</h3>
+        <select id="giro-dispo-select" class="kk-select">
+          <option value="alle">Alle</option>
+          <option value="8">bis 8 %</option>
+          <option value="9">bis 9 %</option>
+          <option value="10">bis 10 %</option>
+        </select>
+      </div>
+    </aside>
+    <div class="kk-main">
+      <div class="kk-toolbar">
+        <span id="giro-count" class="kk-count"></span>
+        <select id="giro-sort-select" class="kk-select" style="width:auto;">
+          <option value="preis">Sortieren: Kontoführung aufsteigend</option>
+          <option value="dispo">Sortieren: Dispozins aufsteigend</option>
+          <option value="name">Sortieren: Name A–Z</option>
+        </select>
+      </div>
+      <div id="giro-app" data-source="data/girokonto.json">
+        <div id="giro-results" class="kk-results"></div>
+      </div>
+      <p class="disclosure-note">Werbung: Finanzpal erhält ggf. eine Provision, wenn du über einen Link ein Konto eröffnest. Das beeinflusst unsere Auswahl nicht. Angaben Stand Oktober 2026, zusammengestellt aus Anbieter- und Konditionen-Datenbanken Dritter. Mehrere Quellen widersprechen sich teils bei Detailfragen (z. B. genaue Freibeträge bei Bargeldabhebungen) — solche Stellen sind entsprechend gekennzeichnet. Bitte prüfe Kontoführungsgebühr, Dispozins und Konditionen vor Kontoeröffnung immer direkt beim Anbieter.</p>
+    </div>
+  </section>
+
+  <section class="method">
+    <div><h2>Worauf du bei der Wahl des Girokontos achten solltest</h2><p>Diese Kriterien helfen dir, das passende Konto für deinen Alltag zu finden.</p></div>
+    <div class="criteria">
+      <div class="criterion"><h3>Kontoführungsgebühr</h3><p>Viele Banken bieten das Konto nur bei einem monatlichen Mindestgeldeingang oder für jüngere Kontoinhaber kostenlos an — prüfe, ob du die Bedingung erfüllst.</p></div>
+      <div class="criterion"><h3>Dispozins</h3><p>Der Zinssatz für eine Kontoüberziehung. Ein Dispo sollte nur für kurze Engpässe genutzt werden, da die Zinsen meist deutlich über denen eines Ratenkredits liegen.</p></div>
+      <div class="criterion"><h3>Karten und Bargeldabhebung</h3><p>Nicht jedes Konto hat eine klassische Kreditkarte — viele moderne Konten setzen auf eine kostenlose Debitkarte. Wie oft du kostenlos Bargeld abheben kannst, unterscheidet sich stark.</p></div>
+      <div class="criterion"><h3>Einlagensicherung</h3><p>In der EU sind Einlagen gesetzlich bis 100.000 € pro Kunde und Bank abgesichert — das gilt auch für Banken mit Sitz in einem anderen EU-Land.</p></div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>Häufige Fragen</h2>
+    <div class="faq-item"><h3>Debitkarte oder Kreditkarte — was ist der Unterschied?</h3><p>Eine Debitkarte bucht Umsätze direkt vom Konto ab, eine Kreditkarte bucht meist gesammelt zum Monatsende ab. Viele moderne Girokonten setzen heute auf eine kostenlose Visa- oder Mastercard-Debitkarte statt einer klassischen Kreditkarte.</p></div>
+    <div class="faq-item"><h3>Ist mein Geld bei einer Neobank sicher?</h3><p>Banken mit eigener Banklizenz (z. B. N26, Trade Republic, C24) unterliegen derselben gesetzlichen Einlagensicherung wie klassische Banken — bis 100.000 € pro Kunde.</p></div>
+    <div class="faq-item"><h3>Lohnt sich ein Konto mit Gebühr?</h3><p>Nur wenn die Zusatzleistungen (z. B. Filialnetz, Bonusprogramm, persönliche Beratung) den Preis für dich rechtfertigen. Für die reine Kontoführung gibt es inzwischen zahlreiche dauerhaft kostenlose Alternativen.</p></div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a><p class="tag">Unabhängige Vergleiche und Ratgeber für deine Finanzen.</p></div>
+      <div class="footer-col"><h4>Vergleiche</h4>
+        <a href="broker.html">Broker</a>
+        <a href="girokonto.html">Girokonto</a>
+        <a href="kreditkarte.html">Kreditkarte</a>
+        <a href="tagesgeld.html">Tagesgeld</a>
+        <a href="kredite.html">Kredite</a>
+        <a href="versicherungen.html">Versicherungen</a>
+        <a href="etf-suche.html">ETF-Suche</a>
+        <a href="steuerprogramm.html">Steuerprogramm</a>
+      </div>
+      <div class="footer-col"><h4>Ratgeber & Rechner</h4>
+        <a href="ratgeber.html">Alle Artikel</a>
+        <a href="sparplanrechner.html">Sparplanrechner</a>
+        <a href="zinseszinsrechner.html">Zinseszinsrechner</a>
+        <a href="kreditrechner.html">Kreditrechner</a>
+      </div>
+      <div class="footer-col"><h4>Über uns</h4>
+        <a href="ueber-uns.html">Methodik</a>
+        <a href="ueber-uns.html">Werbepartner</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+    <div class="footer-legal">Finanzpal erhält teils Provisionen von Partnern, wenn du über unsere Links ein Konto eröffnest. Das beeinflusst unsere Bewertungen nicht. Alle Angaben ohne Gewähr, keine Anlageberatung. © 2026 Finanzpal</div>
+  </div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/girokonto-compare.js"></script>
+</body>
+</html>
