@@ -53,13 +53,46 @@
       <a href="#" class="cta-btn" rel="sponsored nofollow">View offer</a>
     </div>
   </section>
-  <section class="filters"><span class="chip active">All</span><span class="chip">No annual fee</span><span class="chip">0% foreign transaction fee</span><span class="chip">Free withdrawals worldwide</span></section>
-  <section class="table-scroll">
-    <table class="compare" data-source="../data/kreditkarte.json" data-type="kreditkarte">
-      <thead><tr><th>Provider</th><th>Card type</th><th>Annual fee</th><th>Foreign transaction fee</th><th>Cash withdrawal</th><th>Rating</th><th></th></tr></thead>
-      <tbody><tr class="loading-row"><td colspan="7">Loading comparison data …</td></tr></tbody>
-    </table>
-    <p class="disclosure-note">Advertising: Finanzpal may earn a commission if you apply for a card through a link. This does not affect our ratings — see <a href="ueber-uns.html" style="text-decoration:underline;">Methodology</a> for details. Terms as of October 2026, sourced from provider websites and bankdaten.de. Ratings (★) for Trade Republic, Barclays, Hanseatic and C24 follow kreditkarte.net's 2025 credit card test; the Consorsbank Visa Card's rating is not yet independently verified. Please check current terms with the provider before applying.</p>
+  <section class="kk-layout">
+    <aside class="kk-filters">
+      <div class="kk-filters-head"><h2>Filters</h2><button type="button" id="kk-reset" class="kk-reset-btn">Reset filters</button></div>
+      <div class="kk-filter-group">
+        <h3>Card network</h3>
+        <label class="kk-check"><input type="checkbox" data-filter="netzwerk" value="Visa"> Visa</label>
+        <label class="kk-check"><input type="checkbox" data-filter="netzwerk" value="Mastercard"> Mastercard</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Minimum rating</h3>
+        <select id="kk-rating-select" class="kk-select">
+          <option value="0">Any rating</option>
+          <option value="4">4.0 ★ or better</option>
+          <option value="4.5">4.5 ★ or better</option>
+        </select>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Features</h3>
+        <label class="kk-check"><input type="checkbox" id="kk-filter-weltweit"> Unlimited free withdrawals worldwide</label>
+        <label class="kk-check"><input type="checkbox" id="kk-filter-ohne"> Permanently free, no conditions</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Mobile payment</h3>
+        <label class="kk-check"><input type="checkbox" id="kk-filter-apple"> Apple Pay</label>
+        <label class="kk-check"><input type="checkbox" id="kk-filter-google"> Google Pay</label>
+      </div>
+    </aside>
+    <div class="kk-main">
+      <div class="kk-toolbar">
+        <span id="kk-count" class="kk-count"></span>
+        <div class="kk-view-toggle">
+          <button type="button" id="kk-view-cards" class="kk-view-btn active">Cards</button>
+          <button type="button" id="kk-view-table" class="kk-view-btn">Table</button>
+        </div>
+      </div>
+      <div id="kk-app" data-source="../data/kreditkarte.json">
+        <div id="kk-results" class="kk-results"></div>
+      </div>
+      <p class="disclosure-note">Advertising: Finanzpal may earn a commission if you apply for a card through a link. This does not affect our ratings — see <a href="ueber-uns.html" style="text-decoration:underline;">Methodology</a> for details. Terms as of October 2026, sourced from provider websites and bankdaten.de. Ratings (★) for Trade Republic, Barclays, Hanseatic and C24 follow kreditkarte.net's 2025 credit card test; the Consorsbank Visa Card's rating is not yet independently verified. Please check current terms with the provider before applying.</p>
+    </div>
   </section>
   <section class="method">
     <div><h2>How we compare</h2><p>We rate every credit card against the same criteria, regardless of any commission. We review fees and withdrawal terms regularly, since providers adjust their conditions more often than with standard accounts.</p></div>
@@ -106,6 +139,6 @@
 </footer>
 
 <script src="../assets/nav.js"></script>
-<script src="../assets/compare.js"></script>
+<script src="../assets/kreditkarte-compare.js"></script>
 </body>
 </html>

@@ -1,0 +1,242 @@
+// Kreditkarte comparison: ranked card list with real filter logic, a
+// secondary table view, and expandable per-card detail. Self-contained
+// (own data fetch + render), replacing the generic compare.js table for
+// this page only, so filtering can apply to whichever view is active.
+(function () {
+  var LANG = (document.documentElement.lang || 'de').toLowerCase().indexOf('en') === 0 ? 'en' : 'de';
+
+  var STR = {
+    de: {
+      loading: 'Lade Vergleichsdaten …',
+      error: function (msg) { return 'Daten konnten nicht geladen werden (' + msg + ').'; },
+      resultCount: function (n, total) { return n + ' von ' + total + ' Kreditkarten'; },
+      noResults: 'Keine Karte erfüllt diese Filter — probiere weniger Filter.',
+      reset: 'Filter zurücksetzen',
+      viewCards: 'Karten',
+      viewTable: 'Tabelle',
+      pick: 'Unsere Empfehlung',
+      notRated: 'noch nicht bewertet',
+      cta: 'Zum Anbieter',
+      moreDetails: 'Mehr Details',
+      lessDetails: 'Weniger Details',
+      network: 'Netzwerk',
+      condition: 'Bedingung',
+      withdrawal: 'Bargeldabhebung',
+      mobilePayment: 'Mobile Payment',
+      filterNetwork: 'Kartennetzwerk',
+      filterRating: 'Mindestbewertung',
+      filterAnyRating: 'Alle Bewertungen',
+      filterFeatures: 'Eigenschaften',
+      filterWeltweit: 'Weltweit unbegrenzt kostenlos abheben',
+      filterOhneBedingungen: 'Dauerhaft kostenlos, ohne Bedingungen',
+      filterMobile: 'Mobile Payment',
+      table: { provider: 'Anbieter', network: 'Netzwerk', fee: 'Jahresgebühr', fx: 'Fremdwährung', withdrawal: 'Bargeldabhebung', rating: 'Bewertung' }
+    },
+    en: {
+      loading: 'Loading comparison data …',
+      error: function (msg) { return 'Could not load data (' + msg + ').'; },
+      resultCount: function (n, total) { return n + ' of ' + total + ' credit cards'; },
+      noResults: 'No card matches these filters — try removing a filter.',
+      reset: 'Reset filters',
+      viewCards: 'Cards',
+      viewTable: 'Table',
+      pick: 'Our pick',
+      notRated: 'not yet rated',
+      cta: 'View offer',
+      moreDetails: 'More details',
+      lessDetails: 'Less details',
+      network: 'Network',
+      condition: 'Condition',
+      withdrawal: 'Cash withdrawal',
+      mobilePayment: 'Mobile payment',
+      filterNetwork: 'Card network',
+      filterRating: 'Minimum rating',
+      filterAnyRating: 'Any rating',
+      filterFeatures: 'Features',
+      filterWeltweit: 'Unlimited free withdrawals worldwide',
+      filterOhneBedingungen: 'Permanently free, no conditions',
+      filterMobile: 'Mobile payment',
+      table: { provider: 'Provider', network: 'Network', fee: 'Annual fee', fx: 'Foreign transaction fee', withdrawal: 'Cash withdrawal', rating: 'Rating' }
+    }
+  }[LANG];
+
+  var MONTHS = {
+    de: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+    en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  };
+
+  function formatUpdated(str) {
+    var m = /^(\d{4})-(\d{2})$/.exec(str || '');
+    if (!m) return str;
+    var monthName = MONTHS[LANG][parseInt(m[2], 10) - 1];
+    return monthName ? monthName + ' ' + m[1] : str;
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function ratingHtml(item) {
+    if (item.rating === null || item.rating === undefined) {
+      return '<div class="rating"><span class="score-na">' + STR.notRated + '</span></div>';
+    }
+    var scoreStr = LANG === 'en' ? item.rating.toFixed(1) : item.rating.toFixed(1).replace('.', ',');
+    return '<div class="rating"><span class="stars">' + item.ratingStars + '</span><span class="score">' + scoreStr + '</span></div>';
+  }
+
+  function init() {
+    var app = document.getElementById('kk-app');
+    if (!app) return;
+    var src = app.getAttribute('data-source');
+    if (LANG === 'en') src = src.replace(/\.json$/, '.en.json');
+
+    var resultsEl = document.getElementById('kk-results');
+    var countEl = document.getElementById('kk-count');
+    var resetBtn = document.getElementById('kk-reset');
+    var viewCardsBtn = document.getElementById('kk-view-cards');
+    var viewTableBtn = document.getElementById('kk-view-table');
+    var networkChecks = document.querySelectorAll('input[data-filter="netzwerk"]');
+    var ratingSelect = document.getElementById('kk-rating-select');
+    var weltweitCheck = document.getElementById('kk-filter-weltweit');
+    var ohneBedingungenCheck = document.getElementById('kk-filter-ohne');
+    var applePayCheck = document.getElementById('kk-filter-apple');
+    var googlePayCheck = document.getElementById('kk-filter-google');
+
+    var allItems = [];
+    var view = 'cards';
+    var expanded = {};
+
+    function applyFilters(items) {
+      var networks = Array.prototype.filter.call(networkChecks, function (c) { return c.checked; }).map(function (c) { return c.value; });
+      var minRating = parseFloat(ratingSelect.value) || 0;
+      return items.filter(function (item) {
+        if (networks.length && networks.indexOf(item.netzwerk) === -1) return false;
+        if (item.rating != null && item.rating < minRating) return false;
+        if (weltweitCheck.checked && !item.weltweitKostenlos) return false;
+        if (ohneBedingungenCheck.checked && !item.ohneBedingungen) return false;
+        if (applePayCheck.checked && !item.applePay) return false;
+        if (googlePayCheck.checked && !item.googlePay) return false;
+        return true;
+      });
+    }
+
+    function mobileIconsHtml(item) {
+      var parts = [];
+      if (item.applePay) parts.push('<span class="mp-chip">Apple Pay</span>');
+      if (item.googlePay) parts.push('<span class="mp-chip">Google Pay</span>');
+      return parts.join('');
+    }
+
+    function cardHtml(item, rank) {
+      var isOpen = !!expanded[item.id];
+      var markStyle = item.color ? ' style="background:' + item.color + ';"' : '';
+      return '<div class="kk-card' + (item.recommended ? ' pick' : '') + '">' +
+        '<div class="kk-card-top">' +
+          '<div class="kk-rank">' + rank + '</div>' +
+          '<div class="broker-mark" style="' + (item.color ? 'background:' + item.color + ';' : '') + '">' + escapeHtml(item.initials) + '</div>' +
+          '<div class="kk-name-col">' +
+            (item.recommended ? '<span class="broker-tag">' + STR.pick + '</span>' : '') +
+            '<div class="broker-name">' + escapeHtml(item.name) + '</div>' +
+            ratingHtml(item) +
+          '</div>' +
+          '<div class="kk-metrics">' +
+            '<div class="kk-metric"><span class="kk-metric-label">' + STR.table.fee + '</span><span class="kk-metric-val">' + item.jahresgebuehr + '</span></div>' +
+            '<div class="kk-metric"><span class="kk-metric-label">' + STR.table.fx + '</span><span class="kk-metric-val">' + item.fremdwaehrung + '</span></div>' +
+            '<div class="kk-metric"><span class="kk-metric-label">' + STR.withdrawal + '</span><span class="kk-metric-val">' + item.abhebung + '</span></div>' +
+          '</div>' +
+          '<div class="kk-cta-col">' +
+            '<a href="' + item.affiliateUrl + '" class="' + (item.recommended ? 'cta-btn2' : 'cta-btn2 secondary') + '" rel="sponsored nofollow">' + STR.cta + '</a>' +
+            '<button type="button" class="kk-toggle" data-toggle-id="' + item.id + '">' + (isOpen ? STR.lessDetails : STR.moreDetails) + ' <span class="kk-chevron">' + (isOpen ? '▴' : '▾') + '</span></button>' +
+          '</div>' +
+        '</div>' +
+        (isOpen ? '<div class="kk-card-details side-facts">' +
+          '<div class="sf-row"><span class="k">' + STR.condition + '</span><span class="v">' + escapeHtml(item.bedingung || '—') + '</span></div>' +
+          '<div class="sf-row"><span class="k">' + STR.network + '</span><span class="v">' + escapeHtml(item.netzwerk) + '</span></div>' +
+          '<div class="sf-row"><span class="k">' + STR.mobilePayment + '</span><span class="v">' + (mobileIconsHtml(item) || '—') + '</span></div>' +
+        '</div>' : '') +
+      '</div>';
+    }
+
+    function tableHtml(items) {
+      var rows = items.map(function (item) {
+        return '<tr class="' + (item.recommended ? 'pick' : '') + '">' +
+          '<td><div class="broker-cell"><div class="broker-mark" style="' + (item.color ? 'background:' + item.color + ';' : '') + '">' + escapeHtml(item.initials) + '</div><div>' +
+            (item.recommended ? '<div class="broker-name linked">' + escapeHtml(item.name) + '</div><span class="broker-tag">' + STR.pick + '</span>' : '<div class="broker-name">' + escapeHtml(item.name) + '</div>') +
+          '</div></div></td>' +
+          '<td class="num-cell">' + escapeHtml(item.netzwerk) + '</td>' +
+          '<td class="num-cell">' + item.jahresgebuehr + (item.bedingung ? '<div class="cell-sub">' + escapeHtml(item.bedingung) + '</div>' : '') + '</td>' +
+          '<td class="num-cell">' + item.fremdwaehrung + '</td>' +
+          '<td class="num-cell">' + item.abhebung + '</td>' +
+          '<td>' + ratingHtml(item) + '</td>' +
+          '<td><a href="' + item.affiliateUrl + '" class="' + (item.recommended ? 'cta-btn2' : 'cta-btn2 secondary') + '" rel="sponsored nofollow">' + STR.cta + '</a></td>' +
+          '</tr>';
+      }).join('');
+      return '<div class="table-scroll"><table class="compare"><thead><tr>' +
+        '<th>' + STR.table.provider + '</th><th>' + STR.table.network + '</th><th>' + STR.table.fee + '</th><th>' + STR.table.fx + '</th><th>' + STR.table.withdrawal + '</th><th>' + STR.table.rating + '</th><th></th>' +
+        '</tr></thead><tbody>' + rows + '</tbody></table></div>';
+    }
+
+    function render() {
+      var filtered = applyFilters(allItems);
+      countEl.textContent = STR.resultCount(filtered.length, allItems.length);
+      if (!filtered.length) {
+        resultsEl.innerHTML = '<p class="kk-empty">' + STR.noResults + '</p>';
+        return;
+      }
+      if (view === 'table') {
+        resultsEl.innerHTML = tableHtml(filtered);
+      } else {
+        resultsEl.innerHTML = filtered.map(function (item, i) { return cardHtml(item, i + 1); }).join('');
+        resultsEl.querySelectorAll('.kk-toggle').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var id = btn.getAttribute('data-toggle-id');
+            expanded[id] = !expanded[id];
+            render();
+          });
+        });
+      }
+      viewCardsBtn.classList.toggle('active', view === 'cards');
+      viewTableBtn.classList.toggle('active', view === 'table');
+    }
+
+    [].concat(
+      Array.prototype.slice.call(networkChecks),
+      [ratingSelect, weltweitCheck, ohneBedingungenCheck, applePayCheck, googlePayCheck]
+    ).forEach(function (el) {
+      el.addEventListener('change', render);
+    });
+
+    resetBtn.addEventListener('click', function () {
+      networkChecks.forEach(function (c) { c.checked = false; });
+      ratingSelect.value = '0';
+      weltweitCheck.checked = false;
+      ohneBedingungenCheck.checked = false;
+      applePayCheck.checked = false;
+      googlePayCheck.checked = false;
+      render();
+    });
+
+    viewCardsBtn.addEventListener('click', function () { view = 'cards'; render(); });
+    viewTableBtn.addEventListener('click', function () { view = 'table'; render(); });
+
+    resultsEl.innerHTML = '<p class="kk-empty">' + STR.loading + '</p>';
+    fetch(src)
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        allItems = data.items;
+        var updatedEl = document.getElementById('last-updated');
+        if (updatedEl && data.updated) updatedEl.textContent = formatUpdated(data.updated);
+        render();
+      })
+      .catch(function (err) {
+        resultsEl.innerHTML = '<p class="kk-empty">' + STR.error(escapeHtml(err.message)) + '</p>';
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();

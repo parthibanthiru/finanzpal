@@ -53,13 +53,46 @@
       <a href="#" class="cta-btn" rel="sponsored nofollow">Zum Angebot</a>
     </div>
   </section>
-  <section class="filters"><span class="chip active">Alle</span><span class="chip">Ohne Jahresgebühr</span><span class="chip">0 % Fremdwährungsgebühr</span><span class="chip">Weltweit kostenlose Abhebung</span></section>
-  <section class="table-scroll">
-    <table class="compare" data-source="data/kreditkarte.json" data-type="kreditkarte">
-      <thead><tr><th>Anbieter</th><th>Kartentyp</th><th>Jahresgebühr</th><th>Fremdwährung</th><th>Bargeldabhebung</th><th>Bewertung</th><th></th></tr></thead>
-      <tbody><tr class="loading-row"><td colspan="7">Lade Vergleichsdaten …</td></tr></tbody>
-    </table>
-    <p class="disclosure-note">Werbung: Finanzpal erhält ggf. eine Provision, wenn du über einen Link eine Karte beantragst. Das beeinflusst unsere Bewertung nicht — Details siehe <a href="ueber-uns.html" style="text-decoration:underline;">Methodik</a>. Konditionen Stand Oktober 2026, Quelle: Anbieter-Websites und bankdaten.de. Bewertungen (★) für Trade Republic, Barclays, Hanseatic und C24 nach dem Kreditkarten-Test von kreditkarte.net (2025); die Bewertung für die Consorsbank Visa Karte ist noch nicht unabhängig verifiziert. Bitte vor Antragstellung aktuelle Konditionen beim Anbieter prüfen.</p>
+  <section class="kk-layout">
+    <aside class="kk-filters">
+      <div class="kk-filters-head"><h2>Filter</h2><button type="button" id="kk-reset" class="kk-reset-btn">Filter zurücksetzen</button></div>
+      <div class="kk-filter-group">
+        <h3>Kartennetzwerk</h3>
+        <label class="kk-check"><input type="checkbox" data-filter="netzwerk" value="Visa"> Visa</label>
+        <label class="kk-check"><input type="checkbox" data-filter="netzwerk" value="Mastercard"> Mastercard</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Mindestbewertung</h3>
+        <select id="kk-rating-select" class="kk-select">
+          <option value="0">Alle Bewertungen</option>
+          <option value="4">4,0 ★ oder besser</option>
+          <option value="4.5">4,5 ★ oder besser</option>
+        </select>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Eigenschaften</h3>
+        <label class="kk-check"><input type="checkbox" id="kk-filter-weltweit"> Weltweit unbegrenzt kostenlos abheben</label>
+        <label class="kk-check"><input type="checkbox" id="kk-filter-ohne"> Dauerhaft kostenlos, ohne Bedingungen</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Mobile Payment</h3>
+        <label class="kk-check"><input type="checkbox" id="kk-filter-apple"> Apple Pay</label>
+        <label class="kk-check"><input type="checkbox" id="kk-filter-google"> Google Pay</label>
+      </div>
+    </aside>
+    <div class="kk-main">
+      <div class="kk-toolbar">
+        <span id="kk-count" class="kk-count"></span>
+        <div class="kk-view-toggle">
+          <button type="button" id="kk-view-cards" class="kk-view-btn active">Karten</button>
+          <button type="button" id="kk-view-table" class="kk-view-btn">Tabelle</button>
+        </div>
+      </div>
+      <div id="kk-app" data-source="data/kreditkarte.json">
+        <div id="kk-results" class="kk-results"></div>
+      </div>
+      <p class="disclosure-note">Werbung: Finanzpal erhält ggf. eine Provision, wenn du über einen Link eine Karte beantragst. Das beeinflusst unsere Bewertung nicht — Details siehe <a href="ueber-uns.html" style="text-decoration:underline;">Methodik</a>. Konditionen Stand Oktober 2026, Quelle: Anbieter-Websites und bankdaten.de. Bewertungen (★) für Trade Republic, Barclays, Hanseatic und C24 nach dem Kreditkarten-Test von kreditkarte.net (2025); die Bewertung für die Consorsbank Visa Karte ist noch nicht unabhängig verifiziert. Bitte vor Antragstellung aktuelle Konditionen beim Anbieter prüfen.</p>
+    </div>
   </section>
   <section class="method">
     <div><h2>Wie wir vergleichen</h2><p>Wir bewerten jede Kreditkarte nach denselben Kriterien, unabhängig von einer möglichen Provision. Gebühren und Abhebungsbedingungen prüfen wir regelmäßig, da Anbieter ihre Konditionen häufiger anpassen als bei klassischen Konten.</p></div>
@@ -106,6 +139,6 @@
 </footer>
 
 <script src="assets/nav.js"></script>
-<script src="assets/compare.js"></script>
+<script src="assets/kreditkarte-compare.js"></script>
 </body>
 </html>

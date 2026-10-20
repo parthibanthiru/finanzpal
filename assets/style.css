@@ -433,3 +433,42 @@ h3.quiz-question { font-family: var(--font-display); font-weight: 500; font-size
 .quiz-runner-label { font-size: 12.5px; color: var(--ink-soft); margin: 4px 0 10px; text-transform: uppercase; letter-spacing: 0.04em; }
 .quiz-result-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
 .quiz-see-all { font-size: 13.5px; color: var(--green-deep); text-decoration: underline; }
+
+/* Kreditkarte: filterable card-list + table comparison */
+.kk-layout { display: grid; grid-template-columns: 260px 1fr; gap: 32px; align-items: start; margin: 28px 0 56px; }
+@media (max-width: 860px) { .kk-layout { grid-template-columns: 1fr; } }
+.kk-filters { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px; padding: 20px; position: sticky; top: 84px; }
+@media (max-width: 860px) { .kk-filters { position: static; } }
+.kk-filters-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.kk-filters-head h2 { font-size: 15px; margin: 0; font-family: var(--font-display); font-weight: 500; }
+.kk-reset-btn { background: none; border: none; color: var(--green-deep); font-size: 12.5px; font-weight: 600; cursor: pointer; padding: 0; text-decoration: underline; }
+.kk-filter-group { margin-bottom: 20px; }
+.kk-filter-group:last-child { margin-bottom: 0; }
+.kk-filter-group h3 { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.03em; }
+.kk-check { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--ink); margin-bottom: 10px; cursor: pointer; }
+.kk-check:last-child { margin-bottom: 0; }
+.kk-check input { accent-color: var(--green-deep); width: 15px; height: 15px; }
+.kk-select { width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: 13.5px; background: var(--bg); color: var(--ink); }
+.kk-main { min-width: 0; }
+.kk-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+.kk-count { font-size: 13.5px; color: var(--ink-soft); }
+.kk-view-toggle { display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.kk-view-btn { background: var(--bg-raised); border: none; padding: 8px 16px; font-size: 13px; font-weight: 600; color: var(--ink-soft); cursor: pointer; }
+.kk-view-btn.active { background: var(--green-deep); color: #fff; }
+.kk-results { display: flex; flex-direction: column; gap: 14px; }
+.kk-empty { padding: 40px 20px; text-align: center; color: var(--ink-soft); font-size: 14px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px; }
+.kk-card { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.kk-card.pick { border-color: var(--green); background: var(--tag-bg); }
+.kk-card-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.kk-rank { width: 26px; height: 26px; border-radius: 50%; background: var(--row-alt); color: var(--ink-soft); display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 700; flex-shrink: 0; }
+.kk-card.pick .kk-rank { background: var(--green-deep); color: #fff; }
+.kk-name-col { display: flex; flex-direction: column; gap: 2px; min-width: 150px; }
+.kk-metrics { display: flex; gap: 24px; flex: 1; flex-wrap: wrap; }
+.kk-metric { display: flex; flex-direction: column; gap: 3px; }
+.kk-metric-label { font-size: 11.5px; color: var(--ink-soft); }
+.kk-metric-val { font-size: 13.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.kk-cta-col { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; margin-left: auto; }
+.kk-toggle { background: none; border: none; color: var(--green-deep); font-size: 12.5px; font-weight: 600; cursor: pointer; padding: 0; white-space: nowrap; }
+.kk-chevron { font-size: 10px; }
+.kk-card-details.side-facts { margin-top: 16px; }
+.mp-chip { display: inline-block; font-size: 12px; font-weight: 600; color: var(--green-deep); background: var(--tag-bg); padding: 3px 10px; border-radius: 100px; margin-right: 6px; }
