@@ -18,7 +18,14 @@
       "applePay": true,
       "googlePay": true,
       "rating": 3.5,
-      "ratingStars": "★★★☆☆"
+      "ratingStars": "★★★☆☆",
+      "kartentyp": "Debitkarte",
+      "zinsfreieTage": null,
+      "zinsfreieText": null,
+      "ratenzahlung": false,
+      "ratenzahlungDetail": null,
+      "rechnungsausgleich": "Direkte Belastung des Verrechnungskontos, kein separater Rechnungsausgleich nötig",
+      "hotelMietwagen": "weniger_geeignet"
     },
     {
       "id": "consorsbank-visa",
@@ -37,7 +44,14 @@
       "applePay": true,
       "googlePay": true,
       "rating": 4.5,
-      "ratingStars": "★★★★★"
+      "ratingStars": "★★★★★",
+      "kartentyp": "Kreditkarte",
+      "zinsfreieTage": null,
+      "zinsfreieText": "Monatliches zinsfreies Zahlungsziel",
+      "ratenzahlung": false,
+      "ratenzahlungDetail": null,
+      "rechnungsausgleich": "Automatische Lastschrift zum 15. oder letzten Bankarbeitstag des Monats",
+      "hotelMietwagen": "geeignet"
     },
     {
       "id": "barclays-visa",
@@ -56,7 +70,14 @@
       "applePay": true,
       "googlePay": true,
       "rating": 4.1,
-      "ratingStars": "★★★★☆"
+      "ratingStars": "★★★★☆",
+      "kartentyp": "Kreditkarte",
+      "zinsfreieTage": 59,
+      "zinsfreieText": null,
+      "ratenzahlung": true,
+      "ratenzahlungDetail": "Ab 3 % der Rechnungssumme oder mind. 30 €/Monat (19,64 % eff. Jahreszins)",
+      "rechnungsausgleich": "Lastschrift (2 €/Monat) oder Überweisung per Hand",
+      "hotelMietwagen": null
     },
     {
       "id": "hanseatic-genialcard",
@@ -75,7 +96,14 @@
       "applePay": true,
       "googlePay": true,
       "rating": 4.4,
-      "ratingStars": "★★★★☆"
+      "ratingStars": "★★★★☆",
+      "kartentyp": "Kreditkarte",
+      "zinsfreieTage": 37,
+      "zinsfreieText": null,
+      "ratenzahlung": true,
+      "ratenzahlungDetail": "Ab 3 % der Rechnungssumme frei wählbar (19,92 % Sollzins p. a., erste 3 Monate zinsfrei)",
+      "rechnungsausgleich": "Lastschrift oder frei wählbarer Tilgungsanteil online einstellbar",
+      "hotelMietwagen": "geeignet"
     },
     {
       "id": "c24-mastercard",
@@ -94,7 +122,14 @@
       "applePay": true,
       "googlePay": true,
       "rating": 3.7,
-      "ratingStars": "★★★☆☆"
+      "ratingStars": "★★★☆☆",
+      "kartentyp": "Debitkarte",
+      "zinsfreieTage": null,
+      "zinsfreieText": null,
+      "ratenzahlung": false,
+      "ratenzahlungDetail": null,
+      "rechnungsausgleich": "Direkte Kontobelastung, kein separater Rechnungsausgleich nötig",
+      "hotelMietwagen": "weniger_geeignet"
     }
   ]
 }

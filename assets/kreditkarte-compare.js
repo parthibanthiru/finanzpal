@@ -30,7 +30,18 @@
       filterWeltweit: 'Weltweit unbegrenzt kostenlos abheben',
       filterOhneBedingungen: 'Dauerhaft kostenlos, ohne Bedingungen',
       filterMobile: 'Mobile Payment',
-      table: { provider: 'Anbieter', network: 'Netzwerk', fee: 'Jahresgebühr', fx: 'Fremdwährung', withdrawal: 'Bargeldabhebung', rating: 'Bewertung' }
+      table: { provider: 'Anbieter', network: 'Netzwerk', fee: 'Jahresgebühr', fx: 'Fremdwährung', withdrawal: 'Bargeldabhebung', rating: 'Bewertung' },
+      typeCredit: 'Echte Kreditkarte',
+      typeDebit: 'Debitkarte',
+      priceLabel: 'Jahresgebühr',
+      payment: 'Bezahlung',
+      paymentFree: 'Kostenlos weltweit',
+      paymentFee: function (fx) { return fx + ' Fremdwährungsgebühr'; },
+      zinsfreiTage: function (n) { return 'Bis zu ' + n + ' Tage zinsfrei'; },
+      noInstallment: 'Keine Ratenzahlung möglich – Rechnungsbetrag wird vollständig fällig',
+      installmentPrefix: 'Ratenzahlung möglich: ',
+      hotelYes: 'Geeignet für Hotel- und Mietwagenbuchungen (Kreditrahmen als Kaution)',
+      hotelNo: 'Als Debitkarte ohne Kreditrahmen meist nicht für Hotel-/Mietwagen-Kautionen geeignet'
     },
     en: {
       loading: 'Loading comparison data …',
@@ -56,7 +67,18 @@
       filterWeltweit: 'Unlimited free withdrawals worldwide',
       filterOhneBedingungen: 'Permanently free, no conditions',
       filterMobile: 'Mobile payment',
-      table: { provider: 'Provider', network: 'Network', fee: 'Annual fee', fx: 'Foreign transaction fee', withdrawal: 'Cash withdrawal', rating: 'Rating' }
+      table: { provider: 'Provider', network: 'Network', fee: 'Annual fee', fx: 'Foreign transaction fee', withdrawal: 'Cash withdrawal', rating: 'Rating' },
+      typeCredit: 'Credit card',
+      typeDebit: 'Debit card',
+      priceLabel: 'Annual fee',
+      payment: 'Payment',
+      paymentFree: 'Free worldwide',
+      paymentFee: function (fx) { return fx + ' foreign transaction fee'; },
+      zinsfreiTage: function (n) { return 'Up to ' + n + ' interest-free days'; },
+      noInstallment: 'No installment option – the full balance is due each month',
+      installmentPrefix: 'Installment payment available: ',
+      hotelYes: 'Suitable for hotel and rental car deposits (credit line used as collateral)',
+      hotelNo: 'As a debit card with no credit line, usually not suitable for hotel/rental car deposits'
     }
   }[LANG];
 
@@ -129,28 +151,60 @@
       return parts.join('');
     }
 
+    function bulletsFor(item) {
+      var bullets = [];
+      if (item.kartentyp === STR.typeDebit) {
+        bullets.push({ ok: false, text: item.rechnungsausgleich });
+      } else {
+        if (item.zinsfreieTage) bullets.push({ ok: true, text: STR.zinsfreiTage(item.zinsfreieTage) });
+        else if (item.zinsfreieText) bullets.push({ ok: true, text: item.zinsfreieText });
+        if (item.ratenzahlung) bullets.push({ ok: true, text: STR.installmentPrefix + item.ratenzahlungDetail });
+        else bullets.push({ ok: false, text: STR.noInstallment });
+        if (item.rechnungsausgleich) bullets.push({ ok: false, text: item.rechnungsausgleich });
+      }
+      if (item.hotelMietwagen === 'geeignet') bullets.push({ ok: true, text: STR.hotelYes });
+      else if (item.hotelMietwagen === 'weniger_geeignet') bullets.push({ ok: false, text: STR.hotelNo });
+      return bullets;
+    }
+
+    function cardArtHtml(item) {
+      return '<div class="cc-art" style="background:' + (item.color || '#163A66') + ';">' +
+        escapeHtml(item.initials) + '<span class="cc-network">' + escapeHtml(item.netzwerk) + '</span></div>';
+    }
+
     function cardHtml(item, rank) {
       var isOpen = !!expanded[item.id];
-      var markStyle = item.color ? ' style="background:' + item.color + ';"' : '';
+      var isDebit = item.kartentyp === STR.typeDebit;
+      var fxIsFree = parseFloat(String(item.fremdwaehrung).replace(',', '.')) === 0;
+      var paymentVal = fxIsFree ? STR.paymentFree : STR.paymentFee(item.fremdwaehrung);
+      var bullets = bulletsFor(item).map(function (b) {
+        return '<li class="' + (b.ok ? 'ok' : 'info') + '"><span class="cc-icon">' + (b.ok ? '✓' : 'ⓘ') + '</span>' + escapeHtml(b.text) + '</li>';
+      }).join('');
+
       return '<div class="kk-card' + (item.recommended ? ' pick' : '') + '">' +
-        '<div class="kk-card-top">' +
-          '<div class="kk-rank">' + rank + '</div>' +
-          '<div class="broker-mark" style="' + (item.color ? 'background:' + item.color + ';' : '') + '">' + escapeHtml(item.initials) + '</div>' +
-          '<div class="kk-name-col">' +
-            (item.recommended ? '<span class="broker-tag">' + STR.pick + '</span>' : '') +
-            '<div class="broker-name">' + escapeHtml(item.name) + '</div>' +
+        '<div class="cc-badges">' +
+          '<span class="cc-badge' + (isDebit ? ' debit' : '') + '">' + (isDebit ? STR.typeDebit : STR.typeCredit) + '</span>' +
+          (item.ohneBedingungen ? '<span class="cc-badge">' + STR.filterOhneBedingungen + '</span>' : '') +
+          (item.recommended ? '<span class="cc-badge">' + STR.pick + '</span>' : '') +
+        '</div>' +
+        '<div class="cc-body">' +
+          cardArtHtml(item) +
+          '<div class="cc-main">' +
+            '<div class="cc-name">' + escapeHtml(item.name) + '</div>' +
+            '<ul class="cc-bullets">' + bullets + '</ul>' +
+          '</div>' +
+          '<div class="cc-facts">' +
+            '<div class="cc-fact"><span class="k">' + STR.payment + '</span><span class="v">' + escapeHtml(paymentVal) + '</span></div>' +
+            '<div class="cc-fact"><span class="k">' + STR.withdrawal + '</span><span class="v">' + escapeHtml(item.abhebung) + '</span></div>' +
+          '</div>' +
+          '<div class="cc-cta-col">' +
+            '<div class="cc-price"><div class="amount">' + item.jahresgebuehr + '</div><div class="label">' + STR.priceLabel + '</div></div>' +
             ratingHtml(item) +
-          '</div>' +
-          '<div class="kk-metrics">' +
-            '<div class="kk-metric"><span class="kk-metric-label">' + STR.table.fee + '</span><span class="kk-metric-val">' + item.jahresgebuehr + '</span></div>' +
-            '<div class="kk-metric"><span class="kk-metric-label">' + STR.table.fx + '</span><span class="kk-metric-val">' + item.fremdwaehrung + '</span></div>' +
-            '<div class="kk-metric"><span class="kk-metric-label">' + STR.withdrawal + '</span><span class="kk-metric-val">' + item.abhebung + '</span></div>' +
-          '</div>' +
-          '<div class="kk-cta-col">' +
-            '<a href="' + item.affiliateUrl + '" class="' + (item.recommended ? 'cta-btn2' : 'cta-btn2 secondary') + '" rel="sponsored nofollow">' + STR.cta + '</a>' +
-            '<button type="button" class="kk-toggle" data-toggle-id="' + item.id + '">' + (isOpen ? STR.lessDetails : STR.moreDetails) + ' <span class="kk-chevron">' + (isOpen ? '▴' : '▾') + '</span></button>' +
+            '<a href="' + item.affiliateUrl + '" class="cta-btn" rel="sponsored nofollow">' + STR.cta + '</a>' +
           '</div>' +
         '</div>' +
+        '<hr class="cc-divider">' +
+        '<button type="button" class="kk-toggle" data-toggle-id="' + item.id + '">' + (isOpen ? STR.lessDetails : STR.moreDetails) + ' <span class="kk-chevron">' + (isOpen ? '▴' : '▾') + '</span></button>' +
         (isOpen ? '<div class="kk-card-details side-facts">' +
           '<div class="sf-row"><span class="k">' + STR.condition + '</span><span class="v">' + escapeHtml(item.bedingung || '—') + '</span></div>' +
           '<div class="sf-row"><span class="k">' + STR.network + '</span><span class="v">' + escapeHtml(item.netzwerk) + '</span></div>' +

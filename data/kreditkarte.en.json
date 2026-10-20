@@ -18,7 +18,14 @@
       "applePay": true,
       "googlePay": true,
       "rating": 3.5,
-      "ratingStars": "★★★☆☆"
+      "ratingStars": "★★★☆☆",
+      "kartentyp": "Debit card",
+      "zinsfreieTage": null,
+      "zinsfreieText": null,
+      "ratenzahlung": false,
+      "ratenzahlungDetail": null,
+      "rechnungsausgleich": "Charged directly to the cash account, no separate billing cycle",
+      "hotelMietwagen": "weniger_geeignet"
     },
     {
       "id": "consorsbank-visa",
@@ -37,7 +44,14 @@
       "applePay": true,
       "googlePay": true,
       "rating": 4.5,
-      "ratingStars": "★★★★★"
+      "ratingStars": "★★★★★",
+      "kartentyp": "Credit card",
+      "zinsfreieTage": null,
+      "zinsfreieText": "Interest-free until the monthly settlement date",
+      "ratenzahlung": false,
+      "ratenzahlungDetail": null,
+      "rechnungsausgleich": "Automatic direct debit on the 15th or last business day of the month",
+      "hotelMietwagen": "geeignet"
     },
     {
       "id": "barclays-visa",
@@ -56,7 +70,14 @@
       "applePay": true,
       "googlePay": true,
       "rating": 4.1,
-      "ratingStars": "★★★★☆"
+      "ratingStars": "★★★★☆",
+      "kartentyp": "Credit card",
+      "zinsfreieTage": 59,
+      "zinsfreieText": null,
+      "ratenzahlung": true,
+      "ratenzahlungDetail": "From 3% of the balance or a €30/month minimum (19.64% effective APR)",
+      "rechnungsausgleich": "Direct debit (€2/month) or manual bank transfer",
+      "hotelMietwagen": null
     },
     {
       "id": "hanseatic-genialcard",
@@ -75,7 +96,14 @@
       "applePay": true,
       "googlePay": true,
       "rating": 4.4,
-      "ratingStars": "★★★★☆"
+      "ratingStars": "★★★★☆",
+      "kartentyp": "Credit card",
+      "zinsfreieTage": 37,
+      "zinsfreieText": null,
+      "ratenzahlung": true,
+      "ratenzahlungDetail": "Freely adjustable from 3% of the balance (19.92% nominal APR, first 3 months interest-free)",
+      "rechnungsausgleich": "Direct debit, or choose your own repayment share online",
+      "hotelMietwagen": "geeignet"
     },
     {
       "id": "c24-mastercard",
@@ -94,7 +122,14 @@
       "applePay": true,
       "googlePay": true,
       "rating": 3.7,
-      "ratingStars": "★★★☆☆"
+      "ratingStars": "★★★☆☆",
+      "kartentyp": "Debit card",
+      "zinsfreieTage": null,
+      "zinsfreieText": null,
+      "ratenzahlung": false,
+      "ratenzahlungDetail": null,
+      "rechnungsausgleich": "Charged directly to the account, no separate billing cycle",
+      "hotelMietwagen": "weniger_geeignet"
     }
   ]
 }
