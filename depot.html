@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Depot-Vergleich: ETF-Sparpläne, Zinsen & Konditionen — Finanzpal</title>
+<meta name="description" content="Wir vergleichen Depots von Trade Republic, Scalable Capital, Consorsbank, comdirect und flatex nach ETF-Sparplan-Auswahl, Mindestsparrate, Guthabenzins und Verwahrgebühren.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="alternate" hreflang="de" href="/depot.html">
+<link rel="alternate" hreflang="en" href="/en/depot.html">
+<link rel="alternate" hreflang="x-default" href="/depot.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-512.png">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a>
+    <nav class="top">
+      <a href="broker.html">Broker</a>
+      <a href="kreditkarte.html">Kreditkarte</a>
+      <a href="tagesgeld.html">Tagesgeld</a>
+      <a href="kredite.html">Kredite</a>
+      <a href="versicherungen.html">Versicherungen</a>
+      <a href="sparplanrechner.html">Rechner</a>
+      <a href="ratgeber.html">Ratgeber</a>
+      <a href="ueber-uns.html">Über uns</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch" aria-label="Sprache wählen"><span class="lang-opt active" aria-current="true">DE</span><a href="en/depot.html" class="lang-opt" hreflang="en" lang="en">EN</a></div>
+      <div class="search-btn">⌕</div>
+      <button class="nav-toggle" aria-label="Menü">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="breadcrumb"><a href="index.html">Start</a> &nbsp;/&nbsp; Depot-Vergleich</p>
+  <section class="hero">
+    <h1>Depot-Vergleich: ETF-Sparpläne, Zinsen und Konditionen</h1>
+    <p class="lede">Während unser <a href="broker.html" style="text-decoration:underline;">Broker-Vergleich</a> sich auf Ordergebühren pro Trade konzentriert, schauen wir hier auf die Depot-Details fürs Sparplan-Investieren: Anzahl und Kosten der ETF-Sparpläne, Mindestsparrate, Ausführungsintervalle, Guthabenzins auf dem Verrechnungskonto und laufende Verwahrgebühren.</p>
+    <div class="trust-bar">
+      <div class="trust-item"><span class="num">5</span><span class="lbl">Depots verglichen</span></div>
+      <div class="trust-item"><span class="num">ab 1 €</span><span class="lbl">niedrigste Mindestsparrate</span></div>
+      <div class="trust-item"><span class="num" id="depot-last-updated">—</span><span class="lbl">Zuletzt aktualisiert</span></div>
+    </div>
+  </section>
+
+  <section class="kk-layout">
+    <aside class="kk-filters">
+      <div class="kk-filters-head"><h2>Filter</h2><button type="button" id="depot-reset" class="kk-reset-btn">Filter zurücksetzen</button></div>
+      <div class="kk-filter-group">
+        <h3>Eigenschaften</h3>
+        <label class="kk-check"><input type="checkbox" id="depot-filter-frei"> Depotführung bedingungslos kostenlos</label>
+        <label class="kk-check"><input type="checkbox" id="depot-filter-zins"> Zinsen auf Verrechnungskonto</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Max. Mindestsparrate</h3>
+        <select id="depot-rate-select" class="kk-select">
+          <option value="alle">Alle</option>
+          <option value="1">bis 1 €</option>
+          <option value="10">bis 10 €</option>
+          <option value="25">bis 25 €</option>
+        </select>
+      </div>
+    </aside>
+    <div class="kk-main">
+      <div class="kk-toolbar">
+        <span id="depot-count" class="kk-count"></span>
+        <select id="depot-sort-select" class="kk-select" style="width:auto;">
+          <option value="rate">Sortieren: Mindestsparrate aufsteigend</option>
+          <option value="zins">Sortieren: Guthabenzins absteigend</option>
+          <option value="name">Sortieren: Name A–Z</option>
+        </select>
+      </div>
+      <div id="depot-app" data-source="data/depot.json">
+        <div id="depot-results" class="kk-results"></div>
+      </div>
+      <p class="disclosure-note">Werbung: Finanzpal erhält ggf. eine Provision, wenn du über einen Link ein Depot eröffnest. Das beeinflusst unsere Auswahl nicht. Angaben Stand Oktober 2026, zusammengestellt aus Anbieter-Websites und unabhängigen Depot-Testportalen (u. a. justETF, capitalo.de, reisetopia.de). Mehrere Quellen widersprechen sich teils bei Detailfragen (z. B. genaue Anzahl kostenloser ETF-Sparpläne oder Höhe des Guthabenzinses) — solche Stellen sind entsprechend gekennzeichnet. Bitte prüfe Konditionen vor Depoteröffnung immer direkt beim Anbieter.</p>
+    </div>
+  </section>
+
+  <section class="method">
+    <div><h2>Worauf du bei der Wahl des Depots achten solltest</h2><p>Diese Kriterien helfen dir, das passende Depot fürs Sparplan-Investieren zu finden.</p></div>
+    <div class="criteria">
+      <div class="criterion"><h3>ETF-Sparplan-Auswahl</h3><p>Wie viele ETFs stehen als Sparplan zur Verfügung, und wie viele davon sind gebührenfrei besparbar? Eine große Auswahl lohnt sich vor allem, wenn du in mehrere ETFs gleichzeitig investieren willst.</p></div>
+      <div class="criterion"><h3>Mindestsparrate</h3><p>Der kleinste Betrag, den du pro Sparplan-Ausführung investieren kannst — wichtig, wenn du mit kleinen Beträgen startest oder auf mehrere ETFs verteilen willst.</p></div>
+      <div class="criterion"><h3>Guthabenzins</h3><p>Viele Broker verzinsen nicht angelegtes Geld auf dem Verrechnungskonto — die Höhe und ob ein Betragslimit gilt, unterscheidet sich stark zwischen Anbietern.</p></div>
+      <div class="criterion"><h3>Depot- und Verwahrgebühren</h3><p>Die meisten modernen Depots sind grundsätzlich kostenlos, manche Anbieter verlangen aber eine Depotgebühr, die nur unter bestimmten Bedingungen entfällt.</p></div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>Häufige Fragen</h2>
+    <div class="faq-item"><h3>Was ist der Unterschied zwischen eurem Broker- und Depot-Vergleich?</h3><p>Der Broker-Vergleich stellt Order- und Depotgebühren für aktives Trading gegenüber. Dieser Depot-Vergleich schaut gezielt auf die Sparplan-Perspektive: ETF-Auswahl, Mindestsparrate, Ausführungsintervalle und Guthabenzins — relevant, wenn du regelmäßig und langfristig ansparst statt einzelne Trades zu platzieren.</p></div>
+    <div class="faq-item"><h3>Warum verzinsen manche Depots mein Guthaben, andere nicht?</h3><p>Broker, die ihr eigenes Tagesgeld- oder Verrechnungskonto anbieten, können nicht angelegtes Geld oft attraktiver verzinsen als klassische Banken. Bei einigen Anbietern ist der Zins nicht transparent ausgewiesen oder nur als befristete Neukundenaktion verfügbar.</p></div>
+    <div class="faq-item"><h3>Lohnt sich ein Depot mit Gebühr?</h3><p>Nur wenn die Bedingungen zum Erlass (z. B. aktiver Sparplan, Mindestanzahl Trades) für dich ohnehin erfüllt sind oder zusätzliche Leistungen den Preis rechtfertigen. Für reines Sparplan-Investieren gibt es mehrere dauerhaft kostenlose Alternativen.</p></div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a><p class="tag">Unabhängige Vergleiche und Ratgeber für deine Finanzen.</p></div>
+      <div class="footer-col"><h4>Vergleiche</h4>
+        <a href="broker.html">Broker</a>
+        <a href="girokonto.html">Girokonto</a>
+        <a href="depot.html">Depot</a>
+        <a href="kreditkarte.html">Kreditkarte</a>
+        <a href="tagesgeld.html">Tagesgeld</a>
+        <a href="kredite.html">Kredite</a>
+        <a href="versicherungen.html">Versicherungen</a>
+        <a href="etf-suche.html">ETF-Suche</a>
+        <a href="steuerprogramm.html">Steuerprogramm</a>
+      </div>
+      <div class="footer-col"><h4>Ratgeber & Rechner</h4>
+        <a href="ratgeber.html">Alle Artikel</a>
+        <a href="sparplanrechner.html">Sparplanrechner</a>
+        <a href="zinseszinsrechner.html">Zinseszinsrechner</a>
+        <a href="kreditrechner.html">Kreditrechner</a>
+      </div>
+      <div class="footer-col"><h4>Über uns</h4>
+        <a href="ueber-uns.html">Methodik</a>
+        <a href="ueber-uns.html">Werbepartner</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+    <div class="footer-legal">Finanzpal erhält teils Provisionen von Partnern, wenn du über unsere Links ein Depot eröffnest. Das beeinflusst unsere Bewertungen nicht. Alle Angaben ohne Gewähr, keine Anlageberatung. © 2026 Finanzpal</div>
+  </div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/depot-compare.js"></script>
+</body>
+</html>
