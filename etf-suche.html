@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ETF-Suche: Aktien-, Anleihen- und Geldmarkt-ETFs filtern — Finanzpal</title>
+<meta name="description" content="Finde den passenden ETF: filtere eine kuratierte Auswahl bekannter Aktien-, Anleihen-, Geldmarkt-, Rohstoff- und Immobilien-ETFs nach TER, Replikation, Anbieter und mehr.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="alternate" hreflang="de" href="/etf-suche.html">
+<link rel="alternate" hreflang="en" href="/en/etf-suche.html">
+<link rel="alternate" hreflang="x-default" href="/etf-suche.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-512.png">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a>
+    <nav class="top">
+      <a href="broker.html">Broker</a>
+      <a href="kreditkarte.html">Kreditkarte</a>
+      <a href="tagesgeld.html">Tagesgeld</a>
+      <a href="kredite.html">Kredite</a>
+      <a href="versicherungen.html">Versicherungen</a>
+      <a href="sparplanrechner.html">Rechner</a>
+      <a href="ratgeber.html">Ratgeber</a>
+      <a href="ueber-uns.html">Über uns</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch" aria-label="Sprache wählen"><span class="lang-opt active" aria-current="true">DE</span><a href="en/etf-suche.html" class="lang-opt" hreflang="en" lang="en">EN</a></div>
+      <div class="search-btn">⌕</div>
+      <button class="nav-toggle" aria-label="Menü">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="breadcrumb"><a href="index.html">Start</a> &nbsp;/&nbsp; ETF-Suche</p>
+  <section class="hero">
+    <h1>ETF-Suche: den passenden ETF finden</h1>
+    <p class="lede">Eine kuratierte Auswahl bekannter, großer ETFs mit geprüften Eckdaten zu TER, Replikation und Ertragsverwendung — filterbar nach Anlageklasse, Region, Anbieter und mehr. Keine Anlageempfehlung, sondern eine Übersicht zum eigenen Vergleich.</p>
+    <div class="trust-bar">
+      <div class="trust-item"><span class="num">18</span><span class="lbl">ETFs in der Auswahl</span></div>
+      <div class="trust-item"><span class="num">0,07 %</span><span class="lbl">niedrigste TER</span></div>
+      <div class="trust-item"><span class="num" id="etf-last-updated">—</span><span class="lbl">Zuletzt aktualisiert</span></div>
+    </div>
+  </section>
+
+  <section class="kk-layout">
+    <aside class="kk-filters">
+      <div class="kk-filters-head"><h2>Filter</h2><button type="button" id="etf-reset" class="kk-reset-btn">Filter zurücksetzen</button></div>
+      <div class="kk-filter-group">
+        <h3>Anlageklasse</h3>
+        <div class="etf-chips">
+          <button type="button" class="etf-chip active" data-filter="anlageklasse" data-value="Alle">Alle</button>
+          <button type="button" class="etf-chip" data-filter="anlageklasse" data-value="Aktien">Aktien</button>
+          <button type="button" class="etf-chip" data-filter="anlageklasse" data-value="Anleihen">Anleihen</button>
+          <button type="button" class="etf-chip" data-filter="anlageklasse" data-value="Geldmarkt">Geldmarkt</button>
+          <button type="button" class="etf-chip" data-filter="anlageklasse" data-value="Rohstoffe">Rohstoffe</button>
+          <button type="button" class="etf-chip" data-filter="anlageklasse" data-value="Immobilien">Immobilien</button>
+        </div>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Anbieter</h3>
+        <label class="kk-check"><input type="checkbox" data-filter="anbieter" value="iShares (BlackRock)"> iShares</label>
+        <label class="kk-check"><input type="checkbox" data-filter="anbieter" value="Vanguard"> Vanguard</label>
+        <label class="kk-check"><input type="checkbox" data-filter="anbieter" value="Xtrackers (DWS)"> Xtrackers</label>
+        <label class="kk-check"><input type="checkbox" data-filter="anbieter" value="Amundi"> Amundi</label>
+        <label class="kk-check"><input type="checkbox" data-filter="anbieter" value="SPDR (State Street)"> SPDR</label>
+        <label class="kk-check"><input type="checkbox" data-filter="anbieter" value="VanEck"> VanEck</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Replikation</h3>
+        <label class="kk-check"><input type="checkbox" data-filter="replikation" value="Physisch"> Physisch</label>
+        <label class="kk-check"><input type="checkbox" data-filter="replikation" value="Synthetisch"> Synthetisch</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Ertragsverwendung</h3>
+        <label class="kk-check"><input type="checkbox" data-filter="ausschuettung" value="Thesaurierend"> Thesaurierend</label>
+        <label class="kk-check"><input type="checkbox" data-filter="ausschuettung" value="Ausschüttend"> Ausschüttend</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Max. TER</h3>
+        <select id="etf-ter-select" class="kk-select">
+          <option value="alle">Alle</option>
+          <option value="0.10">bis 0,10 %</option>
+          <option value="0.20">bis 0,20 %</option>
+          <option value="0.30">bis 0,30 %</option>
+        </select>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Fondsgröße (mind.)</h3>
+        <select id="etf-groesse-select" class="kk-select">
+          <option value="alle">Alle</option>
+          <option value="mittel">mittel oder größer</option>
+          <option value="gross">groß oder größer</option>
+          <option value="sehrgross">sehr groß</option>
+        </select>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Fondsalter</h3>
+        <select id="etf-alter-select" class="kk-select">
+          <option value="alle">Alle</option>
+          <option value="gt10">älter als 10 Jahre</option>
+          <option value="5bis10">5–10 Jahre</option>
+          <option value="lt5">jünger als 5 Jahre</option>
+        </select>
+      </div>
+    </aside>
+    <div class="kk-main">
+      <div class="kk-toolbar">
+        <span id="etf-count" class="kk-count"></span>
+        <select id="etf-sort-select" class="kk-select" style="width:auto;">
+          <option value="ter">Sortieren: TER aufsteigend</option>
+          <option value="name">Sortieren: Name A–Z</option>
+          <option value="groesse">Sortieren: Fondsgröße</option>
+        </select>
+      </div>
+      <div id="etf-app" data-source="data/etf.json">
+        <div id="etf-results" class="kk-results"></div>
+      </div>
+      <div class="best-rate-banner" style="margin-top:20px;">
+        <div><div class="brl">Noch kein Depot?</div><div class="brv">ETFs kaufst du über einen Broker — finde den passenden in unserem Broker-Vergleich.</div></div>
+        <a href="broker.html" class="cta-btn">Zum Broker-Vergleich</a>
+      </div>
+      <p class="disclosure-note">Diese Auswahl ist eine kuratierte Liste bekannter, großer ETFs — keine vollständige Marktübersicht und keine Anlageempfehlung. Angaben zu TER, Replikation, Ertragsverwendung, Fondsdomizil und Auflagejahr Stand Oktober 2026, zusammengestellt aus öffentlich zugänglichen Fondsdaten der Anbieter; Fondsgröße als grobe Größenklasse angegeben. Bitte prüfe die aktuellen Kennzahlen (insbesondere TER und Fondsgröße) immer im aktuellen Factsheet oder KID des Anbieters, bevor du eine Anlageentscheidung triffst. Finanzpal erhält für diese Seite keine Provision von ETF-Anbietern.</p>
+    </div>
+  </section>
+
+  <section class="method">
+    <div><h2>Worauf du bei der ETF-Auswahl achten solltest</h2><p>Diese fünf Kennzahlen helfen dir, ETFs mit ähnlichem Anlagefokus sachlich zu vergleichen.</p></div>
+    <div class="criteria">
+      <div class="criterion"><h3>TER (Gesamtkostenquote)</h3><p>Die jährlichen Fondskosten in Prozent des Fondsvermögens. Schon kleine Unterschiede wirken sich über viele Jahre spürbar auf die Rendite aus.</p></div>
+      <div class="criterion"><h3>Replikation</h3><p>Physisch bedeutet, der ETF hält die Wertpapiere des Index direkt. Synthetisch nutzt ein Tauschgeschäft (Swap), um die Index-Rendite abzubilden — üblich etwa bei Geldmarkt- und Rohstoff-ETFs.</p></div>
+      <div class="criterion"><h3>Ertragsverwendung</h3><p>Thesaurierend reinvestiert Dividenden automatisch im Fonds, ausschüttend zahlt sie dir regelmäßig aus. Für den langfristigen Vermögensaufbau ist Thesaurierung oft praktischer.</p></div>
+      <div class="criterion"><h3>Fondsgröße</h3><p>Größere Fonds werden seltener geschlossen oder mit einem anderen Fonds verschmolzen, was steuerliche und organisatorische Umstände ersparen kann.</p></div>
+      <div class="criterion"><h3>Fondsalter</h3><p>Ein längerer Track Record zeigt, wie zuverlässig der ETF seinen Index über verschiedene Marktphasen abgebildet hat.</p></div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>Häufige Fragen</h2>
+    <div class="faq-item"><h3>Warum ist diese Liste nicht vollständig?</h3><p>Ein vollständiger ETF-Markt umfasst mehrere tausend Produkte mit laufend wechselnden Kennzahlen, die üblicherweise über lizenzierte Finanzdaten-Feeds bezogen werden. Wir zeigen stattdessen eine kuratierte Auswahl bekannter, etablierter ETFs mit Daten, die wir für verlässlich halten — als Startpunkt für deinen eigenen Vergleich, nicht als abschließende Marktübersicht.</p></div>
+    <div class="faq-item"><h3>Welcher ETF ist der "beste"?</h3><p>Das hängt von deiner Anlagestrategie ab — Anlagehorizont, gewünschte Streuung und Risikobereitschaft unterscheiden sich von Person zu Person. Wir zeigen deshalb bewusst keine Einzelempfehlung, sondern Kennzahlen zum eigenen Abwägen.</p></div>
+    <div class="faq-item"><h3>Wo kaufe ich einen ETF?</h3><p>Über ein Wertpapierdepot bei einem Broker oder einer Bank, meist per Einmalkauf oder als monatlichen Sparplan. Einen Depot-Vergleich findest du in unserem <a href="broker.html" style="text-decoration:underline;">Broker-Vergleich</a>.</p></div>
+    <div class="faq-item"><h3>Was bedeutet UCITS?</h3><p>UCITS-ETFs erfüllen EU-weite Standards etwa zur Risikostreuung und Transparenz und sind die in Deutschland gängige Fondsart für Privatanleger. Fast alle an deutschen Börsen gehandelten ETFs sind UCITS-konform.</p></div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a><p class="tag">Unabhängige Vergleiche und Ratgeber für deine Finanzen.</p></div>
+      <div class="footer-col"><h4>Vergleiche</h4>
+        <a href="broker.html">Broker</a>
+        <a href="kreditkarte.html">Kreditkarte</a>
+        <a href="tagesgeld.html">Tagesgeld</a>
+        <a href="kredite.html">Kredite</a>
+        <a href="versicherungen.html">Versicherungen</a>
+        <a href="etf-suche.html">ETF-Suche</a>
+      </div>
+      <div class="footer-col"><h4>Ratgeber & Rechner</h4>
+        <a href="ratgeber.html">Alle Artikel</a>
+        <a href="sparplanrechner.html">Sparplanrechner</a>
+        <a href="zinseszinsrechner.html">Zinseszinsrechner</a>
+        <a href="kreditrechner.html">Kreditrechner</a>
+      </div>
+      <div class="footer-col"><h4>Über uns</h4>
+        <a href="ueber-uns.html">Methodik</a>
+        <a href="ueber-uns.html">Werbepartner</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+    <div class="footer-legal">Finanzpal erhält teils Provisionen von Partnern, wenn du über unsere Links ein Konto eröffnest. Das beeinflusst unsere Bewertungen nicht. Alle Angaben ohne Gewähr, keine Anlageberatung. © 2026 Finanzpal</div>
+  </div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/etf-search.js"></script>
+</body>
+</html>

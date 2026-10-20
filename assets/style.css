@@ -471,4 +471,10 @@ h3.quiz-question { font-family: var(--font-display); font-weight: 500; font-size
 .kk-toggle { background: none; border: none; color: var(--green-deep); font-size: 12.5px; font-weight: 600; cursor: pointer; padding: 0; white-space: nowrap; }
 .kk-chevron { font-size: 10px; }
 .kk-card-details.side-facts { margin-top: 16px; }
+
+.etf-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.etf-chip { background: var(--bg); border: 1px solid var(--line); border-radius: 100px; padding: 7px 14px; font-size: 13px; font-weight: 600; color: var(--ink-soft); cursor: pointer; }
+.etf-chip.active { background: var(--green-deep); border-color: var(--green-deep); color: #fff; }
+tr.etf-detail-row td { background: var(--row-alt); padding: 0 16px 16px; }
+tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10px; max-width: 420px; }
 .mp-chip { display: inline-block; font-size: 12px; font-weight: 600; color: var(--green-deep); background: var(--tag-bg); padding: 3px 10px; border-radius: 100px; margin-right: 6px; }
