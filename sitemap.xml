@@ -11,6 +11,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/index.html" />
   </url>
   <url>
+    <loc>https://finanzpal.de/finanz-check.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/finanz-check.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/finanz-check.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/finanz-check.html" />
+  </url>
+  <url>
+    <loc>https://finanzpal.de/en/finanz-check.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/finanz-check.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/finanz-check.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/finanz-check.html" />
+  </url>
+  <url>
     <loc>https://finanzpal.de/en/index.html</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>weekly</changefreq>
