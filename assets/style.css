@@ -43,6 +43,13 @@ nav.top a.active { color: var(--ink); border-bottom-color: var(--green); }
 .lang-switch .lang-opt.active { background: var(--tag-bg); color: var(--green-deep); }
 .lang-switch .lang-opt:not(.active):hover { color: var(--ink); background: var(--bg-raised); }
 .search-btn { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-raised); display: flex; align-items: center; justify-content: center; color: var(--ink-soft); flex-shrink: 0; }
+.theme-toggle-btn { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-raised); display: flex; align-items: center; justify-content: center; color: var(--ink-soft); flex-shrink: 0; cursor: pointer; position: relative; }
+.theme-toggle-btn:hover { color: var(--ink); }
+.theme-toggle-btn .theme-icon { font-size: 15px; line-height: 1; position: absolute; transition: opacity 0.15s ease, transform 0.15s ease; }
+.theme-toggle-btn .theme-icon-sun { opacity: 1; transform: scale(1); }
+.theme-toggle-btn .theme-icon-moon { opacity: 0; transform: scale(0.6); }
+:root[data-theme="dark"] .theme-toggle-btn .theme-icon-sun { opacity: 0; transform: scale(0.6); }
+:root[data-theme="dark"] .theme-toggle-btn .theme-icon-moon { opacity: 1; transform: scale(1); }
 .nav-toggle { display: none; width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-raised); align-items: center; justify-content: center; }
 @media (max-width: 920px) {
   nav.top { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-raised); border-bottom: 1px solid var(--line); flex-direction: column; gap: 0; padding: 8px 0; }
