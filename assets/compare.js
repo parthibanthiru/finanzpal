@@ -86,7 +86,8 @@
     kreditkarte: function (item) {
       return '<tr class="' + (item.recommended ? 'pick' : '') + '">' +
         '<td>' + brokerCell(item) + '</td>' +
-        '<td class="num-cell">' + item.jahresgebuehr + '</td>' +
+        '<td class="num-cell">' + item.kartentyp + '</td>' +
+        '<td class="num-cell">' + item.jahresgebuehr + (item.bedingung ? '<div class="cell-sub">' + item.bedingung + '</div>' : '') + '</td>' +
         '<td class="num-cell">' + item.fremdwaehrung + '</td>' +
         '<td class="num-cell">' + item.abhebung + '</td>' +
         '<td>' + ratingHtml(item.ratingStars, item.rating) + '</td>' +
