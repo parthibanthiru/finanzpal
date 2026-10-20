@@ -527,4 +527,6 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .cc-crosslink { margin-top: 10px; font-size: 12.5px; }
 .cc-crosslink a { color: var(--green-deep); font-weight: 600; text-decoration: underline; }
 .kk-card.cc-highlight, .kk-card:target { outline: 2px solid var(--green); outline-offset: 2px; transition: outline-color 0.3s ease; }
+.fp-profil-banner { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; background: var(--tag-bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-bottom: 16px; font-size: 12.5px; color: var(--green-deep); line-height: 1.4; }
+.fp-profil-banner button { background: none; border: none; color: var(--green-deep); font-size: 15px; line-height: 1; cursor: pointer; padding: 0; flex-shrink: 0; }
 .mp-chip { display: inline-block; font-size: 12px; font-weight: 600; color: var(--green-deep); background: var(--tag-bg); padding: 3px 10px; border-radius: 100px; margin-right: 6px; }
