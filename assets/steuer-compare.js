@@ -129,7 +129,7 @@
       var bullets = bulletsFor(item).map(function (b) {
         return '<li class="' + (b.ok ? 'ok' : 'info') + '"><span class="cc-icon">' + (b.ok ? '✓' : 'ⓘ') + '</span>' + escapeHtml(b.text) + '</li>';
       }).join('');
-      return '<div class="kk-card">' +
+      return '<div class="kk-card" id="' + escapeHtml(item.id) + '">' +
         '<div class="cc-badges"><span class="cc-badge">' + escapeHtml(item.anbieter) + '</span></div>' +
         '<div class="cc-body">' +
           cardArtHtml(item) +

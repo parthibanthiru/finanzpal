@@ -529,4 +529,23 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .kk-card.cc-highlight, .kk-card:target { outline: 2px solid var(--green); outline-offset: 2px; transition: outline-color 0.3s ease; }
 .fp-profil-banner { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; background: var(--tag-bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-bottom: 16px; font-size: 12.5px; color: var(--green-deep); line-height: 1.4; }
 .fp-profil-banner button { background: none; border: none; color: var(--green-deep); font-size: 15px; line-height: 1; cursor: pointer; padding: 0; flex-shrink: 0; }
+.cc-compare-check { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-soft); margin-bottom: 10px; cursor: pointer; }
+.cc-compare-check input { margin: 0; cursor: pointer; }
+.kk-compare-bar { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%) translateY(140%); display: flex; align-items: center; gap: 18px; background: var(--logo-ink); color: #fff; border-radius: 100px; padding: 12px 10px 12px 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); z-index: 400; transition: transform 0.25s ease; }
+.kk-compare-bar.visible { transform: translateX(-50%) translateY(0); }
+.kk-compare-count { font-size: 13.5px; font-weight: 600; white-space: nowrap; }
+.kk-compare-actions { display: flex; align-items: center; gap: 8px; }
+.kk-compare-clear { background: none; border: none; color: rgba(255,255,255,0.75); font-size: 13px; cursor: pointer; padding: 8px 10px; }
+.kk-compare-clear:hover { color: #fff; }
+.kk-compare-view { padding: 9px 18px; font-size: 13.5px; }
+.kk-compare-modal { position: fixed; inset: 0; background: rgba(10,16,10,0.55); display: none; align-items: center; justify-content: center; z-index: 500; padding: 24px; }
+.kk-compare-modal.open { display: flex; }
+.kk-compare-modal-inner { position: relative; background: var(--bg-raised); border-radius: 14px; max-width: 920px; width: 100%; max-height: 82vh; overflow-y: auto; padding: 32px 28px 24px; }
+.kk-compare-modal-close { position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 22px; line-height: 1; color: var(--ink-soft); cursor: pointer; }
+.kk-compare-modal-close:hover { color: var(--ink); }
+.kk-compare-modal-body { display: flex; gap: 24px; flex-wrap: wrap; }
+.kk-compare-col { flex: 1 1 240px; min-width: 220px; border-left: 1px solid var(--line); padding-left: 20px; }
+.kk-compare-col:first-child { border-left: none; padding-left: 0; }
+.kk-compare-col h3 { margin: 0 0 12px; font-size: 16px; font-family: var(--font-display); }
+@media (max-width: 760px) { .kk-compare-col { border-left: none; padding-left: 0; border-top: 1px solid var(--line); padding-top: 16px; } .kk-compare-col:first-child { border-top: none; padding-top: 0; } }
 .mp-chip { display: inline-block; font-size: 12px; font-weight: 600; color: var(--green-deep); background: var(--tag-bg); padding: 3px 10px; border-radius: 100px; margin-right: 6px; }
