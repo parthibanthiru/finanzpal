@@ -65,6 +65,71 @@
       "leistungen": "In unabhängigen Versicherungsvergleichen häufig gut platziert<br>Mallorca-Police inklusive",
       "rating": null,
       "ratingStars": null
+    },
+    {
+      "id": "axa-auto",
+      "name": "AXA",
+      "initials": "AXA",
+      "color": "#8B1E3F",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individuell",
+      "deckung": "bis 100 Mio. €",
+      "leistungen": "Leistungsumfang und Beitrag tarifabhängig (mehrere Tarifstufen)<br>Details beim Anbieter prüfen, von Finanzpal nicht unabhängig verifiziert",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "generali-auto",
+      "name": "Generali",
+      "initials": "GEN",
+      "color": "#1F6F54",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individuell",
+      "deckung": "bis 100 Mio. €",
+      "leistungen": "Leistungsumfang und Beitrag tarifabhängig (mehrere Tarifstufen)<br>Details beim Anbieter prüfen, von Finanzpal nicht unabhängig verifiziert",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "adac-autoversicherung",
+      "name": "ADAC Autoversicherung",
+      "initials": "ADAC",
+      "color": "#FFCC00",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individuell",
+      "deckung": "bis 100 Mio. €",
+      "leistungen": "Laut Stiftung Warentest nicht immer der günstigste Anbieter trotz ADAC-Marke<br>Details beim Anbieter prüfen, von Finanzpal nicht unabhängig verifiziert",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "cosmos-direkt-auto",
+      "name": "CosmosDirekt",
+      "initials": "CD",
+      "color": "#2F5C8A",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individuell",
+      "deckung": "bis 100 Mio. €",
+      "leistungen": "Leistungsumfang und Beitrag tarifabhängig (mehrere Tarifstufen)<br>Details beim Anbieter prüfen, von Finanzpal nicht unabhängig verifiziert",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "r-plus-v-auto",
+      "name": "R+V",
+      "initials": "R+V",
+      "color": "#6B2FA0",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individuell",
+      "deckung": "bis 100 Mio. €",
+      "leistungen": "Genossenschaftlicher Versicherer (Teil der DZ-Bank-Gruppe)<br>Details beim Anbieter prüfen, von Finanzpal nicht unabhängig verifiziert",
+      "rating": null,
+      "ratingStars": null
     }
   ]
 }

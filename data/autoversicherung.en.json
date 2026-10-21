@@ -65,6 +65,71 @@
       "leistungen": "Often ranks well in independent insurance comparisons<br>Mallorca policy included",
       "rating": null,
       "ratingStars": null
+    },
+    {
+      "id": "axa-auto",
+      "name": "AXA",
+      "initials": "AXA",
+      "color": "#8B1E3F",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individual",
+      "deckung": "up to €100m",
+      "leistungen": "Cover and premium depend on the tariff tier (several tiers available)<br>Check details with the provider, not independently verified by Finanzpal",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "generali-auto",
+      "name": "Generali",
+      "initials": "GEN",
+      "color": "#1F6F54",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individual",
+      "deckung": "up to €100m",
+      "leistungen": "Cover and premium depend on the tariff tier (several tiers available)<br>Check details with the provider, not independently verified by Finanzpal",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "adac-autoversicherung",
+      "name": "ADAC Autoversicherung",
+      "initials": "ADAC",
+      "color": "#FFCC00",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individual",
+      "deckung": "up to €100m",
+      "leistungen": "Per Stiftung Warentest, not always the cheapest option despite the ADAC brand<br>Check details with the provider, not independently verified by Finanzpal",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "cosmos-direkt-auto",
+      "name": "CosmosDirekt",
+      "initials": "CD",
+      "color": "#2F5C8A",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individual",
+      "deckung": "up to €100m",
+      "leistungen": "Cover and premium depend on the tariff tier (several tiers available)<br>Check details with the provider, not independently verified by Finanzpal",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "r-plus-v-auto",
+      "name": "R+V",
+      "initials": "R+V",
+      "color": "#6B2FA0",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individual",
+      "deckung": "up to €100m",
+      "leistungen": "Cooperative insurer (part of the DZ Bank group)<br>Check details with the provider, not independently verified by Finanzpal",
+      "rating": null,
+      "ratingStars": null
     }
   ]
 }

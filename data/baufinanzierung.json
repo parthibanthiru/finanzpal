@@ -48,6 +48,78 @@
       "beratungText": "Kostenlos und unverbindlich — Hüttig & Rompf erhält im Erfolgsfall eine Provision von der finanzierenden Bank",
       "besonderheitenText": "1,5 Mrd. € vermitteltes Finanzierungsvolumen in 2024 (rund 4.500 Darlehensverträge laut Anbieter); von €uro als „Top Baufinanzierungsvermittler“ ausgezeichnet",
       "sourcesNote": "Angaben laut huettig-rompf.de (Eigenangaben des Anbieters, nicht unabhängig geprüft), Stand Oktober 2026"
+    },
+    {
+      "id": "check24-baufinanzierung",
+      "name": "CHECK24 Baufinanzierung",
+      "initials": "C24",
+      "color": "#FF6600",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Vergleich mit Angeboten von über 500 Anbietern laut Anbieterseite; genaue Partnerbanken-Liste nicht ausgewiesen",
+      "standorteText": "Teil der CHECK24 Vergleichsportal GmbH (München); eigene Standortzahl für die Baufinanzierungssparte nicht gesondert ausgewiesen",
+      "beratungText": "Kostenlos und unverbindlich — CHECK24 finanziert sich laut eigener Aussage über Provisionen im Erfolgsfall",
+      "besonderheitenText": "Presseberichte (versicherungsbote.de) sowie die aktuelle Anbieterseite deuten darauf hin, dass CHECK24 seine eigene Baufinanzierungsvermittlung eingestellt hat und den Vergleich inzwischen über den Partner Interhyp anbietet („Baufinanzierungsvergleich unseres Partners Interhyp“) — ob CHECK24 noch eigenständig oder nur noch als Zuführer fungiert, ist auf der Seite nicht eindeutig geklärt",
+      "sourcesNote": "Angaben laut check24.de (Eigenangaben des Anbieters, nicht unabhängig geprüft), Stand Oktober 2026"
+    },
+    {
+      "id": "planethome",
+      "name": "PlanetHome",
+      "initials": "PH",
+      "color": "#13395E",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Anzahl der Partnerbanken auf der Anbieter-Website nicht beziffert",
+      "standorteText": "Bundesweites Beraternetzwerk; genaue Standort-/Beraterzahl nicht einheitlich ausgewiesen",
+      "beratungText": "Kostenlos und unverbindlich — PlanetHome erhält im Erfolgsfall eine Provision von der finanzierenden Bank",
+      "besonderheitenText": "Bietet neben Baufinanzierung auch Immobilienvermittlung aus einer Hand an; Teil der PlanetHome Group",
+      "sourcesNote": "Angaben laut planethome.de (Eigenangaben des Anbieters, nicht unabhängig geprüft), Stand Oktober 2026"
+    },
+    {
+      "id": "hypofriend",
+      "name": "Hypofriend",
+      "initials": "HF",
+      "color": "#8A3F2F",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Über 750 Banken und Finanzierungspartner laut Anbieter",
+      "standorteText": "Online-Erstberatung (algorithmusgestützter Abgleich), Berlin-basiertes Unternehmen",
+      "beratungText": "Kostenlos und unverbindlich — Hypofriend erhält im Erfolgsfall eine Provision von der finanzierenden Bank",
+      "besonderheitenText": "Positioniert sich als digitaler/online-first Vermittler mit algorithmischem Bank-Matching statt klassischer Filialberatung",
+      "sourcesNote": "Angaben laut hypofriend.de (Eigenangaben des Anbieters, nicht unabhängig geprüft), Stand Oktober 2026"
+    },
+    {
+      "id": "finanzcheck-baufinanzierung",
+      "name": "FINANZCHECK Baufinanzierung",
+      "initials": "FC",
+      "color": "#6B2FA0",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Vergleichsplattform, Teil der Verivox-Gruppe; genaue Partnerbanken-Anzahl auf der Anbieter-Website nicht beziffert",
+      "standorteText": "Online-Vergleich mit telefonischer/persönlicher Beratung; eigene Standortzahl nicht gesondert ausgewiesen",
+      "beratungText": "Kostenlos und unverbindlich — FINANZCHECK erhält im Erfolgsfall eine Provision von der finanzierenden Bank",
+      "besonderheitenText": "Bekannt vor allem durch den Kreditvergleich; Baufinanzierung als weiteres Vergleichsangebot",
+      "sourcesNote": "Angaben laut finanzcheck.de (Eigenangaben des Anbieters, nicht unabhängig geprüft), Stand Oktober 2026"
+    },
+    {
+      "id": "vergleich24-baufinanzierung",
+      "name": "Vergleich.de Baufinanzierung",
+      "initials": "V24",
+      "color": "#5B5F63",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Anzahl der Partnerbanken auf der Anbieter-Website nicht beziffert",
+      "standorteText": "Reines Online-Vergleichsportal ohne eigenes Filialnetz",
+      "beratungText": "Kostenlos und unverbindlich — Vergleich.de erhält im Erfolgsfall eine Provision von der finanzierenden Bank oder dem Vermittler",
+      "besonderheitenText": "Vergleichsportal für mehrere Finanzprodukte (Kredite, Versicherungen, Baufinanzierung); keine eigene Vermittlerlizenz, leitet an Partnervermittler weiter",
+      "sourcesNote": "Angaben laut vergleich.de (Eigenangaben des Anbieters, nicht unabhängig geprüft), Stand Oktober 2026"
+    },
+    {
+      "id": "immobilienscout24-baufinanzierung",
+      "name": "ImmobilienScout24 Baufinanzierung",
+      "initials": "IS24",
+      "color": "#00A651",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Anzahl der Partnerbanken auf der Anbieter-Website nicht beziffert",
+      "standorteText": "Online-Vergleichsportal, Teil von ImmobilienScout24 (Immobilienanzeigenportal)",
+      "beratungText": "Kostenlos und unverbindlich — ImmobilienScout24 erhält im Erfolgsfall eine Provision von der finanzierenden Bank oder dem Vermittler",
+      "besonderheitenText": "Baufinanzierungsvergleich direkt in die Immobiliensuche integriert, sodass Finanzierung und Objektsuche aus einer Hand möglich sind; arbeitet laut Presseberichten u. a. mit Interhyp zusammen",
+      "sourcesNote": "Angaben laut immobilienscout24.de, Stand Oktober 2026"
     }
   ]
 }

@@ -23,7 +23,7 @@ gibt es doppelt: einmal auf Deutsch im Projekt-Root, einmal auf Englisch unter
 | `kinderdepot.html` | Junior-/Kinderdepot-Vergleich, mit Filter „ohne eigenes Elterndepot" |
 | `kreditkarte.html` | Kreditkarten-Vergleich, Karten- und Tabellenansicht |
 | `kredite.html` | Ratenkredit-Vergleich |
-| `baufinanzierung.html` | Baufinanzierungs-Vermittler-Vergleich (Interhyp, Dr. Klein, Baufi24, Hüttig & Rompf) — bewusst ohne Zinssatz-Zahl, da individuell kalkuliert |
+| `baufinanzierung.html` | Baufinanzierungs-Vermittler-Vergleich, 10 Vermittler (u. a. Interhyp, Dr. Klein, Baufi24, Hüttig & Rompf) — bewusst ohne Zinssatz-Zahl, da individuell kalkuliert |
 | `versicherungen.html` | 5 Tabs: Privathaftpflicht / Hausrat / Berufsunfähigkeit / Rechtsschutz / Kfz, jeder Tab mit eigenem JSON |
 | `etf-suche.html` | ETF-Suche mit Filtern (Anlageklasse, TER, Replikation …) |
 | `steuerprogramm.html` | Steuererklärungs-Software-Vergleich |
@@ -123,6 +123,16 @@ dafür `tools/build_nav.py` ausführen statt von Hand zu editieren, siehe
 `tools/README.md`.
 
 ## Vergleichsdaten aktualisieren
+
+**Stand Oktober 2026:** alle 14 Vergleichskategorien (Broker, Girokonto,
+Tagesgeld, Depot, Kinderdepot, Kredite, Kreditkarte, Baufinanzierung,
+Autoversicherung, Hausrat, BU, Rechtsschutz, Privathaftpflicht,
+Steuerprogramm) wurden auf je 10 recherchierte Anbieter ausgebaut (ETF-Suche
+bleibt bei 18, da bereits vorher größer). Jeder neue Eintrag folgt demselben
+Ehrlichkeitsprinzip wie die ursprünglichen Daten — unsichere oder
+widersprüchliche Angaben stehen als Caveat/Note-Text im JSON statt als
+erfundene Zahl. Die Trust-Stat-Kacheln („X verglichen") auf den jeweiligen
+Seiten sind entsprechend aktualisiert.
 
 Die Zahlen in den Vergleichstabellen stehen **nicht** im HTML, sondern in den
 JSON-Dateien unter `data/`. Um z. B. einen Tagesgeld-Zinssatz zu ändern:

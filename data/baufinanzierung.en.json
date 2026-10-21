@@ -48,6 +48,78 @@
       "beratungText": "Free and non-binding — Hüttig & Rompf earns a commission from the lending bank if a financing deal closes",
       "besonderheitenText": "€1.5 billion in mortgage volume arranged in 2024 (around 4,500 loan contracts per the provider); named \"top mortgage broker\" by €uro",
       "sourcesNote": "Figures per huettig-rompf.de (the provider's own claims, not independently verified), as of October 2026"
+    },
+    {
+      "id": "check24-baufinanzierung",
+      "name": "CHECK24 Mortgage Comparison",
+      "initials": "C24",
+      "color": "#FF6600",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Comparison of offers from over 500 providers per the provider's page; a specific list of partner banks is not disclosed",
+      "standorteText": "Part of CHECK24 Vergleichsportal GmbH (Munich); no separate location count given for the mortgage division",
+      "beratungText": "Free and non-binding — CHECK24 states it is funded by commissions received when a deal closes",
+      "besonderheitenText": "Press reports (versicherungsbote.de) and the current provider page suggest CHECK24 has discontinued its own in-house mortgage brokerage and now runs the comparison through its partner Interhyp (\"mortgage comparison from our partner Interhyp\") — whether CHECK24 still operates independently or only as a lead referrer isn't clearly stated on the page",
+      "sourcesNote": "Figures per check24.de (the provider's own claims, not independently verified), as of October 2026"
+    },
+    {
+      "id": "planethome",
+      "name": "PlanetHome",
+      "initials": "PH",
+      "color": "#13395E",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Number of partner banks not stated on the provider's website",
+      "standorteText": "Nationwide advisor network; exact location/advisor count not consistently stated",
+      "beratungText": "Free and non-binding — PlanetHome earns a commission from the lending bank if a financing deal closes",
+      "besonderheitenText": "Offers property brokerage alongside mortgage financing from a single provider; part of the PlanetHome Group",
+      "sourcesNote": "Figures per planethome.de (the provider's own claims, not independently verified), as of October 2026"
+    },
+    {
+      "id": "hypofriend",
+      "name": "Hypofriend",
+      "initials": "HF",
+      "color": "#8A3F2F",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Over 750 banks and financing partners per the provider",
+      "standorteText": "Online-first advice (algorithm-based matching), Berlin-based company",
+      "beratungText": "Free and non-binding — Hypofriend earns a commission from the lending bank if a financing deal closes",
+      "besonderheitenText": "Positions itself as a digital/online-first broker using algorithmic bank matching rather than traditional branch-based advice",
+      "sourcesNote": "Figures per hypofriend.de (the provider's own claims, not independently verified), as of October 2026"
+    },
+    {
+      "id": "finanzcheck-baufinanzierung",
+      "name": "FINANZCHECK Mortgages",
+      "initials": "FC",
+      "color": "#6B2FA0",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Comparison platform, part of the Verivox group; exact partner-bank count not stated on the provider's website",
+      "standorteText": "Online comparison with phone/in-person advice; no separate location count given",
+      "beratungText": "Free and non-binding — FINANZCHECK earns a commission from the lending bank if a financing deal closes",
+      "besonderheitenText": "Best known for its loan comparison; mortgages are offered as an additional comparison product",
+      "sourcesNote": "Figures per finanzcheck.de (the provider's own claims, not independently verified), as of October 2026"
+    },
+    {
+      "id": "vergleich24-baufinanzierung",
+      "name": "Vergleich.de Mortgages",
+      "initials": "V24",
+      "color": "#5B5F63",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Number of partner banks not stated on the provider's website",
+      "standorteText": "Pure online comparison portal with no branch network of its own",
+      "beratungText": "Free and non-binding — Vergleich.de earns a commission from the lending bank or partner broker",
+      "besonderheitenText": "Comparison portal covering several financial products (loans, insurance, mortgages); holds no broker license of its own and refers users to partner brokers",
+      "sourcesNote": "Figures per vergleich.de (the provider's own claims, not independently verified), as of October 2026"
+    },
+    {
+      "id": "immobilienscout24-baufinanzierung",
+      "name": "ImmobilienScout24 Mortgages",
+      "initials": "IS24",
+      "color": "#00A651",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Number of partner banks not stated on the provider's website",
+      "standorteText": "Online comparison portal, part of ImmobilienScout24 (property listings portal)",
+      "beratungText": "Free and non-binding — ImmobilienScout24 earns a commission from the lending bank or partner broker",
+      "besonderheitenText": "Mortgage comparison integrated directly into the property search, so financing and property search are available from a single source; press reports indicate it works with partners such as Interhyp",
+      "sourcesNote": "Figures per immobilienscout24.de, as of October 2026"
     }
   ]
 }
