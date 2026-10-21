@@ -35,9 +35,26 @@ header.site { border-bottom: 1px solid var(--line); background: var(--bg); posit
 .wordmark .logo-mark { flex-shrink: 0; border-radius: 7px; }
 .wordmark .logo-text { color: var(--logo-ink); }
 .wordmark .logo-text .pal { color: var(--logo-pal); }
-nav.top { display: flex; gap: 18px; flex-wrap: nowrap; }
+nav.top { display: flex; align-items: center; gap: 18px; flex-wrap: nowrap; }
 nav.top a { color: var(--ink-soft); text-decoration: none; font-size: 13.5px; font-weight: 500; padding: 4px 0; border-bottom: 2px solid transparent; white-space: nowrap; }
 nav.top a.active { color: var(--ink); border-bottom-color: var(--green); }
+
+/* Nav dropdown groups (Broker, Konten & Depots, Kredite, Rechner) */
+.nav-drop { position: relative; }
+.nav-drop-btn { display: flex; align-items: center; gap: 4px; background: none; border: none; font: inherit; color: var(--ink-soft); font-size: 13.5px; font-weight: 500; padding: 4px 0; border-bottom: 2px solid transparent; white-space: nowrap; cursor: pointer; }
+.nav-drop-btn:hover { color: var(--ink); }
+.nav-drop-btn.active { color: var(--ink); border-bottom-color: var(--green); }
+.nav-caret { font-size: 10px; line-height: 1; position: relative; top: 1px; transition: transform 0.15s ease; }
+.nav-drop.open .nav-caret { transform: rotate(180deg); }
+.nav-drop-panel { display: none; position: absolute; top: 100%; left: 0; margin-top: 14px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px; padding: 8px; min-width: 210px; box-shadow: 0 10px 28px rgba(15, 25, 15, 0.12); flex-direction: column; z-index: 30; }
+.nav-drop.open .nav-drop-panel { display: flex; }
+.nav-drop-panel a { padding: 9px 12px; border-radius: 6px; font-size: 13.5px; font-weight: 500; color: var(--ink); white-space: nowrap; border-bottom: none; }
+.nav-drop-panel a:hover { background: var(--tag-bg); }
+.nav-drop-panel a.active { color: var(--green-deep); background: var(--tag-bg); }
+@media (hover: hover) and (pointer: fine) {
+  .nav-drop:hover .nav-drop-panel { display: flex; }
+  .nav-drop:hover .nav-caret { transform: rotate(180deg); }
+}
 .header-actions { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
 .lang-switch { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; flex-shrink: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.02em; }
 .lang-switch .lang-opt { padding: 7px 10px; text-decoration: none; color: var(--ink-soft); line-height: 1; }
@@ -53,10 +70,14 @@ nav.top a.active { color: var(--ink); border-bottom-color: var(--green); }
 :root[data-theme="dark"] .theme-toggle-btn .theme-icon-moon { opacity: 1; transform: scale(1); }
 .nav-toggle { display: none; width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-raised); align-items: center; justify-content: center; }
 @media (max-width: 920px) {
-  nav.top { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-raised); border-bottom: 1px solid var(--line); flex-direction: column; gap: 0; padding: 8px 0; }
+  nav.top { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-raised); border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; gap: 0; padding: 8px 0; max-height: calc(100vh - 64px); overflow-y: auto; }
   nav.top.open { display: flex; }
   nav.top a { padding: 12px 24px; border-bottom: none; font-size: 14.5px; }
   .nav-toggle { display: flex; }
+  .nav-drop-btn { width: 100%; justify-content: space-between; padding: 12px 24px; font-size: 14.5px; border-bottom: none; }
+  .nav-drop-panel { position: static; display: flex !important; flex-direction: column; background: transparent; border: none; box-shadow: none; border-radius: 0; margin: 0; padding: 0 0 6px 24px; min-width: 0; }
+  .nav-drop-panel a { padding: 10px 12px; color: var(--ink-soft); }
+  .nav-caret { display: none; }
 }
 @media (max-width: 480px) {
   .site-bar { padding: 14px 16px; gap: 10px; }

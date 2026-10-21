@@ -7,8 +7,38 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  initNavDropdowns();
   initThemeToggle();
 });
+
+function initNavDropdowns() {
+  var drops = document.querySelectorAll('.nav-drop');
+  if (!drops.length) return;
+
+  function closeAll(except) {
+    drops.forEach(function (d) {
+      if (d !== except) d.classList.remove('open');
+    });
+  }
+
+  drops.forEach(function (drop) {
+    var btn = drop.querySelector('.nav-drop-btn');
+    if (!btn) return;
+    btn.setAttribute('aria-expanded', 'false');
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var willOpen = !drop.classList.contains('open');
+      closeAll(willOpen ? drop : null);
+      drop.classList.toggle('open', willOpen);
+      btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    });
+  });
+
+  document.addEventListener('click', function () { closeAll(null); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeAll(null);
+  });
+}
 
 function initThemeToggle() {
   var actions = document.querySelector('.header-actions');
