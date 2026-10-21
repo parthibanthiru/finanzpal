@@ -140,6 +140,27 @@ auf `versicherungen.html#hausrat` / `#berufsunfaehigkeit` / `#rechtsschutz` /
 `#kfz` — `assets/insurance-tabs.js` liest diesen Hash beim Laden und aktiviert
 automatisch den passenden Tab, statt immer mit Privathaftpflicht zu starten.
 
+### „Aktuell beste Empfehlung"-Banner
+
+Alle 8 Vergleichskategorien (Broker & Depot, Girokonto, Tagesgeld, Kinderdepot,
+Kreditkarte, Kredite, Baufinanzierung, Steuerprogramm) sowie — dynamisch pro
+Tab — Versicherungen zeigen im Hero einen grünen Banner (`.best-rate-banner`)
+mit einer konkreten Top-Empfehlung statt einer allgemeinen Aussage. Auf den
+meisten Seiten ist das statisches HTML (Label + Anbietername + ein bis zwei
+reale Kennzahlen aus der jeweiligen `data/*.json`, keine erfundenen Zahlen);
+bei Baufinanzierung bewusst ohne Preisangabe (reichweitenbasierte Begründung
+„Unsere Empfehlung" statt „Aktuell beste Empfehlung", da hier laut eigener
+Methodik kein einzelner bester Zins existiert). Auf `versicherungen.html`
+schaltet `assets/insurance-tabs.js` den Banner-Text pro Tab um (`TYPES[].banner`,
+DE/EN) und blendet ihn komplett aus, wenn der jeweilige Typ keinen
+`recommended`-Eintrag in seiner JSON hat (aktuell: Rechtsschutz) — dafür war
+eine explizite `.best-rate-banner[hidden] { display: none; }`-Regel in
+`style.css` nötig, weil die Klasse selbst `display: flex` setzt und damit das
+`hidden`-Attribut sonst überstimmt. Neue Kategorie mit Banner ergänzen = Markup
+nach dem `trust-bar` einfügen (siehe bestehende Seiten als Vorlage) und Text
+anhand des tatsächlichen `recommended`-Eintrags der zugehörigen JSON-Datei
+formulieren, nicht freihändig.
+
 ### Suche
 
 Die Lupe oben rechts (nur Desktop) öffnet eine clientseitige Seitensuche
