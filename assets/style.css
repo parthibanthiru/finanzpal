@@ -41,18 +41,22 @@ nav.top a.active { color: var(--ink); border-bottom-color: var(--green); }
 
 /* Nav dropdown groups (Broker, Konten & Depots, Kredite, Rechner) */
 .nav-drop { position: relative; }
-.nav-drop-btn { display: flex; align-items: center; gap: 4px; background: none; border: none; font: inherit; color: var(--ink-soft); font-size: 13.5px; font-weight: 500; padding: 4px 0; border-bottom: 2px solid transparent; white-space: nowrap; cursor: pointer; }
+.nav-drop-btn { appearance: none; -webkit-appearance: none; -moz-appearance: none; display: flex; align-items: center; gap: 5px; background: none; border: none; margin: 0; font: inherit; color: var(--ink-soft); font-size: 13.5px; font-weight: 500; padding: 4px 0; border-bottom: 2px solid transparent; white-space: nowrap; cursor: pointer; outline: none; }
 .nav-drop-btn:hover { color: var(--ink); }
 .nav-drop-btn.active { color: var(--ink); border-bottom-color: var(--green); }
-.nav-caret { font-size: 10px; line-height: 1; position: relative; top: 1px; transition: transform 0.15s ease; }
-.nav-drop.open .nav-caret { transform: rotate(180deg); }
-.nav-drop-panel { display: none; position: absolute; top: 100%; left: 0; margin-top: 14px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px; padding: 8px; min-width: 210px; box-shadow: 0 10px 28px rgba(15, 25, 15, 0.12); flex-direction: column; z-index: 30; }
-.nav-drop.open .nav-drop-panel { display: flex; }
-.nav-drop-panel a { padding: 9px 12px; border-radius: 6px; font-size: 13.5px; font-weight: 500; color: var(--ink); white-space: nowrap; border-bottom: none; }
+.nav-drop-btn:focus-visible { border-radius: 4px; outline: 2px solid var(--green); outline-offset: 4px; }
+.nav-caret { font-size: 9px; line-height: 1; position: relative; top: 1px; color: var(--ink-soft); opacity: 0.75; transition: transform 0.18s ease; }
+.nav-drop.open .nav-caret, .nav-drop-btn.active .nav-caret { transform: rotate(180deg); }
+.nav-drop-panel { position: absolute; top: 100%; left: -12px; margin-top: 16px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 12px; padding: 7px; min-width: 220px; box-shadow: 0 14px 32px rgba(15, 25, 15, 0.14); display: flex; flex-direction: column; z-index: 30; opacity: 0; visibility: hidden; transform: translateY(-6px); pointer-events: none; transition: opacity 0.16s ease, transform 0.16s ease, visibility 0s linear 0.16s; }
+.nav-drop.open .nav-drop-panel { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; transition: opacity 0.16s ease, transform 0.16s ease; }
+.nav-drop-panel a { padding: 9px 13px; border-radius: 7px; font-size: 13.5px; font-weight: 500; color: var(--ink); white-space: nowrap; border-bottom: none; transition: background 0.1s ease; }
 .nav-drop-panel a:hover { background: var(--tag-bg); }
 .nav-drop-panel a.active { color: var(--green-deep); background: var(--tag-bg); }
+.nav-drop-panel a.nav-feature { color: var(--green-deep); font-weight: 600; position: relative; }
+.nav-drop-panel a.nav-feature::after { content: "→"; float: right; opacity: 0.7; }
+.nav-drop-panel .nav-panel-divider { height: 1px; background: var(--line); margin: 6px 4px; }
 @media (hover: hover) and (pointer: fine) {
-  .nav-drop:hover .nav-drop-panel { display: flex; }
+  .nav-drop:hover .nav-drop-panel { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; transition: opacity 0.16s ease, transform 0.16s ease; }
   .nav-drop:hover .nav-caret { transform: rotate(180deg); }
 }
 .header-actions { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
@@ -75,8 +79,10 @@ nav.top a.active { color: var(--ink); border-bottom-color: var(--green); }
   nav.top a { padding: 12px 24px; border-bottom: none; font-size: 14.5px; }
   .nav-toggle { display: flex; }
   .nav-drop-btn { width: 100%; justify-content: space-between; padding: 12px 24px; font-size: 14.5px; border-bottom: none; }
-  .nav-drop-panel { position: static; display: flex !important; flex-direction: column; background: transparent; border: none; box-shadow: none; border-radius: 0; margin: 0; padding: 0 0 6px 24px; min-width: 0; }
+  .nav-drop-panel { position: static; opacity: 1; visibility: visible; transform: none; pointer-events: auto; transition: none; flex-direction: column; background: transparent; border: none; box-shadow: none; border-radius: 0; margin: 0; padding: 0 0 6px 24px; min-width: 0; }
   .nav-drop-panel a { padding: 10px 12px; color: var(--ink-soft); }
+  .nav-drop-panel a.nav-feature::after { content: none; }
+  .nav-drop-panel .nav-panel-divider { display: none; }
   .nav-caret { display: none; }
 }
 @media (max-width: 480px) {
