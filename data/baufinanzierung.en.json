@@ -1,0 +1,53 @@
+{
+  "updated": "2026-10",
+  "items": [
+    {
+      "id": "interhyp",
+      "name": "Interhyp",
+      "initials": "IH",
+      "color": "#0F2A3D",
+      "affiliateUrl": "#",
+      "partnerbankenText": "More than 500 lenders (savings banks, cooperative banks, private and direct banks, insurers)",
+      "standorteText": "Over 140 locations across Germany, around 1,400 employees",
+      "beratungText": "Free and non-binding — Interhyp earns a commission from the lending bank if a financing deal closes",
+      "besonderheitenText": "Describes itself as Germany's largest broker of private mortgages; carries Finanztip's recommendation seal (valid through end of 2026)",
+      "sourcesNote": "Figures per interhyp.de (the provider's own claims, not independently verified), as of October 2026"
+    },
+    {
+      "id": "dr-klein",
+      "name": "Dr. Klein",
+      "initials": "DK",
+      "color": "#8A1538",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Number of partner banks not stated on the provider's website",
+      "standorteText": "Around 240–250 locations, 600–700 advisors (figures vary slightly across the provider's own pages)",
+      "beratungText": "Free and non-binding — Dr. Klein earns a commission from the lending bank if a financing deal closes",
+      "besonderheitenText": "A 100% subsidiary of Hypoport SE (Lübeck); per the provider, ranked 1st in the customer-advice category in a comparison of 15 mortgage brokers (06/2026)",
+      "sourcesNote": "Figures per drklein.de (the provider's own claims, not independently verified), as of October 2026"
+    },
+    {
+      "id": "baufi24",
+      "name": "Baufi24",
+      "initials": "B24",
+      "color": "#1F6F54",
+      "affiliateUrl": "#",
+      "partnerbankenText": "More than 600 banks, insurers and building societies",
+      "standorteText": "Over 70 locations, around 200 employees",
+      "beratungText": "Free and non-binding — Baufi24 earns a commission from the lending bank if a financing deal closes",
+      "besonderheitenText": "Named \"best mortgage broker 2026\" by business magazine €uro and analysis institute SWI in July 2026 (26 providers tested); part of the Bilthouse group (alongside Hüttig & Rompf and Creditweb)",
+      "sourcesNote": "Figures per baufi24.de and the €uro/SWI press release, as of October 2026"
+    },
+    {
+      "id": "huettig-rompf",
+      "name": "Hüttig & Rompf",
+      "initials": "HR",
+      "color": "#2F5C8A",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Around 600 partner banks, bank-independent",
+      "standorteText": "25 locations across Germany, around 130 advisors",
+      "beratungText": "Free and non-binding — Hüttig & Rompf earns a commission from the lending bank if a financing deal closes",
+      "besonderheitenText": "€1.5 billion in mortgage volume arranged in 2024 (around 4,500 loan contracts per the provider); named \"top mortgage broker\" by €uro",
+      "sourcesNote": "Figures per huettig-rompf.de (the provider's own claims, not independently verified), as of October 2026"
+    }
+  ]
+}

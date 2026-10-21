@@ -182,6 +182,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/kinderdepot.html" />
   </url>
   <url>
+    <loc>https://finanzpal.de/baufinanzierung.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/baufinanzierung.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/baufinanzierung.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/baufinanzierung.html" />
+  </url>
+  <url>
+    <loc>https://finanzpal.de/en/baufinanzierung.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/baufinanzierung.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/baufinanzierung.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/baufinanzierung.html" />
+  </url>
+  <url>
     <loc>https://finanzpal.de/steuerprogramm.html</loc>
     <lastmod>2026-10-20</lastmod>
     <changefreq>weekly</changefreq>

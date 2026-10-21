@@ -1,0 +1,53 @@
+{
+  "updated": "2026-10",
+  "items": [
+    {
+      "id": "interhyp",
+      "name": "Interhyp",
+      "initials": "IH",
+      "color": "#0F2A3D",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Mehr als 500 Darlehensgeber (Sparkassen, Volksbanken, Privat- und Direktbanken, Versicherer)",
+      "standorteText": "Über 140 Standorte deutschlandweit, rund 1.400 Mitarbeitende",
+      "beratungText": "Kostenlos und unverbindlich — Interhyp erhält im Erfolgsfall eine Provision von der finanzierenden Bank",
+      "besonderheitenText": "Bezeichnet sich selbst als größten Vermittler privater Baufinanzierungen in Deutschland; trägt das Finanztip-Empfehlungssiegel (gültig bis Ende 2026)",
+      "sourcesNote": "Angaben laut interhyp.de (Eigenangaben des Anbieters, nicht unabhängig geprüft), Stand Oktober 2026"
+    },
+    {
+      "id": "dr-klein",
+      "name": "Dr. Klein",
+      "initials": "DK",
+      "color": "#8A1538",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Anzahl der Partnerbanken auf der Anbieter-Website nicht beziffert",
+      "standorteText": "Rund 240–250 Standorte, 600–700 Berater:innen (Angaben auf der Anbieter-Seite an verschiedenen Stellen leicht widersprüchlich)",
+      "beratungText": "Kostenlos und unverbindlich — Dr. Klein erhält im Erfolgsfall eine Provision von der finanzierenden Bank",
+      "besonderheitenText": "100%ige Tochter der Hypoport SE (Lübeck); laut Anbieter 1. Platz in der Kategorie Kundenberatung bei einem Vergleich von 15 Baufinanzierungsvermittlern (06/2026)",
+      "sourcesNote": "Angaben laut drklein.de (Eigenangaben des Anbieters, nicht unabhängig geprüft), Stand Oktober 2026"
+    },
+    {
+      "id": "baufi24",
+      "name": "Baufi24",
+      "initials": "B24",
+      "color": "#1F6F54",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Mehr als 600 Banken, Versicherer und Bausparkassen",
+      "standorteText": "Über 70 Standorte, rund 200 Mitarbeitende",
+      "beratungText": "Kostenlos und unverbindlich — Baufi24 erhält im Erfolgsfall eine Provision von der finanzierenden Bank",
+      "besonderheitenText": "Von €uro und dem Analyseinstitut SWI im Juli 2026 zum „besten Baufinanzierungsvermittler 2026“ gekürt (26 getestete Anbieter); Teil der Bilthouse-Gruppe (ebenso Hüttig & Rompf und Creditweb)",
+      "sourcesNote": "Angaben laut baufi24.de und €uro/SWI-Pressemitteilung, Stand Oktober 2026"
+    },
+    {
+      "id": "huettig-rompf",
+      "name": "Hüttig & Rompf",
+      "initials": "HR",
+      "color": "#2F5C8A",
+      "affiliateUrl": "#",
+      "partnerbankenText": "Rund 600 Partnerbanken, bankenunabhängig",
+      "standorteText": "25 Standorte deutschlandweit, rund 130 Berater:innen",
+      "beratungText": "Kostenlos und unverbindlich — Hüttig & Rompf erhält im Erfolgsfall eine Provision von der finanzierenden Bank",
+      "besonderheitenText": "1,5 Mrd. € vermitteltes Finanzierungsvolumen in 2024 (rund 4.500 Darlehensverträge laut Anbieter); von €uro als „Top Baufinanzierungsvermittler“ ausgezeichnet",
+      "sourcesNote": "Angaben laut huettig-rompf.de (Eigenangaben des Anbieters, nicht unabhängig geprüft), Stand Oktober 2026"
+    }
+  ]
+}

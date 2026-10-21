@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<script>(function(){try{var t=localStorage.getItem("fp-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baufinanzierung-Vermittler-Vergleich: Interhyp, Dr. Klein, Baufi24 & Co. — Finanzpal</title>
+<meta name="description" content="Wir vergleichen die bekanntesten Baufinanzierungsvermittler in Deutschland — Interhyp, Dr. Klein, Baufi24 und Hüttig & Rompf — nach Partnerbanken, Standorten und Beratungsangebot.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="alternate" hreflang="de" href="/baufinanzierung.html">
+<link rel="alternate" hreflang="en" href="/en/baufinanzierung.html">
+<link rel="alternate" hreflang="x-default" href="/baufinanzierung.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-512.png">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a>
+    <nav class="top">
+      <a href="broker.html">Broker</a>
+      <a href="kreditkarte.html">Kreditkarte</a>
+      <a href="tagesgeld.html">Tagesgeld</a>
+      <a href="kredite.html">Kredite</a>
+      <a href="versicherungen.html">Versicherungen</a>
+      <a href="sparplanrechner.html">Rechner</a>
+      <a href="ratgeber.html">Ratgeber</a>
+      <a href="ueber-uns.html">Über uns</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch" aria-label="Sprache wählen"><span class="lang-opt active" aria-current="true">DE</span><a href="en/baufinanzierung.html" class="lang-opt" hreflang="en" lang="en">EN</a></div>
+      <div class="search-btn">⌕</div>
+      <button class="nav-toggle" aria-label="Menü">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="breadcrumb"><a href="index.html">Start</a> &nbsp;/&nbsp; Baufinanzierung-Vermittler-Vergleich</p>
+  <section class="hero">
+    <h1>Baufinanzierung-Vermittler-Vergleich</h1>
+    <p class="lede">Anders als bei Tagesgeld oder Girokonto gibt es bei einer Baufinanzierung keinen einzelnen "besten Zins" — der tatsächliche Zinssatz hängt von Beleihungsauslauf, Bonität, Objektart, Region, Zinsbindung und Tilgungssatz ab und wird individuell berechnet. Wir vergleichen deshalb die bekanntesten unabhängigen Vermittler, die dir Angebote mehrerer hundert Banken gegenüberstellen, nach Reichweite, Standorten und Beratungsangebot.</p>
+    <div class="trust-bar">
+      <div class="trust-item"><span class="num">4</span><span class="lbl">Vermittler verglichen</span></div>
+      <div class="trust-item"><span class="num">kostenlos</span><span class="lbl">Beratung bei allen 4</span></div>
+      <div class="trust-item"><span class="num" id="baufi-last-updated">—</span><span class="lbl">Zuletzt aktualisiert</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kk-toolbar">
+      <span id="baufi-count" class="kk-count"></span>
+      <select id="baufi-sort-select" class="kk-select" style="width:auto;">
+        <option value="name">Sortieren: Name A–Z</option>
+      </select>
+    </div>
+    <div id="baufi-app" data-source="data/baufinanzierung.json">
+      <div id="baufi-results" class="kk-results"></div>
+    </div>
+    <p class="disclosure-note">Werbung: Finanzpal erhält ggf. eine Provision, wenn du über einen Link eine Finanzierungsanfrage stellst. Das beeinflusst unsere Auswahl nicht. Die hier gezeigten Angaben zu Partnerbanken, Standorten und Auszeichnungen stammen von den Anbieter-Websites selbst und sind nicht unabhängig geprüft — wir zeigen bewusst keinen Vergleichszins, da dieser bei einer Baufinanzierung so individuell ist, dass eine pauschale Zahl irreführend wäre. Hole dir vor einer Entscheidung immer mehrere konkrete Angebote ein.</p>
+  </section>
+
+  <section class="method">
+    <div><h2>Warum zeigen wir keine Vergleichszinsen?</h2><p>Der Zinssatz einer Baufinanzierung ist eines der am stärksten individualisierten Finanzprodukte überhaupt.</p></div>
+    <div class="criteria">
+      <div class="criterion"><h3>Beleihungsauslauf</h3><p>Je mehr Eigenkapital du einbringst, desto niedriger in der Regel der Zins. Der Unterschied zwischen 60 % und 90 % Beleihungsauslauf kann den Zinssatz deutlich verändern.</p></div>
+      <div class="criterion"><h3>Bonität & Beruf</h3><p>Schufa-Score, Einkommensart (Angestellt, selbstständig, verbeamtet) und Beschäftigungsdauer fließen in die Risikoeinschätzung der Bank ein.</p></div>
+      <div class="criterion"><h3>Zinsbindung & Tilgung</h3><p>Eine längere Zinsbindung (z. B. 15 statt 10 Jahre) kostet meist einen Aufschlag, bietet dafür mehr Planungssicherheit. Die gewählte Tilgungsrate beeinflusst die monatliche Rate und die Gesamtlaufzeit.</p></div>
+      <div class="criterion"><h3>Objektart & Region</h3><p>Bestand vs. Neubau, Lage und regionale Marktlage wirken sich ebenfalls auf die Konditionen aus, die eine Bank anbietet.</p></div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>Häufige Fragen</h2>
+    <div class="faq-item"><h3>Ist die Beratung bei einem Baufinanzierungsvermittler wirklich kostenlos?</h3><p>Ja, für dich als Kundin oder Kunde entstehen in der Regel keine Kosten. Der Vermittler erhält stattdessen eine Provision von der Bank, bei der du am Ende finanzierst — unabhängig davon, ob du am Ende überhaupt abschließt.</p></div>
+    <div class="faq-item"><h3>Sollte ich mehrere Vermittler gleichzeitig anfragen?</h3><p>Das ist grundsätzlich möglich und kann helfen, Konditionen zu vergleichen. Beachte aber, dass mehrere Anfragen in kurzer Zeit in Einzelfällen von Banken kritisch gesehen werden können — informiere dich vorab, wie der jeweilige Vermittler damit umgeht.</p></div>
+    <div class="faq-item"><h3>Lohnt sich die Hausbank oder ein unabhängiger Vermittler?</h3><p>Die Hausbank kennt dich bereits, hat aber nur ihr eigenes Zinsangebot. Ein unabhängiger Vermittler vergleicht mehrere hundert Banken gleichzeitig — in der Praxis lohnt sich oft, beide Wege parallel zu prüfen.</p></div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a><p class="tag">Unabhängige Vergleiche und Ratgeber für deine Finanzen.</p></div>
+      <div class="footer-col"><h4>Vergleiche</h4>
+        <a href="finanz-check.html">Finanz-Check</a>
+        <a href="broker.html">Broker</a>
+        <a href="girokonto.html">Girokonto</a>
+        <a href="depot.html">Depot</a>
+        <a href="kinderdepot.html">Kinderdepot</a>
+        <a href="kreditkarte.html">Kreditkarte</a>
+        <a href="tagesgeld.html">Tagesgeld</a>
+        <a href="kredite.html">Kredite</a>
+        <a href="baufinanzierung.html">Baufinanzierung</a>
+        <a href="versicherungen.html">Versicherungen</a>
+        <a href="etf-suche.html">ETF-Suche</a>
+        <a href="steuerprogramm.html">Steuerprogramm</a>
+      </div>
+      <div class="footer-col"><h4>Ratgeber & Rechner</h4>
+        <a href="ratgeber.html">Alle Artikel</a>
+        <a href="sparplanrechner.html">Sparplanrechner</a>
+        <a href="zinseszinsrechner.html">Zinseszinsrechner</a>
+        <a href="kreditrechner.html">Kreditrechner</a>
+        <a href="altersvorsorge-rechner.html">Altersvorsorge-Rechner</a>
+      </div>
+      <div class="footer-col"><h4>Über uns</h4>
+        <a href="ueber-uns.html">Methodik</a>
+        <a href="ueber-uns.html">Werbepartner</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+    <div class="footer-legal">Finanzpal erhält teils Provisionen von Partnern, wenn du über unsere Links eine Finanzierungsanfrage stellst. Das beeinflusst unsere Bewertungen nicht. Alle Angaben ohne Gewähr, keine Finanzberatung. © 2026 Finanzpal</div>
+  </div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/cross-sell.js"></script>
+<script src="assets/kk-skeleton.js"></script>
+<script src="assets/baufinanzierung-compare.js"></script>
+<script src="assets/compare-bar.js"></script>
+<script src="assets/finanz-profil.js"></script>
+</body>
+</html>
