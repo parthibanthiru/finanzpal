@@ -53,16 +53,6 @@
   }
 
   var renderers = {
-    broker: function (item) {
-      return '<tr class="' + (item.recommended ? 'pick' : '') + '">' +
-        '<td>' + brokerCell(item) + '</td>' +
-        '<td class="num-cell">' + item.depotfee + '</td>' +
-        '<td class="num-cell">' + item.orderfee + '</td>' +
-        '<td class="num-cell">' + item.sparplanAb + '</td>' +
-        '<td>' + ratingHtml(item.ratingStars, item.rating) + '</td>' +
-        '<td>' + ctaHtml(item) + '</td>' +
-        '</tr>';
-    },
     tagesgeld: function (item) {
       return '<tr class="' + (item.recommended ? 'pick' : '') + '">' +
         '<td>' + brokerCell(item) + '</td>' +

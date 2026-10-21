@@ -1,14 +1,14 @@
 (function () {
   var GROUPS = [
-    { label: 'Trade Republic', girokonto: 'trade-republic-girokonto', depot: 'trade-republic-depot', kreditkarte: 'trade-republic-visa' },
-    { label: 'Consorsbank', girokonto: 'consorsbank-girokonto', depot: 'consorsbank-depot', kreditkarte: 'consorsbank-visa' },
-    { label: 'comdirect', girokonto: 'comdirect-girokonto', depot: 'comdirect-depot' },
+    { label: 'Trade Republic', girokonto: 'trade-republic-girokonto', broker: 'trade-republic', kreditkarte: 'trade-republic-visa' },
+    { label: 'Consorsbank', girokonto: 'consorsbank-girokonto', broker: 'consorsbank', kreditkarte: 'consorsbank-visa' },
+    { label: 'comdirect', girokonto: 'comdirect-girokonto', broker: 'comdirect' },
     { label: 'C24', girokonto: 'c24-smart-girokonto', kreditkarte: 'c24-mastercard' }
   ];
 
   var PAGE_META = {
     girokonto: { url: 'girokonto.html', de: 'Girokonto-Vergleich', en: 'current account comparison' },
-    depot: { url: 'depot.html', de: 'Depot-Vergleich', en: 'custody account comparison' },
+    broker: { url: 'broker.html', de: 'Broker- &amp; Depot-Vergleich', en: 'broker &amp; custody account comparison' },
     kreditkarte: { url: 'kreditkarte.html', de: 'Kreditkarte-Vergleich', en: 'credit card comparison' }
   };
 

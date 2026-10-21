@@ -10,14 +10,14 @@
 
   var DATA_SRC = {
     girokonto: PREFIX + 'data/girokonto' + SUFFIX + '.json',
-    depot: PREFIX + 'data/depot' + SUFFIX + '.json',
+    depot: PREFIX + 'data/broker' + SUFFIX + '.json',
     kreditkarte: PREFIX + 'data/kreditkarte' + SUFFIX + '.json',
     tagesgeld: PREFIX + 'data/tagesgeld' + SUFFIX + '.json'
   };
 
   var PAGE_URL = {
     girokonto: PREFIX + 'girokonto.html',
-    depot: PREFIX + 'depot.html',
+    depot: PREFIX + 'broker.html',
     kreditkarte: PREFIX + 'kreditkarte.html',
     tagesgeld: PREFIX + 'tagesgeld.html'
   };
@@ -106,9 +106,9 @@
       guthabenzins: { wichtig: { 'comdirect-girokonto': 3, 'trade-republic-girokonto': 2, 'n26-standard': 1 }, egal: { 'c24-smart-girokonto': 1, 'dkb-girokonto': 1 } }
     },
     depot: {
-      bedingungslos: { wichtig: { 'trade-republic-depot': 3, 'scalable-capital-depot': 3, 'flatex-depot': 1 }, teils_ok: { 'comdirect-depot': 2, 'consorsbank-depot': 2 } },
-      investstil: { sparplan: { 'scalable-capital-depot': 3, 'trade-republic-depot': 2 }, einzelkauf: { 'flatex-depot': 2, 'comdirect-depot': 1 }, beides: { 'scalable-capital-depot': 2, 'trade-republic-depot': 2 } },
-      guthabenzins: { wichtig: { 'comdirect-depot': 3, 'scalable-capital-depot': 2, 'trade-republic-depot': 2 }, egal: { 'flatex-depot': 1 } }
+      bedingungslos: { wichtig: { 'trade-republic': 3, 'scalable-capital': 3, flatex: 1 }, teils_ok: { comdirect: 2, consorsbank: 2 } },
+      investstil: { sparplan: { 'scalable-capital': 3, 'trade-republic': 2 }, einzelkauf: { flatex: 2, comdirect: 1 }, beides: { 'scalable-capital': 2, 'trade-republic': 2 } },
+      guthabenzins: { wichtig: { comdirect: 3, 'scalable-capital': 2, 'trade-republic': 2 }, egal: { flatex: 1 } }
     },
     kreditkarte: {
       kartentyp: { ratenzahlung: { 'barclays-visa': 3, 'hanseatic-genialcard': 3 }, debitkarte: { 'trade-republic-visa': 2, 'c24-mastercard': 2, 'consorsbank-visa': 1 } },

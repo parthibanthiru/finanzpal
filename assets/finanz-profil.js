@@ -17,9 +17,9 @@
   }
 
   // id -> profile key, across the pages that share this concept
-  var BEDINGUNGSLOS_IDS = ['giro-filter-bedingungslos', 'depot-filter-frei', 'kk-filter-ohne'];
-  var ZINS_IDS = ['giro-filter-zins', 'depot-filter-zins'];
-  var RESET_IDS = ['giro-reset', 'depot-reset', 'kk-reset'];
+  var BEDINGUNGSLOS_IDS = ['giro-filter-bedingungslos', 'broker-filter-frei', 'kk-filter-ohne'];
+  var ZINS_IDS = ['giro-filter-zins', 'broker-filter-zins'];
+  var RESET_IDS = ['giro-reset', 'broker-reset', 'kk-reset'];
 
   document.addEventListener('DOMContentLoaded', function () {
     var profile = readProfile();

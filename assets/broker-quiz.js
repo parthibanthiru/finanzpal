@@ -8,8 +8,8 @@
   // data-source attributes are written per page — read it from the table
   // on the page instead of hardcoding, so this engine works unmodified at
   // either depth.
-  var tableEl = document.querySelector('table.compare[data-type="broker"]');
-  var baseSrc = tableEl ? tableEl.getAttribute('data-source') : 'data/broker.json';
+  var appEl = document.getElementById('broker-app');
+  var baseSrc = appEl ? appEl.getAttribute('data-source') : 'data/broker.json';
   var DATA_SRC = LANG === 'en' ? baseSrc.replace(/broker\.json$/, 'broker.en.json') : baseSrc;
 
   var STR = {
@@ -205,7 +205,7 @@
           '<div class="rating"><span class="stars">' + item.ratingStars + '</span><span class="score">' + (LANG === 'en' ? item.rating.toFixed(1) : item.rating.toFixed(1).replace('.', ',')) + '</span></div></div>' +
         '</div>' +
         '<div class="side-facts" style="margin:14px 0;">' +
-          '<div class="sf-row"><span class="k">' + (LANG === 'en' ? 'Custody fee' : 'Depotgebühr') + '</span><span class="v">' + escapeHtml(item.depotfee) + '</span></div>' +
+          '<div class="sf-row"><span class="k">' + (LANG === 'en' ? 'Custody fee' : 'Depotgebühr') + '</span><span class="v">' + escapeHtml(item.brokerDepotfee) + '</span></div>' +
           '<div class="sf-row"><span class="k">' + (LANG === 'en' ? 'Order fee' : 'Ordergebühr') + '</span><span class="v">' + escapeHtml(item.orderfee) + '</span></div>' +
           '<div class="sf-row"><span class="k">' + (LANG === 'en' ? 'Savings plan from' : 'Sparplan ab') + '</span><span class="v">' + escapeHtml(item.sparplanAb) + '</span></div>' +
         '</div>' +
@@ -248,8 +248,8 @@
           e.preventDefault();
           quizBox.hidden = true;
           toggleBtn.textContent = STR.toggleOpen;
-          var table = document.querySelector('table.compare');
-          if (table) table.scrollIntoView({ behavior: 'smooth' });
+          var results = document.querySelector('.kk-layout');
+          if (results) results.scrollIntoView({ behavior: 'smooth' });
         });
       });
     }

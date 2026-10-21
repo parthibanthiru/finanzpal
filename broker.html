@@ -4,8 +4,8 @@
 <script>(function(){try{var t=localStorage.getItem("fp-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Broker-Vergleich — Finanzpal</title>
-<meta name="description" content="Wir vergleichen Depotgebühren, Ordergebühren und ETF-Sparpläne führender Online-Broker — unabhängig von Provisionen.">
+<title>Broker- &amp; Depot-Vergleich: Gebühren, ETF-Sparpläne &amp; Konditionen — Finanzpal</title>
+<meta name="description" content="Wir vergleichen Depotgebühren, Ordergebühren, ETF-Sparpläne, Mindestsparrate und Guthabenzins führender Online-Broker — unabhängig von Provisionen.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -36,7 +36,6 @@
           <div class="nav-panel-divider"></div>
           <a href="girokonto.html">Girokonto</a>
           <a href="tagesgeld.html">Tagesgeld</a>
-          <a href="depot.html">Depot</a>
           <a href="kinderdepot.html">Kinderdepot</a>
           <a href="kreditkarte.html">Kreditkarte</a>
         </div>
@@ -83,14 +82,14 @@
 </header>
 
 <main class="wrap">
-  <p class="breadcrumb"><a href="index.html">Start</a> &nbsp;/&nbsp; Broker</p>
+  <p class="breadcrumb"><a href="index.html">Start</a> &nbsp;/&nbsp; Broker &amp; Depot</p>
   <section class="hero">
     <h1>Welcher Online-Broker passt zu dir?</h1>
-    <p class="lede">Wir vergleichen Depotgebühren, Ordergebühren und ETF-Sparpläne — unabhängig von der Provision, die wir erhalten, wenn du dich über uns anmeldest.</p>
+    <p class="lede">Wir vergleichen Depotgebühren, Ordergebühren, ETF-Sparpläne, Mindestsparrate und Guthabenzins — alles an einem Ort, unabhängig von der Provision, die wir erhalten, wenn du dich über uns anmeldest.</p>
     <div class="trust-bar">
       <div class="trust-item"><span class="num">10</span><span class="lbl">Broker verglichen</span></div>
-      <div class="trust-item"><span class="num">480+</span><span class="lbl">Gebührenpunkte geprüft</span></div>
-      <div class="trust-item"><span class="num" id="last-updated">—</span><span class="lbl">Zuletzt aktualisiert</span></div>
+      <div class="trust-item"><span class="num">ab 1 €</span><span class="lbl">niedrigste Mindestsparrate</span></div>
+      <div class="trust-item"><span class="num" id="broker-last-updated">—</span><span class="lbl">Zuletzt aktualisiert</span></div>
     </div>
     <div class="best-rate-banner">
       <div><div class="brl">Aktuell beste Empfehlung</div><div class="brv">Scalable Capital — 0 € Depotgebühr (Free Broker), Sparplan ab 1 €</div></div>
@@ -102,28 +101,58 @@
       <div id="quiz-question-area"></div>
     </div>
   </section>
-  <section class="filters">
-    <span class="chip active">Alle</span><span class="chip">Aktien &amp; ETF</span><span class="chip">Sparplanfähig</span><span class="chip">Ohne Depotgebühr</span><span class="chip">Für Einsteiger</span>
+
+  <section class="kk-layout">
+    <aside class="kk-filters">
+      <div class="kk-filters-head"><h2>Filter</h2><button type="button" id="broker-reset" class="kk-reset-btn">Filter zurücksetzen</button></div>
+      <div class="kk-filter-group">
+        <h3>Eigenschaften</h3>
+        <label class="kk-check"><input type="checkbox" id="broker-filter-frei"> Depotführung bedingungslos kostenlos</label>
+        <label class="kk-check"><input type="checkbox" id="broker-filter-zins"> Zinsen auf Verrechnungskonto</label>
+      </div>
+      <div class="kk-filter-group">
+        <h3>Max. Mindestsparrate</h3>
+        <select id="broker-rate-select" class="kk-select">
+          <option value="alle">Alle</option>
+          <option value="1">bis 1 €</option>
+          <option value="10">bis 10 €</option>
+          <option value="25">bis 25 €</option>
+        </select>
+      </div>
+    </aside>
+    <div class="kk-main">
+      <div class="kk-toolbar">
+        <span id="broker-count" class="kk-count"></span>
+        <select id="broker-sort-select" class="kk-select" style="width:auto;">
+          <option value="rate">Sortieren: Mindestsparrate aufsteigend</option>
+          <option value="zins">Sortieren: Guthabenzins absteigend</option>
+          <option value="rating">Sortieren: Bewertung absteigend</option>
+          <option value="name">Sortieren: Name A–Z</option>
+        </select>
+      </div>
+      <div id="broker-app" data-source="data/broker.json">
+        <div id="broker-results" class="kk-results"></div>
+      </div>
+      <p class="disclosure-note">¹ Bei mind. 1 Trade pro Quartal oder ab 25.000 € Depotwert. Werbung: Finanzpal erhält ggf. eine Provision, wenn du über einen Link ein Konto eröffnest. Das beeinflusst unsere Bewertung nicht — Details siehe <a href="ueber-uns.html" style="text-decoration:underline;">Methodik</a>. Konditionen Stand Oktober 2026, zusammengestellt aus Anbieter-Websites, justETF.com und unabhängigen Depot-Testportalen (u. a. capitalo.de, reisetopia.de). Mehrere Quellen widersprechen sich teils bei Detailfragen (z. B. genaue Anzahl kostenloser ETF-Sparpläne oder Höhe des Guthabenzinses) — solche Stellen sind entsprechend gekennzeichnet. Bitte prüfe Konditionen vor Kontoeröffnung immer direkt beim Anbieter.</p>
+    </div>
   </section>
-  <section class="table-scroll">
-    <table class="compare" data-source="data/broker.json" data-type="broker">
-      <thead><tr><th>Broker</th><th>Depotgebühr</th><th>Order (Aktie)</th><th>ETF-Sparplan</th><th>Bewertung</th><th></th></tr></thead>
-      <tbody><tr class="loading-row"><td colspan="6">Lade Vergleichsdaten …</td></tr></tbody>
-    </table>
-    <p class="disclosure-note">¹ Bei mind. 1 Trade pro Quartal oder ab 25.000 € Depotwert. Werbung: Finanzpal erhält ggf. eine Provision, wenn du über einen Link ein Konto eröffnest. Das beeinflusst unsere Bewertung nicht — Details siehe <a href="ueber-uns.html" style="text-decoration:underline;">Methodik</a>. Konditionen Stand Oktober 2026, Quelle: justETF.com — bitte vor Kontoeröffnung aktuelle Konditionen beim Anbieter prüfen.</p>
-  </section>
+
   <section class="method">
     <div><h2>Wie wir vergleichen</h2><p>Jeder Broker wird anhand derselben Kriterien geprüft, unabhängig davon, ob und wie viel Provision wir erhalten. Die Rohdaten aktualisieren wir vierteljährlich direkt aus den Preisverzeichnissen der Anbieter.</p></div>
     <div class="criteria">
       <div class="criterion"><h3>Kosten</h3><p>Depotführung, Orderentgelte und Sparplankosten über typische Anlagesummen hinweg.</p></div>
-      <div class="criterion"><h3>Angebot</h3><p>Verfügbare ETFs, Aktienmärkte und Sparplan-Mindestbeiträge.</p></div>
+      <div class="criterion"><h3>ETF-Sparplan-Auswahl</h3><p>Wie viele ETFs stehen als Sparplan zur Verfügung, und wie viele davon sind gebührenfrei besparbar?</p></div>
+      <div class="criterion"><h3>Mindestsparrate &amp; Guthabenzins</h3><p>Der kleinste Betrag pro Sparplan-Ausführung sowie die Verzinsung von nicht angelegtem Geld auf dem Verrechnungskonto.</p></div>
       <div class="criterion"><h3>Nutzung</h3><p>App-Bedienbarkeit, Kontoeröffnung und Erfahrungsberichte aus unserer Leserschaft.</p></div>
     </div>
   </section>
+
   <section class="faq">
     <h2>Häufige Fragen</h2>
-    <div class="faq-item"><h3>Warum ist Trade Republic eure Empfehlung?</h3><p>Für die meisten Einsteiger überwiegt die Kombination aus niedrigen Ordergebühren und kostenlosen Sparplänen. Wer viele Einzelorders pro Monat aufgibt, fährt bei anderen Brokern teils günstiger — siehe Tabelle.</p></div>
-    <div class="faq-item"><h3>Verdient Finanzpal an eurer Empfehlung?</h3><p>Ja, über Partnerlinks. Die Reihenfolge in der Tabelle richtet sich nach unseren Kriterien, nicht nach der Provisionshöhe.</p></div>
+    <div class="faq-item"><h3>Warum ist Trade Republic eure Empfehlung?</h3><p>Für die meisten Einsteiger überwiegt die Kombination aus niedrigen Ordergebühren, kostenlosen Sparplänen und Guthabenzins. Wer viele Einzelorders pro Monat aufgibt oder eine besonders große ETF-Auswahl braucht, fährt bei anderen Brokern teils besser — siehe Karten oben.</p></div>
+    <div class="faq-item"><h3>Lohnt sich ein Depot mit Gebühr?</h3><p>Nur wenn die Bedingungen zum Erlass (z. B. aktiver Sparplan, Mindestanzahl Trades) für dich ohnehin erfüllt sind oder zusätzliche Leistungen den Preis rechtfertigen. Für reines Sparplan-Investieren gibt es mehrere dauerhaft kostenlose Alternativen.</p></div>
+    <div class="faq-item"><h3>Warum verzinsen manche Broker mein Guthaben, andere nicht?</h3><p>Broker, die ihr eigenes Tagesgeld- oder Verrechnungskonto anbieten, können nicht angelegtes Geld oft attraktiver verzinsen als klassische Banken. Bei einigen Anbietern ist der Zins nicht transparent ausgewiesen oder nur als befristete Neukundenaktion verfügbar.</p></div>
+    <div class="faq-item"><h3>Verdient Finanzpal an eurer Empfehlung?</h3><p>Ja, über Partnerlinks. Die Reihenfolge richtet sich nach unseren Kriterien, nicht nach der Provisionshöhe.</p></div>
     <div class="faq-item"><h3>Wie oft aktualisiert ihr die Daten?</h3><p>Mindestens vierteljährlich, bei größeren Preisänderungen der Anbieter sofort.</p></div>
   </section>
 </main>
@@ -134,9 +163,8 @@
       <div><a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a><p class="tag">Unabhängige Vergleiche und Ratgeber für deine Finanzen.</p></div>
       <div class="footer-col"><h4>Vergleiche</h4>
         <a href="finanz-check.html">Finanz-Check</a>
-        <a href="broker.html">Broker</a>
+        <a href="broker.html">Broker &amp; Depot</a>
         <a href="girokonto.html">Girokonto</a>
-        <a href="depot.html">Depot</a>
         <a href="kinderdepot.html">Kinderdepot</a>
         <a href="kreditkarte.html">Kreditkarte</a>
         <a href="tagesgeld.html">Tagesgeld</a>
@@ -168,7 +196,11 @@
 </footer>
 
 <script src="assets/nav.js"></script>
-<script src="assets/compare.js"></script>
+<script src="assets/cross-sell.js"></script>
+<script src="assets/kk-skeleton.js"></script>
+<script src="assets/broker-compare.js"></script>
+<script src="assets/compare-bar.js"></script>
+<script src="assets/finanz-profil.js"></script>
 <script src="assets/broker-quiz.js"></script>
 </body>
 </html>

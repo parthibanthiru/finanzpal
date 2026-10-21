@@ -35,7 +35,6 @@ FILE_TO_KEY = {
     "finanz-check.html": ("konten", "finanz-check.html"),
     "girokonto.html": ("konten", "girokonto.html"),
     "tagesgeld.html": ("konten", "tagesgeld.html"),
-    "depot.html": ("konten", "depot.html"),
     "kinderdepot.html": ("konten", "kinderdepot.html"),
     "kreditkarte.html": ("konten", "kreditkarte.html"),
     # Kredite group
@@ -73,7 +72,7 @@ FILE_TO_KEY = {
 
 DE_PANELS = {
     "broker": [("broker.html", "Online-Broker"), ("etf-suche.html", "ETF-Suche")],
-    "konten": [("finanz-check.html", "Finanz-Check"), ("girokonto.html", "Girokonto"), ("tagesgeld.html", "Tagesgeld"), ("depot.html", "Depot"), ("kinderdepot.html", "Kinderdepot"), ("kreditkarte.html", "Kreditkarte")],
+    "konten": [("finanz-check.html", "Finanz-Check"), ("girokonto.html", "Girokonto"), ("tagesgeld.html", "Tagesgeld"), ("kinderdepot.html", "Kinderdepot"), ("kreditkarte.html", "Kreditkarte")],
     "kredite": [("kredite.html", "Ratenkredit"), ("baufinanzierung.html", "Baufinanzierung")],
     "versicherungen": [("versicherungen.html", "Privathaftpflicht"), ("versicherungen.html#hausrat", "Hausrat"), ("versicherungen.html#berufsunfaehigkeit", "Berufsunfähigkeit"), ("versicherungen.html#rechtsschutz", "Rechtsschutz"), ("versicherungen.html#kfz", "Kfz")],
     "rechner": [("sparplanrechner.html", "Sparplanrechner"), ("zinseszinsrechner.html", "Zinseszinsrechner"), ("kreditrechner.html", "Kreditrechner"), ("baufinanzierungsrechner.html", "Baufinanzierungsrechner"), ("nettolohnrechner.html", "Nettolohnrechner"), ("haushaltsbuch.html", "Haushaltsbuch"), ("altersvorsorge-rechner.html", "Altersvorsorge-Rechner")],
@@ -83,7 +82,7 @@ DE_PLAIN = {"steuerprogramm": ("steuerprogramm.html", "Steuerprogramm"), "ratgeb
 
 EN_PANELS = {
     "broker": [("broker.html", "Online broker"), ("etf-suche.html", "ETF search")],
-    "konten": [("finanz-check.html", "Finanz-Check"), ("girokonto.html", "Current account"), ("tagesgeld.html", "Savings"), ("depot.html", "Custody account"), ("kinderdepot.html", "Children&#39;s custody account"), ("kreditkarte.html", "Credit cards")],
+    "konten": [("finanz-check.html", "Finanz-Check"), ("girokonto.html", "Current account"), ("tagesgeld.html", "Savings"), ("kinderdepot.html", "Children&#39;s custody account"), ("kreditkarte.html", "Credit cards")],
     "kredite": [("kredite.html", "Installment loan"), ("baufinanzierung.html", "Mortgages")],
     "versicherungen": [("versicherungen.html", "Personal liability"), ("versicherungen.html#hausrat", "Home contents"), ("versicherungen.html#berufsunfaehigkeit", "Disability (BU)"), ("versicherungen.html#rechtsschutz", "Legal protection"), ("versicherungen.html#kfz", "Car insurance")],
     "rechner": [("sparplanrechner.html", "Savings Plan Calculator"), ("zinseszinsrechner.html", "Compound Interest Calculator"), ("kreditrechner.html", "Loan Calculator"), ("baufinanzierungsrechner.html", "Mortgage Calculator"), ("nettolohnrechner.html", "Net Salary Calculator"), ("haushaltsbuch.html", "Budget Tracker"), ("altersvorsorge-rechner.html", "Retirement savings calculator")],

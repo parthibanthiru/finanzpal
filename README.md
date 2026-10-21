@@ -16,10 +16,9 @@ gibt es doppelt: einmal auf Deutsch im Projekt-Root, einmal auf Englisch unter
 **Vergleiche**
 | Seite | Inhalt |
 |---|---|
-| `broker.html` (+ 3 Detailseiten) | Online-Broker-Vergleich, JSON-gespeist |
+| `broker.html` (+ 3 Detailseiten) | Broker- & Depot-Vergleich in einer Seite: Depot-/Ordergebühr, ETF-Sparpläne, Mindestsparrate, Guthabenzins, Rating — kartenbasiert (ehemals zwei getrennte Seiten `broker.html`/`depot.html`, seit Oktober 2026 zusammengeführt) |
 | `girokonto.html` | Girokonto-Vergleich |
 | `tagesgeld.html` | Tagesgeld-Vergleich |
-| `depot.html` | Depot-Vergleich (ETF-Sparpläne, Zinsen, Konditionen) |
 | `kinderdepot.html` | Junior-/Kinderdepot-Vergleich, mit Filter „ohne eigenes Elterndepot" |
 | `kreditkarte.html` | Kreditkarten-Vergleich, Karten- und Tabellenansicht |
 | `kredite.html` | Ratenkredit-Vergleich |
@@ -27,7 +26,7 @@ gibt es doppelt: einmal auf Deutsch im Projekt-Root, einmal auf Englisch unter
 | `versicherungen.html` | 5 Tabs: Privathaftpflicht / Hausrat / Berufsunfähigkeit / Rechtsschutz / Kfz, jeder Tab mit eigenem JSON |
 | `etf-suche.html` | ETF-Suche mit Filtern (Anlageklasse, TER, Replikation …) |
 | `steuerprogramm.html` | Steuererklärungs-Software-Vergleich |
-| `finanz-check.html` | Quiz/Empfehlungstool über Girokonto, Depot, Kreditkarte, Tagesgeld |
+| `finanz-check.html` | Quiz/Empfehlungstool über Girokonto, Broker/Depot, Kreditkarte, Tagesgeld |
 
 **Rechner**
 | Seite | Inhalt |
@@ -44,7 +43,10 @@ gibt es doppelt: einmal auf Deutsch im Projekt-Root, einmal auf Englisch unter
 Icon + Akzentfarbe, siehe unten); aktuell 10 Artikel über 6 Kategorien
 (Investieren / Zahlen / Sparen / Finanzieren / Absichern / Vorsorge):
 ETF-Sparplan, Kreditkarte, Tagesgeld-vs-Festgeld, Ratenkredit, Haftpflicht,
-Berufsunfähigkeit, Girokonto, Depot, Steuerprogramm, Altersvorsorgedepot.
+Berufsunfähigkeit, Girokonto, Depot, Steuerprogramm, Altersvorsorgedepot. Der
+Depot-Guide-Artikel (`ratgeber-depot-guide.html`) verlinkt seit der
+Broker/Depot-Zusammenführung auf den gemeinsamen Broker- & Depot-Vergleich
+(`broker.html`) statt auf eine eigene Depot-Seite.
 
 **Sonstiges:** `index.html` (Startseite), `ueber-uns.html` (Methodik),
 `impressum.html` / `datenschutz.html` (**Platzhalter, siehe unten**),
@@ -54,14 +56,15 @@ Berufsunfähigkeit, Girokonto, Depot, Steuerprogramm, Altersvorsorgedepot.
 
 ```
 finanzpal-production/
-├── *.html                      37 Seiten auf Deutsch (siehe Seitenübersicht oben)
+├── *.html                      36 Seiten auf Deutsch (siehe Seitenübersicht oben)
 ├── en/                         Komplette englische Spiegelung aller Seiten
 ├── sitemap.xml / robots.txt
 ├── data/
-│   ├── broker.json / .en.json            Broker-Vergleichsdaten
+│   ├── broker.json / .en.json            Broker- & Depot-Vergleichsdaten (zusammengeführt,
+│   │                                      ein Eintrag pro Anbieter mit allen Feldern aus
+│   │                                      beiden ehemaligen Datensätzen)
 │   ├── girokonto.json / .en.json         Girokonto-Vergleichsdaten
 │   ├── tagesgeld.json / .en.json         Tagesgeld-Vergleichsdaten
-│   ├── depot.json / .en.json             Depot-Vergleichsdaten
 │   ├── kinderdepot.json / .en.json       Kinderdepot-Vergleichsdaten
 │   ├── kredite.json / .en.json           Ratenkredit-Vergleichsdaten
 │   ├── kreditkarte.json / .en.json       Kreditkarten-Vergleichsdaten
@@ -77,14 +80,15 @@ finanzpal-production/
 │   ├── style.css                   Gemeinsames Stylesheet (ein Design-System für alle Seiten,
 │   │                                 inkl. Light/Dark-Theme über CSS-Variablen in :root)
 │   ├── nav.js                      Mobiles Menü (Hamburger-Toggle), Dropdown-Logik für die
-│   │                                Nav-Gruppen (Broker / Konten & Depots / Kredite / Rechner),
+│   │                                Nav-Gruppen (Broker / Konten & Depots / Kredite /
+│   │                                Versicherungen / Rechner),
 │   │                                Dark-Mode-Toggle
 │   ├── compare.js                  Rendert die generischen Vergleichstabellen aus JSON;
 │   │                                exponiert window.FPCompare.renderTable()
 │   ├── insurance-tabs.js           Schaltet die 5 Versicherungs-Tabs um
 │   ├── broker-quiz.js / finanz-check.js / finanz-profil.js / cross-sell.js
 │   │                                Finanz-Check-Quiz und produktübergreifende Empfehlungslogik
-│   ├── depot-compare.js / kinderdepot-compare.js / girokonto-compare.js /
+│   ├── broker-compare.js / kinderdepot-compare.js / girokonto-compare.js /
 │   │   kreditkarte-compare.js / baufinanzierung-compare.js / steuer-compare.js
 │   │                                Seiteneigene Renderer mit Filtern/Sortierung (eigene
 │   │                                Renderlogik statt des generischen compare.js, da jede
@@ -110,9 +114,9 @@ finanzpal-production/
 
 Die Top-Nav ist über alle Seiten identisch und gruppiert die ursprünglich
 8 Einzel-Links in Dropdowns, damit auch Seiten ohne eigenen Nav-Slot (z. B.
-Depot, Girokonto, Baufinanzierung, alle Rechner) von oben erreichbar sind:
-**Broker ▾** (Online-Broker, ETF-Suche) ·
-**Konten & Depots ▾** (Finanz-Check, Girokonto, Tagesgeld, Depot,
+Girokonto, Baufinanzierung, alle Rechner) von oben erreichbar sind:
+**Broker ▾** (Online-Broker & Depot, ETF-Suche) ·
+**Konten & Depots ▾** (Finanz-Check, Girokonto, Tagesgeld,
 Kinderdepot, Kreditkarte) · **Kredite ▾** (Ratenkredit, Baufinanzierung) ·
 **Versicherungen ▾** (Privathaftpflicht, Hausrat, Berufsunfähigkeit,
 Rechtsschutz, Kfz) · **Steuerprogramm** · **Rechner ▾** (alle 7 Rechner) ·
@@ -122,6 +126,14 @@ Neue Unterseite ergänzen = neuen `<a>`-Eintrag im passenden Dropdown-Panel in
 jeder betroffenen `.html`-Datei (es gibt kein serverseitiges Nav-Template) —
 dafür `tools/build_nav.py` ausführen statt von Hand zu editieren, siehe
 `tools/README.md`.
+
+Seit Oktober 2026 sind der frühere eigenständige Depot-Vergleich (`depot.html`)
+und der Online-Broker-Vergleich zu einer Seite verschmolzen (`broker.html`,
+unter dem **Broker**-Dropdown): eine kartenbasierte Ansicht (Filter, Sortierung,
+„Vergleichen"-Leiste) zeigt pro Anbieter Depot-/Ordergebühr, ETF-Sparplan-Auswahl,
+Mindestsparrate, Guthabenzins, Verwahrentgelt und Bewertung in einer Karte,
+gespeist aus der zusammengeführten `data/broker.json` (ein Eintrag pro Anbieter
+statt zweier getrennter Datensätze mit unterschiedlichen IDs).
 
 Die vier Versicherungen-Dropdown-Einträge außer Privathaftpflicht verlinken
 auf `versicherungen.html#hausrat` / `#berufsunfaehigkeit` / `#rechtsschutz` /
@@ -235,6 +247,15 @@ drei Stellen einsetzen.
    echten Partnerlinks (siehe Launch-Liste unten).
 5. **Filter-Chips auf `ratgeber.html`** (Alle/Investieren/Zahlen/…) sind noch
    rein optisch — kein JS filtert die Artikelkarten danach.
+6. **Scalable Capital: zwei leicht widersprüchliche Depotgebühr-Angaben
+   zusammengeführt.** Der ehemalige `broker.json`-Eintrag nannte die
+   gestaffelte Gebühr „0 € (Free Broker) / 4,99 €/Monat (Prime+)", der
+   ehemalige `depot.json`-Eintrag pauschal „0 €/Jahr". Nach der
+   Broker/Depot-Zusammenführung zeigt die Karte die differenziertere
+   `brokerDepotfee` als Hauptangabe; das Flag `depotgebuehrBedingungslos: true`
+   aus dem Depot-Datensatz steht weiter für den „Depotführung bedingungslos
+   kostenlos"-Filter/Badge. Vor Launch beim Anbieter verifizieren, welche
+   Angabe tatsächlich zutrifft.
 
 ## Vor dem Launch unbedingt erledigen
 
