@@ -577,3 +577,27 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .lohn-field-inline { margin: 10px 0 18px; font-size: 13px; color: var(--ink-soft); }
 .lohn-field-inline label { display: block; margin-bottom: 6px; }
 .lohn-field-inline select { font-family: var(--font-body); font-size: 14px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-raised); color: var(--ink); width: 100%; max-width: 100%; }
+
+/* Haushaltsbuch (budget tracker) */
+.hb-form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 8px; }
+.hb-form .hb-field-full { grid-column: 1 / -1; }
+.hb-form label { display: block; font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; }
+.hb-form select, .hb-form input[type="text"], .hb-form input[type="number"] { width: 100%; font-family: var(--font-body); font-size: 14px; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-raised); color: var(--ink); box-sizing: border-box; }
+.hb-form .cta-btn { grid-column: 1 / -1; border: none; cursor: pointer; margin-top: 4px; }
+@media (max-width: 480px) { .hb-form { grid-template-columns: 1fr; } }
+.result-card.hb-negative .rc-val { color: var(--gold); }
+.hb-list { margin: 20px 0; }
+.hb-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.hb-row:last-child { border-bottom: none; }
+.hb-row-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.hb-desc { font-size: 14.5px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hb-kat { font-size: 12px; color: var(--ink-soft); }
+.hb-amt { font-family: var(--font-display); font-weight: 600; font-size: 15px; white-space: nowrap; }
+.hb-amt-in { color: var(--green-deep); }
+.hb-amt-out { color: var(--gold); }
+.hb-del { border: none; background: transparent; color: var(--ink-soft); font-size: 20px; line-height: 1; cursor: pointer; padding: 4px 8px; border-radius: 6px; }
+.hb-del:hover { background: var(--bg); color: var(--ink); }
+.hb-cat-row { margin-bottom: 14px; }
+.hb-cat-head { display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 6px; }
+.hb-cat-bar-track { height: 8px; border-radius: 100px; background: var(--line); overflow: hidden; }
+.hb-cat-bar-fill { height: 100%; background: var(--green-deep); border-radius: 100px; }

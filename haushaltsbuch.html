@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<script>(function(){try{var t=localStorage.getItem("fp-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Haushaltsbuch: Kostenloser Budget-Tracker — Finanzpal</title>
+<meta name="description" content="Kostenloses Online-Haushaltsbuch: Erfasse Einnahmen und Ausgaben, behalte deinen Saldo im Blick und sieh, wofür du dein Geld ausgibst. Deine Daten bleiben in deinem Browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="alternate" hreflang="de" href="/haushaltsbuch.html">
+<link rel="alternate" hreflang="en" href="/en/haushaltsbuch.html">
+<link rel="alternate" hreflang="x-default" href="/haushaltsbuch.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-512.png">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a>
+    <nav class="top">
+      <a href="broker.html">Broker</a>
+      <a href="kreditkarte.html">Kreditkarte</a>
+      <a href="tagesgeld.html">Tagesgeld</a>
+      <a href="kredite.html">Kredite</a>
+      <a href="versicherungen.html">Versicherungen</a>
+      <a href="sparplanrechner.html" class="active">Rechner</a>
+      <a href="ratgeber.html">Ratgeber</a>
+      <a href="ueber-uns.html">Über uns</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch" aria-label="Sprache wählen"><span class="lang-opt active" aria-current="true">DE</span><a href="en/haushaltsbuch.html" class="lang-opt" hreflang="en" lang="en">EN</a></div>
+      <div class="search-btn">⌕</div>
+      <button class="nav-toggle" aria-label="Menü">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="breadcrumb"><a href="index.html">Start</a> &nbsp;/&nbsp; Rechner &nbsp;/&nbsp; Haushaltsbuch</p>
+  <section class="hero" style="padding-bottom:8px;">
+    <h1>Haushaltsbuch</h1>
+    <p class="lede">Erfasse deine Einnahmen und Ausgaben, behalte deinen Saldo im Blick und sieh auf einen Blick, wofür dein Geld tatsächlich draufgeht.</p>
+  </section>
+
+  <div class="calc-page-layout">
+    <div class="calc-inputs">
+      <h2>NEUE BUCHUNG</h2>
+      <form id="hb-form" class="hb-form">
+        <div>
+          <label for="hb-typ">Typ</label>
+          <select id="hb-typ">
+            <option value="ausgabe">Ausgabe</option>
+            <option value="einnahme">Einnahme</option>
+          </select>
+        </div>
+        <div>
+          <label for="hb-kategorie">Kategorie</label>
+          <select id="hb-kategorie"></select>
+        </div>
+        <div class="hb-field-full">
+          <label for="hb-beschreibung">Beschreibung (optional)</label>
+          <input type="text" id="hb-beschreibung" placeholder="z. B. Miete Oktober" maxlength="60">
+        </div>
+        <div class="hb-field-full">
+          <label for="hb-betrag">Betrag in €</label>
+          <input type="number" id="hb-betrag" min="0.01" step="0.01" placeholder="0,00" required>
+        </div>
+        <button type="submit" class="cta-btn">Buchung hinzufügen</button>
+      </form>
+      <p class="calc-disclaimer" style="margin-top:16px;">Deine Buchungen werden ausschließlich in deinem Browser gespeichert (localStorage) — es gibt keinen Login und keinen Server, der deine Daten sieht. Das bedeutet aber auch: Auf einem anderen Gerät oder Browser sind deine Einträge nicht sichtbar, und beim Löschen deiner Browserdaten gehen sie verloren.</p>
+      <button type="button" id="hb-reset" class="cta-btn secondary" style="width:100%;margin-top:8px;">Alle Buchungen löschen</button>
+    </div>
+
+    <div class="calc-results">
+      <div class="result-cards">
+        <div class="result-card"><div class="rc-label">Einnahmen</div><div class="rc-val" id="hb-result-einnahmen">0 €</div></div>
+        <div class="result-card"><div class="rc-label">Ausgaben</div><div class="rc-val" id="hb-result-ausgaben">0 €</div></div>
+        <div class="result-card highlight"><div class="rc-label">Saldo</div><div class="rc-val" id="hb-result-saldo">0 €</div></div>
+      </div>
+
+      <div class="chart-card">
+        <h3>AUSGABEN NACH KATEGORIE</h3>
+        <div id="hb-breakdown"></div>
+      </div>
+
+      <div class="chart-card" style="margin-top:20px;">
+        <h3>DEINE BUCHUNGEN</h3>
+        <div id="hb-list" class="hb-list"></div>
+      </div>
+
+      <section class="method" style="padding:24px 0 8px;grid-template-columns:1fr;">
+        <div>
+          <h2 style="font-size:20px;">Tipps für dein Haushaltsbuch</h2>
+          <p style="max-width:70ch;">Trage am besten jede Ausgabe zeitnah ein, statt am Monatsende aus dem Gedächtnis zu rekonstruieren — so bekommst du ein realistisches Bild. Viele unterschätzen vor allem kleinere, häufige Ausgaben (Lieferdienste, Abos, Spontankäufe). Die Kategorie-Aufschlüsselung hilft dir zu sehen, wo sich sparen tatsächlich lohnt.</p>
+        </div>
+      </section>
+
+      <section class="faq" style="margin-top:0;padding-top:32px;">
+        <h2>Häufige Fragen</h2>
+        <div class="faq-item"><h3>Sind meine Daten sicher?</h3><p>Deine Buchungen verlassen deinen Browser nie — wir speichern und sehen nichts davon. Das hat aber den Nachteil, dass die Daten an ein Gerät und einen Browser gebunden sind.</p></div>
+        <div class="faq-item"><h3>Wie oft sollte ich mein Haushaltsbuch aktualisieren?</h3><p>Am besten wöchentlich oder sogar direkt nach größeren Ausgaben — je länger du wartest, desto mehr Buchungen vergisst du.</p></div>
+        <div class="faq-item"><h3>Was mache ich, wenn meine Ausgaben meine Einnahmen übersteigen?</h3><p>Ein negativer Saldo ist ein wichtiges Warnsignal. Schau dir die Kategorie-Aufschlüsselung an — oft lässt sich bei Freizeit & Shopping oder Abos am einfachsten ansetzen, bevor es an fixe Kosten wie Wohnen geht.</p></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a><p class="tag">Unabhängige Vergleiche und Ratgeber für deine Finanzen.</p></div>
+      <div class="footer-col"><h4>Vergleiche</h4>
+        <a href="finanz-check.html">Finanz-Check</a>
+        <a href="broker.html">Broker</a>
+        <a href="girokonto.html">Girokonto</a>
+        <a href="depot.html">Depot</a>
+        <a href="kinderdepot.html">Kinderdepot</a>
+        <a href="kreditkarte.html">Kreditkarte</a>
+        <a href="tagesgeld.html">Tagesgeld</a>
+        <a href="kredite.html">Kredite</a>
+        <a href="baufinanzierung.html">Baufinanzierung</a>
+        <a href="versicherungen.html">Versicherungen</a>
+        <a href="etf-suche.html">ETF-Suche</a>
+        <a href="steuerprogramm.html">Steuerprogramm</a>
+      </div>
+      <div class="footer-col"><h4>Ratgeber & Rechner</h4>
+        <a href="ratgeber.html">Alle Artikel</a>
+        <a href="sparplanrechner.html">Sparplanrechner</a>
+        <a href="zinseszinsrechner.html">Zinseszinsrechner</a>
+        <a href="kreditrechner.html">Kreditrechner</a>
+        <a href="baufinanzierungsrechner.html">Baufinanzierungsrechner</a>
+        <a href="nettolohnrechner.html">Nettolohnrechner</a>
+        <a href="haushaltsbuch.html">Haushaltsbuch</a>
+        <a href="altersvorsorge-rechner.html">Altersvorsorge-Rechner</a>
+      </div>
+      <div class="footer-col"><h4>Über uns</h4>
+        <a href="ueber-uns.html">Methodik</a>
+        <a href="ueber-uns.html">Werbepartner</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+    <div class="footer-legal">Finanzpal erhält teils Provisionen von Partnern. Das beeinflusst unsere Bewertungen nicht. Alle Angaben ohne Gewähr. © 2026 Finanzpal</div>
+  </div>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/haushaltsbuch.js"></script>
+</body>
+</html>
