@@ -111,11 +111,11 @@ finanzpal-production/
 Die Top-Nav ist über alle Seiten identisch und gruppiert die ursprünglich
 8 Einzel-Links in Dropdowns, damit auch Seiten ohne eigenen Nav-Slot (z. B.
 Depot, Girokonto, Baufinanzierung, alle Rechner) von oben erreichbar sind:
-**Broker ▾** (Online-Broker, ETF-Suche, Steuerprogramm) · **Kreditkarte** ·
+**Broker ▾** (Online-Broker, ETF-Suche) ·
 **Konten & Depots ▾** (Finanz-Check, Girokonto, Tagesgeld, Depot,
-Kinderdepot) · **Kredite ▾** (Ratenkredit, Baufinanzierung) ·
-**Versicherungen** · **Rechner ▾** (alle 7 Rechner) · **Ratgeber** ·
-**Über uns**. Öffnet per Klick und (auf Geräten mit Maus) per Hover, klappt
+Kinderdepot, Kreditkarte) · **Kredite ▾** (Ratenkredit, Baufinanzierung) ·
+**Versicherungen** · **Steuerprogramm** · **Rechner ▾** (alle 7 Rechner) ·
+**Ratgeber** · **Über uns**. Öffnet per Klick und (auf Geräten mit Maus) per Hover, klappt
 auf Mobile zu einer flachen, eingerückten Liste unter dem Hamburger-Menü auf.
 Neue Unterseite ergänzen = neuen `<a>`-Eintrag im passenden Dropdown-Panel in
 jeder betroffenen `.html`-Datei (es gibt kein serverseitiges Nav-Template) —
