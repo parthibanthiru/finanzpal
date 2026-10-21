@@ -115,9 +115,9 @@ finanzpal-production/
 Die Top-Nav ist über alle Seiten identisch und gruppiert die ursprünglich
 8 Einzel-Links in Dropdowns, damit auch Seiten ohne eigenen Nav-Slot (z. B.
 Girokonto, Baufinanzierung, alle Rechner) von oben erreichbar sind:
-**Broker ▾** (Online-Broker & Depot, ETF-Suche) ·
-**Konten & Depots ▾** (Finanz-Check, Girokonto, Tagesgeld,
-Kinderdepot, Kreditkarte) · **Kredite ▾** (Ratenkredit, Baufinanzierung) ·
+**Konten & Depots ▾** (Finanz-Check, Girokonto, Tagesgeld, Kreditkarte) ·
+**Broker ▾** (Broker & Depot, Kinderdepot, ETF-Suche) ·
+**Kredite ▾** (Ratenkredit, Baufinanzierung) ·
 **Versicherungen ▾** (Privathaftpflicht, Hausrat, Berufsunfähigkeit,
 Rechtsschutz, Kfz) · **Steuerprogramm** · **Rechner ▾** (alle 7 Rechner) ·
 **Ratgeber** · **Über uns**. Öffnet per Klick und (auf Geräten mit Maus) per Hover, klappt
@@ -126,6 +126,14 @@ Neue Unterseite ergänzen = neuen `<a>`-Eintrag im passenden Dropdown-Panel in
 jeder betroffenen `.html`-Datei (es gibt kein serverseitiges Nav-Template) —
 dafür `tools/build_nav.py` ausführen statt von Hand zu editieren, siehe
 `tools/README.md`.
+
+Stand Oktober 2026: **Konten & Depots** steht jetzt als erste Gruppe links
+(häufigster Einstiegspunkt), **Kinderdepot** ist aus Konten & Depots in die
+**Broker**-Gruppe gewandert (inhaltlich näher an Depot/Sparplan-Themen als an
+Girokonto/Kreditkarte) und der Broker-Panel-Eintrag heißt jetzt „Broker &
+Depot" statt „Online-Broker" — passend zur Fußzeile und zum Seiteninhalt
+seit der Broker/Depot-Zusammenführung (siehe unten), die den alten Namen
+sonst irreführend gemacht hätte.
 
 Seit Oktober 2026 sind der frühere eigenständige Depot-Vergleich (`depot.html`)
 und der Online-Broker-Vergleich zu einer Seite verschmolzen (`broker.html`,

@@ -21,7 +21,7 @@ import re, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # active_key -> which top-level slot it belongs to
-# slot order: broker, konten, kredite, versicherungen, steuerprogramm, rechner, ratgeber, ueberuns
+# slot order: konten, broker, kredite, versicherungen, steuerprogramm, rechner, ratgeber, ueberuns
 FILE_TO_KEY = {
     # Broker group
     "broker.html": ("broker", "broker.html"),
@@ -29,13 +29,13 @@ FILE_TO_KEY = {
     "broker-scalable-capital.html": ("broker", "broker.html"),
     "broker-trade-republic.html": ("broker", "broker.html"),
     "etf-suche.html": ("broker", "etf-suche.html"),
+    "kinderdepot.html": ("broker", "kinderdepot.html"),
     # Steuerprogramm (standalone, "Tax")
     "steuerprogramm.html": ("steuerprogramm", None),
     # Konten & Depots group
     "finanz-check.html": ("konten", "finanz-check.html"),
     "girokonto.html": ("konten", "girokonto.html"),
     "tagesgeld.html": ("konten", "tagesgeld.html"),
-    "kinderdepot.html": ("konten", "kinderdepot.html"),
     "kreditkarte.html": ("konten", "kreditkarte.html"),
     # Kredite group
     "kredite.html": ("kredite", "kredite.html"),
@@ -71,8 +71,8 @@ FILE_TO_KEY = {
 }
 
 DE_PANELS = {
-    "broker": [("broker.html", "Online-Broker"), ("etf-suche.html", "ETF-Suche")],
-    "konten": [("finanz-check.html", "Finanz-Check"), ("girokonto.html", "Girokonto"), ("tagesgeld.html", "Tagesgeld"), ("kinderdepot.html", "Kinderdepot"), ("kreditkarte.html", "Kreditkarte")],
+    "broker": [("broker.html", "Broker &amp; Depot"), ("kinderdepot.html", "Kinderdepot"), ("etf-suche.html", "ETF-Suche")],
+    "konten": [("finanz-check.html", "Finanz-Check"), ("girokonto.html", "Girokonto"), ("tagesgeld.html", "Tagesgeld"), ("kreditkarte.html", "Kreditkarte")],
     "kredite": [("kredite.html", "Ratenkredit"), ("baufinanzierung.html", "Baufinanzierung")],
     "versicherungen": [("versicherungen.html", "Privathaftpflicht"), ("versicherungen.html#hausrat", "Hausrat"), ("versicherungen.html#berufsunfaehigkeit", "Berufsunfähigkeit"), ("versicherungen.html#rechtsschutz", "Rechtsschutz"), ("versicherungen.html#kfz", "Kfz")],
     "rechner": [("sparplanrechner.html", "Sparplanrechner"), ("zinseszinsrechner.html", "Zinseszinsrechner"), ("kreditrechner.html", "Kreditrechner"), ("baufinanzierungsrechner.html", "Baufinanzierungsrechner"), ("nettolohnrechner.html", "Nettolohnrechner"), ("haushaltsbuch.html", "Haushaltsbuch"), ("altersvorsorge-rechner.html", "Altersvorsorge-Rechner")],
@@ -81,8 +81,8 @@ DE_LABELS = {"broker": "Broker", "konten": "Konten &amp; Depots", "kredite": "Kr
 DE_PLAIN = {"steuerprogramm": ("steuerprogramm.html", "Steuerprogramm"), "ratgeber": ("ratgeber.html", "Ratgeber"), "ueberuns": ("ueber-uns.html", "Über uns")}
 
 EN_PANELS = {
-    "broker": [("broker.html", "Online broker"), ("etf-suche.html", "ETF search")],
-    "konten": [("finanz-check.html", "Finanz-Check"), ("girokonto.html", "Current account"), ("tagesgeld.html", "Savings"), ("kinderdepot.html", "Children&#39;s custody account"), ("kreditkarte.html", "Credit cards")],
+    "broker": [("broker.html", "Broker &amp; Custody"), ("kinderdepot.html", "Children&#39;s custody account"), ("etf-suche.html", "ETF search")],
+    "konten": [("finanz-check.html", "Finanz-Check"), ("girokonto.html", "Current account"), ("tagesgeld.html", "Savings"), ("kreditkarte.html", "Credit cards")],
     "kredite": [("kredite.html", "Installment loan"), ("baufinanzierung.html", "Mortgages")],
     "versicherungen": [("versicherungen.html", "Personal liability"), ("versicherungen.html#hausrat", "Home contents"), ("versicherungen.html#berufsunfaehigkeit", "Disability (BU)"), ("versicherungen.html#rechtsschutz", "Legal protection"), ("versicherungen.html#kfz", "Car insurance")],
     "rechner": [("sparplanrechner.html", "Savings Plan Calculator"), ("zinseszinsrechner.html", "Compound Interest Calculator"), ("kreditrechner.html", "Loan Calculator"), ("baufinanzierungsrechner.html", "Mortgage Calculator"), ("nettolohnrechner.html", "Net Salary Calculator"), ("haushaltsbuch.html", "Budget Tracker"), ("altersvorsorge-rechner.html", "Retirement savings calculator")],
@@ -90,7 +90,7 @@ EN_PANELS = {
 EN_LABELS = {"broker": "Broker", "konten": "Accounts &amp; Custody", "kredite": "Loans", "versicherungen": "Insurance", "rechner": "Calculator"}
 EN_PLAIN = {"steuerprogramm": ("steuerprogramm.html", "Tax software"), "ratgeber": ("ratgeber.html", "Guides"), "ueberuns": ("ueber-uns.html", "About us")}
 
-SLOT_ORDER = ["broker", "konten", "kredite", "versicherungen", "steuerprogramm", "rechner", "ratgeber", "ueberuns"]
+SLOT_ORDER = ["konten", "broker", "kredite", "versicherungen", "steuerprogramm", "rechner", "ratgeber", "ueberuns"]
 DROPDOWN_SLOTS = {"broker", "konten", "kredite", "versicherungen", "rechner"}
 
 
