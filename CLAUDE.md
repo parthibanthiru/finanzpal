@@ -18,3 +18,10 @@
 - Both `finanzpal-production/` (local test copy) and `finanzpal-website/`
   (the actual git checkout pushed to GitHub) need to stay in sync — changes
   made in one must be copied to the other before committing.
+- **Maintenance scripts live in `tools/`** (committed to the repo, not the
+  session scratchpad): `build_nav.py` regenerates the nav across all 74
+  pages, `add_article_icons.py` sets Ratgeber icon/accent colors,
+  `audit_quick.py` is the Playwright regression check. See `tools/README.md`
+  for usage and prerequisites. Add new one-off/debug scripts to `tools/`
+  too if they're reusable across sessions; keep truly single-use debugging
+  scripts out of git.

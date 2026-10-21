@@ -98,6 +98,11 @@ finanzpal-production/
 │   ├── nettolohnrechner.js         SV-Beiträge + §32a-EStG-Tarif + Soli (Steuerklasse I)
 │   ├── haushaltsbuch.js            localStorage-Budget-Tracker
 │   └── altersvorsorge-rechner.js   Rentenlücken-Logik
+├── tools/                          Wartungsskripte für seitenweite Änderungen
+│   ├── build_nav.py                 Regeneriert die Top-Nav identisch in allen 74 Dateien
+│   ├── add_article_icons.py         Setzt Icon + Akzentfarbe für Ratgeber-Artikel
+│   ├── audit_quick.py               Playwright-Regressionscheck (alle Seiten, Light/Dark)
+│   └── README.md                    Details, Aufrufparameter, Voraussetzungen je Skript
 └── README.md                       Diese Datei
 ```
 
@@ -113,7 +118,9 @@ Kinderdepot) · **Kredite ▾** (Ratenkredit, Baufinanzierung) ·
 **Über uns**. Öffnet per Klick und (auf Geräten mit Maus) per Hover, klappt
 auf Mobile zu einer flachen, eingerückten Liste unter dem Hamburger-Menü auf.
 Neue Unterseite ergänzen = neuen `<a>`-Eintrag im passenden Dropdown-Panel in
-jeder betroffenen `.html`-Datei (es gibt kein serverseitiges Nav-Template).
+jeder betroffenen `.html`-Datei (es gibt kein serverseitiges Nav-Template) —
+dafür `tools/build_nav.py` ausführen statt von Hand zu editieren, siehe
+`tools/README.md`.
 
 ## Vergleichsdaten aktualisieren
 
@@ -251,6 +258,10 @@ Dann im Browser: http://localhost:8000
   noch manuell freigegeben werden musste, ist aufgehoben).
 - Jeder Commit endet mit einer `Co-Authored-By`-Zeile für die beteiligte
   Claude-Session.
+- Wartungsskripte für seitenweite Änderungen (Nav, Ratgeber-Icons,
+  Regressionscheck) liegen versioniert in `tools/`, siehe `tools/README.md`
+  — vorher lagen sie nur in der jeweiligen Chat-Session und gingen mit ihr
+  verloren.
 - **Custom Domain** (`finanzpal.de`, DNS bei GoDaddy) ist noch **nicht**
   verbunden — bewusst zurückgestellt. Sobald gewünscht: Netlify →
   "Domain management" → "Add custom domain" → die angezeigten DNS-Einträge
