@@ -1,0 +1,70 @@
+{
+  "updated": "2026-10",
+  "items": [
+    {
+      "id": "huk24",
+      "name": "HUK24",
+      "initials": "HUK",
+      "color": "#007A3D",
+      "recommended": true,
+      "affiliateUrl": "#",
+      "beitrag": "Individual",
+      "deckung": "up to €100m",
+      "leistungen": "Gross negligence included · Mallorca policy included<br>Workshop tie-in optional (lowers the premium)",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "huk-coburg",
+      "name": "HUK-Coburg",
+      "initials": "HUK",
+      "color": "#00592A",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individual",
+      "deckung": "up to €100m",
+      "leistungen": "In-person advice available (branch network)<br>No-claims protection optional add-on",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "allianz-direct",
+      "name": "Allianz Direct",
+      "initials": "ALZ",
+      "color": "#003781",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individual",
+      "deckung": "up to €100m",
+      "leistungen": "Optional roadside assistance add-on<br>New-value compensation up to 24 months (plan-dependent)",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "da-direkt",
+      "name": "DA Direkt",
+      "initials": "DA",
+      "color": "#C8102E",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individual",
+      "deckung": "up to €100m",
+      "leistungen": "Workshop tie-in discount optional<br>No-claims protection optional add-on",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "vhv",
+      "name": "VHV",
+      "initials": "VHV",
+      "color": "#004C97",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Individual",
+      "deckung": "up to €100m",
+      "leistungen": "Often ranks well in independent insurance comparisons<br>Mallorca policy included",
+      "rating": null,
+      "ratingStars": null
+    }
+  ]
+}

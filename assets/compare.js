@@ -94,10 +94,11 @@
         '</tr>';
     }
   };
-  // Hausrat, BU and Rechtsschutz share the same row shape (beitrag/deckung/leistungen) as versicherungen.
+  // Hausrat, BU, Rechtsschutz and Autoversicherung share the same row shape (beitrag/deckung/leistungen) as versicherungen.
   renderers.hausrat = renderers.versicherungen;
   renderers.bu = renderers.versicherungen;
   renderers.rechtsschutz = renderers.versicherungen;
+  renderers.autoversicherung = renderers.versicherungen;
 
   function renderTable(table) {
     var src = table.getAttribute('data-source');

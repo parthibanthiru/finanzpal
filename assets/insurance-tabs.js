@@ -42,6 +42,15 @@
         de: 'Werbung: Finanzpal erhält ggf. eine Provision, wenn du über einen Link eine Versicherung abschließt. Das beeinflusst unsere Bewertung nicht. *Der angegebene Beitrag ist eine Schätzung auf Basis des Modellhaushalts der Stiftung Warentest 2026 (40-jähriger Angestellter, Mieter, 2 Kinder, Pkw, Paket Privat + Beruf + Verkehr, 150 € Selbstbeteiligung — Gesamtspanne über alle getesteten Tarife: 251–978 €/Jahr) und ist nicht anbieterspezifisch verifiziert. Eine unabhängige Qualitätsbewertung der einzelnen Anbieter liegt uns noch nicht vor; echte, anbieterspezifische Angebote ergänzen wir vor Launch.',
         en: 'Advertisement: Finanzpal may receive a commission if you take out a policy via a link. This does not affect our rating. *The premium shown is an estimate based on Stiftung Warentest\'s 2026 model household (40-year-old employee, renter, 2 children, car, private + professional + traffic package, €150 deductible — overall range across all tested tariffs: €251–978/year) and is not verified per provider. We don\'t yet have an independent quality rating for the individual providers; real, provider-specific quotes will be added before launch.'
       }
+    },
+    {
+      key: 'autoversicherung',
+      source: DIR + 'autoversicherung.json',
+      header: { beitrag: { de: 'Beitrag', en: 'Premium' }, deckung: { de: 'Haftpflicht-Deckung', en: 'Liability cover' } },
+      disclosure: {
+        de: 'Werbung: Finanzpal erhält ggf. eine Provision, wenn du über einen Link eine Versicherung abschließt. Das beeinflusst unsere Bewertung nicht. Der Beitrag einer Kfz-Versicherung hängt extrem stark von Fahrzeugtyp, Regional- und Typklasse, Schadenfreiheitsklasse, jährlicher Fahrleistung und weiteren individuellen Faktoren ab — ein pauschaler Vergleichsbeitrag wäre irreführend, die Unterschiede zwischen zwei Fahrern können mehrere hundert Euro pro Jahr betragen. Wir zeigen daher keinen Einzelpreis, sondern Leistungsmerkmale und die übliche Haftpflicht-Deckungssumme; für ein konkretes Angebot ist eine individuelle Anfrage beim Anbieter nötig. Angaben zu Leistungsmerkmalen laut Anbieter-Websites, Stand Oktober 2026 — eine unabhängige Testbewertung (z. B. von Stiftung Warentest) liegt uns für diese Anbieter noch nicht vor und wird ergänzt, sobald verfügbar.',
+        en: 'Advertisement: Finanzpal may receive a commission if you take out a policy via a link. This does not affect our rating. A car insurance premium depends enormously on vehicle type, regional and type class, no-claims class, annual mileage and other individual factors — a single comparison price would be misleading, since the difference between two drivers can run to several hundred euros a year. We therefore show no single price, just coverage features and the typical liability cover level; getting an actual quote requires an individual request to the provider. Feature details are sourced from provider websites as of October 2026 — we don\'t yet have an independent test rating (e.g. from Stiftung Warentest) for these providers and will add one once available.'
+      }
     }
   ];
 
