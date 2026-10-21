@@ -168,6 +168,48 @@
       "guthabenzins": null,
       "mobilePay": true,
       "einlagensicherung": "Deutschland"
+    },
+    {
+      "id": "1822direkt-girokonto",
+      "name": "1822direkt GiroDirekt",
+      "anbieter": "1822direkt (Frankfurter Sparkasse)",
+      "initials": "18",
+      "color": "#C8102E",
+      "affiliateUrl": "#",
+      "kontofuehrung": "4,90 €/Monat",
+      "kontofuehrungSort": 4.90,
+      "bedingungslos": false,
+      "bedingung": "Kostenlos ab 700 € monatlichem Geldeingang oder für Kontoinhaber unter 30 Jahren",
+      "karteNetzwerk": "girocard",
+      "kreditkarteEnthalten": false,
+      "karteText": "girocard (Sparkassen-Card) inklusive; Visa Classic optional und kostenpflichtig (Jahresgebühr auf der Quellseite nicht genannt)",
+      "dispozins": 9.90,
+      "abhebung": "Unbegrenzt kostenlos an rund 21.000 Sparkassen-Automaten; im Maestro/Cirrus/V-PAY/Plus-System 1 % (mind. 6 €); Tageslimit 1.000–2.000 €. Quelle nennt an anderer Stelle widersprüchlich „weltweit kostenlos“",
+      "fremdwaehrung": "1,75 % außerhalb des Euroraums",
+      "guthabenzins": null,
+      "mobilePay": true,
+      "einlagensicherung": "Deutschland (Institutssicherung Sparkassen-Finanzgruppe, konkreter Erstattungsbetrag auf Quellseite nicht genannt)"
+    },
+    {
+      "id": "norisbank-girokonto",
+      "name": "norisbank Girokonto plus",
+      "anbieter": "norisbank GmbH (Deutsche Bank)",
+      "initials": "NB",
+      "color": "#8A5F2F",
+      "affiliateUrl": "#",
+      "kontofuehrung": "7,90 €/Monat",
+      "kontofuehrungSort": 7.90,
+      "bedingungslos": false,
+      "bedingung": "Quelle nennt keine Bedingung, unter der das Konto kostenlos wird",
+      "karteNetzwerk": "girocard",
+      "kreditkarteEnthalten": true,
+      "karteText": "girocard kostenlos inklusive; optionale Mastercard direkt ebenfalls als kostenlos angegeben",
+      "dispozins": 10.75,
+      "abhebung": "Kostenlos im In- und Ausland laut Konditionstabelle; unbegrenzt kostenlos an Cash-Group-Automaten (Deutsche Bank, Postbank, Commerzbank, HypoVereinsbank); sonst 1 % (girocard) bzw. 2,5 % (Mastercard direkt), mind. 6 €",
+      "fremdwaehrung": "1,75 %",
+      "guthabenzins": null,
+      "mobilePay": true,
+      "einlagensicherung": "Deutschland (konkrete Angabe auf Quellseite fehlt)"
     }
   ]
 }

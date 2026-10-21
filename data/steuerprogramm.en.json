@@ -119,6 +119,57 @@
       "vorjahresImport": true,
       "elsterZertifikat": "Not required",
       "belegerfassung": null
+    },
+    {
+      "id": "check24-steuer",
+      "name": "CHECK24 Steuer",
+      "anbieter": "Verbraucherportal Deutschland GmbH (CHECK24)",
+      "initials": "CH24",
+      "color": "#B8901F",
+      "affiliateUrl": "#",
+      "preis": "Free, including filing with the tax office (per provider)",
+      "preisSort": 0,
+      "zahlungErstBeiAbgabe": null,
+      "plattform": { "web": true, "app": true, "desktop": false },
+      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": true, "rente": true },
+      "zielgruppenAusschluss": [],
+      "vorjahresImport": null,
+      "elsterZertifikat": "Not clearly stated by the provider whether your own certificate is needed",
+      "belegerfassung": null
+    },
+    {
+      "id": "taxman",
+      "name": "Taxman",
+      "anbieter": "Haufe-Lexware GmbH & Co. KG",
+      "initials": "TXM",
+      "color": "#0F2A3D",
+      "affiliateUrl": "#",
+      "preis": "License covers up to 5 tax returns, exact price not stated by the provider (Windows only)",
+      "preisSort": null,
+      "zahlungErstBeiAbgabe": null,
+      "plattform": { "web": false, "app": false, "desktop": true },
+      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": null, "rente": null },
+      "zielgruppenAusschluss": [],
+      "vorjahresImport": null,
+      "elsterZertifikat": "Your own ELSTER certificate is required for filing",
+      "belegerfassung": null
+    },
+    {
+      "id": "steuer-sparerklaerung",
+      "name": "Steuer-Sparerklärung",
+      "anbieter": "Akademische Arbeitsgemeinschaft Verlag GmbH",
+      "initials": "SSE",
+      "color": "#7A1E3C",
+      "affiliateUrl": "#",
+      "preis": "€34.95 (per comparison site finanzfluss.de)",
+      "preisSort": 34.95,
+      "zahlungErstBeiAbgabe": null,
+      "plattform": { "web": true, "app": false, "desktop": true },
+      "zielgruppen": { "angestellte": null, "selbststaendige": null, "vermietung": null, "kapitalertraege": null, "rente": null },
+      "zielgruppenAusschluss": [],
+      "vorjahresImport": null,
+      "elsterZertifikat": "Unclear whether your own certificate is needed",
+      "belegerfassung": null
     }
   ]
 }

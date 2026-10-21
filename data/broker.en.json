@@ -70,6 +70,76 @@
       "sparplanAb": "from €25",
       "rating": 4.4,
       "ratingStars": "★★★★☆"
+    },
+    {
+      "id": "dkb-broker",
+      "name": "DKB Broker",
+      "initials": "DKB",
+      "color": "#B8901F",
+      "recommended": false,
+      "detailUrl": null,
+      "affiliateUrl": "#",
+      "depotfee": "€0/year (with a DKB current account as the settlement account)",
+      "orderfee": "€10–30 tiered by order volume (abroad: sources conflict, some cite €20 flat)",
+      "sparplanAb": "from €25",
+      "rating": 2.6,
+      "ratingStars": "★★★☆☆"
+    },
+    {
+      "id": "smartbroker-plus",
+      "name": "Smartbroker+",
+      "initials": "SB+",
+      "color": "#7A1E3C",
+      "recommended": false,
+      "detailUrl": null,
+      "affiliateUrl": "#",
+      "depotfee": "€0/year",
+      "orderfee": "€4.00 under €500 (domestic order) / €0 from €500 via gettex — the app description cites a conflicting €1 figure",
+      "sparplanAb": "from €1",
+      "rating": 4.0,
+      "ratingStars": "★★★★☆"
+    },
+    {
+      "id": "finanzen-net-zero",
+      "name": "finanzen.net Zero",
+      "initials": "FNZ",
+      "color": "#1F6F54",
+      "recommended": false,
+      "detailUrl": null,
+      "affiliateUrl": "#",
+      "depotfee": "€0/year",
+      "orderfee": "€0 plus a €1 small-order surcharge under €500, plus market-standard spreads",
+      "sparplanAb": "from €1",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "justtrade",
+      "name": "justTRADE",
+      "initials": "JT",
+      "color": "#6B2FA0",
+      "recommended": false,
+      "detailUrl": null,
+      "affiliateUrl": "#",
+      "depotfee": "€0/year",
+      "orderfee": "Provider states \"€0\" plus roughly €1 in third-party costs per the test portal — the conditions table instead lists €2.90 for domestic orders; sources conflict",
+      "sparplanAb": "from €25",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "ing-depot",
+      "name": "ING Depot",
+      "initials": "ING",
+      "color": "#FF6200",
+      "recommended": false,
+      "detailUrl": null,
+      "affiliateUrl": "#",
+      "depotfee": "€0/year, conditional on a transaction or holdings in the last 6 months",
+      "orderfee": "€4.90 + 0.25% (min. €4.90, max. €69.90); abroad €14.90 + 0.25% per the FAQ",
+      "sparplanAb": "from €1",
+      "rating": 3.7,
+      "ratingStars": "★★★★☆"
     }
   ]
 }

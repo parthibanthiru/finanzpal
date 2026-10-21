@@ -70,6 +70,76 @@
       "sparplanAb": "ab 25 €",
       "rating": 4.4,
       "ratingStars": "★★★★☆"
+    },
+    {
+      "id": "dkb-broker",
+      "name": "DKB Broker",
+      "initials": "DKB",
+      "color": "#B8901F",
+      "recommended": false,
+      "detailUrl": null,
+      "affiliateUrl": "#",
+      "depotfee": "0 €/Jahr (bei DKB-Girokonto als Verrechnungskonto)",
+      "orderfee": "10–30 € gestaffelt nach Volumen (Ausland: Angaben widersprüchlich, teils 20 €)",
+      "sparplanAb": "ab 25 €",
+      "rating": 2.6,
+      "ratingStars": "★★★☆☆"
+    },
+    {
+      "id": "smartbroker-plus",
+      "name": "Smartbroker+",
+      "initials": "SB+",
+      "color": "#7A1E3C",
+      "recommended": false,
+      "detailUrl": null,
+      "affiliateUrl": "#",
+      "depotfee": "0 €/Jahr",
+      "orderfee": "4,00 € unter 500 € (Inlandsorder) / 0 € ab 500 € über gettex — App-Variante nennt abweichend 1 €",
+      "sparplanAb": "ab 1 €",
+      "rating": 4.0,
+      "ratingStars": "★★★★☆"
+    },
+    {
+      "id": "finanzen-net-zero",
+      "name": "finanzen.net Zero",
+      "initials": "FNZ",
+      "color": "#1F6F54",
+      "recommended": false,
+      "detailUrl": null,
+      "affiliateUrl": "#",
+      "depotfee": "0 €/Jahr",
+      "orderfee": "0 € + 1 € Mindermengenzuschlag unter 500 € sowie marktübliche Spreads",
+      "sparplanAb": "ab 1 €",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "justtrade",
+      "name": "justTRADE",
+      "initials": "JT",
+      "color": "#6B2FA0",
+      "recommended": false,
+      "detailUrl": null,
+      "affiliateUrl": "#",
+      "depotfee": "0 €/Jahr",
+      "orderfee": "Eigenangabe „0 €“ plus ca. 1 € Drittkosten laut Testportal — Konditionentabelle nennt dagegen 2,90 € für Inlandsorder; Angaben widersprüchlich",
+      "sparplanAb": "ab 25 €",
+      "rating": null,
+      "ratingStars": null
+    },
+    {
+      "id": "ing-depot",
+      "name": "ING Depot",
+      "initials": "ING",
+      "color": "#FF6200",
+      "recommended": false,
+      "detailUrl": null,
+      "affiliateUrl": "#",
+      "depotfee": "0 €/Jahr, an Bedingung geknüpft (Transaktion oder Depotbestand in den letzten 6 Monaten)",
+      "orderfee": "4,90 € + 0,25 % (min. 4,90 €, max. 69,90 €); Ausland laut FAQ 14,90 € + 0,25 %",
+      "sparplanAb": "ab 1 €",
+      "rating": 3.7,
+      "ratingStars": "★★★★☆"
     }
   ]
 }

@@ -168,6 +168,48 @@
       "guthabenzins": null,
       "mobilePay": true,
       "einlagensicherung": "Germany"
+    },
+    {
+      "id": "1822direkt-girokonto",
+      "name": "1822direkt GiroDirekt",
+      "anbieter": "1822direkt (Frankfurter Sparkasse)",
+      "initials": "18",
+      "color": "#C8102E",
+      "affiliateUrl": "#",
+      "kontofuehrung": "€4.90/month",
+      "kontofuehrungSort": 4.9,
+      "bedingungslos": false,
+      "bedingung": "Free from €700 monthly incoming payments or for account holders under 30",
+      "karteNetzwerk": "girocard",
+      "kreditkarteEnthalten": false,
+      "karteText": "girocard (Sparkassen-Card) included; Visa Classic optional and chargeable (annual fee not stated on the source page)",
+      "dispozins": 9.9,
+      "abhebung": "Unlimited free withdrawals at roughly 21,000 Sparkasse ATMs; 1% (min. €6) in the Maestro/Cirrus/V-PAY/Plus network; daily limit €1,000–2,000. Source states elsewhere, inconsistently, \"free worldwide\"",
+      "fremdwaehrung": "1.75% outside the eurozone",
+      "guthabenzins": null,
+      "mobilePay": true,
+      "einlagensicherung": "Germany (Sparkassen-Finanzgruppe institutional protection scheme; exact reimbursement amount not stated on source page)"
+    },
+    {
+      "id": "norisbank-girokonto",
+      "name": "norisbank Girokonto plus",
+      "anbieter": "norisbank GmbH (Deutsche Bank)",
+      "initials": "NB",
+      "color": "#8A5F2F",
+      "affiliateUrl": "#",
+      "kontofuehrung": "€7.90/month",
+      "kontofuehrungSort": 7.9,
+      "bedingungslos": false,
+      "bedingung": "Source states no condition under which the account becomes free",
+      "karteNetzwerk": "girocard",
+      "kreditkarteEnthalten": true,
+      "karteText": "girocard included free of charge; optional Mastercard direkt also stated as free",
+      "dispozins": 10.75,
+      "abhebung": "Free domestically and abroad per the fee table; unlimited free withdrawals at Cash Group ATMs (Deutsche Bank, Postbank, Commerzbank, HypoVereinsbank); otherwise 1% (girocard) or 2.5% (Mastercard direkt), min. €6",
+      "fremdwaehrung": "1.75%",
+      "guthabenzins": null,
+      "mobilePay": true,
+      "einlagensicherung": "Germany (no specific figure stated on source page)"
     }
   ]
 }

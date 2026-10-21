@@ -119,6 +119,57 @@
       "vorjahresImport": true,
       "elsterZertifikat": "Nicht nötig",
       "belegerfassung": null
+    },
+    {
+      "id": "check24-steuer",
+      "name": "CHECK24 Steuer",
+      "anbieter": "Verbraucherportal Deutschland GmbH (CHECK24)",
+      "initials": "CH24",
+      "color": "#B8901F",
+      "affiliateUrl": "#",
+      "preis": "Kostenlos, inkl. Abgabe ans Finanzamt (laut Anbieter)",
+      "preisSort": 0,
+      "zahlungErstBeiAbgabe": null,
+      "plattform": { "web": true, "app": true, "desktop": false },
+      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": true, "rente": true },
+      "zielgruppenAusschluss": [],
+      "vorjahresImport": null,
+      "elsterZertifikat": "Vom Anbieter nicht eindeutig angegeben, ob ein eigenes Zertifikat nötig ist",
+      "belegerfassung": null
+    },
+    {
+      "id": "taxman",
+      "name": "Taxman",
+      "anbieter": "Haufe-Lexware GmbH & Co. KG",
+      "initials": "TXM",
+      "color": "#0F2A3D",
+      "affiliateUrl": "#",
+      "preis": "Lizenz für bis zu 5 Steuererklärungen, genauer Preis vom Anbieter nicht beziffert (nur für Windows)",
+      "preisSort": null,
+      "zahlungErstBeiAbgabe": null,
+      "plattform": { "web": false, "app": false, "desktop": true },
+      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": null, "rente": null },
+      "zielgruppenAusschluss": [],
+      "vorjahresImport": null,
+      "elsterZertifikat": "Eigenes ELSTER-Zertifikat für die Abgabe erforderlich",
+      "belegerfassung": null
+    },
+    {
+      "id": "steuer-sparerklaerung",
+      "name": "Steuer-Sparerklärung",
+      "anbieter": "Akademische Arbeitsgemeinschaft Verlag GmbH",
+      "initials": "SSE",
+      "color": "#7A1E3C",
+      "affiliateUrl": "#",
+      "preis": "34,95 € (laut Vergleichsportal finanzfluss.de)",
+      "preisSort": 34.95,
+      "zahlungErstBeiAbgabe": null,
+      "plattform": { "web": true, "app": false, "desktop": true },
+      "zielgruppen": { "angestellte": null, "selbststaendige": null, "vermietung": null, "kapitalertraege": null, "rente": null },
+      "zielgruppenAusschluss": [],
+      "vorjahresImport": null,
+      "elsterZertifikat": "Unklar, ob ein eigenes Zertifikat nötig ist",
+      "belegerfassung": null
     }
   ]
 }
