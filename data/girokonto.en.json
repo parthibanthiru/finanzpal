@@ -20,7 +20,18 @@
       "fremdwaehrung": "0% for active accounts, otherwise 2.2%",
       "guthabenzins": null,
       "mobilePay": true,
-      "einlagensicherung": "Germany"
+      "einlagensicherung": "Germany",
+      "score": {
+        "value": 34.7,
+        "band": "C",
+        "breakdown": {
+          "kontofuehrung": 32.5,
+          "dispozins": 53.4,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "ing-girokonto",
@@ -41,7 +52,18 @@
       "fremdwaehrung": "2.2% outside the eurozone",
       "guthabenzins": null,
       "mobilePay": true,
-      "einlagensicherung": "Germany"
+      "einlagensicherung": "Germany",
+      "score": {
+        "value": 33.3,
+        "band": "C",
+        "breakdown": {
+          "kontofuehrung": 26.5,
+          "dispozins": 56.1,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "consorsbank-girokonto",
@@ -62,7 +84,18 @@
       "fremdwaehrung": "2.1% outside the eurozone",
       "guthabenzins": null,
       "mobilePay": true,
-      "einlagensicherung": "France (FGDR), up to €100,000"
+      "einlagensicherung": "France (FGDR), up to €100,000",
+      "score": {
+        "value": 36.8,
+        "band": "C",
+        "breakdown": {
+          "kontofuehrung": 40.0,
+          "dispozins": 51.0,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "c24-smart-girokonto",
@@ -83,7 +116,18 @@
       "fremdwaehrung": "0%",
       "guthabenzins": 0.75,
       "mobilePay": true,
-      "einlagensicherung": "Germany"
+      "einlagensicherung": "Germany",
+      "score": {
+        "value": 64.8,
+        "band": "B",
+        "breakdown": {
+          "kontofuehrung": 100.0,
+          "dispozins": 75.1,
+          "guthabenzins": 30.0,
+          "karteFlexibilitaet": 25.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "trade-republic-girokonto",
@@ -104,7 +148,18 @@
       "fremdwaehrung": "0%",
       "guthabenzins": 2.5,
       "mobilePay": true,
-      "einlagensicherung": "Germany (via partner banks, up to €100,000)"
+      "einlagensicherung": "Germany (via partner banks, up to €100,000)",
+      "score": {
+        "value": 90.0,
+        "band": "A",
+        "breakdown": {
+          "kontofuehrung": 100.0,
+          "dispozins": 100.0,
+          "guthabenzins": 100.0,
+          "karteFlexibilitaet": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "n26-standard",
@@ -125,7 +180,18 @@
       "fremdwaehrung": "1.7% outside the eurozone",
       "guthabenzins": 0.25,
       "mobilePay": true,
-      "einlagensicherung": "Germany"
+      "einlagensicherung": "Germany",
+      "score": {
+        "value": 62.2,
+        "band": "B",
+        "breakdown": {
+          "kontofuehrung": 100.0,
+          "dispozins": 61.0,
+          "guthabenzins": 10.0,
+          "karteFlexibilitaet": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "comdirect-girokonto",
@@ -146,7 +212,18 @@
       "fremdwaehrung": null,
       "guthabenzins": null,
       "mobilePay": true,
-      "einlagensicherung": "Germany (assumed; not explicitly stated on the source page)"
+      "einlagensicherung": "Germany (assumed; not explicitly stated on the source page)",
+      "score": {
+        "value": 59.8,
+        "band": "B",
+        "breakdown": {
+          "kontofuehrung": 70.0,
+          "dispozins": 61.0,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "openbank-bestgiro",
@@ -167,7 +244,18 @@
       "fremdwaehrung": "0% per the provider (uncertain)",
       "guthabenzins": null,
       "mobilePay": true,
-      "einlagensicherung": "Germany"
+      "einlagensicherung": "Germany",
+      "score": {
+        "value": 61.4,
+        "band": "B",
+        "breakdown": {
+          "kontofuehrung": 100.0,
+          "dispozins": 45.5,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 75.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "1822direkt-girokonto",
@@ -188,7 +276,18 @@
       "fremdwaehrung": "1.75% outside the eurozone",
       "guthabenzins": null,
       "mobilePay": true,
-      "einlagensicherung": "Germany (Sparkassen-Finanzgruppe institutional protection scheme; exact reimbursement amount not stated on source page)"
+      "einlagensicherung": "Germany (Sparkassen-Finanzgruppe institutional protection scheme; exact reimbursement amount not stated on source page)",
+      "score": {
+        "value": 32.0,
+        "band": "C",
+        "breakdown": {
+          "kontofuehrung": 26.5,
+          "dispozins": 51.0,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "norisbank-girokonto",
@@ -209,7 +308,18 @@
       "fremdwaehrung": "1.75%",
       "guthabenzins": null,
       "mobilePay": true,
-      "einlagensicherung": "Germany (no specific figure stated on source page)"
+      "einlagensicherung": "Germany (no specific figure stated on source page)",
+      "score": {
+        "value": 30.6,
+        "band": "C",
+        "breakdown": {
+          "kontofuehrung": 0.0,
+          "dispozins": 42.5,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     }
   ]
 }

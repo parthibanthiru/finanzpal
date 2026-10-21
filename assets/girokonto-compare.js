@@ -20,7 +20,10 @@
       fremdwaehrung: 'Fremdwährung',
       guthabenzinsText: function (z) { return z.toFixed(2).replace('.', ',') + ' % Guthabenzins'; },
       einlagensicherungPrefix: 'Einlagensicherung: ',
-      anbieter: 'Anbieter'
+      anbieter: 'Anbieter',
+      scoreTooltip: function (b) {
+        return 'Finanzpal-Score: Kontoführung ' + b.kontofuehrung + ' · Dispozins ' + b.dispozins + ' · Guthabenzins ' + b.guthabenzins + ' · Karte & Flexibilität ' + b.karteFlexibilitaet + ' (je von 100). Methodik: ueber-uns.html#finanzpal-score';
+      }
     },
     en: {
       loading: 'Loading comparison data …',
@@ -37,9 +40,20 @@
       fremdwaehrung: 'Foreign transaction fee',
       guthabenzinsText: function (z) { return z.toFixed(2) + '% interest on balance'; },
       einlagensicherungPrefix: 'Deposit protection: ',
-      anbieter: 'Provider'
+      anbieter: 'Provider',
+      scoreTooltip: function (b) {
+        return 'Finanzpal Score: Account fee ' + b.kontofuehrung + ' · Overdraft rate ' + b.dispozins + ' · Cash interest ' + b.guthabenzins + ' · Card & flexibility ' + b.karteFlexibilitaet + ' (each out of 100). Methodology: ueber-uns.html#finanzpal-score';
+      }
     }
   }[LANG];
+
+  function scoreBadgeHtml(item) {
+    if (!item.score) return '';
+    var band = (item.score.band || '').toLowerCase();
+    var title = STR.scoreTooltip(item.score.breakdown || {});
+    return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '">' +
+      item.score.value + ' <span class="fp-score-band">' + escapeHtml(item.score.band) + '</span></a>';
+  }
 
   function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, function (c) {
@@ -113,7 +127,7 @@
         '</div>' +
         '<div class="cc-body">' +
           cardArtHtml(item) +
-          '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + '</div><ul class="cc-bullets">' + bullets + '</ul>' + crossLinkHtml + '</div>' +
+          '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div><ul class="cc-bullets">' + bullets + '</ul>' + crossLinkHtml + '</div>' +
           '<div class="cc-facts">' +
             '<div class="cc-fact"><span class="k">' + STR.kontofuehrung + '</span><span class="v">' + escapeHtml(item.kontofuehrung) + '</span></div>' +
             '<div class="cc-fact"><span class="k">' + STR.dispozins + '</span><span class="v">' + dispoText + '</span></div>' +

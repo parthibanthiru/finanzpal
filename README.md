@@ -105,6 +105,9 @@ finanzpal-production/
 ├── tools/                          Wartungsskripte für seitenweite Änderungen
 │   ├── build_nav.py                 Regeneriert die Top-Nav identisch in allen 74 Dateien
 │   ├── add_article_icons.py         Setzt Icon + Akzentfarbe für Ratgeber-Artikel
+│   ├── compute_scores.py            Berechnet den Finanzpal-Score (0–100 + Note A–D) je
+│   │                                  Kategorie aus bereits vorhandenen JSON-Feldern,
+│   │                                  schreibt `score` in data/*.json zurück (siehe unten)
 │   ├── audit_quick.py               Playwright-Regressionscheck (alle Seiten, Light/Dark)
 │   └── README.md                    Details, Aufrufparameter, Voraussetzungen je Skript
 └── README.md                       Diese Datei
@@ -258,6 +261,38 @@ auf Tool-/Vergleichsseiten wie `broker.html` behalten ihr generisches Icon).
 Neuen Artikel ergänzen = neuen Eintrag in der `ICONS`/`MAP`-Zuordnung (aktuell
 nur als einmaliges Skript gepflegt, kein eigenes JS-Modul) + manuell an den
 drei Stellen einsetzen.
+
+## Finanzpal-Score
+
+**Stand Oktober 2026 — Pilotkategorie Girokonto.** Zusätzlich zu den Rohdaten
+zeigt `girokonto.html`/`en/girokonto.html` einen grünen/blauen/gelben/grauen
+Badge pro Karte (`.fp-score-badge`, A–D-Note + Zahl 0–100), berechnet aus
+Feldern, die auf derselben Seite ohnehin schon stehen (Kontoführungsgebühr
+35 % · Dispozins 25 % · Guthabenzins 20 % · Karte & Bargeld-Flexibilität
+20 %). Design-Hintergrund und die vollständigen Bewertungskriterien für alle
+Kategorien (inkl. der bewusst noch nicht bewerteten: Baufinanzierung, BU,
+Kfz, Rechtsschutz) stehen im Projektdokument
+„finanzpal-score-methodology.md".
+
+- **`tools/compute_scores.py`** ist die einzige Quelle für die Berechnung —
+  nie von Hand in den JSON-Dateien nachtragen. Rechnet aus `data/girokonto.json`
+  (DE ist die Quelle der Wahrheit) und schreibt denselben `score`-Wert anhand
+  der `id` identisch in `data/girokonto.en.json` zurück, damit ein Anbieter nie
+  je nach Sprachversion unterschiedlich bewertet wird (ein Early-Bug: ein
+  Teilkriterium hatte ursprünglich per Stichwortsuche im deutschen
+  `abhebung`-Text gearbeitet, was auf der übersetzten EN-Seite stillschweigend
+  andere Werte lieferte — seither wird nur noch einmal, aus der DE-Datei,
+  gerechnet).
+- Ausführen nach jeder Datenänderung an einer bewerteten Kategorie:
+  `python3 tools/compute_scores.py girokonto` (oder ohne Argument für alle
+  registrierten Kategorien).
+- Jedes `score`-Objekt enthält `value`, `band`, ein `breakdown` je Teilkriterium
+  (im Badge-Tooltip sichtbar) und `computedFrom` (Monat der Berechnung) — bewusst
+  offengelegt statt einer nackten Zahl.
+- Neue Kategorie bewerten = Rubrik in `compute_scores.py` ergänzen (siehe
+  `GIROKONTO_RUBRIC` als Vorlage) **und** Methodik-Text auf `ueber-uns.html`/
+  `en/ueber-uns.html` (`#finanzpal-score`) erweitern — nie eine Kategorie
+  stillschweigend bewerten, ohne die Kriterien dort offenzulegen.
 
 ## Bekannte offene Punkte (bewusste Entscheidungen, nicht vergessen)
 
