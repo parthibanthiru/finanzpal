@@ -129,6 +129,7 @@
     var allItems = [];
     var view = 'cards';
     var expanded = {};
+    var layoutEl = document.querySelector('.kk-layout');
 
     function applyFilters(items) {
       var networks = Array.prototype.filter.call(networkChecks, function (c) { return c.checked; }).map(function (c) { return c.value; });
@@ -254,6 +255,7 @@
       }
       viewCardsBtn.classList.toggle('active', view === 'cards');
       viewTableBtn.classList.toggle('active', view === 'table');
+      if (layoutEl) layoutEl.classList.toggle('kk-table-mode', view === 'table');
     }
 
     [].concat(

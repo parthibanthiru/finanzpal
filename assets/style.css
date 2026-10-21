@@ -456,8 +456,10 @@ h3.quiz-question { font-family: var(--font-display); font-weight: 500; font-size
 /* Kreditkarte: filterable card-list + table comparison */
 .kk-layout { display: grid; grid-template-columns: 260px 1fr; gap: 32px; align-items: start; margin: 28px 0 56px; }
 @media (max-width: 860px) { .kk-layout { grid-template-columns: 1fr; } }
+.kk-layout.kk-table-mode { grid-template-columns: 1fr; }
 .kk-filters { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px; padding: 20px; position: sticky; top: 84px; }
 @media (max-width: 860px) { .kk-filters { position: static; } }
+.kk-table-mode .kk-filters { position: static; }
 .kk-filters-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .kk-filters-head h2 { font-size: 15px; margin: 0; font-family: var(--font-display); font-weight: 500; }
 .kk-reset-btn { background: none; border: none; color: var(--green-deep); font-size: 12.5px; font-weight: 600; cursor: pointer; padding: 0; text-decoration: underline; }
