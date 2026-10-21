@@ -9,6 +9,7 @@
   var TYPES = [
     {
       key: 'versicherungen',
+      slug: 'privathaftpflicht',
       source: DIR + 'versicherungen.json',
       header: { beitrag: { de: 'Jahresbeitrag', en: 'Annual premium' }, deckung: { de: 'Deckungssumme', en: 'Cover amount' } },
       disclosure: {
@@ -18,6 +19,7 @@
     },
     {
       key: 'hausrat',
+      slug: 'hausrat',
       source: DIR + 'hausrat.json',
       header: { beitrag: { de: 'Jahresbeitrag', en: 'Annual premium' }, deckung: { de: 'Deckung', en: 'Cover' } },
       disclosure: {
@@ -27,6 +29,7 @@
     },
     {
       key: 'bu',
+      slug: 'berufsunfaehigkeit',
       source: DIR + 'bu.json',
       header: { beitrag: { de: 'Beitrag', en: 'Premium' }, deckung: { de: 'BU-Rente', en: 'Cover' } },
       disclosure: {
@@ -36,6 +39,7 @@
     },
     {
       key: 'rechtsschutz',
+      slug: 'rechtsschutz',
       source: DIR + 'rechtsschutz.json',
       header: { beitrag: { de: 'Jahresbeitrag*', en: 'Annual premium*' }, deckung: { de: 'Leistungsbereiche', en: 'Cover areas' } },
       disclosure: {
@@ -45,6 +49,7 @@
     },
     {
       key: 'autoversicherung',
+      slug: 'kfz',
       source: DIR + 'autoversicherung.json',
       header: { beitrag: { de: 'Beitrag', en: 'Premium' }, deckung: { de: 'Haftpflicht-Deckung', en: 'Liability cover' } },
       disclosure: {
@@ -60,26 +65,45 @@
     var disclosureEl = document.querySelector('.disclosure-note');
     if (!tabs.length || !table || !window.FPCompare) return;
 
+    function activate(i, updateHash) {
+      var cfg = TYPES[i];
+      if (!cfg) return;
+      tabs.forEach(function (t) { t.classList.remove('active'); });
+      if (tabs[i]) tabs[i].classList.add('active');
+
+      table.setAttribute('data-source', cfg.source);
+      table.setAttribute('data-type', cfg.key);
+
+      var ths = table.querySelectorAll('thead th');
+      if (ths[1]) ths[1].textContent = cfg.header.beitrag[LANG];
+      if (ths[2]) ths[2].textContent = cfg.header.deckung[LANG];
+
+      if (disclosureEl) disclosureEl.innerHTML = cfg.disclosure[LANG];
+
+      window.FPCompare.renderTable(table);
+
+      if (updateHash && window.history && history.replaceState) {
+        history.replaceState(null, '', '#' + cfg.slug);
+      }
+    }
+
     tabs.forEach(function (tab, i) {
       tab.style.cursor = 'pointer';
       tab.addEventListener('click', function () {
         if (tab.classList.contains('active')) return;
-        tabs.forEach(function (t) { t.classList.remove('active'); });
-        tab.classList.add('active');
-
-        var cfg = TYPES[i];
-        if (!cfg) return;
-        table.setAttribute('data-source', cfg.source);
-        table.setAttribute('data-type', cfg.key);
-
-        var ths = table.querySelectorAll('thead th');
-        if (ths[1]) ths[1].textContent = cfg.header.beitrag[LANG];
-        if (ths[2]) ths[2].textContent = cfg.header.deckung[LANG];
-
-        if (disclosureEl) disclosureEl.innerHTML = cfg.disclosure[LANG];
-
-        window.FPCompare.renderTable(table);
+        activate(i, true);
       });
     });
+
+    // Deep-link support: versicherungen.html#hausrat, #berufsunfaehigkeit,
+    // #rechtsschutz, #kfz (used by the "Versicherungen" nav dropdown so each
+    // insurance type is a real, linkable URL instead of only reachable by
+    // clicking a tab after landing on the default Privathaftpflicht view).
+    var hashSlug = (window.location.hash || '').replace('#', '').toLowerCase();
+    var initialIndex = -1;
+    for (var i = 0; i < TYPES.length; i++) {
+      if (TYPES[i].slug === hashSlug) { initialIndex = i; break; }
+    }
+    if (initialIndex > 0) activate(initialIndex, false);
   });
 })();

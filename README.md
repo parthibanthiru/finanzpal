@@ -114,13 +114,29 @@ Depot, Girokonto, Baufinanzierung, alle Rechner) von oben erreichbar sind:
 **Broker ▾** (Online-Broker, ETF-Suche) ·
 **Konten & Depots ▾** (Finanz-Check, Girokonto, Tagesgeld, Depot,
 Kinderdepot, Kreditkarte) · **Kredite ▾** (Ratenkredit, Baufinanzierung) ·
-**Versicherungen** · **Steuerprogramm** · **Rechner ▾** (alle 7 Rechner) ·
+**Versicherungen ▾** (Privathaftpflicht, Hausrat, Berufsunfähigkeit,
+Rechtsschutz, Kfz) · **Steuerprogramm** · **Rechner ▾** (alle 7 Rechner) ·
 **Ratgeber** · **Über uns**. Öffnet per Klick und (auf Geräten mit Maus) per Hover, klappt
 auf Mobile zu einer flachen, eingerückten Liste unter dem Hamburger-Menü auf.
 Neue Unterseite ergänzen = neuen `<a>`-Eintrag im passenden Dropdown-Panel in
 jeder betroffenen `.html`-Datei (es gibt kein serverseitiges Nav-Template) —
 dafür `tools/build_nav.py` ausführen statt von Hand zu editieren, siehe
 `tools/README.md`.
+
+Die vier Versicherungen-Dropdown-Einträge außer Privathaftpflicht verlinken
+auf `versicherungen.html#hausrat` / `#berufsunfaehigkeit` / `#rechtsschutz` /
+`#kfz` — `assets/insurance-tabs.js` liest diesen Hash beim Laden und aktiviert
+automatisch den passenden Tab, statt immer mit Privathaftpflicht zu starten.
+
+### Suche
+
+Die Lupe oben rechts (nur Desktop) öffnet eine clientseitige Seitensuche
+(`initSiteSearch()` in `assets/nav.js`): ein fest hinterlegter Index aller
+Seiten (Array `PAGES_DE`/`PAGES_EN`, je mit Titel + Stichwörtern) wird live
+nach Tippen gefiltert, kein Server-Request nötig. Tastatur: `/` öffnet die
+Suche von überall auf der Seite, Pfeiltasten + Enter navigieren, Escape
+schließt. Neue Seite ergänzen = neuen Eintrag in beiden Arrays in
+`assets/nav.js` (Titel + ein paar Stichwörter reichen).
 
 ## Vergleichsdaten aktualisieren
 
@@ -219,7 +235,6 @@ drei Stellen einsetzen.
    echten Partnerlinks (siehe Launch-Liste unten).
 5. **Filter-Chips auf `ratgeber.html`** (Alle/Investieren/Zahlen/…) sind noch
    rein optisch — kein JS filtert die Artikelkarten danach.
-6. **Such-Icon im Header** ist noch rein dekorativ, keine Funktion dahinter.
 
 ## Vor dem Launch unbedingt erledigen
 
