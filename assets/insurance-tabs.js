@@ -99,11 +99,30 @@
     // #rechtsschutz, #kfz (used by the "Versicherungen" nav dropdown so each
     // insurance type is a real, linkable URL instead of only reachable by
     // clicking a tab after landing on the default Privathaftpflicht view).
-    var hashSlug = (window.location.hash || '').replace('#', '').toLowerCase();
-    var initialIndex = -1;
-    for (var i = 0; i < TYPES.length; i++) {
-      if (TYPES[i].slug === hashSlug) { initialIndex = i; break; }
+    function slugToIndex(hashSlug) {
+      for (var i = 0; i < TYPES.length; i++) {
+        if (TYPES[i].slug === hashSlug) return i;
+      }
+      return -1;
     }
+
+    var initialIndex = slugToIndex((window.location.hash || '').replace('#', '').toLowerCase());
     if (initialIndex > 0) activate(initialIndex, false);
+
+    // A click from the Versicherungen nav dropdown to another #slug on this
+    // same page (you're already on versicherungen.html, just a different
+    // tab) is a same-document navigation — the browser only updates the
+    // hash and fires "hashchange", it does not reload the page or re-run
+    // the DOMContentLoaded listener above. Without this, switching tabs via
+    // the nav (as opposed to clicking the in-page tab buttons) silently did
+    // nothing once you'd already landed on a non-default tab.
+    window.addEventListener('hashchange', function () {
+      var hashSlug = (window.location.hash || '').replace('#', '').toLowerCase();
+      var index = slugToIndex(hashSlug);
+      // An empty/unrecognized hash (e.g. the nav's plain "versicherungen.html"
+      // link, or the hash cleared some other way) falls back to Privathaftpflicht
+      // rather than doing nothing.
+      activate(index > -1 ? index : 0, false);
+    });
   });
 })();
