@@ -164,6 +164,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/depot.html" />
   </url>
   <url>
+    <loc>https://finanzpal.de/kinderdepot.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/kinderdepot.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/kinderdepot.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/kinderdepot.html" />
+  </url>
+  <url>
+    <loc>https://finanzpal.de/en/kinderdepot.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/kinderdepot.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/kinderdepot.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/kinderdepot.html" />
+  </url>
+  <url>
     <loc>https://finanzpal.de/steuerprogramm.html</loc>
     <lastmod>2026-10-20</lastmod>
     <changefreq>weekly</changefreq>

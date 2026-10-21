@@ -1,0 +1,164 @@
+(function () {
+  var LANG = document.documentElement.lang === 'en' ? 'en' : 'de';
+  var STR = LANG === 'en' ? {
+    count: function (n, total) { return n + ' of ' + total + ' children\'s accounts'; },
+    reset: 'Reset filters',
+    sortRate: 'Sort: Savings rate ascending',
+    sortName: 'Sort: Name A–Z',
+    empty: 'No account matches these filters. Try removing one.',
+    etfText: function (item) { return item.etfSparplaeneAnzahl.toLocaleString('en-US') + ' fee-free ETF savings plans'; },
+    mindestsparrate: function (n) { return 'Minimum savings rate: from €' + n + '/plan'; },
+    noParentDepot: 'No parent account needed',
+    zinsText: function (item) { return item.guthabenzins + '% p.a. cash interest'; },
+    feeLabel: 'Account fee',
+    rateLabel: 'Min. savings rate',
+    ageLabel: 'Age / conditions',
+    detailsMore: 'More details',
+    detailsLess: 'Fewer details',
+    cta: 'View offer',
+    provider: 'Provider',
+    sourceLabel: 'Sources'
+  } : {
+    count: function (n, total) { return n + ' von ' + total + ' Kinderdepots'; },
+    reset: 'Filter zurücksetzen',
+    sortRate: 'Sortieren: Mindestsparrate aufsteigend',
+    sortName: 'Sortieren: Name A–Z',
+    empty: 'Kein Kinderdepot passt zu diesen Filtern. Entferne einen Filter.',
+    etfText: function (item) { return item.etfSparplaeneAnzahl.toLocaleString('de-DE') + ' kostenlose ETF-Sparpläne'; },
+    mindestsparrate: function (n) { return 'Mindestsparrate: ab ' + n + ' €/Sparplan'; },
+    noParentDepot: 'Kein eigenes Depot der Eltern nötig',
+    zinsText: function (item) { return item.guthabenzins + ' % p. a. Guthabenzins'; },
+    feeLabel: 'Depotgebühr',
+    rateLabel: 'Mind. Sparrate',
+    ageLabel: 'Alter / Voraussetzungen',
+    detailsMore: 'Mehr Details',
+    detailsLess: 'Weniger Details',
+    cta: 'Zum Anbieter',
+    provider: 'Anbieter',
+    sourceLabel: 'Quellen'
+  };
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function bulletsFor(item) {
+    var bullets = [];
+    bullets.push({ ok: true, text: STR.etfText(item) + (item.etfSparplaeneCaveat ? ' — ' + item.etfSparplaeneCaveat : '') });
+    bullets.push({ ok: true, text: STR.mindestsparrate(item.mindestsparrate) });
+    if (item.guthabenzins) {
+      bullets.push({ ok: true, text: STR.zinsText(item) + (item.guthabenzinsCaveat ? ' — ' + item.guthabenzinsCaveat : '') });
+    } else if (item.guthabenzinsCaveat) {
+      bullets.push({ ok: false, text: item.guthabenzinsCaveat });
+    }
+    bullets.push({ ok: !item.parentDepotRequired, text: item.ageLimitText });
+    if (item.besonderheitenText) bullets.push({ ok: true, text: item.besonderheitenText });
+    return bullets;
+  }
+
+  function cardArtHtml(item) {
+    return '<div class="cc-art" style="background:' + (item.color || '#163A66') + ';">' + escapeHtml(item.initials) + '</div>';
+  }
+
+  function cardHtml(item) {
+    var bullets = bulletsFor(item);
+    var bulletsHtml = bullets.map(function (b) {
+      return '<li class="' + (b.ok ? 'ok' : 'info') + '"><span class="cc-icon">' + (b.ok ? '✓' : 'i') + '</span>' + escapeHtml(b.text) + '</li>';
+    }).join('');
+    return (
+      '<article class="kk-card" id="' + escapeHtml(item.id) + '">' +
+      '<div class="cc-badges"><span class="cc-badge">' + escapeHtml(item.name) + '</span>' +
+      (!item.parentDepotRequired ? '<span class="cc-badge debit">' + escapeHtml(STR.noParentDepot) + '</span>' : '') +
+      '</div>' +
+      '<div class="cc-body">' +
+      cardArtHtml(item) +
+      '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + '</div>' +
+      '<ul class="cc-bullets">' + bulletsHtml + '</ul></div>' +
+      '<div class="cc-facts">' +
+      '<div class="cc-fact"><span class="k">' + STR.feeLabel + '</span><span class="v">' + escapeHtml(item.depotgebuehrText) + '</span></div>' +
+      '<div class="cc-fact"><span class="k">' + STR.rateLabel + '</span><span class="v">' + item.mindestsparrate + ' €</span></div>' +
+      '</div>' +
+      '<div class="cc-cta-col"><a href="' + escapeHtml(item.affiliateUrl) + '" class="cta-btn" rel="sponsored nofollow">' + STR.cta + '</a></div>' +
+      '</div>' +
+      '<hr class="cc-divider">' +
+      '<button type="button" class="kk-toggle" data-toggle>' + STR.detailsMore + ' ▾</button>' +
+      '<div class="kk-card-details side-facts" hidden>' +
+      '<div><span class="k">' + STR.ageLabel + '</span><span class="v">' + escapeHtml(item.ageLimitText) + '</span></div>' +
+      '<div><span class="k">' + STR.sourceLabel + '</span><span class="v">' + escapeHtml(item.sourcesNote || '') + '</span></div>' +
+      '</div>' +
+      '</article>'
+    );
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var app = document.getElementById('kinderdepot-app');
+    if (!app) return;
+    var source = app.getAttribute('data-source');
+    var resultsEl = document.getElementById('kinderdepot-results');
+    var countEl = document.getElementById('kinderdepot-count');
+    var resetBtn = document.getElementById('kinderdepot-reset');
+    var sortSelect = document.getElementById('kinderdepot-sort-select');
+    var noParentCheck = document.getElementById('kinderdepot-filter-no-parent');
+    var rateSelect = document.getElementById('kinderdepot-rate-select');
+
+    var allItems = [];
+
+    function applyFilters(items) {
+      var maxRate = parseFloat(rateSelect.value);
+      return items.filter(function (item) {
+        if (noParentCheck.checked && item.parentDepotRequired) return false;
+        if (!isNaN(maxRate) && item.mindestsparrate > maxRate) return false;
+        return true;
+      });
+    }
+
+    function applySort(items) {
+      var sorted = items.slice();
+      if (sortSelect.value === 'name') {
+        sorted.sort(function (a, b) { return a.name.localeCompare(b.name); });
+      } else {
+        sorted.sort(function (a, b) { return a.mindestsparrate - b.mindestsparrate; });
+      }
+      return sorted;
+    }
+
+    function render() {
+      var filtered = applySort(applyFilters(allItems));
+      countEl.textContent = STR.count(filtered.length, allItems.length);
+      if (!filtered.length) {
+        resultsEl.innerHTML = '<p class="kk-empty">' + STR.empty + '</p>';
+        return;
+      }
+      resultsEl.innerHTML = filtered.map(cardHtml).join('');
+      Array.prototype.forEach.call(resultsEl.querySelectorAll('[data-toggle]'), function (btn) {
+        btn.addEventListener('click', function () {
+          var details = btn.nextElementSibling;
+          var isHidden = details.hasAttribute('hidden');
+          if (isHidden) { details.removeAttribute('hidden'); btn.textContent = STR.detailsLess + ' ▴'; }
+          else { details.setAttribute('hidden', ''); btn.textContent = STR.detailsMore + ' ▾'; }
+        });
+      });
+    }
+
+    if (noParentCheck) noParentCheck.addEventListener('change', render);
+    if (rateSelect) rateSelect.addEventListener('change', render);
+    if (sortSelect) sortSelect.addEventListener('change', render);
+    if (resetBtn) resetBtn.addEventListener('click', function () {
+      noParentCheck.checked = false;
+      rateSelect.value = 'alle';
+      sortSelect.value = 'rate';
+      render();
+    });
+
+    if (window.kkSkeletonHtml) resultsEl.innerHTML = window.kkSkeletonHtml(5);
+    fetch(source).then(function (r) { return r.json(); }).then(function (data) {
+      allItems = data.items;
+      var lastUpdatedEl = document.getElementById('kinderdepot-last-updated');
+      if (lastUpdatedEl) lastUpdatedEl.textContent = data.updated;
+      render();
+      if (window.kkScrollToHash) window.kkScrollToHash();
+    });
+  });
+})();
