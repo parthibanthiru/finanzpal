@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){try{var t=localStorage.getItem("fp-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mortgage Calculator: Monthly Payment & Remaining Balance — Finanzpal</title>
+<meta name="description" content="Free mortgage calculator: work out your monthly payment, the remaining balance at the end of the fixed-rate period, and the interest you'll pay.">
+<link rel="alternate" hreflang="de" href="/baufinanzierungsrechner.html">
+<link rel="alternate" hreflang="en" href="/en/baufinanzierungsrechner.html">
+<link rel="alternate" hreflang="x-default" href="/baufinanzierungsrechner.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/icon-512.png">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a>
+    <nav class="top">
+      <a href="broker.html">Broker</a>
+      <a href="kreditkarte.html">Credit cards</a>
+      <a href="tagesgeld.html">Savings</a>
+      <a href="kredite.html">Loans</a>
+      <a href="versicherungen.html">Insurance</a>
+      <a href="sparplanrechner.html" class="active">Calculator</a>
+      <a href="ratgeber.html">Guides</a>
+      <a href="ueber-uns.html">About us</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch" aria-label="Choose language"><a href="../baufinanzierungsrechner.html" class="lang-opt" hreflang="de" lang="de">DE</a><span class="lang-opt active" aria-current="true">EN</span></div>
+      <div class="search-btn">⌕</div>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Calculator &nbsp;/&nbsp; Mortgage Calculator</p>
+  <section class="hero" style="padding-bottom:8px;">
+    <h1>Mortgage calculator</h1>
+    <p class="lede">Work out your monthly payment, how much remaining balance (Restschuld) is left at the end of the fixed-rate period, and the total interest you'll pay during that time.</p>
+  </section>
+
+  <div class="calc-page-layout">
+    <div class="calc-inputs">
+      <h2>YOUR INPUTS</h2>
+      <div class="calc-field-group">
+        <label>Loan amount <span class="live-val" id="bf-darlehen-val">€300,000</span></label>
+        <input type="range" id="bf-darlehen" min="50000" max="1000000" step="5000" value="300000">
+      </div>
+      <div class="calc-field-group">
+        <label>Nominal interest rate p.a. <span class="live-val" id="bf-zins-val">3.50 %</span></label>
+        <input type="range" id="bf-zins" min="1" max="6" step="0.05" value="3.5">
+      </div>
+      <div class="calc-field-group">
+        <label>Initial repayment rate p.a. <span class="live-val" id="bf-tilgung-val">2.00 %</span></label>
+        <input type="range" id="bf-tilgung" min="1" max="5" step="0.1" value="2">
+      </div>
+      <div class="calc-field-group">
+        <label>Fixed-rate period <span class="live-val" id="bf-zinsbindung-val">15 years</span></label>
+        <input type="range" id="bf-zinsbindung" min="5" max="30" step="1" value="15">
+      </div>
+      <p class="calc-disclaimer">This calculator models a classic German annuity mortgage (Annuitätendarlehen) — a fixed monthly payment made up of interest and principal. It doesn't replace individual advice — your actual rate depends on creditworthiness, loan-to-value ratio, property type and region. Compare real offers e.g. via our <a href="baufinanzierung.html" style="text-decoration:underline;">mortgage broker comparison</a>.</p>
+    </div>
+
+    <div class="calc-results">
+      <div class="result-cards">
+        <div class="result-card highlight"><div class="rc-label">Monthly payment</div><div class="rc-val" id="bf-result-rate">€0</div></div>
+        <div class="result-card"><div class="rc-label">Remaining balance after fixed period</div><div class="rc-val" id="bf-result-restschuld">€0</div></div>
+        <div class="result-card"><div class="rc-label">Interest paid during fixed period</div><div class="rc-val" id="bf-result-zinsen">€0</div></div>
+      </div>
+
+      <div class="chart-card">
+        <h3>PRINCIPAL VS. INTEREST PER YEAR</h3>
+        <div class="bar-chart" id="bf-bar-chart"></div>
+        <div class="chart-legend">
+          <span><span class="dot contrib"></span>Principal repaid</span>
+          <span><span class="dot interest"></span>Interest</span>
+        </div>
+      </div>
+
+      <p class="calc-disclaimer" id="bf-payoff-note" style="margin-top:4px;"></p>
+
+      <section class="method" style="padding:0 0 8px;grid-template-columns:1fr;">
+        <div>
+          <h2 style="font-size:20px;">How is this calculated?</h2>
+          <p style="max-width:70ch;">The monthly payment is loan amount × (interest rate + initial repayment rate) ÷ 12. Each month, the payment splits into an interest share and a principal share; as the remaining balance falls, the interest share shrinks and the principal share grows accordingly. Once the fixed-rate period ends, the remaining balance in practice needs follow-up financing at whatever rate applies then, which can be higher or lower than the original rate.</p>
+        </div>
+      </section>
+
+      <section class="faq" style="margin-top:0;padding-top:32px;">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item"><h3>What happens after the fixed-rate period ends?</h3><p>The remaining balance needs to be refinanced at whatever market rate applies then (follow-up financing or a switch to a new lender) — the new rate could be higher or lower than the original one.</p></div>
+        <div class="faq-item"><h3>How does a higher repayment rate affect things?</h3><p>A higher initial repayment rate increases the monthly payment but significantly lowers the remaining balance at the end of the fixed period, and saves interest over the full term.</p></div>
+        <div class="faq-item"><h3>What's a sensible fixed-rate period?</h3><p>When rates are low, a long fixed period (15–20 years) offers planning certainty. When rates are high, some people deliberately choose a shorter fixed period to benefit if rates fall later — but that's a bet on how rates will move.</p></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a><p class="tag">Independent comparisons and guides for your finances.</p></div>
+      <div class="footer-col"><h4>Compare</h4>
+        <a href="finanz-check.html">Finanz-Check</a>
+        <a href="broker.html">Broker</a>
+        <a href="girokonto.html">Current account</a>
+        <a href="depot.html">Custody account</a>
+        <a href="kinderdepot.html">Children's custody account</a>
+        <a href="kreditkarte.html">Credit cards</a>
+        <a href="tagesgeld.html">Savings</a>
+        <a href="kredite.html">Loans</a>
+        <a href="baufinanzierung.html">Mortgages</a>
+        <a href="versicherungen.html">Insurance</a>
+        <a href="etf-suche.html">ETF search</a>
+        <a href="steuerprogramm.html">Tax software</a>
+      </div>
+      <div class="footer-col"><h4>Guides & Calculator</h4>
+        <a href="ratgeber.html">All articles</a>
+        <a href="sparplanrechner.html">Savings Plan Calculator</a>
+        <a href="zinseszinsrechner.html">Compound Interest Calculator</a>
+        <a href="kreditrechner.html">Loan Calculator</a>
+        <a href="baufinanzierungsrechner.html">Mortgage Calculator</a>
+        <a href="altersvorsorge-rechner.html">Retirement savings calculator</a>
+      </div>
+      <div class="footer-col"><h4>About us</h4>
+        <a href="ueber-uns.html">Methodology</a>
+        <a href="ueber-uns.html">Advertising partners</a>
+        <a href="impressum.html">Legal Notice</a>
+        <a href="datenschutz.html">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-legal">Finanzpal may earn commission from partners when you submit a financing request via our links. This does not affect our ratings. All figures without guarantee, not financial advice. © 2026 Finanzpal</div>
+  </div>
+</footer>
+
+<script src="../assets/nav.js"></script>
+<script src="../assets/baufinanzierungsrechner.js"></script>
+</body>
+</html>

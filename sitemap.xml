@@ -200,6 +200,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/baufinanzierung.html" />
   </url>
   <url>
+    <loc>https://finanzpal.de/baufinanzierungsrechner.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/baufinanzierungsrechner.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/baufinanzierungsrechner.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/baufinanzierungsrechner.html" />
+  </url>
+  <url>
+    <loc>https://finanzpal.de/en/baufinanzierungsrechner.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/baufinanzierungsrechner.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/baufinanzierungsrechner.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/baufinanzierungsrechner.html" />
+  </url>
+  <url>
     <loc>https://finanzpal.de/steuerprogramm.html</loc>
     <lastmod>2026-10-20</lastmod>
     <changefreq>weekly</changefreq>
