@@ -566,3 +566,14 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .fc-cat-label { font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--green-deep); margin-bottom: 10px; }
 .fc-quiz-box { max-width: 560px; margin: 0 auto; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 12px; padding: 28px 30px; }
 .mp-chip { display: inline-block; font-size: 12px; font-weight: 600; color: var(--green-deep); background: var(--tag-bg); padding: 3px 10px; border-radius: 100px; margin-right: 6px; }
+
+/* Nettolohnrechner breakdown table */
+.lohn-breakdown { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px; padding: 8px 20px; margin: 20px 0; }
+.lohn-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; }
+.lohn-row:last-child { border-bottom: none; }
+.lohn-row.total { font-weight: 600; font-size: 16px; color: var(--green-deep); }
+.lohn-row .lbl { color: var(--ink-soft); }
+.lohn-row.total .lbl { color: var(--ink); }
+.lohn-field-inline { margin: 10px 0 18px; font-size: 13px; color: var(--ink-soft); }
+.lohn-field-inline label { display: block; margin-bottom: 6px; }
+.lohn-field-inline select { font-family: var(--font-body); font-size: 14px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-raised); color: var(--ink); width: 100%; max-width: 100%; }

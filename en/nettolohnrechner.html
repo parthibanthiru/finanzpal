@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){try{var t=localStorage.getItem("fp-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Net Salary Calculator: Gross-to-Net for German Tax Class I — Finanzpal</title>
+<meta name="description" content="Free German net salary calculator for tax class I (Steuerklasse I): work out social contributions, income tax, and your net pay from your gross salary — with every step broken out.">
+<link rel="alternate" hreflang="de" href="/nettolohnrechner.html">
+<link rel="alternate" hreflang="en" href="/en/nettolohnrechner.html">
+<link rel="alternate" hreflang="x-default" href="/nettolohnrechner.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/icon-512.png">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a>
+    <nav class="top">
+      <a href="broker.html">Broker</a>
+      <a href="kreditkarte.html">Credit cards</a>
+      <a href="tagesgeld.html">Savings</a>
+      <a href="kredite.html">Loans</a>
+      <a href="versicherungen.html">Insurance</a>
+      <a href="sparplanrechner.html" class="active">Calculator</a>
+      <a href="ratgeber.html">Guides</a>
+      <a href="ueber-uns.html">About us</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch" aria-label="Choose language"><a href="../nettolohnrechner.html" class="lang-opt" hreflang="de" lang="de">DE</a><span class="lang-opt active" aria-current="true">EN</span></div>
+      <div class="search-btn">⌕</div>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Calculator &nbsp;/&nbsp; Net Salary Calculator</p>
+  <section class="hero" style="padding-bottom:8px;">
+    <h1>Net salary calculator</h1>
+    <p class="lede">Work out your social contributions, income tax, and net pay from your gross salary — with every step broken out individually.</p>
+  </section>
+
+  <div class="calc-page-layout">
+    <div class="calc-inputs">
+      <h2>YOUR INPUTS</h2>
+      <div class="calc-field-group">
+        <label>Gross salary per month <span class="live-val" id="nl-brutto-val">€4,000</span></label>
+        <input type="range" id="nl-brutto" min="1000" max="15000" step="50" value="4000">
+      </div>
+      <div class="calc-field-group">
+        <label>Health insurance surcharge (Zusatzbeitrag) <span class="live-val" id="nl-zusatzbeitrag-val">2.90 %</span></label>
+        <input type="range" id="nl-zusatzbeitrag" min="0" max="3.5" step="0.05" value="2.9">
+      </div>
+      <div class="lohn-field-inline">
+        <label for="nl-kirchensteuer">Church tax</label>
+        <select id="nl-kirchensteuer">
+          <option value="0" selected>None</option>
+          <option value="9">9% (most states)</option>
+          <option value="8">8% (Bavaria, Baden-Württemberg)</option>
+        </select>
+      </div>
+      <label class="kk-check"><input type="checkbox" id="nl-kinderlos"> Childless and 23 or older (long-term care insurance surcharge)</label>
+      <p class="calc-disclaimer" style="margin-top:16px;">This calculator models <strong>tax class I</strong> (single, no children, no further allowances) — for married people (tax class III/IV/V) or with children, the result will differ. Income tax is derived via a simplified annual calculation: instead of the official Vorsorgepauschale formula, we use the actual social contributions paid — the official payroll tax program may give a slightly different result. For a binding calculation, use a payslip or an official German wage/income tax calculator.</p>
+    </div>
+
+    <div class="calc-results">
+      <div class="result-cards">
+        <div class="result-card highlight"><div class="rc-label">Net per month</div><div class="rc-val" id="nl-result-netto">€0</div></div>
+        <div class="result-card"><div class="rc-label">Total social contributions</div><div class="rc-val" id="nl-result-sv">€0</div></div>
+        <div class="result-card"><div class="rc-label">Total tax</div><div class="rc-val" id="nl-result-steuer">€0</div></div>
+      </div>
+
+      <div class="lohn-breakdown">
+        <div class="lohn-row"><span class="lbl">Pension insurance</span><span id="nl-row-rv">€0</span></div>
+        <div class="lohn-row"><span class="lbl">Unemployment insurance</span><span id="nl-row-alv">€0</span></div>
+        <div class="lohn-row"><span class="lbl">Health insurance</span><span id="nl-row-kv">€0</span></div>
+        <div class="lohn-row"><span class="lbl">Long-term care insurance</span><span id="nl-row-pv">€0</span></div>
+        <div class="lohn-row"><span class="lbl">Income tax (Lohnsteuer)</span><span id="nl-row-est">€0</span></div>
+        <div class="lohn-row"><span class="lbl">Solidarity surcharge</span><span id="nl-row-soli">€0</span></div>
+        <div class="lohn-row"><span class="lbl">Church tax</span><span id="nl-row-kist">€0</span></div>
+        <div class="lohn-row total"><span class="lbl">Net</span><span id="nl-row-netto">€0</span></div>
+      </div>
+
+      <section class="method" style="padding:0 0 8px;grid-template-columns:1fr;">
+        <div>
+          <h2 style="font-size:20px;">How is this calculated?</h2>
+          <p style="max-width:70ch;">Social contributions (pension, unemployment, health and long-term care insurance) are calculated using the 2026 contribution rates and contribution ceilings. Taxable income is derived, simplified, as annual gross salary minus social contributions, the standard employee allowance (€1,230) and the standard special-expenses allowance (€36). The income tax tariff under §32a EStG (basic table) is then applied, followed by the solidarity surcharge (with its exemption threshold and phase-in zone) and, optionally, church tax.</p>
+        </div>
+      </section>
+
+      <section class="faq" style="margin-top:0;padding-top:32px;">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item"><h3>Why does this differ from my real payslip?</h3><p>Your payslip also accounts for your exact tax class, any registered allowances, child allowances, and the official Vorsorgepauschale formula — this calculator deliberately models only the most common case (tax class I, no children), simplified.</p></div>
+        <div class="faq-item"><h3>Why do I pay little or no solidarity surcharge despite a high income?</h3><p>Since the 2021 reform, the solidarity surcharge no longer applies to most taxpayers — it only kicks in above an annual income tax of around €20,350 (tax class I), and is further capped in a "phase-in zone" just above that threshold.</p></div>
+        <div class="faq-item"><h3>What is the health insurance Zusatzbeitrag?</h3><p>Every statutory health insurer sets its own additional contribution on top of the nationwide base rate of 14.6%, split evenly between you and your employer. The 2026 average is 2.9% — check your health insurer's membership certificate for the exact figure.</p></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a href="index.html" class="wordmark"><svg class="logo-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F2A3D"/><path d="M17 19V36M17 19H27M17 27.5H25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 36V19H42.5A4.75 4.75 0 0 1 42.5 28.5H37" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 44Q32 56 47 44" fill="none" stroke="#2FBF7F" stroke-width="5" stroke-linecap="round"/></svg><span class="logo-text">finanz<span class="pal">pal</span></span></a><p class="tag">Independent comparisons and guides for your finances.</p></div>
+      <div class="footer-col"><h4>Compare</h4>
+        <a href="finanz-check.html">Finanz-Check</a>
+        <a href="broker.html">Broker</a>
+        <a href="girokonto.html">Current account</a>
+        <a href="depot.html">Custody account</a>
+        <a href="kinderdepot.html">Children's custody account</a>
+        <a href="kreditkarte.html">Credit cards</a>
+        <a href="tagesgeld.html">Savings</a>
+        <a href="kredite.html">Loans</a>
+        <a href="baufinanzierung.html">Mortgages</a>
+        <a href="versicherungen.html">Insurance</a>
+        <a href="etf-suche.html">ETF search</a>
+        <a href="steuerprogramm.html">Tax software</a>
+      </div>
+      <div class="footer-col"><h4>Guides & Calculator</h4>
+        <a href="ratgeber.html">All articles</a>
+        <a href="sparplanrechner.html">Savings Plan Calculator</a>
+        <a href="zinseszinsrechner.html">Compound Interest Calculator</a>
+        <a href="kreditrechner.html">Loan Calculator</a>
+        <a href="baufinanzierungsrechner.html">Mortgage Calculator</a>
+        <a href="nettolohnrechner.html">Net Salary Calculator</a>
+        <a href="altersvorsorge-rechner.html">Retirement savings calculator</a>
+      </div>
+      <div class="footer-col"><h4>About us</h4>
+        <a href="ueber-uns.html">Methodology</a>
+        <a href="ueber-uns.html">Advertising partners</a>
+        <a href="impressum.html">Legal Notice</a>
+        <a href="datenschutz.html">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-legal">Finanzpal may earn commission from partners. This does not affect our ratings. All figures without guarantee, not tax advice. © 2026 Finanzpal</div>
+  </div>
+</footer>
+
+<script src="../assets/nav.js"></script>
+<script src="../assets/nettolohnrechner.js"></script>
+</body>
+</html>

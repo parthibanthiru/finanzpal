@@ -218,6 +218,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/baufinanzierungsrechner.html" />
   </url>
   <url>
+    <loc>https://finanzpal.de/nettolohnrechner.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/nettolohnrechner.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/nettolohnrechner.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/nettolohnrechner.html" />
+  </url>
+  <url>
+    <loc>https://finanzpal.de/en/nettolohnrechner.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/nettolohnrechner.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/nettolohnrechner.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/nettolohnrechner.html" />
+  </url>
+  <url>
     <loc>https://finanzpal.de/steuerprogramm.html</loc>
     <lastmod>2026-10-20</lastmod>
     <changefreq>weekly</changefreq>
