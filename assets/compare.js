@@ -18,6 +18,10 @@
     kredite: {
       de: { zinssatz: 'Zinssatz', sondertilgung: 'Sondertilgung', kreditrahmen: 'Kreditrahmen' },
       en: { zinssatz: 'Interest rate', sondertilgung: 'Special repayment', kreditrahmen: 'Loan amount range' }
+    },
+    tagesgeld: {
+      de: { zins: 'Zins', garantiedauer: 'Zins-Garantiedauer', einlagensicherung: 'Einlagensicherung' },
+      en: { zins: 'Interest rate', garantiedauer: 'Rate-guarantee duration', einlagensicherung: 'Deposit protection' }
     }
   };
 

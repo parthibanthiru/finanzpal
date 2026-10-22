@@ -264,11 +264,12 @@ drei Stellen einsetzen.
 
 ## Finanzpal-Score
 
-**Stand Oktober 2026 — Kategorien Girokonto, Kredite & Kreditkarte.**
+**Stand Oktober 2026 — Kategorien Girokonto, Kredite, Kreditkarte & Tagesgeld.**
 Zusätzlich zu den Rohdaten zeigen `girokonto.html`/`en/girokonto.html` und
 `kreditkarte.html`/`en/kreditkarte.html` (beide Karten-Layout, eigenes
-Vergleichs-JS) sowie `kredite.html`/`en/kredite.html` (Tabellen-Layout,
-`assets/compare.js`) einen Finanzpal-Score-Badge pro Zeile (`.fp-score-badge`):
+Vergleichs-JS) sowie `kredite.html`/`en/kredite.html` und
+`tagesgeld.html`/`en/tagesgeld.html` (Tabellen-Layout, `assets/compare.js`)
+einen Finanzpal-Score-Badge pro Zeile (`.fp-score-badge`):
 ein kleiner Fortschritts-Ring (SVG, `stroke-dasharray`/`-dashoffset`) mit der
 Note (A–D) in der Mitte und der Zahl (0–100) daneben, in den vier bestehenden
 Band-Farben grün/petrol/gold/schiefergrau. Der Ring füllt sich proportional
@@ -287,6 +288,12 @@ ohnehin schon stehen:
     Bedingungsfreiheit 20 % · zinsfreie Tage 20 %. Fehlt die Anzahl
     zinsfreier Tage (Debit-/Charge-Karten rechnen anders ab), wird das
     neutral statt als Nachteil gewertet.
+  - Tagesgeld: Zins 55 % · Zins-Garantiedauer 20 % · Einlagensicherung 25 %.
+    Eine vom Anbieter selbst als unklar markierte Währungsumrechnung zählt
+    nur als Teilerfüllung; ein ausdrücklicher Hinweis, dass ein Teil des
+    Guthabens ohne Einlagensicherung gehalten werden kann, schlägt
+    entsprechend stärker zu Buche — keins von beiden wird wie eine
+    uneingeschränkte Garantie gewertet.
 
 Design-Hintergrund und die vollständigen Bewertungskriterien für alle
 Kategorien (inkl. der bewusst noch nicht bewerteten: Baufinanzierung, BU,
@@ -303,8 +310,8 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   gearbeitet, was auf der übersetzten EN-Seite stillschweigend andere Werte
   lieferte — seither wird nur noch einmal, aus der DE-Datei, gerechnet).
 - Ausführen nach jeder Datenänderung an einer bewerteten Kategorie:
-  `python3 tools/compute_scores.py girokonto kredite kreditkarte` (oder ohne
-  Argument für alle registrierten Kategorien).
+  `python3 tools/compute_scores.py girokonto kredite kreditkarte tagesgeld`
+  (oder ohne Argument für alle registrierten Kategorien).
 - Jedes `score`-Objekt enthält `value`, `band`, ein `breakdown` je Teilkriterium
   (im Badge-Tooltip sichtbar) und `computedFrom` (Monat der Berechnung) — bewusst
   offengelegt statt einer nackten Zahl.
@@ -313,12 +320,14 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   `assets/girokonto-compare.js` und `assets/kreditkarte-compare.js` (jeweils
   Karten, Kreditkarte zusätzlich mit einer Tabellen-Ansicht im selben
   Skript) sowie dieselben Funktionen generisch in `assets/compare.js`
-  (Tabellen, geteilt mit Tagesgeld/Versicherungen — der Badge erscheint dort
-  nur, sobald ein `score`-Feld in den Daten steht).
+  (Tabellen, geteilt mit Versicherungen, das noch kein `score`-Feld hat —
+  der Badge erscheint dort nur, sobald eins in den Daten steht;
+  `SCORE_FACTOR_LABELS.tagesgeld` zeigt das Muster für die Tooltip-Labels
+  einer neuen Tabellen-Kategorie).
 - Neue Kategorie bewerten = Rubrik in `compute_scores.py` ergänzen (siehe
-  `GIROKONTO_RUBRIC`/`KREDITE_RUBRIC`/`KREDITKARTE_RUBRIC` als Vorlage),
-  Badge-Rendering an der richtigen Stelle anschließen (jeweiliges
-  Karten-Skript oder `SCORE_FACTOR_LABELS` in `compare.js`) **und**
+  `GIROKONTO_RUBRIC`/`KREDITE_RUBRIC`/`KREDITKARTE_RUBRIC`/`TAGESGELD_RUBRIC`
+  als Vorlage), Badge-Rendering an der richtigen Stelle anschließen
+  (jeweiliges Karten-Skript oder `SCORE_FACTOR_LABELS` in `compare.js`) **und**
   Methodik-Text auf `ueber-uns.html`/`en/ueber-uns.html`
   (`#finanzpal-score`) erweitern — nie eine Kategorie stillschweigend
   bewerten, ohne die Kriterien dort offenzulegen.

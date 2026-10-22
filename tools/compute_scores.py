@@ -212,6 +212,55 @@ KREDITKARTE_RUBRIC = [
 
 
 # ---------------------------------------------------------------------------
+# Tagesgeld rubric
+# Zins 55% · Zins-Garantiedauer 20% · Einlagensicherung 25%
+# ---------------------------------------------------------------------------
+
+def _tg_zins(item):
+    m = re.search(r"(\d+[,.]\d+)\s*%", item.get("rate") or "")
+    if not m:
+        return 0.0
+    rate = float(m.group(1).replace(",", "."))
+    # Fixed anchor: 4.0% = 100 points. Chosen as a round, stable reference —
+    # NOT "today's category leader", so adding or removing a provider can
+    # never silently shift every other provider's score.
+    return clamp(100.0 - (4.0 - rate) * 25.0)
+
+
+def _tg_garantiedauer(item):
+    m = re.search(r"(\d+)\s*Monate", item.get("guarantee") or "")
+    months = float(m.group(1)) if m else 0.0
+    # Fixed anchor: 6 months of guaranteed rate = 100 points. A rate with no
+    # guarantee period at all (e.g. Trade Republic: "kann jederzeit angepasst
+    # werden") scores 0 here — that's a real, stated difference in how long
+    # the advertised rate can be relied on, not a missing data point.
+    return clamp((months / 6.0) * 100.0)
+
+
+def _tg_einlagensicherung(item):
+    text = (item.get("protection") or "").lower()
+    if "ohne einlagensicherung" in text:
+        # The text itself states part of the balance may be held without
+        # any deposit protection at all (Trade Republic's money-market-fund
+        # note) — a materially different, and worse, guarantee.
+        return 40.0
+    if "unterschiedlich angegeben" in text or "ca. " in text:
+        # Protection exists, but the source data itself flags the exact
+        # covered amount as uncertain (a currency-conversion ambiguity) —
+        # carry that stated uncertainty into the score rather than treating
+        # it as equivalent to an unambiguous guarantee.
+        return 60.0
+    return 100.0
+
+
+TAGESGELD_RUBRIC = [
+    ("zins", 0.55, _tg_zins),
+    ("garantiedauer", 0.20, _tg_garantiedauer),
+    ("einlagensicherung", 0.25, _tg_einlagensicherung),
+]
+
+
+# ---------------------------------------------------------------------------
 # Registry: category -> rubric. Add new categories here once their rubric
 # is agreed (see the design doc's open questions before adding one).
 # ---------------------------------------------------------------------------
@@ -220,6 +269,7 @@ RUBRICS = {
     "girokonto": GIROKONTO_RUBRIC,
     "kredite": KREDITE_RUBRIC,
     "kreditkarte": KREDITKARTE_RUBRIC,
+    "tagesgeld": TAGESGELD_RUBRIC,
 }
 
 
