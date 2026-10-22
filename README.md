@@ -268,9 +268,15 @@ drei Stellen einsetzen.
 Zusätzlich zu den Rohdaten zeigen `girokonto.html`/`en/girokonto.html` und
 `kreditkarte.html`/`en/kreditkarte.html` (beide Karten-Layout, eigenes
 Vergleichs-JS) sowie `kredite.html`/`en/kredite.html` (Tabellen-Layout,
-`assets/compare.js`) einen grünen/blauen/gelben/grauen Badge pro Zeile
-(`.fp-score-badge`, A–D-Note + Zahl 0–100), berechnet aus Feldern, die auf
-derselben Seite ohnehin schon stehen:
+`assets/compare.js`) einen Finanzpal-Score-Badge pro Zeile (`.fp-score-badge`):
+ein kleiner Fortschritts-Ring (SVG, `stroke-dasharray`/`-dashoffset`) mit der
+Note (A–D) in der Mitte und der Zahl (0–100) daneben, in den vier bestehenden
+Band-Farben grün/petrol/gold/schiefergrau. Der Ring füllt sich proportional
+zum Score, statt nur eine flache Farbfläche zu zeigen — bewusst kein
+Siegel-/Zertifikats-Look, um keine Drittprüfung vorzutäuschen, die es nicht
+gibt (Tooltip + `aria-label` nennen das trotzdem explizit „Finanzpal-Score",
+nicht „Zertifiziert" o. ä.). Berechnet aus Feldern, die auf derselben Seite
+ohnehin schon stehen:
   - Girokonto: Kontoführungsgebühr 35 % · Dispozins 25 % · Guthabenzins 20 %
     · Karte & Bargeld-Flexibilität 20 %.
   - Kredite: Zinssatz 55 % · Sondertilgungsrecht 30 % · Kreditrahmen 15 %.

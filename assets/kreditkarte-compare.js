@@ -88,12 +88,26 @@
     }
   }[LANG];
 
+  var SCORE_RING_R = 8;
+  var SCORE_RING_C = 2 * Math.PI * SCORE_RING_R;
+
   function scoreBadgeHtml(item) {
     if (!item.score) return '';
     var band = (item.score.band || '').toLowerCase();
+    var value = item.score.value;
     var title = STR.scoreTooltip(item.score.breakdown || {});
-    return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '">' +
-      item.score.value + ' <span class="fp-score-band">' + escapeHtml(item.score.band) + '</span></a>';
+    var ariaLabel = LANG === 'en'
+      ? 'Finanzpal Score ' + value + ', grade ' + item.score.band
+      : 'Finanzpal-Score ' + value + ', Note ' + item.score.band;
+    var offset = (SCORE_RING_C * (1 - Math.max(0, Math.min(100, value)) / 100)).toFixed(2);
+    return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '" aria-label="' + escapeHtml(ariaLabel) + '">' +
+      '<svg class="fp-score-ring" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">' +
+        '<circle class="fp-score-track" cx="11" cy="11" r="' + SCORE_RING_R + '"></circle>' +
+        '<circle class="fp-score-fill" cx="11" cy="11" r="' + SCORE_RING_R + '" stroke-dasharray="' + SCORE_RING_C.toFixed(2) + '" stroke-dashoffset="' + offset + '" transform="rotate(-90 11 11)"></circle>' +
+        '<text x="11" y="11" class="fp-score-letter" text-anchor="middle" dominant-baseline="middle">' + escapeHtml(item.score.band) + '</text>' +
+      '</svg>' +
+      '<span class="fp-score-value">' + value + '</span>' +
+    '</a>';
   }
 
   var MONTHS = {
