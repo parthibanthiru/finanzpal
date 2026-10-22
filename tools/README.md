@@ -27,6 +27,19 @@ mapping needs to change. Also run (and verify with a quick diff) after
 adding a brand-new page to the site, since a new file won't appear in any
 nav group until it's added to `FILE_TO_KEY`.
 
+Since 2026-10-22 this script also regenerates the `<footer class="site">…
+</footer>` block (`FOOTER_COMPARE_DE/EN`, `FOOTER_CALC_DE/EN`,
+`FOOTER_ABOUT_DE/EN`). Before that, the footer was hand-duplicated into
+every page and never regenerated at all, which let pages drift silently —
+one page's EN footer still had category labels from before a previous
+rename months after everywhere else had been updated. A handful of pages
+legitimately need their own footer-legal disclaimer sentence, because the
+generic one would misstate what they do (a mortgage page isn't "opening an
+account", a budget tracker has no affiliate link at all) — those live in
+`FOOTER_LEGAL_OVERRIDES`, keyed by filename. If you add a page whose
+product genuinely isn't a plain "account" in the Finanzpal sense, add an
+override there rather than letting the default sentence go out inaccurate.
+
 ## add_article_icons.py
 
 Applies a unique icon + theme-aware accent color to a Ratgeber article in
