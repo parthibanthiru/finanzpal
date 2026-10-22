@@ -1,18 +1,21 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { openSite } from '@/lib/site';
 import { colors, fonts, radius, spacing } from '@/components/theme';
 
-// Same 7 calculators as the website's "Rechner" menu.
-// Native = built into the app; the rest open the website page for now.
-const RECHNER: { title: string; sub: string; icon: string; route?: '/rechner/sparplan' | '/rechner/kredit'; page?: string }[] = [
+// Same 7 calculators as the website's "Rechner" menu, all built into the app
+// (math identical to the website's assets/*rechner.js — see lib/calc.ts).
+type Route =
+  | '/rechner/sparplan' | '/rechner/zinseszins' | '/rechner/kredit' | '/rechner/baufinanzierung'
+  | '/rechner/nettolohn' | '/rechner/altersvorsorge' | '/rechner/haushaltsbuch';
+
+const RECHNER: { title: string; sub: string; icon: string; route: Route }[] = [
   { title: 'Sparplanrechner', sub: 'ETF-Sparplan: Einmalanlage + Sparrate', icon: '📈', route: '/rechner/sparplan' },
+  { title: 'Zinseszinsrechner', sub: 'Wie Zinsen auf Zinsen wachsen', icon: '🌱', route: '/rechner/zinseszins' },
   { title: 'Kreditrechner', sub: 'Monatsrate und Zinskosten', icon: '💰', route: '/rechner/kredit' },
-  { title: 'Zinseszinsrechner', sub: 'Wie Zinsen auf Zinsen wachsen', icon: '🌱', page: 'zinseszinsrechner.html' },
-  { title: 'Baufinanzierungsrechner', sub: 'Rate, Restschuld, Zinskosten', icon: '🏠', page: 'baufinanzierungsrechner.html' },
-  { title: 'Brutto-Netto-Rechner', sub: 'Steuerklasse I mit Abgaben-Aufschlüsselung', icon: '🧮', page: 'nettolohnrechner.html' },
-  { title: 'Altersvorsorge-Rechner', sub: 'Wie groß ist deine Rentenlücke?', icon: '🧓', page: 'altersvorsorge-rechner.html' },
-  { title: 'Haushaltsbuch', sub: 'Einnahmen und Ausgaben im Blick', icon: '📒', page: 'haushaltsbuch.html' },
+  { title: 'Baufinanzierungsrechner', sub: 'Rate, Restschuld, Zinskosten', icon: '🏠', route: '/rechner/baufinanzierung' },
+  { title: 'Brutto-Netto-Rechner', sub: 'Steuerklasse I mit Abgaben-Aufschlüsselung', icon: '🧮', route: '/rechner/nettolohn' },
+  { title: 'Altersvorsorge-Rechner', sub: 'Vermögen zur Rente und monatliche Auszahlung', icon: '🧓', route: '/rechner/altersvorsorge' },
+  { title: 'Haushaltsbuch', sub: 'Einnahmen und Ausgaben im Blick', icon: '📒', route: '/rechner/haushaltsbuch' },
 ];
 
 export default function RechnerScreen() {
@@ -20,20 +23,15 @@ export default function RechnerScreen() {
   return (
     <ScrollView contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }}>
       {RECHNER.map((r) => (
-        <Pressable
-          key={r.title}
-          style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]}
-          onPress={() => (r.route ? router.push(r.route) : openSite(r.page!))}
-        >
+        <Pressable key={r.route} style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]} onPress={() => router.push(r.route)}>
           <Text style={styles.icon}>{r.icon}</Text>
           <View style={{ flex: 1 }}>
             <Text style={styles.title}>{r.title}</Text>
             <Text style={styles.sub}>{r.sub}</Text>
           </View>
-          <Text style={styles.chevron}>{r.route ? '›' : '↗'}</Text>
+          <Text style={styles.chevron}>›</Text>
         </Pressable>
       ))}
-      <Text style={styles.hint}>↗ öffnet den Rechner auf finanzpal.de</Text>
     </ScrollView>
   );
 }
@@ -47,5 +45,4 @@ const styles = StyleSheet.create({
   title: { fontFamily: fonts.display, fontSize: 18, color: colors.text },
   sub: { fontSize: 13, color: colors.muted, marginTop: 2 },
   chevron: { fontSize: 22, color: colors.muted, marginLeft: spacing.sm },
-  hint: { fontSize: 12, color: colors.muted, marginTop: spacing.sm, textAlign: 'center' },
 });

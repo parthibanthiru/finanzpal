@@ -4,6 +4,7 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import { supabase } from '@/lib/supabase';
+import { deleteBuchungen } from '@/lib/haushaltsbuch';
 
 // Closes the login popup correctly when running as a web app.
 WebBrowser.maybeCompleteAuthSession();
@@ -140,8 +141,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // GDPR (Art. 17): users must be able to delete their account.
     // Calls the `delete_own_account` SQL function from supabase/schema.sql.
     async deleteAccount() {
+      const userId = session?.user.id;
       const { error } = await supabase.rpc('delete_own_account');
       if (error) return toGerman(error.message);
+      if (userId) await deleteBuchungen(userId); // budget entries stored only on this device
       await supabase.auth.signOut();
       return null;
     },

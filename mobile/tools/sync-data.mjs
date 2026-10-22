@@ -65,6 +65,19 @@ for (const k of ['versicherungen', 'hausrat', 'bu', 'rechtsschutz', 'autoversich
   if (!disclosures[k]) missing.push(`insurance-tabs.js:${k}`);
 }
 
+// calculator disclaimers: first <p class="calc-disclaimer"> without an id on each calculator page
+// (the one with an id, e.g. bf-payoff-note, is filled in by JavaScript at runtime)
+const RECHNER = [
+  'sparplanrechner', 'zinseszinsrechner', 'kreditrechner', 'baufinanzierungsrechner',
+  'nettolohnrechner', 'altersvorsorge-rechner', 'haushaltsbuch',
+];
+for (const page of RECHNER) {
+  const html = readFileSync(join(site, `${page}.html`), 'utf8');
+  const m = html.match(/<p class="calc-disclaimer"(?![^>]*\bid=)[^>]*>([\s\S]*?)<\/p>/);
+  if (m) disclosures[`rechner:${page}`] = decode(m[1]);
+  else missing.push(`${page}.html (calc-disclaimer)`);
+}
+
 writeFileSync(join(dest, 'disclosures.json'), JSON.stringify(disclosures, null, 2) + '\n');
 console.log(`[sync-data] ${n} Datendateien + ${Object.keys(disclosures).length} Hinweistexte übernommen.`);
 if (missing.length) {

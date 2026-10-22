@@ -4,10 +4,9 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 import { getCategory } from '@/lib/categories';
 import { DataFile, formatUpdated, loadData } from '@/lib/data';
 import { openSite } from '@/lib/site';
+import { disclosure } from '@/lib/disclosures';
 import { ProviderCard } from '@/components/ProviderCard';
 import { colors, radius, spacing } from '@/components/theme';
-
-const DISCLOSURES: Record<string, string> = require('../../../data/disclosures.json');
 
 type Sort = 'standard' | 'score';
 
@@ -65,7 +64,7 @@ export default function CategoryScreen() {
           renderItem={({ item }) => <ProviderCard item={item} fields={cat.fields(item)} />}
           ListFooterComponent={
             <View>
-              {DISCLOSURES[cat.file] ? <Text style={styles.disclosure}>{DISCLOSURES[cat.file]}</Text> : null}
+              {disclosure(cat.file) ? <Text style={styles.disclosure}>{disclosure(cat.file)}</Text> : null}
               <View style={styles.footerLinks}>
                 {hasScores && (
                   <Pressable onPress={() => openSite('ueber-uns.html#finanzpal-score')}>

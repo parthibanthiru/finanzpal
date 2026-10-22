@@ -444,17 +444,19 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   unter `mobile/data/`, die `mobile/tools/sync-data.mjs` erzeugt — das Skript
   zieht außerdem die Disclosure-Texte („Werbung: …") aus den Vergleichsseiten
   und `assets/insurance-tabs.js`.
-- **Rechner:** Sparplan- und Kreditrechner nativ (gleiche Formeln/Startwerte wie
-  `sparplanrechner.js`/`kreditrechner.js`, gegeneinander getestet), die übrigen
-  5 Rechner sowie Ratgeber, Methodik, Impressum und Datenschutz öffnen die
-  Website-Seiten in der App.
+- **Rechner:** alle 7 Rechner nativ in der App (`mobile/lib/calc.ts`, gleiche
+  Formeln, Startwerte und Disclaimer-Texte wie die `assets/*rechner.js` bzw.
+  `haushaltsbuch.js` — gegeneinander getestet). Das Haushaltsbuch speichert
+  wie auf der Website nur lokal (auf dem Gerät statt im Browser). Ratgeber,
+  Methodik, Impressum und Datenschutz öffnen die Website-Seiten in der App.
 - **Farben/Logo:** `mobile/components/theme.ts` spiegelt die Tokens aus
   `assets/style.css`; App-Icon = FP5-Logo.
 
-**Pflege:** Wer `data/*.json`, einen Disclosure-Text oder die Rechner-Logik
-ändert, führt danach `cd mobile && npm run sync-data` aus und committet
-`mobile/data/` mit (bei Rechner-Änderungen zusätzlich `mobile/lib/calc.ts`
-angleichen). Commits, die nur `mobile/` ändern, lösen dank `netlify.toml`
+**Pflege:** Wer `data/*.json`, einen Disclosure-Text, einen `calc-disclaimer`
+oder die Rechner-Logik ändert, führt danach `cd mobile && npm run sync-data` aus
+und committet `mobile/data/` mit (bei Rechner-Änderungen zusätzlich
+`mobile/lib/calc.ts` angleichen, inkl. der 2026er Steuer-/SV-Werte im
+Brutto-Netto-Rechner). Commits, die nur `mobile/` ändern, lösen dank `netlify.toml`
 keinen Netlify-Deploy aus (spart Build-Minuten); `/mobile/*` wird nie als Teil
 der Website ausgeliefert. Details und App-Setup: `mobile/README.md`.
 

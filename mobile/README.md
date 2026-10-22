@@ -4,14 +4,17 @@ The Finanzpal app, built with Expo / React Native + TypeScript: one codebase for
 It lives in `mobile/` inside the website repo and uses the **website as its single source of truth**:
 same comparison data, same disclosure texts, same calculator math and the same design tokens.
 
-**What's in it (v0.4)**
+**What's in it (v0.5)**
 - **Vergleiche** (home tab): all 13 comparisons from the website: Girokonto, Tagesgeld, Kreditkarte,
   Broker & Depot, Kinderdepot, Ratenkredit, Baufinanzierung, the 5 insurance types, Steuerprogramm.
   Provider cards with the website's fields, caveats (ⓘ), "Unsere Empfehlung", ratings, **Finanzpal-Score**
   (0–100 + A–D, sortable) and the page's own "Werbung"/disclosure text.
   "Zum Anbieter" appears only once an item has a real affiliate link (all are `#` placeholders today).
-- **Rechner**: Sparplanrechner and Kreditrechner built in (same formulas and defaults as the website, checked
-  against the site's JS); the other 5 calculators open on the website.
+- **Rechner**: all 7 website calculators built in: Sparplan, Zinseszins, Kredit, Baufinanzierung,
+  Brutto-Netto (Steuerklasse I, 2026), Altersvorsorge, Haushaltsbuch. Same formulas, defaults, ranges and
+  disclaimer texts as the website; the math was checked against the site's own JS (84,000+ input
+  combinations, all identical). The Haushaltsbuch keeps entries on the phone only (per account, deleted with
+  the account), like the website keeps them in the browser only.
 - **Ratgeber**: the 10 guides, opened on the website.
 - **Chat**, **Profil**, login with e-mail / Google / Apple, chat history, Datenschutz/Impressum links (from v0.1–v0.3).
 - Branding: FP5 logo as app icon/splash, website colors (`components/theme.ts` mirrors `assets/style.css`).
@@ -21,11 +24,13 @@ mobile/
   app/_layout.tsx                 auth gate: logged out → /login, logged in → /vergleiche
   app/(auth)/…                    login, register, forgot-password
   app/(app)/vergleiche/           category list + [id] comparison screen
-  app/(app)/rechner/              calculator list, sparplan, kredit
+  app/(app)/rechner/              calculator list + 7 calculators
   app/(app)/ratgeber.tsx, chat.tsx, profile.tsx
   lib/categories.ts               which data fields each comparison shows
   lib/data.ts                     loads data/*.json (bundled; optional live from the website)
-  lib/calc.ts                     calculator math (identical to the website's)
+  lib/calc.ts                     calculator math (identical to the website's assets/*rechner.js)
+  lib/haushaltsbuch.ts            budget tracker storage + totals
+  lib/disclosures.ts              disclosure/disclaimer texts from the website
   lib/site.ts                     website base URL, opens site pages in-app
   data/                           copy of ../data/*.json + disclosures.json (generated, committed)
   tools/sync-data.mjs             refreshes data/ from the website
@@ -34,7 +39,8 @@ mobile/
 ```
 
 ## Keeping app and website in sync
-The app ships a copy of the website's `data/*.json` and extracts the disclosure texts from the website pages.
+The app ships a copy of the website's `data/*.json` and extracts the disclosure texts (comparison pages,
+insurance tabs, and the `calc-disclaimer` of all 7 calculator pages) from the website.
 After changing comparison data or disclosure texts on the website:
 ```bash
 cd mobile && npm run sync-data     # also runs automatically before `npm start`

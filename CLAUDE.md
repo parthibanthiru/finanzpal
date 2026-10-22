@@ -40,8 +40,10 @@
   too if they're reusable across sessions; keep truly single-use debugging
   scripts out of git.
 - **Mobile app in `mobile/`** uses this website as its single source of truth.
-  After changing `data/*.json`, a disclosure text, or calculator logic
-  (`sparplanrechner.js`, `kreditrechner.js`), run `cd mobile && npm run sync-data`
-  (and mirror calculator changes in `mobile/lib/calc.ts`), then commit
+  After changing `data/*.json`, a disclosure text, a `calc-disclaimer`, or
+  calculator logic (any `assets/*rechner.js` or `haushaltsbuch.js`, incl. the
+  yearly tax/SV values in `nettolohnrechner.js`), run
+  `cd mobile && npm run sync-data` (and mirror calculator changes in
+  `mobile/lib/calc.ts` / `mobile/lib/haushaltsbuch.ts`), then commit
   `mobile/data/` in the same commit. Commits touching only `mobile/` don't
   trigger a Netlify deploy (`netlify.toml` ignore rule).

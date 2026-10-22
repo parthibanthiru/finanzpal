@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { calcLoan } from '@/lib/calc';
+import { disclosure } from '@/lib/disclosures';
 import { formatEUR, formatEURCents } from '@/lib/format';
 import { BarChart, NumberField, ResultTile, calcStyles } from '@/components/CalcUI';
 import { colors, spacing } from '@/components/theme';
@@ -41,9 +42,7 @@ export default function KreditScreen() {
         <Text style={{ color: colors.primary, fontWeight: '700', fontSize: 15 }}>Ratenkredite vergleichen ›</Text>
       </Pressable>
 
-      <Text style={calcStyles.disclaimer}>
-        Annuitätendarlehen mit gleichbleibender Rate. Dein tatsächlicher Zins hängt von deiner Bonität ab. Keine Finanzberatung.
-      </Text>
+      {disclosure('rechner:kreditrechner') ? <Text style={calcStyles.disclaimer}>{disclosure('rechner:kreditrechner')}</Text> : null}
     </ScrollView>
   );
 }
