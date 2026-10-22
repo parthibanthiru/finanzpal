@@ -127,7 +127,7 @@ nav.top a.active { color: var(--ink); border-bottom-color: var(--green); }
 .hero.home-hero { padding-top: 48px; }
 .hero h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(30px, 5vw, 46px); line-height: 1.12; margin: 0 0 16px; }
 @media (max-width: 480px) { .hero h1 { font-size: clamp(24px, 7.5vw, 46px); } }
-.hero.home-hero h1 { max-width: 16ch; }
+.hero.home-hero h1 { max-width: 22ch; }
 @media (max-width: 480px) { .hero.home-hero h1 { max-width: none; } }
 .hero p.lede { font-size: 17px; color: var(--ink-soft); max-width: 76ch; margin: 0 0 24px; }
 .hero.home-hero p.lede { max-width: 56ch; }
@@ -171,7 +171,7 @@ nav.top a.active { color: var(--ink); border-bottom-color: var(--green); }
 .featured-panel > div, .featured-panel > .mini-table { position: relative; z-index: 1; }
 @media (max-width: 780px) { .featured-panel { grid-template-columns: 1fr; padding: 28px; } }
 .featured-panel .eyebrow { font-size: 13px; opacity: 0.75; margin-bottom: 10px; }
-.featured-panel h2 { font-family: var(--font-display); font-weight: 500; font-size: 30px; margin: 0 0 14px; max-width: 16ch; }
+.featured-panel h2 { font-family: var(--font-display); font-weight: 500; font-size: 30px; margin: 0 0 14px; max-width: 22ch; }
 .featured-panel p { opacity: 0.85; font-size: 15px; max-width: 42ch; margin: 0 0 22px; }
 .featured-panel .cta-btn { background: #fff; color: var(--green-deep); font-size: 14px; padding: 11px 20px; }
 .mini-table { background: rgba(255,255,255,0.06); border-radius: 8px; padding: 6px; }
