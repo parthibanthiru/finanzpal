@@ -15,23 +15,23 @@
   explicit caveat/disclosure text, `null` fields, or individual-dependent
   framing instead (see the BU/Kfz/Baufinanzierung insurance tabs for the
   established pattern).
-- Both `finanzpal-production/` (local test copy) and `finanzpal-website/`
-  (the checked-out copy used for editing — the folder name predates the
-  GitHub repo rename to `github.com/parthibanthiru/finanzpal` and was kept
-  as-is) need to stay in sync — changes made in one must be copied to the
-  other before committing.
-- **Git commits/pushes happen from `/home/claude/finanzpal`, not
-  `finanzpal-website/`.** `finanzpal-website/` and `finanzpal-production/`
-  stay the editing/testing copies as above, but the actual `git add` /
-  `commit` / `push` runs against `/home/claude/finanzpal` (a separate,
-  properly-registered clone of the same repo under its current name) —
-  copy the changed files there first. This exists because this session's
-  original checkout kept reverting its own git remote back to the old
-  `finanzpal-website` GitHub URL between turns (a session-registration
-  quirk, not a real repo problem — pushes from the old location still
-  succeeded via GitHub's redirect either way); the properly-registered
-  clone at `/home/claude/finanzpal` doesn't have that problem. Keep all
-  three directories' content in sync before committing.
+- **`/home/claude/finanzpal`** is the one and only git checkout: edit,
+  commit, and push all happen here. (Earlier this repo was split across
+  `finanzpal-website/` for editing and a separate `/home/claude/finanzpal`
+  just for pushing, because the original checkout's git remote kept
+  reverting to a stale pre-rename URL between turns — that's resolved by
+  working in this directory instead, so the split is gone. If a fresh
+  session somehow ends up with a `finanzpal-website/` checkout again and
+  its pushes show a "repository moved" redirect notice or its remote URL
+  doesn't stick, that's the same old issue — fix is to clone fresh into a
+  new directory via the session's repo-attach tool rather than fighting
+  the existing checkout.)
+- **`/home/claude/finanzpal-test`** (local test copy) needs to stay in
+  sync by hand — changes made in `/home/claude/finanzpal` must be copied
+  there before running `python3 -m http.server` / `tools/audit_quick.py`
+  against it. It has its own old, unrelated git history from early in the
+  project; that's cosmetic and not used for anything — don't try to
+  reconcile it with the real repo's history.
 - **Maintenance scripts live in `tools/`** (committed to the repo, not the
   session scratchpad): `build_nav.py` regenerates the nav across all 74
   pages, `add_article_icons.py` sets Ratgeber icon/accent colors,

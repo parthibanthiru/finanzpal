@@ -55,7 +55,7 @@ Broker/Depot-Zusammenführung auf den gemeinsamen Broker- & Depot-Vergleich
 ## Struktur
 
 ```
-finanzpal-production/
+finanzpal/
 ├── *.html                      36 Seiten auf Deutsch (siehe Seitenübersicht oben)
 ├── en/                         Komplette englische Spiegelung aller Seiten
 ├── sitemap.xml / robots.txt
@@ -428,7 +428,7 @@ JSON-gespeiste Tabellen brauchen `http://`, nicht `file://`. Lokalen Server
 starten:
 
 ```
-cd finanzpal-production
+cd finanzpal-test
 python3 -m http.server 8000
 ```
 
@@ -462,14 +462,12 @@ der Website ausgeliefert. Details und App-Setup: `mobile/README.md`.
 
 - **Repo:** `github.com/parthibanthiru/finanzpal`, Branch `main` (umbenannt
   von `finanzpal-website`; GitHub leitet die alte URL per Redirect weiter).
-  Enthält Website und App (`mobile/`). Der lokale Ordnername des
-  Editier-Checkouts (`finanzpal-website/`, siehe `CLAUDE.md`) heißt weiterhin
-  so wie vor der Umbenennung — nur der GitHub-Repo-Name hat sich geändert,
-  der Ordner selbst wurde nicht umbenannt. **Commits/Pushes laufen über
-  `/home/claude/finanzpal`** (separater, korrekt registrierter Checkout),
-  nicht über `finanzpal-website/` direkt — siehe `CLAUDE.md` für den Grund
-  (Git-Remote von `finanzpal-website/` sprang zwischen Turns sonst immer
-  wieder auf die alte URL zurück).
+  Enthält Website und App (`mobile/`). Lokal gibt es nur noch einen
+  Checkout, `/home/claude/finanzpal` — editiert, committed und gepusht wird
+  ausschließlich dort (siehe `CLAUDE.md` zur Vorgeschichte: ein früherer,
+  separat benannter Checkout `finanzpal-website/` ist deshalb entfallen,
+  weil dessen Git-Remote zwischen Turns immer wieder auf die alte URL
+  zurückgesprungen war).
 - **Netlify** ist verbunden und deployed automatisch bei jedem Push auf
   `main` (Projekt "Finanzpal", Free-Plan mit begrenzten Build-Minuten),
   aktuell hinter dem Team-SSO-Gate.
