@@ -16,10 +16,22 @@
   framing instead (see the BU/Kfz/Baufinanzierung insurance tabs for the
   established pattern).
 - Both `finanzpal-production/` (local test copy) and `finanzpal-website/`
-  (the actual git checkout pushed to GitHub, as `github.com/parthibanthiru/
-  finanzpal` — the local folder name predates the GitHub repo rename and
-  was kept as-is) need to stay in sync — changes made in one must be
-  copied to the other before committing.
+  (the checked-out copy used for editing — the folder name predates the
+  GitHub repo rename to `github.com/parthibanthiru/finanzpal` and was kept
+  as-is) need to stay in sync — changes made in one must be copied to the
+  other before committing.
+- **Git commits/pushes happen from `/home/claude/finanzpal`, not
+  `finanzpal-website/`.** `finanzpal-website/` and `finanzpal-production/`
+  stay the editing/testing copies as above, but the actual `git add` /
+  `commit` / `push` runs against `/home/claude/finanzpal` (a separate,
+  properly-registered clone of the same repo under its current name) —
+  copy the changed files there first. This exists because this session's
+  original checkout kept reverting its own git remote back to the old
+  `finanzpal-website` GitHub URL between turns (a session-registration
+  quirk, not a real repo problem — pushes from the old location still
+  succeeded via GitHub's redirect either way); the properly-registered
+  clone at `/home/claude/finanzpal` doesn't have that problem. Keep all
+  three directories' content in sync before committing.
 - **Maintenance scripts live in `tools/`** (committed to the repo, not the
   session scratchpad): `build_nav.py` regenerates the nav across all 74
   pages, `add_article_icons.py` sets Ratgeber icon/accent colors,

@@ -463,9 +463,13 @@ der Website ausgeliefert. Details und App-Setup: `mobile/README.md`.
 - **Repo:** `github.com/parthibanthiru/finanzpal`, Branch `main` (umbenannt
   von `finanzpal-website`; GitHub leitet die alte URL per Redirect weiter).
   Enthält Website und App (`mobile/`). Der lokale Ordnername des
-  Git-Checkouts (`finanzpal-website/`, siehe `CLAUDE.md`) heißt weiterhin so
-  wie vor der Umbenennung — nur der GitHub-Repo-Name hat sich geändert, der
-  Ordner selbst wurde nicht umbenannt.
+  Editier-Checkouts (`finanzpal-website/`, siehe `CLAUDE.md`) heißt weiterhin
+  so wie vor der Umbenennung — nur der GitHub-Repo-Name hat sich geändert,
+  der Ordner selbst wurde nicht umbenannt. **Commits/Pushes laufen über
+  `/home/claude/finanzpal`** (separater, korrekt registrierter Checkout),
+  nicht über `finanzpal-website/` direkt — siehe `CLAUDE.md` für den Grund
+  (Git-Remote von `finanzpal-website/` sprang zwischen Turns sonst immer
+  wieder auf die alte URL zurück).
 - **Netlify** ist verbunden und deployed automatisch bei jedem Push auf
   `main` (Projekt "Finanzpal", Free-Plan mit begrenzten Build-Minuten),
   aktuell hinter dem Team-SSO-Gate.
