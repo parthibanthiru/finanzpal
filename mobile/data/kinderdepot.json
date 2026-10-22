@@ -1,0 +1,285 @@
+{
+  "updated": "2026-10",
+  "items": [
+    {
+      "id": "trade-republic-kinderdepot",
+      "name": "Trade Republic",
+      "initials": "TR",
+      "color": "#1F4E36",
+      "affiliateUrl": "#",
+      "depotgebuehrText": "0 €/Jahr",
+      "mindestsparrate": 1,
+      "etfSparplaeneAnzahl": 2827,
+      "etfSparplaeneCaveat": "Anbieter- und Testportal-Angaben schwanken zwischen rund 2.700 und 2.827 kostenlosen ETF-Sparplänen",
+      "guthabenzins": 2.5,
+      "guthabenzinsCaveat": "Testportale nennen je nach Stand 2,25 % oder 2,50 % p. a. (variabel, an den EZB-Einlagenzins gekoppelt)",
+      "parentDepotRequired": true,
+      "ageLimitText": "Eröffnung bis 17,5 Jahre",
+      "besonderheitenText": "Großeltern können über eine Sparpaten-Funktion mit einzahlen",
+      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026",
+      "score": {
+        "value": 75.5,
+        "band": "A",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 100.0,
+          "guthabenzins": 100.0,
+          "elternAufwand": 30.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "scalable-capital-kinderdepot",
+      "name": "Scalable Capital",
+      "initials": "SC",
+      "color": "#2F5C8A",
+      "affiliateUrl": "#",
+      "depotgebuehrText": "0 €/Jahr",
+      "mindestsparrate": 1,
+      "etfSparplaeneAnzahl": 2700,
+      "etfSparplaeneCaveat": "Testportale nennen je nach Stand zwischen rund 2.700 und 3.328 kostenlosen ETF-Sparplänen",
+      "guthabenzins": 2.5,
+      "guthabenzinsCaveat": "Zins gilt im kostenlosen FREE-Tarif auf Guthaben bis 100.000 €",
+      "parentDepotRequired": true,
+      "ageLimitText": "Eröffnung bis 17 Jahre",
+      "besonderheitenText": null,
+      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026",
+      "score": {
+        "value": 75.5,
+        "band": "A",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 100.0,
+          "guthabenzins": 100.0,
+          "elternAufwand": 30.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "consorsbank-junior-depot",
+      "name": "Consorsbank",
+      "initials": "CB",
+      "color": "#13395E",
+      "affiliateUrl": "#",
+      "depotgebuehrText": "0 €/Jahr",
+      "mindestsparrate": 10,
+      "etfSparplaeneAnzahl": 1860,
+      "etfSparplaeneCaveat": "Testportale nennen zwischen rund 1.860 und 2.004 kostenlosen ETF-Sparplänen",
+      "guthabenzins": null,
+      "guthabenzinsCaveat": "Zinsangaben widersprüchlich: eine Quelle nennt 0,80 % Basiszins plus 3,40 % Neukundenaktion für 5 Monate, eine andere nur 1 % — bitte aktuelle Konditionen beim Anbieter prüfen",
+      "parentDepotRequired": false,
+      "ageLimitText": "Keine Altersbeschränkung für den eröffnenden Elternteil bekannt",
+      "besonderheitenText": null,
+      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026",
+      "score": {
+        "value": 64.6,
+        "band": "B",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 64.0,
+          "guthabenzins": 0.0,
+          "elternAufwand": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "comdirect-juniordepot",
+      "name": "comdirect",
+      "initials": "CD",
+      "color": "#5B5F63",
+      "affiliateUrl": "#",
+      "depotgebuehrText": "0 €/Jahr für 6 Monate, danach kostenlos bei 2 Trades/Quartal oder laufendem Sparplan, sonst 1,95 €/Monat",
+      "mindestsparrate": 1,
+      "etfSparplaeneAnzahl": 598,
+      "etfSparplaeneCaveat": "Rund 550–600 von insgesamt über 2.100 Sparplänen kostenlos besparbar (geringste Freiquote im Vergleich)",
+      "guthabenzins": null,
+      "guthabenzinsCaveat": "Zins auf das Verrechnungskonto von den Testportalen nicht beziffert",
+      "parentDepotRequired": false,
+      "ageLimitText": "Originalunterlagen zur Depoteröffnung werden per Post zugesandt",
+      "besonderheitenText": "Auf ETF-Sparpläne wird laut Testportal eine Ausführungsgebühr von 1,5 % pro Ausführung fällig",
+      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026",
+      "score": {
+        "value": 62.0,
+        "band": "B",
+        "breakdown": {
+          "depotgebuehr": 60.0,
+          "mindestsparrate": 100.0,
+          "guthabenzins": 0.0,
+          "elternAufwand": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "flatex-kinderdepot",
+      "name": "flatex",
+      "initials": "FX",
+      "color": "#8A3F2F",
+      "affiliateUrl": "#",
+      "depotgebuehrText": "0 €/Jahr",
+      "mindestsparrate": 25,
+      "etfSparplaeneAnzahl": 2364,
+      "etfSparplaeneCaveat": "Testportale nennen zwischen rund 2.364 und 2.506 Sparplänen — ob alle gebührenfrei besparbar sind, wird nicht einheitlich angegeben",
+      "guthabenzins": null,
+      "guthabenzinsCaveat": "Zins auf das Verrechnungskonto von den Testportalen nicht beziffert",
+      "parentDepotRequired": true,
+      "ageLimitText": "Beide Elternteile benötigen ein eigenes flatex-Depot",
+      "besonderheitenText": "Höchste Mindestsparrate im Vergleich (25 €)",
+      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026",
+      "score": {
+        "value": 31.1,
+        "band": "C",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 4.0,
+          "guthabenzins": 0.0,
+          "elternAufwand": 30.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "dkb-kinderdepot",
+      "name": "DKB",
+      "initials": "DKB",
+      "color": "#B8901F",
+      "affiliateUrl": "#",
+      "depotgebuehrText": "0 €/Jahr",
+      "mindestsparrate": 25,
+      "etfSparplaeneAnzahl": 2118,
+      "etfSparplaeneCaveat": "511 von 2.118 Sparplänen kostenlos; FAQ nennt zusätzlich „über 500“ Aktions-ETFs ohne Ausführungsentgelt",
+      "guthabenzins": null,
+      "guthabenzinsCaveat": "Zinssatz auf das Verrechnungskonto nicht angegeben",
+      "parentDepotRequired": true,
+      "ageLimitText": "Konto geht mit dem 18. Geburtstag automatisch in ein reguläres Depot über",
+      "besonderheitenText": "Voraussetzung: Girokonto u18 plus DKB-Girokonto eines Elternteils",
+      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026",
+      "score": {
+        "value": 31.1,
+        "band": "C",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 4.0,
+          "guthabenzins": 0.0,
+          "elternAufwand": 30.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "finanzen-net-zero-kinderdepot",
+      "name": "finanzen.net Zero",
+      "initials": "FNZ",
+      "color": "#1F6F54",
+      "affiliateUrl": "#",
+      "depotgebuehrText": "0 €/Jahr",
+      "mindestsparrate": 1,
+      "etfSparplaeneAnzahl": 1891,
+      "etfSparplaeneCaveat": null,
+      "guthabenzins": null,
+      "guthabenzinsCaveat": "Zinssatz auf das Verrechnungskonto nicht angegeben",
+      "parentDepotRequired": true,
+      "ageLimitText": "Keine Altersangabe auf der Anbieterseite",
+      "besonderheitenText": "Eröffnung nur möglich, wenn beide Sorgeberechtigten ein eigenes ZERO-Depot haben",
+      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026",
+      "score": {
+        "value": 45.5,
+        "band": "C",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 100.0,
+          "guthabenzins": 0.0,
+          "elternAufwand": 30.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "ing-junior-depot",
+      "name": "ING",
+      "initials": "ING",
+      "color": "#FF6200",
+      "affiliateUrl": "#",
+      "depotgebuehrText": "0 €/Jahr",
+      "mindestsparrate": 1,
+      "etfSparplaeneAnzahl": 1215,
+      "etfSparplaeneCaveat": null,
+      "guthabenzins": 3.2,
+      "guthabenzinsCaveat": "Neukundenaktion, Stand Juni 2026 laut Anbieterseite — danach ggf. abweichender Zins",
+      "parentDepotRequired": false,
+      "ageLimitText": "Konto geht mit dem 18. Geburtstag automatisch in ein reguläres Depot über",
+      "besonderheitenText": "Beide Sorgeberechtigte müssen den Antrag bestätigen und sich legitimieren; ob ein eigenes ING-Konto der Eltern nötig ist, wird auf der Seite nicht angegeben",
+      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026",
+      "score": {
+        "value": 94.0,
+        "band": "A",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 100.0,
+          "guthabenzins": 80.0,
+          "elternAufwand": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "sbroker-kinderdepot",
+      "name": "S Broker",
+      "initials": "SBR",
+      "color": "#9A1F3D",
+      "affiliateUrl": "#",
+      "depotgebuehrText": "0 €/Jahr, keine Inaktivitätsgebühr",
+      "mindestsparrate": 5,
+      "etfSparplaeneAnzahl": 2400,
+      "etfSparplaeneCaveat": "Anbieter nennt „über 2.400“ Sparpläne, alle kostenlos",
+      "guthabenzins": null,
+      "guthabenzinsCaveat": "Laut Anbieter aktuell keine Zinsgutschrift auf das Verrechnungskonto",
+      "parentDepotRequired": false,
+      "ageLimitText": "Konto geht mit dem 18. Geburtstag automatisch in ein reguläres S-Broker-Depot über",
+      "besonderheitenText": "Depot läuft auf den Namen des Kindes; Eltern/Sorgeberechtigte müssen Antrag und Legitimation durchführen",
+      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026",
+      "score": {
+        "value": 67.6,
+        "band": "B",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 84.0,
+          "guthabenzins": 0.0,
+          "elternAufwand": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "tradersplace-kinderdepot",
+      "name": "Traders Place",
+      "initials": "TP",
+      "color": "#4A6B3F",
+      "affiliateUrl": "#",
+      "depotgebuehrText": "0 €/Jahr (außer ggf. bei Xetra-Gold, ADRs/GDRs)",
+      "mindestsparrate": 1,
+      "etfSparplaeneAnzahl": 2230,
+      "etfSparplaeneCaveat": null,
+      "guthabenzins": 2.0,
+      "guthabenzinsCaveat": "Zusammenfassung nennt 2,00 % ab 5.000 €, Konditionentabelle nennt 2,25 % für 5.000–1.000.000 € — Angaben widersprüchlich",
+      "parentDepotRequired": true,
+      "ageLimitText": "Keine Altersangabe auf der Anbieterseite",
+      "besonderheitenText": "Beide Sorgeberechtigte benötigen ein eigenes Traders-Place-Depot",
+      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026",
+      "score": {
+        "value": 69.5,
+        "band": "B",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 100.0,
+          "guthabenzins": 80.0,
+          "elternAufwand": 30.0
+        },
+        "computedFrom": "2026-10"
+      }
+    }
+  ]
+}

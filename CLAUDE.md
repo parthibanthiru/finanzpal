@@ -25,3 +25,9 @@
   for usage and prerequisites. Add new one-off/debug scripts to `tools/`
   too if they're reusable across sessions; keep truly single-use debugging
   scripts out of git.
+- **Mobile app in `mobile/`** uses this website as its single source of truth.
+  After changing `data/*.json`, a disclosure text, or calculator logic
+  (`sparplanrechner.js`, `kreditrechner.js`), run `cd mobile && npm run sync-data`
+  (and mirror calculator changes in `mobile/lib/calc.ts`), then commit
+  `mobile/data/` in the same commit. Commits touching only `mobile/` don't
+  trigger a Netlify deploy (`netlify.toml` ignore rule).

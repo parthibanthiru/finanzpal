@@ -110,6 +110,10 @@ finanzpal-production/
 │   │                                  schreibt `score` in data/*.json zurück (siehe unten)
 │   ├── audit_quick.py               Playwright-Regressionscheck (alle Seiten, Light/Dark)
 │   └── README.md                    Details, Aufrufparameter, Voraussetzungen je Skript
+├── mobile/                         Finanzpal-App (Android & iOS, Expo/React Native) — nutzt
+│                                     data/*.json + Disclosure-Texte dieser Website, siehe
+│                                     Abschnitt „Mobile App" und mobile/README.md
+├── netlify.toml                    Kein Deploy bei Commits nur in mobile/; /mobile/* nie ausliefern
 └── README.md                       Diese Datei
 ```
 
@@ -430,9 +434,33 @@ python3 -m http.server 8000
 
 Dann im Browser: http://localhost:8000
 
+## Mobile App (`mobile/`)
+
+Die Android-/iOS-App (Expo/React Native + Supabase-Login) liegt seit Oktober 2026
+im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
+
+- **Vergleiche:** alle 13 Vergleiche aus den gleichen `data/*.json`-Dateien
+  (inkl. Finanzpal-Score, Caveats, „Unsere Empfehlung"). Die App hat eine Kopie
+  unter `mobile/data/`, die `mobile/tools/sync-data.mjs` erzeugt — das Skript
+  zieht außerdem die Disclosure-Texte („Werbung: …") aus den Vergleichsseiten
+  und `assets/insurance-tabs.js`.
+- **Rechner:** Sparplan- und Kreditrechner nativ (gleiche Formeln/Startwerte wie
+  `sparplanrechner.js`/`kreditrechner.js`, gegeneinander getestet), die übrigen
+  5 Rechner sowie Ratgeber, Methodik, Impressum und Datenschutz öffnen die
+  Website-Seiten in der App.
+- **Farben/Logo:** `mobile/components/theme.ts` spiegelt die Tokens aus
+  `assets/style.css`; App-Icon = FP5-Logo.
+
+**Pflege:** Wer `data/*.json`, einen Disclosure-Text oder die Rechner-Logik
+ändert, führt danach `cd mobile && npm run sync-data` aus und committet
+`mobile/data/` mit (bei Rechner-Änderungen zusätzlich `mobile/lib/calc.ts`
+angleichen). Commits, die nur `mobile/` ändern, lösen dank `netlify.toml`
+keinen Netlify-Deploy aus (spart Build-Minuten); `/mobile/*` wird nie als Teil
+der Website ausgeliefert. Details und App-Setup: `mobile/README.md`.
+
 ## Deployment & Git-Workflow
 
-- **Repo:** `github.com/parthibanthiru/finanzpal-website`, Branch `main`.
+- **Repo:** `github.com/parthibanthiru/finanzpal` (früher `finanzpal-website`; GitHub leitet den alten Namen weiter), Branch `main`. Enthält Website und App (`mobile/`).
 - **Netlify** ist verbunden und deployed automatisch bei jedem Push auf
   `main` (Projekt "Finanzpal", Free-Plan mit begrenzten Build-Minuten),
   aktuell hinter dem Team-SSO-Gate.

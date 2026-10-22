@@ -1,0 +1,128 @@
+# Finanzpal App (Android & iOS)
+
+The Finanzpal app, built with Expo / React Native + TypeScript: one codebase for Android and iOS, with Supabase accounts.
+It lives in `mobile/` inside the website repo and uses the **website as its single source of truth**:
+same comparison data, same disclosure texts, same calculator math and the same design tokens.
+
+**What's in it (v0.4)**
+- **Vergleiche** (home tab): all 13 comparisons from the website: Girokonto, Tagesgeld, Kreditkarte,
+  Broker & Depot, Kinderdepot, Ratenkredit, Baufinanzierung, the 5 insurance types, Steuerprogramm.
+  Provider cards with the website's fields, caveats (ⓘ), "Unsere Empfehlung", ratings, **Finanzpal-Score**
+  (0–100 + A–D, sortable) and the page's own "Werbung"/disclosure text.
+  "Zum Anbieter" appears only once an item has a real affiliate link (all are `#` placeholders today).
+- **Rechner**: Sparplanrechner and Kreditrechner built in (same formulas and defaults as the website, checked
+  against the site's JS); the other 5 calculators open on the website.
+- **Ratgeber**: the 10 guides, opened on the website.
+- **Chat**, **Profil**, login with e-mail / Google / Apple, chat history, Datenschutz/Impressum links (from v0.1–v0.3).
+- Branding: FP5 logo as app icon/splash, website colors (`components/theme.ts` mirrors `assets/style.css`).
+
+```
+mobile/
+  app/_layout.tsx                 auth gate: logged out → /login, logged in → /vergleiche
+  app/(auth)/…                    login, register, forgot-password
+  app/(app)/vergleiche/           category list + [id] comparison screen
+  app/(app)/rechner/              calculator list, sparplan, kredit
+  app/(app)/ratgeber.tsx, chat.tsx, profile.tsx
+  lib/categories.ts               which data fields each comparison shows
+  lib/data.ts                     loads data/*.json (bundled; optional live from the website)
+  lib/calc.ts                     calculator math (identical to the website's)
+  lib/site.ts                     website base URL, opens site pages in-app
+  data/                           copy of ../data/*.json + disclosures.json (generated, committed)
+  tools/sync-data.mjs             refreshes data/ from the website
+  context/AuthProvider.tsx, lib/supabase.ts, lib/api.ts, lib/history.ts
+  supabase/schema.sql, backend-auth/
+```
+
+## Keeping app and website in sync
+The app ships a copy of the website's `data/*.json` and extracts the disclosure texts from the website pages.
+After changing comparison data or disclosure texts on the website:
+```bash
+cd mobile && npm run sync-data     # also runs automatically before `npm start`
+```
+Then commit `mobile/data/`. The script warns (and exits with an error) if it can't find a disclosure text.
+With `EXPO_PUBLIC_DATA_LIVE=1` the app loads the data live from the website instead, falling back to the
+bundled copy. Turn that on once the site is public; while it's behind the Netlify SSO gate, live loading
+(and the website pages the app opens) won't work for normal users.
+
+Commits that only touch `mobile/` don't trigger a Netlify deploy (`netlify.toml` → `ignore`), and
+`/mobile/*` is never served on the website.
+
+## 1. Supabase (10 min)
+1. Create a free project at supabase.com – choose region **Frankfurt (eu-central-1)**.
+2. SQL Editor → paste `supabase/schema.sql` → Run.
+3. Authentication → Providers → Email: enabled, "Confirm email" on.
+4. Authentication → Email Templates: translate the confirmation / reset mails to German (optional but recommended).
+5. Project Settings → API: copy **Project URL** and **anon public key**.
+
+## 2. Run the app
+Needs Node 20+ on your computer and the **Expo Go** app on your phone (Play Store / App Store).
+
+```bash
+cd mobile
+cp .env.example .env          # fill in the Supabase values + backend URL
+npm install
+npx expo install --fix        # aligns all package versions to your Expo SDK
+npx expo start
+```
+Scan the QR code with Expo Go (Android) or the iPhone camera. Phone and computer must be on the same Wi-Fi.
+
+> You can test iOS from Windows this way – no Mac needed until you publish.
+
+## 3. Connect the chatbot backend
+In your existing `finanzpal-chatbot` server:
+1. `npm install @supabase/supabase-js`, copy `backend-auth/requireUser.js` next to `server.js`.
+2. Protect the route: `app.post('/api/chat', requireUser, handler)`.
+3. Make sure it accepts `{ sessionId, message }` and returns `{ reply }` – or change `lib/api.ts` to match your route.
+4. In the app's `.env`, set `EXPO_PUBLIC_API_URL` to your computer's LAN IP (e.g. `http://192.168.0.23:3000`), not `localhost`.
+
+## 4. Google & Apple sign-in + chat history (v0.2)
+
+**Database:** run `supabase/schema.sql` again in the SQL Editor (it's safe to repeat). It adds the `messages` table for chat history.
+
+**Redirect URLs** – Supabase → Authentication → URL Configuration → Redirect URLs, add:
+```
+finanzpal://**
+exp://**
+```
+(`exp://` is for testing in Expo Go; `finanzpal://` is for the APK / store app.)
+
+**Google** (Android + iOS)
+1. console.cloud.google.com → new project "Finanzpal" → APIs & Services → OAuth consent screen: External, app name Finanzpal, your support e-mail, add `finanzpal.de` as authorized domain.
+2. Credentials → Create credentials → OAuth client ID → type **Web application**.
+   Authorized redirect URI: `https://YOUR-PROJECT.supabase.co/auth/v1/callback`
+3. Copy Client ID + Client Secret → Supabase → Authentication → Providers → Google → enable, paste both.
+
+**Apple** (iOS only – needs the Apple Developer account, 99 USD/year)
+1. developer.apple.com → Identifiers → App ID `de.finanzpal.app` → tick **Sign in with Apple**.
+2. Supabase → Authentication → Providers → Apple → enable, and under **Client IDs** enter `de.finanzpal.app`
+   (add `host.exp.Exponent` too if you want to test Apple login inside Expo Go).
+3. Native iOS sign-in needs no secret key; that's only for Apple login on the web.
+
+The Apple button only appears on iPhones. Apple's App Store rules require it as soon as Google login is offered.
+
+**Chat history:** each question and answer is saved to the user's account and loaded when the app opens. "Neu" in the chat header deletes the history and starts fresh. Deleting the account deletes the history too.
+
+## 5. Chat memory + legal links (v0.3)
+
+**Chat memory:** the app now sends the last 10 messages with every question (`history` in the request body).
+To let the bot use them, copy `backend-auth/chatHistory.js` into your backend and build the Claude `messages`
+array with `buildMessages(...)` – the comment at the top of the file shows the exact lines.
+If the server still has the conversation in memory it uses that; after a restart it falls back to the app's history.
+Until you change the backend, everything keeps working as before.
+
+**Legal links:** Datenschutz and Impressum links appear on the login, register and profile screens and open
+`https://finanzpal.de/datenschutz` and `https://finanzpal.de/impressum` (change them in `components/LegalLinks.tsx`).
+Both pages must be online before you submit to Google Play or the App Store.
+
+## 6. Publishing (later)
+```bash
+npm install -g eas-cli
+eas login
+eas build:configure
+eas build -p android          # .aab for Google Play (one-time 25 USD account)
+eas build -p ios              # needs Apple Developer account, 99 USD/year
+```
+Before store release you need: a privacy policy URL (Datenschutzerklärung), an Impressum, app icons in `assets/`, and – if you add Google/Apple sign-in – Apple requires "Sign in with Apple" whenever another social login is offered.
+
+## Next ideas
+- Push notifications for new comparisons (expo-notifications)

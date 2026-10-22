@@ -1,0 +1,325 @@
+{
+  "updated": "2026-10",
+  "items": [
+    {
+      "id": "dkb-girokonto",
+      "name": "DKB-Girokonto",
+      "anbieter": "Deutsche Kreditbank AG",
+      "initials": "DKB",
+      "color": "#13395E",
+      "affiliateUrl": "#",
+      "kontofuehrung": "4,50 €/Monat",
+      "kontofuehrungSort": 4.5,
+      "bedingungslos": false,
+      "bedingung": "Kostenlos ab 700 € monatlichem Geldeingang oder für Kontoinhaber unter 28 Jahren",
+      "karteNetzwerk": "Visa",
+      "kreditkarteEnthalten": false,
+      "karteText": "Visa-Debitkarte inklusive; optionale Visa-Kreditkarte für 2,49 €/Monat",
+      "dispozins": 9.66,
+      "abhebung": "Kostenlos ab 50 € an Visa-Automaten in der Eurozone; weltweit kostenlos bei aktivem Konto (≥ 700 €/Monat Geldeingang)",
+      "fremdwaehrung": "0 % bei aktivem Konto, sonst 2,2 %",
+      "guthabenzins": null,
+      "mobilePay": true,
+      "einlagensicherung": "Deutschland",
+      "score": {
+        "value": 34.7,
+        "band": "C",
+        "breakdown": {
+          "kontofuehrung": 32.5,
+          "dispozins": 53.4,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "ing-girokonto",
+      "name": "ING Girokonto",
+      "anbieter": "ING-DiBa AG",
+      "initials": "ING",
+      "color": "#8A5F2F",
+      "affiliateUrl": "#",
+      "kontofuehrung": "4,90 €/Monat",
+      "kontofuehrungSort": 4.9,
+      "bedingungslos": false,
+      "bedingung": "Kostenlos ab 1.000 € monatlichem Geldeingang oder für Kontoinhaber unter 28 Jahren",
+      "karteNetzwerk": "Visa",
+      "kreditkarteEnthalten": false,
+      "karteText": "Visa-Debitkarte inklusive; girocard optional (Angabe zur Gebühr uneinheitlich, laut Konditionstabelle kostenlos)",
+      "dispozins": 9.39,
+      "abhebung": "Weltweit kostenlos an Visa-Automaten in der Eurozone ab 50 € pro Abhebung",
+      "fremdwaehrung": "2,2 % außerhalb der Eurozone",
+      "guthabenzins": null,
+      "mobilePay": true,
+      "einlagensicherung": "Deutschland",
+      "score": {
+        "value": 33.3,
+        "band": "C",
+        "breakdown": {
+          "kontofuehrung": 26.5,
+          "dispozins": 56.1,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "consorsbank-girokonto",
+      "name": "Consorsbank Girokonto",
+      "anbieter": "Consorsbank (BNP Paribas)",
+      "initials": "CB",
+      "color": "#2F5C8A",
+      "affiliateUrl": "#",
+      "kontofuehrung": "4,00 €/Monat",
+      "kontofuehrungSort": 4.0,
+      "bedingungslos": false,
+      "bedingung": "Kostenlos ab 700 € monatlichem Geldeingang oder für Kontoinhaber unter 31 Jahren",
+      "karteNetzwerk": "Visa",
+      "kreditkarteEnthalten": false,
+      "karteText": "Visa-Debitkarte inklusive; Visa-Kreditkarte auf Antrag möglich",
+      "dispozins": 9.9,
+      "abhebung": "Kostenlos ab 50 € an Visa-Automaten weltweit in Euro (genaue Freibeträge in Quellen uneinheitlich angegeben)",
+      "fremdwaehrung": "2,1 % außerhalb der Eurozone",
+      "guthabenzins": null,
+      "mobilePay": true,
+      "einlagensicherung": "Frankreich (FGDR), bis 100.000 €",
+      "score": {
+        "value": 36.8,
+        "band": "C",
+        "breakdown": {
+          "kontofuehrung": 40.0,
+          "dispozins": 51.0,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "c24-smart-girokonto",
+      "name": "C24 Smart Konto",
+      "anbieter": "C24 Bank GmbH",
+      "initials": "C24",
+      "color": "#8A3F2F",
+      "affiliateUrl": "#",
+      "kontofuehrung": "0 €/Monat",
+      "kontofuehrungSort": 0,
+      "bedingungslos": true,
+      "bedingung": null,
+      "karteNetzwerk": "Mastercard",
+      "kreditkarteEnthalten": false,
+      "karteText": "Mastercard-Debitkarte (physisch und virtuell); keine echte Kreditkarte",
+      "dispozins": 7.49,
+      "abhebung": "4×/Monat kostenlos (Mastercard-Automaten DE/EWR sowie teilnehmende Händler), danach 2 € pro Abhebung",
+      "fremdwaehrung": "0 %",
+      "guthabenzins": 0.75,
+      "mobilePay": true,
+      "einlagensicherung": "Deutschland",
+      "score": {
+        "value": 64.8,
+        "band": "B",
+        "breakdown": {
+          "kontofuehrung": 100.0,
+          "dispozins": 75.1,
+          "guthabenzins": 30.0,
+          "karteFlexibilitaet": 25.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "trade-republic-girokonto",
+      "name": "Trade Republic Girokonto",
+      "anbieter": "Trade Republic Bank GmbH",
+      "initials": "TR",
+      "color": "#1F4E36",
+      "affiliateUrl": "#",
+      "kontofuehrung": "0 €/Monat",
+      "kontofuehrungSort": 0,
+      "bedingungslos": true,
+      "bedingung": null,
+      "karteNetzwerk": "Visa",
+      "kreditkarteEnthalten": false,
+      "karteText": "Visa-Debitkarte (Classic 5 € oder Mirror 50 € einmalig, virtuell kostenlos) — keine Kreditkarte, reines Guthabenkonto",
+      "dispozins": null,
+      "abhebung": "Weltweit kostenlos ab 100 € pro Abhebung",
+      "fremdwaehrung": "0 %",
+      "guthabenzins": 2.5,
+      "mobilePay": true,
+      "einlagensicherung": "Deutschland (über Partnerbanken, bis 100.000 €)",
+      "score": {
+        "value": 90.0,
+        "band": "A",
+        "breakdown": {
+          "kontofuehrung": 100.0,
+          "dispozins": 100.0,
+          "guthabenzins": 100.0,
+          "karteFlexibilitaet": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "n26-standard",
+      "name": "N26 Standard",
+      "anbieter": "N26 Bank GmbH",
+      "initials": "N26",
+      "color": "#5B5F63",
+      "affiliateUrl": "#",
+      "kontofuehrung": "0 €/Monat",
+      "kontofuehrungSort": 0,
+      "bedingungslos": true,
+      "bedingung": null,
+      "karteNetzwerk": "Mastercard",
+      "kreditkarteEnthalten": false,
+      "karteText": "Virtuelle Mastercard-Debitkarte kostenlos; physische Karte einmalig 10 €",
+      "dispozins": 8.9,
+      "abhebung": "2×/Monat kostenlos in Deutschland (danach 2 €); laut Anbieter unbegrenzt kostenlos in der Eurozone",
+      "fremdwaehrung": "1,7 % außerhalb der Eurozone",
+      "guthabenzins": 0.25,
+      "mobilePay": true,
+      "einlagensicherung": "Deutschland",
+      "score": {
+        "value": 62.2,
+        "band": "B",
+        "breakdown": {
+          "kontofuehrung": 100.0,
+          "dispozins": 61.0,
+          "guthabenzins": 10.0,
+          "karteFlexibilitaet": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "comdirect-girokonto",
+      "name": "comdirect Girokonto Aktiv",
+      "anbieter": "comdirect (Commerzbank)",
+      "initials": "CD",
+      "color": "#163A66",
+      "affiliateUrl": "#",
+      "kontofuehrung": "0 € für Neukunden 36 Monate, danach 0 € bei Bedingung oder 4,90 €",
+      "kontofuehrungSort": 0,
+      "bedingungslos": false,
+      "bedingung": "Nach der Neukundenphase kostenlos ab 700 € Geldeingang, 3 mobilen Zahlungen/Monat oder 1 Trade/Sparplan im comdirect-Depot",
+      "karteNetzwerk": "Visa",
+      "kreditkarteEnthalten": true,
+      "karteText": "Visa-Debitkarte inklusive; Visa-Kreditkarte für Neukunden 36 Monate kostenlos",
+      "dispozins": 8.9,
+      "abhebung": "5×/Monat weltweit kostenlos mit der Visa-Debitkarte, danach 4,90 € pro Abhebung",
+      "fremdwaehrung": null,
+      "guthabenzins": null,
+      "mobilePay": true,
+      "einlagensicherung": "Deutschland (angenommen, auf der Quellseite nicht ausdrücklich benannt)",
+      "score": {
+        "value": 59.8,
+        "band": "B",
+        "breakdown": {
+          "kontofuehrung": 70.0,
+          "dispozins": 61.0,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "openbank-bestgiro",
+      "name": "Openbank BestGiro",
+      "anbieter": "Openbank (Banco Santander)",
+      "initials": "OB",
+      "color": "#B8901F",
+      "affiliateUrl": "#",
+      "kontofuehrung": "0 €/Monat",
+      "kontofuehrungSort": 0,
+      "bedingungslos": true,
+      "bedingung": null,
+      "karteNetzwerk": "Visa",
+      "kreditkarteEnthalten": true,
+      "karteText": "Visa-Debitkarte inklusive; zusätzliche Kreditkarte laut Anbieter kostenlos enthalten (genaues Netzwerk unklar)",
+      "dispozins": 10.45,
+      "abhebung": "In Deutschland an rund 3.200 CashPool-Automaten kostenlos; im Ausland 6×/Monat kostenlos, danach 4,95 €",
+      "fremdwaehrung": "0 % laut Anbieter (Angabe unsicher)",
+      "guthabenzins": null,
+      "mobilePay": true,
+      "einlagensicherung": "Deutschland",
+      "score": {
+        "value": 61.4,
+        "band": "B",
+        "breakdown": {
+          "kontofuehrung": 100.0,
+          "dispozins": 45.5,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 75.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "1822direkt-girokonto",
+      "name": "1822direkt GiroDirekt",
+      "anbieter": "1822direkt (Frankfurter Sparkasse)",
+      "initials": "18",
+      "color": "#C8102E",
+      "affiliateUrl": "#",
+      "kontofuehrung": "4,90 €/Monat",
+      "kontofuehrungSort": 4.9,
+      "bedingungslos": false,
+      "bedingung": "Kostenlos ab 700 € monatlichem Geldeingang oder für Kontoinhaber unter 30 Jahren",
+      "karteNetzwerk": "girocard",
+      "kreditkarteEnthalten": false,
+      "karteText": "girocard (Sparkassen-Card) inklusive; Visa Classic optional und kostenpflichtig (Jahresgebühr auf der Quellseite nicht genannt)",
+      "dispozins": 9.9,
+      "abhebung": "Unbegrenzt kostenlos an rund 21.000 Sparkassen-Automaten; im Maestro/Cirrus/V-PAY/Plus-System 1 % (mind. 6 €); Tageslimit 1.000–2.000 €. Quelle nennt an anderer Stelle widersprüchlich „weltweit kostenlos“",
+      "fremdwaehrung": "1,75 % außerhalb des Euroraums",
+      "guthabenzins": null,
+      "mobilePay": true,
+      "einlagensicherung": "Deutschland (Institutssicherung Sparkassen-Finanzgruppe, konkreter Erstattungsbetrag auf Quellseite nicht genannt)",
+      "score": {
+        "value": 32.0,
+        "band": "C",
+        "breakdown": {
+          "kontofuehrung": 26.5,
+          "dispozins": 51.0,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "norisbank-girokonto",
+      "name": "norisbank Girokonto plus",
+      "anbieter": "norisbank GmbH (Deutsche Bank)",
+      "initials": "NB",
+      "color": "#B85C00",
+      "affiliateUrl": "#",
+      "kontofuehrung": "7,90 €/Monat",
+      "kontofuehrungSort": 7.9,
+      "bedingungslos": false,
+      "bedingung": "Quelle nennt keine Bedingung, unter der das Konto kostenlos wird",
+      "karteNetzwerk": "girocard",
+      "kreditkarteEnthalten": true,
+      "karteText": "girocard kostenlos inklusive; optionale Mastercard direkt ebenfalls als kostenlos angegeben",
+      "dispozins": 10.75,
+      "abhebung": "Kostenlos im In- und Ausland laut Konditionstabelle; unbegrenzt kostenlos an Cash-Group-Automaten (Deutsche Bank, Postbank, Commerzbank, HypoVereinsbank); sonst 1 % (girocard) bzw. 2,5 % (Mastercard direkt), mind. 6 €",
+      "fremdwaehrung": "1,75 %",
+      "guthabenzins": null,
+      "mobilePay": true,
+      "einlagensicherung": "Deutschland (konkrete Angabe auf Quellseite fehlt)",
+      "score": {
+        "value": 30.6,
+        "band": "C",
+        "breakdown": {
+          "kontofuehrung": 0.0,
+          "dispozins": 42.5,
+          "guthabenzins": 0.0,
+          "karteFlexibilitaet": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    }
+  ]
+}

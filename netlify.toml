@@ -1,0 +1,20 @@
+# Netlify settings for the website. The site itself has no build step (plain HTML/CSS/JS);
+# publish directory and other settings stay as configured in the Netlify UI.
+
+[build]
+  # Skip the deploy (saves Free-plan build minutes) when a commit only touches the
+  # mobile app in mobile/. Exit code 0 = "nothing website-relevant changed, skip".
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)mobile'"
+
+# The app's source code lives in the same repo but must never be served on the website.
+[[redirects]]
+  from = "/mobile"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/mobile/*"
+  to = "/"
+  status = 404
+  force = true
