@@ -1,4 +1,4 @@
-// Girokonto comparison: curated list of current accounts, filterable by
+// Girokonto comparison: curated list of checking accounts, filterable by
 // fee-free terms, card network, overdraft rate and more. Self-contained,
 // reusing the kk-/cc- card and filter primitives shared across the site.
 (function () {
@@ -28,7 +28,7 @@
     en: {
       loading: 'Loading comparison data …',
       error: 'Could not load the data.',
-      resultCount: function (n, total) { return n + ' of ' + total + ' current accounts'; },
+      resultCount: function (n, total) { return n + ' of ' + total + ' checking accounts'; },
       noResults: 'No account matches these filters — try removing a filter.',
       cta: 'View provider',
       moreDetails: 'More details',

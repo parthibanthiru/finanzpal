@@ -140,6 +140,18 @@ Depot" statt „Online-Broker" — passend zur Fußzeile und zum Seiteninhalt
 seit der Broker/Depot-Zusammenführung (siehe unten), die den alten Namen
 sonst irreführend gemacht hätte.
 
+Zusätzlich wurden die EN-Panel-Labels für Girokonto und Tagesgeld vereinheitlicht:
+Girokonto heißt jetzt überall **"Checking account"** (vorher uneinheitlich
+"Current account" in Nav/Footer vs. bereits "Checking account" auf einzelnen
+Unterseiten) und Tagesgeld **"Instant savings account"** (vorher "Savings" /
+"Savings account" / "Overnight savings" je nach Stelle). Die Namensänderung
+betrifft Nav-Dropdown (`tools/build_nav.py` EN_PANELS), die statische
+Footer-"Compare"-Spalte (hart codiert pro Seite, **wird nicht** von
+`build_nav.py` erzeugt — bei künftigen Footer-Änderungen auf allen EN-Seiten
+einzeln suchen/ersetzen), `ueber-uns.html`, `index.html`, `finanz-check.html`
++ `finanz-check.js`, den Ratgeber-Artikel „Instant savings account or fixed
+deposit" sowie `assets/nav.js` (Suchindex) und `assets/cross-sell.js`.
+
 Seit Oktober 2026 sind der frühere eigenständige Depot-Vergleich (`depot.html`)
 und der Online-Broker-Vergleich zu einer Seite verschmolzen (`broker.html`,
 unter dem **Broker**-Dropdown): eine kartenbasierte Ansicht (Filter, Sortierung,

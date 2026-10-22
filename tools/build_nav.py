@@ -82,7 +82,7 @@ DE_PLAIN = {"steuerprogramm": ("steuerprogramm.html", "Steuerprogramm"), "ratgeb
 
 EN_PANELS = {
     "broker": [("broker.html", "Broker &amp; Custody"), ("kinderdepot.html", "Children&#39;s custody account"), ("etf-suche.html", "ETF search")],
-    "konten": [("finanz-check.html", "Finanz-Check"), ("girokonto.html", "Current account"), ("tagesgeld.html", "Savings"), ("kreditkarte.html", "Credit cards")],
+    "konten": [("finanz-check.html", "Finanz-Check"), ("girokonto.html", "Checking account"), ("tagesgeld.html", "Instant savings account"), ("kreditkarte.html", "Credit cards")],
     "kredite": [("kredite.html", "Installment loan"), ("baufinanzierung.html", "Mortgages")],
     "versicherungen": [("versicherungen.html", "Personal liability"), ("versicherungen.html#hausrat", "Home contents"), ("versicherungen.html#berufsunfaehigkeit", "Disability (BU)"), ("versicherungen.html#rechtsschutz", "Legal protection"), ("versicherungen.html#kfz", "Car insurance")],
     "rechner": [("sparplanrechner.html", "Savings Plan Calculator"), ("zinseszinsrechner.html", "Compound Interest Calculator"), ("kreditrechner.html", "Loan Calculator"), ("baufinanzierungsrechner.html", "Mortgage Calculator"), ("nettolohnrechner.html", "Net Salary Calculator"), ("haushaltsbuch.html", "Budget Tracker"), ("altersvorsorge-rechner.html", "Retirement savings calculator")],

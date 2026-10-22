@@ -29,7 +29,7 @@
     resultLede: 'Based on your answers — one pick per category. See the full comparison for every option and every detail.',
     seeAll: 'See full comparison →',
     restart: 'Restart Finanz-Check',
-    categories: { girokonto: 'Current account', depot: 'Custody account', kreditkarte: 'Credit card', tagesgeld: 'Overnight savings' },
+    categories: { girokonto: 'Checking account', depot: 'Custody account', kreditkarte: 'Credit card', tagesgeld: 'Instant savings account' },
     loading: 'Loading your result …',
     noDispo: 'No overdraft', noZins: '–',
     cta: 'View offer'
@@ -82,7 +82,7 @@
     },
     {
       id: 'tagesgeld_pref',
-      text: { de: 'Beim Tagesgeld: Ist dir die Zinshöhe oder eine lange Zinsgarantie wichtiger?', en: 'For overnight savings: does the rate or a long rate guarantee matter more?' },
+      text: { de: 'Beim Tagesgeld: Ist dir die Zinshöhe oder eine lange Zinsgarantie wichtiger?', en: 'For instant savings: does the rate or a long rate guarantee matter more?' },
       options: [
         { id: 'zins', label: { de: 'Möglichst hoher Zins', en: 'The highest possible rate' } },
         { id: 'garantie', label: { de: 'Lange garantierte Laufzeit', en: 'A long guaranteed period' } }
@@ -90,7 +90,7 @@
     },
     {
       id: 'guthabenzins',
-      text: { de: 'Wie wichtig ist dir Verzinsung auf dein Giro-/Depot-Guthaben?', en: 'How important is interest on your current account / custody cash balance?' },
+      text: { de: 'Wie wichtig ist dir Verzinsung auf dein Giro-/Depot-Guthaben?', en: 'How important is interest on your checking account / custody cash balance?' },
       options: [
         { id: 'wichtig', label: { de: 'Wichtig', en: 'Important' } },
         { id: 'egal', label: { de: 'Eher egal', en: "Doesn't matter much" } }

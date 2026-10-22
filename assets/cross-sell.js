@@ -7,7 +7,7 @@
   ];
 
   var PAGE_META = {
-    girokonto: { url: 'girokonto.html', de: 'Girokonto-Vergleich', en: 'current account comparison' },
+    girokonto: { url: 'girokonto.html', de: 'Girokonto-Vergleich', en: 'checking account comparison' },
     broker: { url: 'broker.html', de: 'Broker- &amp; Depot-Vergleich', en: 'broker &amp; custody account comparison' },
     kreditkarte: { url: 'kreditkarte.html', de: 'Kreditkarte-Vergleich', en: 'credit card comparison' }
   };
