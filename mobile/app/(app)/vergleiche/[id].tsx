@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { getCategory } from '@/lib/categories';
@@ -11,7 +11,9 @@ import { colors, radius, spacing } from '@/components/theme';
 type Sort = 'standard' | 'score';
 
 export default function CategoryScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  // focus = provider id to scroll to and highlight (from the Finanz-Check)
+  const { id, focus } = useLocalSearchParams<{ id: string; focus?: string }>();
+  const listRef = useRef<FlatList>(null);
   const cat = getCategory(String(id));
   const [data, setData] = useState<DataFile | null>(null);
   const [sort, setSort] = useState<Sort>('standard');
@@ -28,6 +30,14 @@ export default function CategoryScreen() {
     return data.items;
   }, [data, sort]);
 
+  const focusIndex = focus ? items.findIndex((i) => i.id === focus) : -1;
+  useEffect(() => {
+    if (focusIndex < 0) return;
+    // Give the list a moment to lay out, then scroll the recommended provider into view.
+    const t = setTimeout(() => listRef.current?.scrollToIndex({ index: focusIndex, viewOffset: 12, animated: true }), 350);
+    return () => clearTimeout(t);
+  }, [focusIndex]);
+
   if (!cat) return <Text style={{ padding: spacing.lg }}>Kategorie nicht gefunden.</Text>;
 
   return (
@@ -37,7 +47,13 @@ export default function CategoryScreen() {
         <ActivityIndicator style={{ marginTop: spacing.xl }} color={colors.primary} />
       ) : (
         <FlatList
+          ref={listRef}
           data={items}
+          onScrollToIndexFailed={(info) => {
+            // Cards have different heights: jump near the target first, then retry precisely.
+            listRef.current?.scrollToOffset({ offset: info.averageItemLength * info.index, animated: false });
+            setTimeout(() => listRef.current?.scrollToIndex({ index: info.index, viewOffset: 12, animated: true }), 120);
+          }}
           keyExtractor={(i) => i.id}
           contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }}
           ListHeaderComponent={
@@ -61,7 +77,9 @@ export default function CategoryScreen() {
               )}
             </View>
           }
-          renderItem={({ item }) => <ProviderCard item={item} fields={cat.fields(item)} />}
+          renderItem={({ item }) => (
+            <ProviderCard item={item} fields={cat.fields(item)} highlight={item.id === focus ? 'Dein Finanz-Check-Ergebnis' : undefined} />
+          )}
           ListFooterComponent={
             <View>
               {disclosure(cat.file) ? <Text style={styles.disclosure}>{disclosure(cat.file)}</Text> : null}

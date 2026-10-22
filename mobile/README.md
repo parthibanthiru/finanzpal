@@ -4,7 +4,12 @@ The Finanzpal app, built with Expo / React Native + TypeScript: one codebase for
 It lives in `mobile/` inside the website repo and uses the **website as its single source of truth**:
 same comparison data, same disclosure texts, same calculator math and the same design tokens.
 
-**What's in it (v0.5)**
+**What's in it (v0.6)**
+- **Finanz-Check** (top of the home tab): the website's 6-question quiz with one recommendation each for
+  Girokonto, Depot, Kreditkarte and Tagesgeld. Questions and weights are extracted from
+  `assets/finanz-check.js`; results were checked against the website for all 96 answer combinations
+  (identical). Answers are saved on the device per account, so the home screen then shows
+  "Deine Empfehlungen"; tapping one opens the comparison scrolled to that provider, highlighted.
 - **Vergleiche** (home tab): all 13 comparisons from the website: Girokonto, Tagesgeld, Kreditkarte,
   Broker & Depot, Kinderdepot, Ratenkredit, Baufinanzierung, the 5 insurance types, Steuerprogramm.
   Provider cards with the website's fields, caveats (ⓘ), "Unsere Empfehlung", ratings, **Finanzpal-Score**
@@ -23,16 +28,17 @@ same comparison data, same disclosure texts, same calculator math and the same d
 mobile/
   app/_layout.tsx                 auth gate: logged out → /login, logged in → /vergleiche
   app/(auth)/…                    login, register, forgot-password
-  app/(app)/vergleiche/           category list + [id] comparison screen
+  app/(app)/vergleiche/           home (Finanz-Check card + categories), finanz-check, [id] comparison
   app/(app)/rechner/              calculator list + 7 calculators
   app/(app)/ratgeber.tsx, chat.tsx, profile.tsx
   lib/categories.ts               which data fields each comparison shows
   lib/data.ts                     loads data/*.json (bundled; optional live from the website)
   lib/calc.ts                     calculator math (identical to the website's assets/*rechner.js)
   lib/haushaltsbuch.ts            budget tracker storage + totals
+  lib/finanzCheck.ts              Finanz-Check scoring (port of finanz-check.js) + saved answers
   lib/disclosures.ts              disclosure/disclaimer texts from the website
   lib/site.ts                     website base URL, opens site pages in-app
-  data/                           copy of ../data/*.json + disclosures.json (generated, committed)
+  data/                           copy of ../data/*.json + disclosures.json + finanz-check.json (generated, committed)
   tools/sync-data.mjs             refreshes data/ from the website
   context/AuthProvider.tsx, lib/supabase.ts, lib/api.ts, lib/history.ts
   supabase/schema.sql, backend-auth/
@@ -40,7 +46,8 @@ mobile/
 
 ## Keeping app and website in sync
 The app ships a copy of the website's `data/*.json` and extracts the disclosure texts (comparison pages,
-insurance tabs, and the `calc-disclaimer` of all 7 calculator pages) from the website.
+insurance tabs, and the `calc-disclaimer` of all 7 calculator pages) plus the Finanz-Check questions and
+weights (`assets/finanz-check.js`) from the website.
 After changing comparison data or disclosure texts on the website:
 ```bash
 cd mobile && npm run sync-data     # also runs automatically before `npm start`

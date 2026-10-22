@@ -13,6 +13,7 @@ export default function VergleicheLayout() {
       }}
     >
       <Stack.Screen name="index" options={{ title: 'Vergleiche' }} />
+      <Stack.Screen name="finanz-check" options={{ title: 'Finanz-Check' }} />
       <Stack.Screen name="[id]" options={{ title: '' }} />
     </Stack>
   );

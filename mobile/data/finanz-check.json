@@ -1,0 +1,281 @@
+{
+  "questions": [
+    {
+      "id": "bedingungslos",
+      "text": {
+        "de": "Wie wichtig ist dir eine Kontoführung ganz ohne Bedingungen (kein Mindestgeldeingang nötig)?",
+        "en": "How important is an account with no conditions at all (no minimum incoming payment)?"
+      },
+      "options": [
+        {
+          "id": "wichtig",
+          "label": {
+            "de": "Sehr wichtig",
+            "en": "Very important"
+          }
+        },
+        {
+          "id": "teils_ok",
+          "label": {
+            "de": "Eine Bedingung ist für mich okay",
+            "en": "One condition is fine for me"
+          }
+        }
+      ]
+    },
+    {
+      "id": "investstil",
+      "text": {
+        "de": "Wie investierst du hauptsächlich?",
+        "en": "How do you mainly invest?"
+      },
+      "options": [
+        {
+          "id": "sparplan",
+          "label": {
+            "de": "ETF-Sparplan (regelmäßig)",
+            "en": "ETF savings plan (regularly)"
+          }
+        },
+        {
+          "id": "einzelkauf",
+          "label": {
+            "de": "Einzelkäufe (Aktien/ETFs)",
+            "en": "One-off buys (stocks/ETFs)"
+          }
+        },
+        {
+          "id": "beides",
+          "label": {
+            "de": "Beides",
+            "en": "Both"
+          }
+        }
+      ]
+    },
+    {
+      "id": "kartentyp",
+      "text": {
+        "de": "Brauchst du eine Kreditkarte mit Ratenzahlungsoption, oder reicht dir eine einfache Debitkarte?",
+        "en": "Do you need a credit card with an installment option, or is a simple debit card enough?"
+      },
+      "options": [
+        {
+          "id": "ratenzahlung",
+          "label": {
+            "de": "Ratenzahlungsoption wichtig",
+            "en": "Installment option matters"
+          }
+        },
+        {
+          "id": "debitkarte",
+          "label": {
+            "de": "Debitkarte reicht völlig",
+            "en": "A debit card is plenty"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ausland",
+      "text": {
+        "de": "Zahlst oder hebst du oft außerhalb der Eurozone Geld ab?",
+        "en": "Do you often pay or withdraw cash outside the eurozone?"
+      },
+      "options": [
+        {
+          "id": "oft",
+          "label": {
+            "de": "Ja, regelmäßig",
+            "en": "Yes, regularly"
+          }
+        },
+        {
+          "id": "selten",
+          "label": {
+            "de": "Selten bis nie",
+            "en": "Rarely or never"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tagesgeld_pref",
+      "text": {
+        "de": "Beim Tagesgeld: Ist dir die Zinshöhe oder eine lange Zinsgarantie wichtiger?",
+        "en": "For instant savings: does the rate or a long rate guarantee matter more?"
+      },
+      "options": [
+        {
+          "id": "zins",
+          "label": {
+            "de": "Möglichst hoher Zins",
+            "en": "The highest possible rate"
+          }
+        },
+        {
+          "id": "garantie",
+          "label": {
+            "de": "Lange garantierte Laufzeit",
+            "en": "A long guaranteed period"
+          }
+        }
+      ]
+    },
+    {
+      "id": "guthabenzins",
+      "text": {
+        "de": "Wie wichtig ist dir Verzinsung auf dein Giro-/Depot-Guthaben?",
+        "en": "How important is interest on your checking account / custody cash balance?"
+      },
+      "options": [
+        {
+          "id": "wichtig",
+          "label": {
+            "de": "Wichtig",
+            "en": "Important"
+          }
+        },
+        {
+          "id": "egal",
+          "label": {
+            "de": "Eher egal",
+            "en": "Doesn't matter much"
+          }
+        }
+      ]
+    }
+  ],
+  "weights": {
+    "girokonto": {
+      "bedingungslos": {
+        "wichtig": {
+          "trade-republic-girokonto": 3,
+          "c24-smart-girokonto": 3,
+          "n26-standard": 2,
+          "comdirect-girokonto": 1
+        },
+        "teils_ok": {
+          "comdirect-girokonto": 2,
+          "dkb-girokonto": 2,
+          "ing-girokonto": 2,
+          "consorsbank-girokonto": 1
+        }
+      },
+      "kartentyp": {
+        "debitkarte": {
+          "trade-republic-girokonto": 1,
+          "c24-smart-girokonto": 1,
+          "n26-standard": 1
+        }
+      },
+      "ausland": {
+        "oft": {
+          "trade-republic-girokonto": 2,
+          "c24-smart-girokonto": 2,
+          "comdirect-girokonto": 1
+        },
+        "selten": {
+          "dkb-girokonto": 1,
+          "ing-girokonto": 1
+        }
+      },
+      "guthabenzins": {
+        "wichtig": {
+          "comdirect-girokonto": 3,
+          "trade-republic-girokonto": 2,
+          "n26-standard": 1
+        },
+        "egal": {
+          "c24-smart-girokonto": 1,
+          "dkb-girokonto": 1
+        }
+      }
+    },
+    "depot": {
+      "bedingungslos": {
+        "wichtig": {
+          "trade-republic": 3,
+          "scalable-capital": 3,
+          "flatex": 1
+        },
+        "teils_ok": {
+          "comdirect": 2,
+          "consorsbank": 2
+        }
+      },
+      "investstil": {
+        "sparplan": {
+          "scalable-capital": 3,
+          "trade-republic": 2
+        },
+        "einzelkauf": {
+          "flatex": 2,
+          "comdirect": 1
+        },
+        "beides": {
+          "scalable-capital": 2,
+          "trade-republic": 2
+        }
+      },
+      "guthabenzins": {
+        "wichtig": {
+          "comdirect": 3,
+          "scalable-capital": 2,
+          "trade-republic": 2
+        },
+        "egal": {
+          "flatex": 1
+        }
+      }
+    },
+    "kreditkarte": {
+      "kartentyp": {
+        "ratenzahlung": {
+          "barclays-visa": 3,
+          "hanseatic-genialcard": 3
+        },
+        "debitkarte": {
+          "trade-republic-visa": 2,
+          "c24-mastercard": 2,
+          "consorsbank-visa": 1
+        }
+      },
+      "ausland": {
+        "oft": {
+          "trade-republic-visa": 2,
+          "consorsbank-visa": 2
+        },
+        "selten": {
+          "hanseatic-genialcard": 1,
+          "barclays-visa": 1
+        }
+      },
+      "bedingungslos": {
+        "wichtig": {
+          "trade-republic-visa": 1,
+          "c24-mastercard": 1
+        }
+      }
+    },
+    "tagesgeld": {
+      "tagesgeld_pref": {
+        "zins": {
+          "openbank": 3,
+          "consorsbank-tagesgeld": 2
+        },
+        "garantie": {
+          "suresse-direkt": 3,
+          "consorsbank-tagesgeld": 2,
+          "ing": 1
+        }
+      }
+    }
+  },
+  "categoryKeys": [
+    "girokonto",
+    "depot",
+    "kreditkarte",
+    "tagesgeld"
+  ]
+}

@@ -40,8 +40,8 @@
   too if they're reusable across sessions; keep truly single-use debugging
   scripts out of git.
 - **Mobile app in `mobile/`** uses this website as its single source of truth.
-  After changing `data/*.json`, a disclosure text, a `calc-disclaimer`, or
-  calculator logic (any `assets/*rechner.js` or `haushaltsbuch.js`, incl. the
+  After changing `data/*.json`, a disclosure text, a `calc-disclaimer`, the
+  Finanz-Check questions/weights in `assets/finanz-check.js`, or calculator logic (any `assets/*rechner.js` or `haushaltsbuch.js`, incl. the
   yearly tax/SV values in `nettolohnrechner.js`), run
   `cd mobile && npm run sync-data` (and mirror calculator changes in
   `mobile/lib/calc.ts` / `mobile/lib/haushaltsbuch.ts`), then commit

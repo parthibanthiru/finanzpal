@@ -449,11 +449,16 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   `haushaltsbuch.js` — gegeneinander getestet). Das Haushaltsbuch speichert
   wie auf der Website nur lokal (auf dem Gerät statt im Browser). Ratgeber,
   Methodik, Impressum und Datenschutz öffnen die Website-Seiten in der App.
+- **Finanz-Check:** gleiches Quiz wie `finanz-check.html` — Fragen und Gewichte
+  zieht das Sync-Skript direkt aus `assets/finanz-check.js` (für alle 96
+  Antwortkombinationen gegen die Website getestet, identisch). In der App
+  oben auf der Startseite; nach dem Quiz zeigt sie „Deine Empfehlungen" und
+  springt im jeweiligen Vergleich direkt zum empfohlenen Anbieter.
 - **Farben/Logo:** `mobile/components/theme.ts` spiegelt die Tokens aus
   `assets/style.css`; App-Icon = FP5-Logo.
 
-**Pflege:** Wer `data/*.json`, einen Disclosure-Text, einen `calc-disclaimer`
-oder die Rechner-Logik ändert, führt danach `cd mobile && npm run sync-data` aus
+**Pflege:** Wer `data/*.json`, einen Disclosure-Text, einen `calc-disclaimer`,
+die Finanz-Check-Fragen/-Gewichte oder die Rechner-Logik ändert, führt danach `cd mobile && npm run sync-data` aus
 und committet `mobile/data/` mit (bei Rechner-Änderungen zusätzlich
 `mobile/lib/calc.ts` angleichen, inkl. der 2026er Steuer-/SV-Werte im
 Brutto-Netto-Rechner). Commits, die nur `mobile/` ändern, lösen dank `netlify.toml`

@@ -1,10 +1,14 @@
 // Keeps the app in sync with the website (single source of truth = the website):
 //  1. copies ../data/*.json (German files, not *.en.json) into mobile/data/
 //  2. extracts the German disclosure texts ("Werbung: … Stand …") from the website's
-//     comparison pages and assets/insurance-tabs.js into mobile/data/disclosures.json
+//     comparison pages, assets/insurance-tabs.js and the calculator pages into
+//     mobile/data/disclosures.json
+//  3. extracts the Finanz-Check quiz (questions + weights) from assets/finanz-check.js
+//     into mobile/data/finanz-check.json
 // Runs automatically before `npm start` (prestart). The copies are committed, so cloud
 // builds (EAS) work without the website folder next to them.
 import { copyFileSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import vm from 'node:vm';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -79,8 +83,48 @@ for (const page of RECHNER) {
 }
 
 writeFileSync(join(dest, 'disclosures.json'), JSON.stringify(disclosures, null, 2) + '\n');
+
+// 3. Finanz-Check quiz: QUESTIONS, WEIGHTS and CATEGORY_KEYS from assets/finanz-check.js
+//    (plain data literals inside the script — evaluated in an empty sandbox, nothing else runs)
+function extractLiteral(src, name) {
+  const start = src.indexOf(`var ${name} =`);
+  if (start < 0) return undefined;
+  let i = src.indexOf('=', start) + 1;
+  while (/\s/.test(src[i])) i++;
+  const open = src[i];
+  const close = open === '[' ? ']' : open === '{' ? '}' : null;
+  if (!close) return undefined;
+  let depth = 0, inStr = null;
+  for (let j = i; j < src.length; j++) {
+    const c = src[j];
+    if (inStr) {
+      if (c === '\\') j++;
+      else if (c === inStr) inStr = null;
+      continue;
+    }
+    if (c === '"' || c === "'") inStr = c;
+    else if (c === open) depth++;
+    else if (c === close && --depth === 0) {
+      return vm.runInNewContext(`(${src.slice(i, j + 1)})`, Object.create(null), { timeout: 1000 });
+    }
+  }
+  return undefined;
+}
+const fc = readFileSync(join(site, 'assets', 'finanz-check.js'), 'utf8');
+const quiz = {
+  questions: extractLiteral(fc, 'QUESTIONS'),
+  weights: extractLiteral(fc, 'WEIGHTS'),
+  categoryKeys: extractLiteral(fc, 'CATEGORY_KEYS'),
+};
+if (!Array.isArray(quiz.questions) || !quiz.weights || !Array.isArray(quiz.categoryKeys)) {
+  missing.push('assets/finanz-check.js (QUESTIONS/WEIGHTS/CATEGORY_KEYS)');
+} else {
+  writeFileSync(join(dest, 'finanz-check.json'), JSON.stringify(quiz, null, 2) + '\n');
+  console.log(`[sync-data] Finanz-Check: ${quiz.questions.length} Fragen, ${quiz.categoryKeys.length} Kategorien übernommen.`);
+}
+
 console.log(`[sync-data] ${n} Datendateien + ${Object.keys(disclosures).length} Hinweistexte übernommen.`);
 if (missing.length) {
-  console.warn(`[sync-data] WARNUNG: kein Hinweistext gefunden für: ${missing.join(', ')}`);
+  console.warn(`[sync-data] WARNUNG: nicht gefunden: ${missing.join(', ')}`);
   process.exitCode = 1;
 }

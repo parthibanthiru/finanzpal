@@ -20,11 +20,14 @@ export function ScoreBadge({ value, band }: { value: number; band: string }) {
   );
 }
 
-export function ProviderCard({ item, fields }: { item: Item; fields: Field[] }) {
+export function ProviderCard({ item, fields, highlight }: { item: Item; fields: Field[]; highlight?: string }) {
   const hasLink = isRealLink(item.affiliateUrl);
   return (
-    <View style={[styles.card, item.recommended && styles.cardRecommended]}>
-      {item.recommended && <Text style={styles.recommended}>Unsere Empfehlung</Text>}
+    <View style={[styles.card, item.recommended && styles.cardRecommended, highlight && styles.cardHighlight]}>
+      <View style={styles.badges}>
+        {highlight ? <Text style={[styles.recommended, styles.highlightBadge]}>{highlight}</Text> : null}
+        {item.recommended && <Text style={styles.recommended}>Unsere Empfehlung</Text>}
+      </View>
 
       <View style={styles.head}>
         <View style={[styles.avatar, { backgroundColor: item.color ?? colors.ink }]}>
@@ -81,6 +84,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   cardRecommended: { borderColor: colors.primary, borderWidth: 2 },
+  cardHighlight: { borderColor: colors.smile, borderWidth: 3 },
+  badges: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
+  highlightBadge: { backgroundColor: colors.ink, color: colors.smile },
   recommended: {
     alignSelf: 'flex-start',
     backgroundColor: colors.tag,
