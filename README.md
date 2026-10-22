@@ -264,33 +264,48 @@ drei Stellen einsetzen.
 
 ## Finanzpal-Score
 
-**Stand Oktober 2026 — Pilotkategorie Girokonto.** Zusätzlich zu den Rohdaten
-zeigt `girokonto.html`/`en/girokonto.html` einen grünen/blauen/gelben/grauen
-Badge pro Karte (`.fp-score-badge`, A–D-Note + Zahl 0–100), berechnet aus
-Feldern, die auf derselben Seite ohnehin schon stehen (Kontoführungsgebühr
-35 % · Dispozins 25 % · Guthabenzins 20 % · Karte & Bargeld-Flexibilität
-20 %). Design-Hintergrund und die vollständigen Bewertungskriterien für alle
+**Stand Oktober 2026 — Kategorien Girokonto & Kredite.** Zusätzlich zu den
+Rohdaten zeigen `girokonto.html`/`en/girokonto.html` (Karten-Layout,
+`assets/girokonto-compare.js`) und `kredite.html`/`en/kredite.html`
+(Tabellen-Layout, `assets/compare.js`) einen grünen/blauen/gelben/grauen
+Badge pro Zeile (`.fp-score-badge`, A–D-Note + Zahl 0–100), berechnet aus
+Feldern, die auf derselben Seite ohnehin schon stehen:
+  - Girokonto: Kontoführungsgebühr 35 % · Dispozins 25 % · Guthabenzins 20 %
+    · Karte & Bargeld-Flexibilität 20 %.
+  - Kredite: Zinssatz 55 % · Sondertilgungsrecht 30 % · Kreditrahmen 15 %.
+    Beim Sondertilgungsrecht zählt nur ein ausdrücklich als kostenlos
+    genanntes Recht — ein bloßes „jederzeit möglich" ohne Kostenangabe reicht
+    nicht für die Top-Stufe.
+
+Design-Hintergrund und die vollständigen Bewertungskriterien für alle
 Kategorien (inkl. der bewusst noch nicht bewerteten: Baufinanzierung, BU,
 Kfz, Rechtsschutz) stehen im Projektdokument
 „finanzpal-score-methodology.md".
 
 - **`tools/compute_scores.py`** ist die einzige Quelle für die Berechnung —
-  nie von Hand in den JSON-Dateien nachtragen. Rechnet aus `data/girokonto.json`
-  (DE ist die Quelle der Wahrheit) und schreibt denselben `score`-Wert anhand
-  der `id` identisch in `data/girokonto.en.json` zurück, damit ein Anbieter nie
-  je nach Sprachversion unterschiedlich bewertet wird (ein Early-Bug: ein
-  Teilkriterium hatte ursprünglich per Stichwortsuche im deutschen
-  `abhebung`-Text gearbeitet, was auf der übersetzten EN-Seite stillschweigend
-  andere Werte lieferte — seither wird nur noch einmal, aus der DE-Datei,
-  gerechnet).
+  nie von Hand in den JSON-Dateien nachtragen. Rechnet aus der jeweiligen
+  `data/<kategorie>.json` (DE ist die Quelle der Wahrheit) und schreibt
+  denselben `score`-Wert anhand der `id` identisch in
+  `data/<kategorie>.en.json` zurück, damit ein Anbieter nie je nach
+  Sprachversion unterschiedlich bewertet wird (ein Early-Bug: ein
+  Teilkriterium hatte ursprünglich per Stichwortsuche im deutschen Freitext
+  gearbeitet, was auf der übersetzten EN-Seite stillschweigend andere Werte
+  lieferte — seither wird nur noch einmal, aus der DE-Datei, gerechnet).
 - Ausführen nach jeder Datenänderung an einer bewerteten Kategorie:
-  `python3 tools/compute_scores.py girokonto` (oder ohne Argument für alle
-  registrierten Kategorien).
+  `python3 tools/compute_scores.py girokonto kredite` (oder ohne Argument für
+  alle registrierten Kategorien).
 - Jedes `score`-Objekt enthält `value`, `band`, ein `breakdown` je Teilkriterium
   (im Badge-Tooltip sichtbar) und `computedFrom` (Monat der Berechnung) — bewusst
   offengelegt statt einer nackten Zahl.
+- Das Badge-Markup selbst sitzt an zwei Stellen, je nach Layout der
+  Zielseite: `scoreBadgeHtml()`/`scoreTooltip()` in
+  `assets/girokonto-compare.js` (Karten) und dieselben Funktionen generisch
+  in `assets/compare.js` (Tabellen, geteilt mit Tagesgeld/Versicherungen —
+  der Badge erscheint dort nur, sobald ein `score`-Feld in den Daten steht).
 - Neue Kategorie bewerten = Rubrik in `compute_scores.py` ergänzen (siehe
-  `GIROKONTO_RUBRIC` als Vorlage) **und** Methodik-Text auf `ueber-uns.html`/
+  `GIROKONTO_RUBRIC`/`KREDITE_RUBRIC` als Vorlage), Badge-Rendering an der
+  richtigen Stelle anschließen (Karten-Skript oder `SCORE_FACTOR_LABELS` in
+  `compare.js`) **und** Methodik-Text auf `ueber-uns.html`/
   `en/ueber-uns.html` (`#finanzpal-score`) erweitern — nie eine Kategorie
   stillschweigend bewerten, ohne die Kriterien dort offenzulegen.
 

@@ -34,6 +34,7 @@ the quarterly data refresh), or after editing a rubric below.
 """
 import json
 import os
+import re
 import sys
 from datetime import date
 
@@ -104,12 +105,61 @@ GIROKONTO_RUBRIC = [
 
 
 # ---------------------------------------------------------------------------
+# Kredite rubric
+# Zinssatz 55% · Sondertilgung 30% · Kreditrahmen 15%
+# ---------------------------------------------------------------------------
+
+def _kredit_zinssatz(item):
+    m = re.search(r"(\d+[,.]\d+)\s*%", item.get("rate") or "")
+    if not m:
+        return 0.0
+    rate = float(m.group(1).replace(",", "."))
+    # Fixed anchor: the "ab X %" effective rate every provider in this
+    # category quotes the same way. 2.5% p.a. = 100 points, each further
+    # percentage point costs 20.
+    return clamp(100.0 - (rate - 2.5) * 20.0)
+
+
+def _kredit_sondertilgung(item):
+    text = (item.get("sondertilgung") or "").lower()
+    # Only credit the top tier when the text states a free special-repayment
+    # right with no stated fee caveat on full early repayment — a "jederzeit"
+    # mention alone isn't enough, since several providers pair it with an
+    # explicit possible fee on full payoff.
+    has_fee_caveat = "volltilgung ggf" in text or "bei volltilgung" in text
+    if "kostenlos" in text and not has_fee_caveat:
+        return 100.0
+    if "jederzeit" in text or "kostenlos" in text:
+        return 65.0
+    # The statutory baseline (§ 502 BGB) that applies whether or not the
+    # provider states anything extra — not a penalty, just no stated perk.
+    return 35.0
+
+
+def _kredit_kreditrahmen(item):
+    nums = re.findall(r"\d[\d.]*", item.get("amount") or "")
+    if not nums:
+        return 50.0
+    max_amount = float(nums[-1].replace(".", ""))
+    # Fixed anchor: a €100,000 max loan amount = 100 points.
+    return clamp((max_amount / 100000.0) * 100.0)
+
+
+KREDITE_RUBRIC = [
+    ("zinssatz", 0.55, _kredit_zinssatz),
+    ("sondertilgung", 0.30, _kredit_sondertilgung),
+    ("kreditrahmen", 0.15, _kredit_kreditrahmen),
+]
+
+
+# ---------------------------------------------------------------------------
 # Registry: category -> rubric. Add new categories here once their rubric
 # is agreed (see the design doc's open questions before adding one).
 # ---------------------------------------------------------------------------
 
 RUBRICS = {
     "girokonto": GIROKONTO_RUBRIC,
+    "kredite": KREDITE_RUBRIC,
 }
 
 

@@ -9,6 +9,40 @@
       error: function (msg) { return 'Could not load data (' + msg + '). Running locally? Please serve the files via a local server, e.g. <code>python3 -m http.server</code> — opening the file directly (file://) blocks the request in the browser.'; } }
   };
 
+  // Human-readable labels for each rubric factor key that can show up in a
+  // `score.breakdown` object, keyed by category so two categories can reuse
+  // the same factor name with different wording if needed. Used only for the
+  // badge tooltip — see assets/girokonto-compare.js for the same pattern
+  // applied to its own card renderer.
+  var SCORE_FACTOR_LABELS = {
+    kredite: {
+      de: { zinssatz: 'Zinssatz', sondertilgung: 'Sondertilgung', kreditrahmen: 'Kreditrahmen' },
+      en: { zinssatz: 'Interest rate', sondertilgung: 'Special repayment', kreditrahmen: 'Loan amount range' }
+    }
+  };
+
+  function scoreTooltip(type, breakdown) {
+    var labels = (SCORE_FACTOR_LABELS[type] || {})[LANG] || {};
+    var parts = [];
+    for (var key in breakdown) {
+      if (!Object.prototype.hasOwnProperty.call(breakdown, key)) continue;
+      parts.push((labels[key] || key) + ' ' + breakdown[key]);
+    }
+    var prefix = LANG === 'en' ? 'Finanzpal Score: ' : 'Finanzpal-Score: ';
+    var suffix = LANG === 'en'
+      ? ' (each out of 100). Methodology: ueber-uns.html#finanzpal-score'
+      : ' (je von 100). Methodik: ueber-uns.html#finanzpal-score';
+    return prefix + parts.join(' · ') + suffix;
+  }
+
+  function scoreBadgeHtml(type, item) {
+    if (!item.score) return '';
+    var band = (item.score.band || '').toLowerCase();
+    var title = scoreTooltip(type, item.score.breakdown || {});
+    return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '">' +
+      item.score.value + ' <span class="fp-score-band">' + escapeHtml(item.score.band) + '</span></a>';
+  }
+
   var MONTHS = {
     de: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
     en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -28,10 +62,10 @@
     });
   }
 
-  function brokerCell(item) {
+  function brokerCell(item, type) {
     var nameHtml = item.recommended
-      ? '<div class="broker-name linked">' + escapeHtml(item.name) + '</div><span class="broker-tag">' + STR[LANG].pick + '</span>'
-      : '<div class="broker-name">' + escapeHtml(item.name) + '</div>';
+      ? '<div class="broker-name linked">' + escapeHtml(item.name) + scoreBadgeHtml(type, item) + '</div><span class="broker-tag">' + STR[LANG].pick + '</span>'
+      : '<div class="broker-name">' + escapeHtml(item.name) + scoreBadgeHtml(type, item) + '</div>';
     var markStyle = item.color ? ' style="background:' + item.color + ';"' : '';
     if (item.detailUrl) {
       return '<a href="' + item.detailUrl + '" class="broker-cell"><div class="broker-mark"' + markStyle + '>' + item.initials + '</div><div>' + nameHtml + '</div></a>';
@@ -55,7 +89,7 @@
   var renderers = {
     tagesgeld: function (item) {
       return '<tr class="' + (item.recommended ? 'pick' : '') + '">' +
-        '<td>' + brokerCell(item) + '</td>' +
+        '<td>' + brokerCell(item, 'tagesgeld') + '</td>' +
         '<td><span class="rate-val">' + item.rate + '</span></td>' +
         '<td class="num-cell">' + item.guarantee + '</td>' +
         '<td class="num-cell">' + item.minDeposit + '</td>' +
@@ -65,7 +99,7 @@
     },
     kredite: function (item) {
       return '<tr class="' + (item.recommended ? 'pick' : '') + '">' +
-        '<td>' + brokerCell(item) + '</td>' +
+        '<td>' + brokerCell(item, 'kredite') + '</td>' +
         '<td><span class="rate-val">' + item.rate + '</span></td>' +
         '<td class="num-cell">' + item.amount + '</td>' +
         '<td class="num-cell">' + item.term + '</td>' +
@@ -75,7 +109,7 @@
     },
     versicherungen: function (item) {
       return '<tr class="' + (item.recommended ? 'pick' : '') + '">' +
-        '<td>' + brokerCell(item) + '</td>' +
+        '<td>' + brokerCell(item, 'versicherungen') + '</td>' +
         '<td class="num-cell">' + item.beitrag + '</td>' +
         '<td class="num-cell">' + item.deckung + '</td>' +
         '<td><div class="cover-list">' + item.leistungen + '</div></td>' +

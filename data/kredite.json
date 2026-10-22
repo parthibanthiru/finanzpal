@@ -1,15 +1,225 @@
 {
   "updated": "2026-10",
   "items": [
-    { "id": "openbank-kredit", "name": "Openbank", "initials": "OB", "color": "#6B2FA0", "recommended": true, "affiliateUrl": "#", "rate": "ab 2,99 %", "amount": "1.000 – 75.000 €", "term": "12 – 96 Monate", "sondertilgung": "jederzeit möglich, ggf. Vorfälligkeitsentschädigung bei Volltilgung" },
-    { "id": "consorsbank-kredit", "name": "Consorsbank", "initials": "CB", "color": "#13395E", "recommended": false, "affiliateUrl": "#", "rate": "ab 3,49 %", "amount": "1.500 – 80.000 €", "term": "6 – 120 Monate", "sondertilgung": "bis 100 % jederzeit kostenlos" },
-    { "id": "ing-kredit", "name": "ING", "initials": "ING", "color": "#FF6200", "recommended": false, "affiliateUrl": "#", "rate": "ab 3,69 %", "amount": "5.000 – 75.000 €", "term": "12 – 96 Monate", "sondertilgung": "jederzeit unbegrenzt kostenlos" },
-    { "id": "swk-bank", "name": "SWK Bank", "initials": "SWK", "color": "#5B5F63", "recommended": false, "affiliateUrl": "#", "rate": "ab 5,29 %", "amount": "7.500 – 100.000 €", "term": "24 – 120 Monate", "sondertilgung": "Teiltilgung unbegrenzt kostenlos, Volltilgung ggf. Vorfälligkeitsentschädigung" },
-    { "id": "commerzbank-kredit", "name": "Commerzbank", "initials": "CMB", "color": "#C9A200", "recommended": false, "affiliateUrl": "#", "rate": "ab 3,29 %", "amount": "1.500 – 100.000 €", "term": "6 – 119 Monate", "sondertilgung": "gesetzliche Vorfälligkeitsentschädigung möglich (§ 502 BGB), anbieterspezifische Details vom Vergleichsportal nicht ausgewiesen" },
-    { "id": "targobank-kredit", "name": "Targobank Online-Kredit", "initials": "TGB", "color": "#9A1F6B", "recommended": false, "affiliateUrl": "#", "rate": "ab 3,49 %", "amount": "1.500 – 80.000 €", "term": "12 – 96 Monate", "sondertilgung": "gesetzliche Vorfälligkeitsentschädigung möglich (§ 502 BGB), anbieterspezifische Details vom Vergleichsportal nicht ausgewiesen" },
-    { "id": "norisbank-kredit", "name": "norisbank", "initials": "NB", "color": "#C8102E", "recommended": false, "affiliateUrl": "#", "rate": "ab 3,69 %", "amount": "1.000 – 65.000 €", "term": "12 – 120 Monate", "sondertilgung": "gesetzliche Vorfälligkeitsentschädigung möglich (§ 502 BGB), anbieterspezifische Details vom Vergleichsportal nicht ausgewiesen" },
-    { "id": "deutsche-skatbank-kredit", "name": "Deutsche Skatbank", "initials": "DSB", "color": "#1F6F54", "recommended": false, "affiliateUrl": "#", "rate": "ab 4,48 %", "amount": "3.000 – 50.000 €", "term": "12 – 84 Monate", "sondertilgung": "gesetzliche Vorfälligkeitsentschädigung möglich (§ 502 BGB), anbieterspezifische Details vom Vergleichsportal nicht ausgewiesen" },
-    { "id": "skg-ratenkredit", "name": "SKG RatenKredit", "initials": "SKG", "color": "#2F5C8A", "recommended": false, "affiliateUrl": "#", "rate": "ab 4,99 %", "amount": "2.500 – 100.000 €", "term": "12 – 120 Monate", "sondertilgung": "gesetzliche Vorfälligkeitsentschädigung möglich (§ 502 BGB), anbieterspezifische Details vom Vergleichsportal nicht ausgewiesen" },
-    { "id": "dkb-privatkredit", "name": "DKB Privatkredit", "initials": "DKB", "color": "#0C4A6E", "recommended": false, "affiliateUrl": "#", "rate": "ab 7,19 %", "amount": "2.500 – 100.000 €", "term": "12 – 120 Monate", "sondertilgung": "gesetzliche Vorfälligkeitsentschädigung möglich (§ 502 BGB), anbieterspezifische Details vom Vergleichsportal nicht ausgewiesen" }
+    {
+      "id": "openbank-kredit",
+      "name": "Openbank",
+      "initials": "OB",
+      "color": "#6B2FA0",
+      "recommended": true,
+      "affiliateUrl": "#",
+      "rate": "ab 2,99 %",
+      "amount": "1.000 – 75.000 €",
+      "term": "12 – 96 Monate",
+      "sondertilgung": "jederzeit möglich, ggf. Vorfälligkeitsentschädigung bei Volltilgung",
+      "score": {
+        "value": 80.4,
+        "band": "A",
+        "breakdown": {
+          "zinssatz": 90.2,
+          "sondertilgung": 65.0,
+          "kreditrahmen": 75.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "consorsbank-kredit",
+      "name": "Consorsbank",
+      "initials": "CB",
+      "color": "#13395E",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "ab 3,49 %",
+      "amount": "1.500 – 80.000 €",
+      "term": "6 – 120 Monate",
+      "sondertilgung": "bis 100 % jederzeit kostenlos",
+      "score": {
+        "value": 86.1,
+        "band": "A",
+        "breakdown": {
+          "zinssatz": 80.2,
+          "sondertilgung": 100.0,
+          "kreditrahmen": 80.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "ing-kredit",
+      "name": "ING",
+      "initials": "ING",
+      "color": "#FF6200",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "ab 3,69 %",
+      "amount": "5.000 – 75.000 €",
+      "term": "12 – 96 Monate",
+      "sondertilgung": "jederzeit unbegrenzt kostenlos",
+      "score": {
+        "value": 83.2,
+        "band": "A",
+        "breakdown": {
+          "zinssatz": 76.2,
+          "sondertilgung": 100.0,
+          "kreditrahmen": 75.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "swk-bank",
+      "name": "SWK Bank",
+      "initials": "SWK",
+      "color": "#5B5F63",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "ab 5,29 %",
+      "amount": "7.500 – 100.000 €",
+      "term": "24 – 120 Monate",
+      "sondertilgung": "Teiltilgung unbegrenzt kostenlos, Volltilgung ggf. Vorfälligkeitsentschädigung",
+      "score": {
+        "value": 58.8,
+        "band": "B",
+        "breakdown": {
+          "zinssatz": 44.2,
+          "sondertilgung": 65.0,
+          "kreditrahmen": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "commerzbank-kredit",
+      "name": "Commerzbank",
+      "initials": "CMB",
+      "color": "#C9A200",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "ab 3,29 %",
+      "amount": "1.500 – 100.000 €",
+      "term": "6 – 119 Monate",
+      "sondertilgung": "gesetzliche Vorfälligkeitsentschädigung möglich (§ 502 BGB), anbieterspezifische Details vom Vergleichsportal nicht ausgewiesen",
+      "score": {
+        "value": 71.8,
+        "band": "B",
+        "breakdown": {
+          "zinssatz": 84.2,
+          "sondertilgung": 35.0,
+          "kreditrahmen": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "targobank-kredit",
+      "name": "Targobank Online-Kredit",
+      "initials": "TGB",
+      "color": "#9A1F6B",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "ab 3,49 %",
+      "amount": "1.500 – 80.000 €",
+      "term": "12 – 96 Monate",
+      "sondertilgung": "gesetzliche Vorfälligkeitsentschädigung möglich (§ 502 BGB), anbieterspezifische Details vom Vergleichsportal nicht ausgewiesen",
+      "score": {
+        "value": 66.6,
+        "band": "B",
+        "breakdown": {
+          "zinssatz": 80.2,
+          "sondertilgung": 35.0,
+          "kreditrahmen": 80.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "norisbank-kredit",
+      "name": "norisbank",
+      "initials": "NB",
+      "color": "#C8102E",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "ab 3,69 %",
+      "amount": "1.000 – 65.000 €",
+      "term": "12 – 120 Monate",
+      "sondertilgung": "gesetzliche Vorfälligkeitsentschädigung möglich (§ 502 BGB), anbieterspezifische Details vom Vergleichsportal nicht ausgewiesen",
+      "score": {
+        "value": 62.2,
+        "band": "B",
+        "breakdown": {
+          "zinssatz": 76.2,
+          "sondertilgung": 35.0,
+          "kreditrahmen": 65.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "deutsche-skatbank-kredit",
+      "name": "Deutsche Skatbank",
+      "initials": "DSB",
+      "color": "#1F6F54",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "ab 4,48 %",
+      "amount": "3.000 – 50.000 €",
+      "term": "12 – 84 Monate",
+      "sondertilgung": "gesetzliche Vorfälligkeitsentschädigung möglich (§ 502 BGB), anbieterspezifische Details vom Vergleichsportal nicht ausgewiesen",
+      "score": {
+        "value": 51.2,
+        "band": "B",
+        "breakdown": {
+          "zinssatz": 60.4,
+          "sondertilgung": 35.0,
+          "kreditrahmen": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "skg-ratenkredit",
+      "name": "SKG RatenKredit",
+      "initials": "SKG",
+      "color": "#2F5C8A",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "ab 4,99 %",
+      "amount": "2.500 – 100.000 €",
+      "term": "12 – 120 Monate",
+      "sondertilgung": "gesetzliche Vorfälligkeitsentschädigung möglich (§ 502 BGB), anbieterspezifische Details vom Vergleichsportal nicht ausgewiesen",
+      "score": {
+        "value": 53.1,
+        "band": "B",
+        "breakdown": {
+          "zinssatz": 50.2,
+          "sondertilgung": 35.0,
+          "kreditrahmen": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "dkb-privatkredit",
+      "name": "DKB Privatkredit",
+      "initials": "DKB",
+      "color": "#0C4A6E",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "ab 7,19 %",
+      "amount": "2.500 – 100.000 €",
+      "term": "12 – 120 Monate",
+      "sondertilgung": "gesetzliche Vorfälligkeitsentschädigung möglich (§ 502 BGB), anbieterspezifische Details vom Vergleichsportal nicht ausgewiesen",
+      "score": {
+        "value": 28.9,
+        "band": "C",
+        "breakdown": {
+          "zinssatz": 6.2,
+          "sondertilgung": 35.0,
+          "kreditrahmen": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    }
   ]
 }
