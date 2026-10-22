@@ -80,7 +80,7 @@ finanzpal-production/
 │   ├── style.css                   Gemeinsames Stylesheet (ein Design-System für alle Seiten,
 │   │                                 inkl. Light/Dark-Theme über CSS-Variablen in :root)
 │   ├── nav.js                      Mobiles Menü (Hamburger-Toggle), Dropdown-Logik für die
-│   │                                Nav-Gruppen (Broker / Konten & Depots / Kredite /
+│   │                                Nav-Gruppen (Broker / Konten / Kredite /
 │   │                                Versicherungen / Rechner),
 │   │                                Dark-Mode-Toggle
 │   ├── compare.js                  Rendert die generischen Vergleichstabellen aus JSON;
@@ -118,7 +118,7 @@ finanzpal-production/
 Die Top-Nav ist über alle Seiten identisch und gruppiert die ursprünglich
 8 Einzel-Links in Dropdowns, damit auch Seiten ohne eigenen Nav-Slot (z. B.
 Girokonto, Baufinanzierung, alle Rechner) von oben erreichbar sind:
-**Konten & Depots ▾** (Finanz-Check, Girokonto, Tagesgeld, Kreditkarte) ·
+**Konten ▾** (Finanz-Check, Girokonto, Tagesgeld, Kreditkarte) ·
 **Broker ▾** (Broker & Depot, Kinderdepot, ETF-Suche) ·
 **Kredite ▾** (Ratenkredit, Baufinanzierung) ·
 **Versicherungen ▾** (Privathaftpflicht, Hausrat, Berufsunfähigkeit,
@@ -130,7 +130,9 @@ jeder betroffenen `.html`-Datei (es gibt kein serverseitiges Nav-Template) —
 dafür `tools/build_nav.py` ausführen statt von Hand zu editieren, siehe
 `tools/README.md`.
 
-Stand Oktober 2026: **Konten & Depots** steht jetzt als erste Gruppe links
+Stand Oktober 2026: Die DE-Nav-Gruppe heißt jetzt **Konten** (vorher „Konten &
+Depots" — gekürzt, da „Depots" inhaltlich zu Broker/Kinderdepot gehört, nicht
+zu Girokonto/Tagesgeld/Kreditkarte). Sie steht als erste Gruppe links
 (häufigster Einstiegspunkt), **Kinderdepot** ist aus Konten & Depots in die
 **Broker**-Gruppe gewandert (inhaltlich näher an Depot/Sparplan-Themen als an
 Girokonto/Kreditkarte) und der Broker-Panel-Eintrag heißt jetzt „Broker &

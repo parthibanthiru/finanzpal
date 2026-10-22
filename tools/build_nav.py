@@ -77,7 +77,7 @@ DE_PANELS = {
     "versicherungen": [("versicherungen.html", "Privathaftpflicht"), ("versicherungen.html#hausrat", "Hausrat"), ("versicherungen.html#berufsunfaehigkeit", "Berufsunfähigkeit"), ("versicherungen.html#rechtsschutz", "Rechtsschutz"), ("versicherungen.html#kfz", "Kfz")],
     "rechner": [("sparplanrechner.html", "Sparplanrechner"), ("zinseszinsrechner.html", "Zinseszinsrechner"), ("kreditrechner.html", "Kreditrechner"), ("baufinanzierungsrechner.html", "Baufinanzierungsrechner"), ("nettolohnrechner.html", "Nettolohnrechner"), ("haushaltsbuch.html", "Haushaltsbuch"), ("altersvorsorge-rechner.html", "Altersvorsorge-Rechner")],
 }
-DE_LABELS = {"broker": "Broker", "konten": "Konten &amp; Depots", "kredite": "Kredite", "versicherungen": "Versicherungen", "rechner": "Rechner"}
+DE_LABELS = {"broker": "Broker", "konten": "Konten", "kredite": "Kredite", "versicherungen": "Versicherungen", "rechner": "Rechner"}
 DE_PLAIN = {"steuerprogramm": ("steuerprogramm.html", "Steuerprogramm"), "ratgeber": ("ratgeber.html", "Ratgeber"), "ueberuns": ("ueber-uns.html", "Über uns")}
 
 EN_PANELS = {
