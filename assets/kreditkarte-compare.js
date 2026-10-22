@@ -41,7 +41,10 @@
       noInstallment: 'Keine Ratenzahlung möglich – Rechnungsbetrag wird vollständig fällig',
       installmentPrefix: 'Ratenzahlung möglich: ',
       hotelYes: 'Geeignet für Hotel- und Mietwagenbuchungen (Kreditrahmen als Kaution)',
-      hotelNo: 'Als Debitkarte ohne Kreditrahmen meist nicht für Hotel-/Mietwagen-Kautionen geeignet'
+      hotelNo: 'Als Debitkarte ohne Kreditrahmen meist nicht für Hotel-/Mietwagen-Kautionen geeignet',
+      scoreTooltip: function (b) {
+        return 'Finanzpal-Score: Jahresgebühr ' + b.jahresgebuehr + ' · Abhebung weltweit ' + b.abhebung + ' · Ohne Bedingungen ' + b.ohneBedingungen + ' · Zinsfreie Tage ' + b.zinsfreieTage + ' (je von 100). Methodik: ueber-uns.html#finanzpal-score';
+      }
     },
     en: {
       loading: 'Loading comparison data …',
@@ -78,9 +81,20 @@
       noInstallment: 'No installment option – the full balance is due each month',
       installmentPrefix: 'Installment payment available: ',
       hotelYes: 'Suitable for hotel and rental car deposits (credit line used as collateral)',
-      hotelNo: 'As a debit card with no credit line, usually not suitable for hotel/rental car deposits'
+      hotelNo: 'As a debit card with no credit line, usually not suitable for hotel/rental car deposits',
+      scoreTooltip: function (b) {
+        return 'Finanzpal Score: Annual fee ' + b.jahresgebuehr + ' · Worldwide withdrawal ' + b.abhebung + ' · No conditions ' + b.ohneBedingungen + ' · Interest-free days ' + b.zinsfreieTage + ' (each out of 100). Methodology: ueber-uns.html#finanzpal-score';
+      }
     }
   }[LANG];
+
+  function scoreBadgeHtml(item) {
+    if (!item.score) return '';
+    var band = (item.score.band || '').toLowerCase();
+    var title = STR.scoreTooltip(item.score.breakdown || {});
+    return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '">' +
+      item.score.value + ' <span class="fp-score-band">' + escapeHtml(item.score.band) + '</span></a>';
+  }
 
   var MONTHS = {
     de: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
@@ -192,7 +206,7 @@
         '<div class="cc-body">' +
           cardArtHtml(item) +
           '<div class="cc-main">' +
-            '<div class="cc-name">' + escapeHtml(item.name) + '</div>' +
+            '<div class="cc-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div>' +
             '<ul class="cc-bullets">' + bullets + '</ul>' + crossLinkHtml +
           '</div>' +
           '<div class="cc-facts">' +
@@ -219,7 +233,7 @@
       var rows = items.map(function (item) {
         return '<tr class="' + (item.recommended ? 'pick' : '') + '">' +
           '<td><div class="broker-cell"><div class="broker-mark" style="' + (item.color ? 'background:' + item.color + ';' : '') + '">' + escapeHtml(item.initials) + '</div><div>' +
-            (item.recommended ? '<div class="broker-name linked">' + escapeHtml(item.name) + '</div><span class="broker-tag">' + STR.pick + '</span>' : '<div class="broker-name">' + escapeHtml(item.name) + '</div>') +
+            (item.recommended ? '<div class="broker-name linked">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div><span class="broker-tag">' + STR.pick + '</span>' : '<div class="broker-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div>') +
           '</div></div></td>' +
           '<td class="num-cell">' + escapeHtml(item.netzwerk) + '</td>' +
           '<td class="num-cell">' + item.jahresgebuehr + (item.bedingung ? '<div class="cell-sub">' + escapeHtml(item.bedingung) + '</div>' : '') + '</td>' +

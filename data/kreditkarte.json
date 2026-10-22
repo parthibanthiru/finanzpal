@@ -25,7 +25,18 @@
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Direkte Belastung des Verrechnungskontos, kein separater Rechnungsausgleich nötig",
-      "hotelMietwagen": "weniger_geeignet"
+      "hotelMietwagen": "weniger_geeignet",
+      "score": {
+        "value": 80.0,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 50.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "consorsbank-visa",
@@ -51,7 +62,18 @@
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Automatische Lastschrift zum 15. oder letzten Bankarbeitstag des Monats",
-      "hotelMietwagen": "geeignet"
+      "hotelMietwagen": "geeignet",
+      "score": {
+        "value": 80.0,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 50.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "barclays-visa",
@@ -77,7 +99,18 @@
       "ratenzahlung": true,
       "ratenzahlungDetail": "Ab 3 % der Rechnungssumme oder mind. 30 €/Monat (19,64 % eff. Jahreszins)",
       "rechnungsausgleich": "Lastschrift (2 €/Monat) oder Überweisung per Hand",
-      "hotelMietwagen": null
+      "hotelMietwagen": null,
+      "score": {
+        "value": 99.7,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 100.0,
+          "zinsfreieTage": 98.3
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "hanseatic-genialcard",
@@ -103,7 +136,18 @@
       "ratenzahlung": true,
       "ratenzahlungDetail": "Ab 3 % der Rechnungssumme frei wählbar (19,92 % Sollzins p. a., erste 3 Monate zinsfrei)",
       "rechnungsausgleich": "Lastschrift oder frei wählbarer Tilgungsanteil online einstellbar",
-      "hotelMietwagen": "geeignet"
+      "hotelMietwagen": "geeignet",
+      "score": {
+        "value": 92.3,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 100.0,
+          "zinsfreieTage": 61.7
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "c24-mastercard",
@@ -129,7 +173,18 @@
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Direkte Kontobelastung, kein separater Rechnungsausgleich nötig",
-      "hotelMietwagen": "weniger_geeignet"
+      "hotelMietwagen": "weniger_geeignet",
+      "score": {
+        "value": 66.5,
+        "band": "B",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 55.0,
+          "ohneBedingungen": 50.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "dkb-visa-debitkarte",
@@ -155,7 +210,18 @@
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Direkte Belastung des Girokontos, kein separater Rechnungsausgleich nötig",
-      "hotelMietwagen": null
+      "hotelMietwagen": null,
+      "score": {
+        "value": 80.0,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 50.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "norisbank-mastercard",
@@ -181,7 +247,18 @@
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Monatliche vollständige Lastschrift",
-      "hotelMietwagen": null
+      "hotelMietwagen": null,
+      "score": {
+        "value": 66.5,
+        "band": "B",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 55.0,
+          "ohneBedingungen": 50.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "bank-norwegian-visa",
@@ -207,7 +284,18 @@
       "ratenzahlung": true,
       "ratenzahlungDetail": "Revolvierende Kreditkarte mit Teilzahlungsoption; SEPA-Lastschriftmandate können laut Testportal aktuell nicht neu eingerichtet werden; Sollzins auf Quellseite nicht beziffert",
       "rechnungsausgleich": "Teilzahlung oder vollständiger Ausgleich per Überweisung wählbar",
-      "hotelMietwagen": null
+      "hotelMietwagen": null,
+      "score": {
+        "value": 90.0,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 100.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "gmx-mastercard-gold",
@@ -233,7 +321,18 @@
       "ratenzahlung": true,
       "ratenzahlungDetail": "Revolvierende Kreditkarte; Sollzins auf Quellseite nicht beziffert",
       "rechnungsausgleich": "Nur per Überweisung, kein Lastschrifteinzug möglich",
-      "hotelMietwagen": null
+      "hotelMietwagen": null,
+      "score": {
+        "value": 90.0,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 100.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "revolut-standard",
@@ -259,7 +358,18 @@
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Direkte Belastung des Revolut-Kontos, kein separater Rechnungsausgleich nötig",
-      "hotelMietwagen": null
+      "hotelMietwagen": null,
+      "score": {
+        "value": 75.5,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 85.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 50.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     }
   ]
 }

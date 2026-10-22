@@ -153,6 +153,65 @@ KREDITE_RUBRIC = [
 
 
 # ---------------------------------------------------------------------------
+# Kreditkarte rubric
+# Jahresgebühr 30% · Abhebung weltweit 30% · Ohne Bedingungen 20% ·
+# Zinsfreie Tage 20%
+# ---------------------------------------------------------------------------
+
+def _kk_jahresgebuehr(item):
+    text = (item.get("jahresgebuehr") or "").strip().lower()
+    if text == "0 €":
+        return 100.0
+    if "einmalig" in text and ("0 €/jahr" in text or "danach 0" in text):
+        # A one-off setup fee, not a recurring annual cost — worth less than
+        # unconditionally free, but not treated like an ongoing fee either.
+        return 85.0
+    m = re.search(r"(\d+(?:,\d+)?)\s*€", text)
+    if m:
+        fee = float(m.group(1).replace(",", "."))
+        # Fixed anchor: each €1 of recurring fee costs 5 points.
+        return clamp(100.0 - fee * 5.0)
+    return 50.0
+
+
+def _kk_abhebung(item):
+    if item.get("weltweitKostenlos"):
+        return 100.0
+    text = (item.get("abhebung") or "").lower()
+    if "kostenlos" in text:
+        # Free, but only in some region or up to a monthly limit — real
+        # value, just not the unconditional worldwide version.
+        return 55.0
+    return 20.0
+
+
+def _kk_ohne_bedingungen(item):
+    # "ohneBedingungen" specifically means free with no conditions attached
+    # (vs. free but tied to e.g. a current account or a usage minimum) — a
+    # tied card still works and is still free, just less flexible.
+    return 100.0 if item.get("ohneBedingungen") else 50.0
+
+
+def _kk_zinsfreie_tage(item):
+    days = item.get("zinsfreieTage")
+    if days is None:
+        # Debit and charge cards settle immediately or monthly and simply
+        # don't carry this figure — that's a different card model, not a
+        # worse one, so this is scored neutral rather than worst-case.
+        return 50.0
+    # Fixed anchor: 60 interest-free days = 100 points.
+    return clamp((days / 60.0) * 100.0)
+
+
+KREDITKARTE_RUBRIC = [
+    ("jahresgebuehr", 0.30, _kk_jahresgebuehr),
+    ("abhebung", 0.30, _kk_abhebung),
+    ("ohneBedingungen", 0.20, _kk_ohne_bedingungen),
+    ("zinsfreieTage", 0.20, _kk_zinsfreie_tage),
+]
+
+
+# ---------------------------------------------------------------------------
 # Registry: category -> rubric. Add new categories here once their rubric
 # is agreed (see the design doc's open questions before adding one).
 # ---------------------------------------------------------------------------
@@ -160,6 +219,7 @@ KREDITE_RUBRIC = [
 RUBRICS = {
     "girokonto": GIROKONTO_RUBRIC,
     "kredite": KREDITE_RUBRIC,
+    "kreditkarte": KREDITKARTE_RUBRIC,
 }
 
 

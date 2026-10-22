@@ -25,7 +25,18 @@
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Charged directly to the cash account, no separate billing cycle",
-      "hotelMietwagen": "weniger_geeignet"
+      "hotelMietwagen": "weniger_geeignet",
+      "score": {
+        "value": 80.0,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 50.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "consorsbank-visa",
@@ -51,7 +62,18 @@
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Automatic direct debit on the 15th or last business day of the month",
-      "hotelMietwagen": "geeignet"
+      "hotelMietwagen": "geeignet",
+      "score": {
+        "value": 80.0,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 50.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "barclays-visa",
@@ -77,7 +99,18 @@
       "ratenzahlung": true,
       "ratenzahlungDetail": "From 3% of the balance or a €30/month minimum (19.64% effective APR)",
       "rechnungsausgleich": "Direct debit (€2/month) or manual bank transfer",
-      "hotelMietwagen": null
+      "hotelMietwagen": null,
+      "score": {
+        "value": 99.7,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 100.0,
+          "zinsfreieTage": 98.3
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "hanseatic-genialcard",
@@ -103,7 +136,18 @@
       "ratenzahlung": true,
       "ratenzahlungDetail": "Freely adjustable from 3% of the balance (19.92% nominal APR, first 3 months interest-free)",
       "rechnungsausgleich": "Direct debit, or choose your own repayment share online",
-      "hotelMietwagen": "geeignet"
+      "hotelMietwagen": "geeignet",
+      "score": {
+        "value": 92.3,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 100.0,
+          "zinsfreieTage": 61.7
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "c24-mastercard",
@@ -129,7 +173,18 @@
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Charged directly to the account, no separate billing cycle",
-      "hotelMietwagen": "weniger_geeignet"
+      "hotelMietwagen": "weniger_geeignet",
+      "score": {
+        "value": 66.5,
+        "band": "B",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 55.0,
+          "ohneBedingungen": 50.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "dkb-visa-debitkarte",
@@ -155,7 +210,18 @@
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Charged directly to the current account, no separate billing cycle",
-      "hotelMietwagen": null
+      "hotelMietwagen": null,
+      "score": {
+        "value": 80.0,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 50.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "norisbank-mastercard",
@@ -181,7 +247,18 @@
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Full monthly direct debit",
-      "hotelMietwagen": null
+      "hotelMietwagen": null,
+      "score": {
+        "value": 66.5,
+        "band": "B",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 55.0,
+          "ohneBedingungen": 50.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "bank-norwegian-visa",
@@ -207,7 +284,18 @@
       "ratenzahlung": true,
       "ratenzahlungDetail": "Revolving credit card with a partial-payment option; the test portal notes new SEPA direct-debit mandates currently cannot be set up; borrowing rate not stated on the source page",
       "rechnungsausgleich": "Partial payment or full settlement by bank transfer, your choice",
-      "hotelMietwagen": null
+      "hotelMietwagen": null,
+      "score": {
+        "value": 90.0,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 100.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "gmx-mastercard-gold",
@@ -233,7 +321,18 @@
       "ratenzahlung": true,
       "ratenzahlungDetail": "Revolving credit card; borrowing rate not stated on the source page",
       "rechnungsausgleich": "By bank transfer only, no direct debit option",
-      "hotelMietwagen": null
+      "hotelMietwagen": null,
+      "score": {
+        "value": 90.0,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 100.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 100.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "revolut-standard",
@@ -259,7 +358,18 @@
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Charged directly to the Revolut account, no separate billing cycle",
-      "hotelMietwagen": null
+      "hotelMietwagen": null,
+      "score": {
+        "value": 75.5,
+        "band": "A",
+        "breakdown": {
+          "jahresgebuehr": 85.0,
+          "abhebung": 100.0,
+          "ohneBedingungen": 50.0,
+          "zinsfreieTage": 50.0
+        },
+        "computedFrom": "2026-10"
+      }
     }
   ]
 }

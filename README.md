@@ -264,18 +264,23 @@ drei Stellen einsetzen.
 
 ## Finanzpal-Score
 
-**Stand Oktober 2026 — Kategorien Girokonto & Kredite.** Zusätzlich zu den
-Rohdaten zeigen `girokonto.html`/`en/girokonto.html` (Karten-Layout,
-`assets/girokonto-compare.js`) und `kredite.html`/`en/kredite.html`
-(Tabellen-Layout, `assets/compare.js`) einen grünen/blauen/gelben/grauen
-Badge pro Zeile (`.fp-score-badge`, A–D-Note + Zahl 0–100), berechnet aus
-Feldern, die auf derselben Seite ohnehin schon stehen:
+**Stand Oktober 2026 — Kategorien Girokonto, Kredite & Kreditkarte.**
+Zusätzlich zu den Rohdaten zeigen `girokonto.html`/`en/girokonto.html` und
+`kreditkarte.html`/`en/kreditkarte.html` (beide Karten-Layout, eigenes
+Vergleichs-JS) sowie `kredite.html`/`en/kredite.html` (Tabellen-Layout,
+`assets/compare.js`) einen grünen/blauen/gelben/grauen Badge pro Zeile
+(`.fp-score-badge`, A–D-Note + Zahl 0–100), berechnet aus Feldern, die auf
+derselben Seite ohnehin schon stehen:
   - Girokonto: Kontoführungsgebühr 35 % · Dispozins 25 % · Guthabenzins 20 %
     · Karte & Bargeld-Flexibilität 20 %.
   - Kredite: Zinssatz 55 % · Sondertilgungsrecht 30 % · Kreditrahmen 15 %.
     Beim Sondertilgungsrecht zählt nur ein ausdrücklich als kostenlos
     genanntes Recht — ein bloßes „jederzeit möglich" ohne Kostenangabe reicht
     nicht für die Top-Stufe.
+  - Kreditkarte: Jahresgebühr 30 % · weltweite Abhebung 30 % ·
+    Bedingungsfreiheit 20 % · zinsfreie Tage 20 %. Fehlt die Anzahl
+    zinsfreier Tage (Debit-/Charge-Karten rechnen anders ab), wird das
+    neutral statt als Nachteil gewertet.
 
 Design-Hintergrund und die vollständigen Bewertungskriterien für alle
 Kategorien (inkl. der bewusst noch nicht bewerteten: Baufinanzierung, BU,
@@ -292,22 +297,25 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   gearbeitet, was auf der übersetzten EN-Seite stillschweigend andere Werte
   lieferte — seither wird nur noch einmal, aus der DE-Datei, gerechnet).
 - Ausführen nach jeder Datenänderung an einer bewerteten Kategorie:
-  `python3 tools/compute_scores.py girokonto kredite` (oder ohne Argument für
-  alle registrierten Kategorien).
+  `python3 tools/compute_scores.py girokonto kredite kreditkarte` (oder ohne
+  Argument für alle registrierten Kategorien).
 - Jedes `score`-Objekt enthält `value`, `band`, ein `breakdown` je Teilkriterium
   (im Badge-Tooltip sichtbar) und `computedFrom` (Monat der Berechnung) — bewusst
   offengelegt statt einer nackten Zahl.
-- Das Badge-Markup selbst sitzt an zwei Stellen, je nach Layout der
+- Das Badge-Markup selbst sitzt an drei Stellen, je nach Layout der
   Zielseite: `scoreBadgeHtml()`/`scoreTooltip()` in
-  `assets/girokonto-compare.js` (Karten) und dieselben Funktionen generisch
-  in `assets/compare.js` (Tabellen, geteilt mit Tagesgeld/Versicherungen —
-  der Badge erscheint dort nur, sobald ein `score`-Feld in den Daten steht).
+  `assets/girokonto-compare.js` und `assets/kreditkarte-compare.js` (jeweils
+  Karten, Kreditkarte zusätzlich mit einer Tabellen-Ansicht im selben
+  Skript) sowie dieselben Funktionen generisch in `assets/compare.js`
+  (Tabellen, geteilt mit Tagesgeld/Versicherungen — der Badge erscheint dort
+  nur, sobald ein `score`-Feld in den Daten steht).
 - Neue Kategorie bewerten = Rubrik in `compute_scores.py` ergänzen (siehe
-  `GIROKONTO_RUBRIC`/`KREDITE_RUBRIC` als Vorlage), Badge-Rendering an der
-  richtigen Stelle anschließen (Karten-Skript oder `SCORE_FACTOR_LABELS` in
-  `compare.js`) **und** Methodik-Text auf `ueber-uns.html`/
-  `en/ueber-uns.html` (`#finanzpal-score`) erweitern — nie eine Kategorie
-  stillschweigend bewerten, ohne die Kriterien dort offenzulegen.
+  `GIROKONTO_RUBRIC`/`KREDITE_RUBRIC`/`KREDITKARTE_RUBRIC` als Vorlage),
+  Badge-Rendering an der richtigen Stelle anschließen (jeweiliges
+  Karten-Skript oder `SCORE_FACTOR_LABELS` in `compare.js`) **und**
+  Methodik-Text auf `ueber-uns.html`/`en/ueber-uns.html`
+  (`#finanzpal-score`) erweitern — nie eine Kategorie stillschweigend
+  bewerten, ohne die Kriterien dort offenzulegen.
 
 ## Bekannte offene Punkte (bewusste Entscheidungen, nicht vergessen)
 
