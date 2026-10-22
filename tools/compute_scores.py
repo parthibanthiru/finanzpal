@@ -261,6 +261,64 @@ TAGESGELD_RUBRIC = [
 
 
 # ---------------------------------------------------------------------------
+# Kinderdepot rubric
+# Depotgebühr 20% · Mindestsparrate 15% · Guthabenzins 30% ·
+# Eltern-Aufwand 35%
+# ---------------------------------------------------------------------------
+
+def _kd_depotgebuehr(item):
+    text = (item.get("depotgebuehrText") or "").lower()
+    if "danach" in text and "€/monat" in text:
+        # Free at first, but a recurring fee can kick back in under some
+        # condition (comdirect: free for 6 months, then free only with
+        # enough trades/a running plan, else €1.95/month) — a real cost
+        # risk an unconditionally free account doesn't carry.
+        return 60.0
+    return 100.0
+
+
+def _kd_mindestsparrate(item):
+    rate = item.get("mindestsparrate")
+    if rate is None:
+        return 50.0
+    # Fixed anchor: a €1 minimum = 100 points, each further €1 costs 4 —
+    # the highest minimum in this category (€25) lands at 4, not 0, since
+    # it's still a real, usable savings plan, just the least flexible one.
+    return clamp(100.0 - (rate - 1) * 4.0)
+
+
+def _kd_guthabenzins(item):
+    zins = item.get("guthabenzins")
+    if zins is None:
+        return 0.0
+    # Same fixed anchor as Girokonto/Broker: 2.5% p.a. = 100 points.
+    score = clamp((zins / 2.5) * 100.0)
+    caveat = (item.get("guthabenzinsCaveat") or "").lower()
+    if "neukundenaktion" in caveat:
+        # The source itself flags this as a temporary new-customer rate
+        # that may drop afterwards (ING) — scored a notch below a
+        # standing rate advertised with no such caveat, rather than
+        # treating a promotional rate as equally durable.
+        score *= 0.8
+    return round(score, 1)
+
+
+def _kd_eltern_aufwand(item):
+    # The one factor that actually differentiates this category from an
+    # adult depot: whether a parent needs their own account at the same
+    # broker just to open this one for their child.
+    return 100.0 if item.get("parentDepotRequired") is False else 30.0
+
+
+KINDERDEPOT_RUBRIC = [
+    ("depotgebuehr", 0.20, _kd_depotgebuehr),
+    ("mindestsparrate", 0.15, _kd_mindestsparrate),
+    ("guthabenzins", 0.30, _kd_guthabenzins),
+    ("elternAufwand", 0.35, _kd_eltern_aufwand),
+]
+
+
+# ---------------------------------------------------------------------------
 # Registry: category -> rubric. Add new categories here once their rubric
 # is agreed (see the design doc's open questions before adding one).
 # ---------------------------------------------------------------------------
@@ -270,6 +328,7 @@ RUBRICS = {
     "kredite": KREDITE_RUBRIC,
     "kreditkarte": KREDITKARTE_RUBRIC,
     "tagesgeld": TAGESGELD_RUBRIC,
+    "kinderdepot": KINDERDEPOT_RUBRIC,
 }
 
 

@@ -264,10 +264,11 @@ drei Stellen einsetzen.
 
 ## Finanzpal-Score
 
-**Stand Oktober 2026 — Kategorien Girokonto, Kredite, Kreditkarte & Tagesgeld.**
-Zusätzlich zu den Rohdaten zeigen `girokonto.html`/`en/girokonto.html` und
-`kreditkarte.html`/`en/kreditkarte.html` (beide Karten-Layout, eigenes
-Vergleichs-JS) sowie `kredite.html`/`en/kredite.html` und
+**Stand Oktober 2026 — Kategorien Girokonto, Kredite, Kreditkarte, Tagesgeld
+& Kinderdepot.** Zusätzlich zu den Rohdaten zeigen `girokonto.html`/
+`en/girokonto.html`, `kreditkarte.html`/`en/kreditkarte.html` und
+`kinderdepot.html`/`en/kinderdepot.html` (alle drei Karten-Layout, jeweils
+eigenes Vergleichs-JS) sowie `kredite.html`/`en/kredite.html` und
 `tagesgeld.html`/`en/tagesgeld.html` (Tabellen-Layout, `assets/compare.js`)
 einen Finanzpal-Score-Badge pro Zeile (`.fp-score-badge`):
 ein kleiner Fortschritts-Ring (SVG, `stroke-dasharray`/`-dashoffset`) mit der
@@ -294,6 +295,13 @@ ohnehin schon stehen:
     Guthabens ohne Einlagensicherung gehalten werden kann, schlägt
     entsprechend stärker zu Buche — keins von beiden wird wie eine
     uneingeschränkte Garantie gewertet.
+  - Kinderdepot: Depotgebühr 20 % · Mindestsparrate 15 % · Guthabenzins 30 %
+    · Eltern-Aufwand 35 %. Das höchste Gewicht liegt bewusst darauf, ob ein
+    Elternteil dafür selbst schon ein eigenes Depot beim Anbieter braucht —
+    der Faktor, der diese Kategorie am stärksten von einem normalen
+    Erwachsenen-Depot unterscheidet. Ein als Neukundenaktion gekennzeichneter
+    Guthabenzins wird leicht abgewertet (×0,8), da er laut Anbieter nach
+    einer Frist wieder sinken kann.
 
 Design-Hintergrund und die vollständigen Bewertungskriterien für alle
 Kategorien (inkl. der bewusst noch nicht bewerteten: Baufinanzierung, BU,
@@ -310,27 +318,27 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   gearbeitet, was auf der übersetzten EN-Seite stillschweigend andere Werte
   lieferte — seither wird nur noch einmal, aus der DE-Datei, gerechnet).
 - Ausführen nach jeder Datenänderung an einer bewerteten Kategorie:
-  `python3 tools/compute_scores.py girokonto kredite kreditkarte tagesgeld`
-  (oder ohne Argument für alle registrierten Kategorien).
+  `python3 tools/compute_scores.py girokonto kredite kreditkarte tagesgeld
+  kinderdepot` (oder ohne Argument für alle registrierten Kategorien).
 - Jedes `score`-Objekt enthält `value`, `band`, ein `breakdown` je Teilkriterium
   (im Badge-Tooltip sichtbar) und `computedFrom` (Monat der Berechnung) — bewusst
   offengelegt statt einer nackten Zahl.
-- Das Badge-Markup selbst sitzt an drei Stellen, je nach Layout der
+- Das Badge-Markup selbst sitzt an vier Stellen, je nach Layout der
   Zielseite: `scoreBadgeHtml()`/`scoreTooltip()` in
-  `assets/girokonto-compare.js` und `assets/kreditkarte-compare.js` (jeweils
-  Karten, Kreditkarte zusätzlich mit einer Tabellen-Ansicht im selben
-  Skript) sowie dieselben Funktionen generisch in `assets/compare.js`
-  (Tabellen, geteilt mit Versicherungen, das noch kein `score`-Feld hat —
-  der Badge erscheint dort nur, sobald eins in den Daten steht;
-  `SCORE_FACTOR_LABELS.tagesgeld` zeigt das Muster für die Tooltip-Labels
-  einer neuen Tabellen-Kategorie).
+  `assets/girokonto-compare.js`, `assets/kreditkarte-compare.js` und
+  `assets/kinderdepot-compare.js` (jeweils Karten, Kreditkarte zusätzlich
+  mit einer Tabellen-Ansicht im selben Skript) sowie dieselben Funktionen
+  generisch in `assets/compare.js` (Tabellen, geteilt mit Versicherungen,
+  das noch kein `score`-Feld hat — der Badge erscheint dort nur, sobald
+  eins in den Daten steht; `SCORE_FACTOR_LABELS.tagesgeld` zeigt das Muster
+  für die Tooltip-Labels einer neuen Tabellen-Kategorie).
 - Neue Kategorie bewerten = Rubrik in `compute_scores.py` ergänzen (siehe
-  `GIROKONTO_RUBRIC`/`KREDITE_RUBRIC`/`KREDITKARTE_RUBRIC`/`TAGESGELD_RUBRIC`
-  als Vorlage), Badge-Rendering an der richtigen Stelle anschließen
-  (jeweiliges Karten-Skript oder `SCORE_FACTOR_LABELS` in `compare.js`) **und**
-  Methodik-Text auf `ueber-uns.html`/`en/ueber-uns.html`
-  (`#finanzpal-score`) erweitern — nie eine Kategorie stillschweigend
-  bewerten, ohne die Kriterien dort offenzulegen.
+  `GIROKONTO_RUBRIC`/`KREDITE_RUBRIC`/`KREDITKARTE_RUBRIC`/`TAGESGELD_RUBRIC`/
+  `KINDERDEPOT_RUBRIC` als Vorlage), Badge-Rendering an der richtigen Stelle
+  anschließen (jeweiliges Karten-Skript oder `SCORE_FACTOR_LABELS` in
+  `compare.js`) **und** Methodik-Text auf `ueber-uns.html`/
+  `en/ueber-uns.html` (`#finanzpal-score`) erweitern — nie eine Kategorie
+  stillschweigend bewerten, ohne die Kriterien dort offenzulegen.
 
 ## Bekannte offene Punkte (bewusste Entscheidungen, nicht vergessen)
 

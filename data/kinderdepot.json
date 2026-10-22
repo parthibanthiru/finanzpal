@@ -16,7 +16,18 @@
       "parentDepotRequired": true,
       "ageLimitText": "Eröffnung bis 17,5 Jahre",
       "besonderheitenText": "Großeltern können über eine Sparpaten-Funktion mit einzahlen",
-      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026"
+      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026",
+      "score": {
+        "value": 75.5,
+        "band": "A",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 100.0,
+          "guthabenzins": 100.0,
+          "elternAufwand": 30.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "scalable-capital-kinderdepot",
@@ -33,7 +44,18 @@
       "parentDepotRequired": true,
       "ageLimitText": "Eröffnung bis 17 Jahre",
       "besonderheitenText": null,
-      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026"
+      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026",
+      "score": {
+        "value": 75.5,
+        "band": "A",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 100.0,
+          "guthabenzins": 100.0,
+          "elternAufwand": 30.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "consorsbank-junior-depot",
@@ -50,7 +72,18 @@
       "parentDepotRequired": false,
       "ageLimitText": "Keine Altersbeschränkung für den eröffnenden Elternteil bekannt",
       "besonderheitenText": null,
-      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026"
+      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026",
+      "score": {
+        "value": 64.6,
+        "band": "B",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 64.0,
+          "guthabenzins": 0.0,
+          "elternAufwand": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "comdirect-juniordepot",
@@ -67,7 +100,18 @@
       "parentDepotRequired": false,
       "ageLimitText": "Originalunterlagen zur Depoteröffnung werden per Post zugesandt",
       "besonderheitenText": "Auf ETF-Sparpläne wird laut Testportal eine Ausführungsgebühr von 1,5 % pro Ausführung fällig",
-      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026"
+      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026",
+      "score": {
+        "value": 62.0,
+        "band": "B",
+        "breakdown": {
+          "depotgebuehr": 60.0,
+          "mindestsparrate": 100.0,
+          "guthabenzins": 0.0,
+          "elternAufwand": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "flatex-kinderdepot",
@@ -84,7 +128,18 @@
       "parentDepotRequired": true,
       "ageLimitText": "Beide Elternteile benötigen ein eigenes flatex-Depot",
       "besonderheitenText": "Höchste Mindestsparrate im Vergleich (25 €)",
-      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026"
+      "sourcesNote": "Angaben laut capitalo.de und finanzfluss.de, Stand Oktober 2026",
+      "score": {
+        "value": 31.1,
+        "band": "C",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 4.0,
+          "guthabenzins": 0.0,
+          "elternAufwand": 30.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "dkb-kinderdepot",
@@ -101,7 +156,18 @@
       "parentDepotRequired": true,
       "ageLimitText": "Konto geht mit dem 18. Geburtstag automatisch in ein reguläres Depot über",
       "besonderheitenText": "Voraussetzung: Girokonto u18 plus DKB-Girokonto eines Elternteils",
-      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026"
+      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026",
+      "score": {
+        "value": 31.1,
+        "band": "C",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 4.0,
+          "guthabenzins": 0.0,
+          "elternAufwand": 30.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "finanzen-net-zero-kinderdepot",
@@ -118,7 +184,18 @@
       "parentDepotRequired": true,
       "ageLimitText": "Keine Altersangabe auf der Anbieterseite",
       "besonderheitenText": "Eröffnung nur möglich, wenn beide Sorgeberechtigten ein eigenes ZERO-Depot haben",
-      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026"
+      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026",
+      "score": {
+        "value": 45.5,
+        "band": "C",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 100.0,
+          "guthabenzins": 0.0,
+          "elternAufwand": 30.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "ing-junior-depot",
@@ -135,7 +212,18 @@
       "parentDepotRequired": false,
       "ageLimitText": "Konto geht mit dem 18. Geburtstag automatisch in ein reguläres Depot über",
       "besonderheitenText": "Beide Sorgeberechtigte müssen den Antrag bestätigen und sich legitimieren; ob ein eigenes ING-Konto der Eltern nötig ist, wird auf der Seite nicht angegeben",
-      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026"
+      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026",
+      "score": {
+        "value": 94.0,
+        "band": "A",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 100.0,
+          "guthabenzins": 80.0,
+          "elternAufwand": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "sbroker-kinderdepot",
@@ -152,7 +240,18 @@
       "parentDepotRequired": false,
       "ageLimitText": "Konto geht mit dem 18. Geburtstag automatisch in ein reguläres S-Broker-Depot über",
       "besonderheitenText": "Depot läuft auf den Namen des Kindes; Eltern/Sorgeberechtigte müssen Antrag und Legitimation durchführen",
-      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026"
+      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026",
+      "score": {
+        "value": 67.6,
+        "band": "B",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 84.0,
+          "guthabenzins": 0.0,
+          "elternAufwand": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "tradersplace-kinderdepot",
@@ -169,7 +268,18 @@
       "parentDepotRequired": true,
       "ageLimitText": "Keine Altersangabe auf der Anbieterseite",
       "besonderheitenText": "Beide Sorgeberechtigte benötigen ein eigenes Traders-Place-Depot",
-      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026"
+      "sourcesNote": "Angaben laut capitalo.de, Stand Oktober 2026",
+      "score": {
+        "value": 69.5,
+        "band": "B",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "mindestsparrate": 100.0,
+          "guthabenzins": 80.0,
+          "elternAufwand": 30.0
+        },
+        "computedFrom": "2026-10"
+      }
     }
   ]
 }

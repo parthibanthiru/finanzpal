@@ -17,7 +17,10 @@
     detailsLess: 'Fewer details',
     cta: 'View offer',
     provider: 'Provider',
-    sourceLabel: 'Sources'
+    sourceLabel: 'Sources',
+    scoreTooltip: function (b) {
+      return 'Finanzpal Score: Account fee ' + b.depotgebuehr + ' · Min. savings rate ' + b.mindestsparrate + ' · Cash interest ' + b.guthabenzins + ' · Parent-account effort ' + b.elternAufwand + ' (each out of 100). Methodology: ueber-uns.html#finanzpal-score';
+    }
   } : {
     count: function (n, total) { return n + ' von ' + total + ' Kinderdepots'; },
     reset: 'Filter zurücksetzen',
@@ -35,7 +38,10 @@
     detailsLess: 'Weniger Details',
     cta: 'Zum Anbieter',
     provider: 'Anbieter',
-    sourceLabel: 'Quellen'
+    sourceLabel: 'Quellen',
+    scoreTooltip: function (b) {
+      return 'Finanzpal-Score: Depotgebühr ' + b.depotgebuehr + ' · Mindestsparrate ' + b.mindestsparrate + ' · Guthabenzins ' + b.guthabenzins + ' · Eltern-Aufwand ' + b.elternAufwand + ' (je von 100). Methodik: ueber-uns.html#finanzpal-score';
+    }
   };
 
   function escapeHtml(s) {
@@ -62,6 +68,28 @@
     return '<div class="cc-art" style="background:' + (item.color || '#163A66') + ';">' + escapeHtml(item.initials) + '</div>';
   }
 
+  var SCORE_RING_R = 8;
+  var SCORE_RING_C = 2 * Math.PI * SCORE_RING_R;
+
+  function scoreBadgeHtml(item) {
+    if (!item.score) return '';
+    var band = (item.score.band || '').toLowerCase();
+    var value = item.score.value;
+    var title = STR.scoreTooltip(item.score.breakdown || {});
+    var ariaLabel = LANG === 'en'
+      ? 'Finanzpal Score ' + value + ', grade ' + item.score.band
+      : 'Finanzpal-Score ' + value + ', Note ' + item.score.band;
+    var offset = (SCORE_RING_C * (1 - Math.max(0, Math.min(100, value)) / 100)).toFixed(2);
+    return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '" aria-label="' + escapeHtml(ariaLabel) + '">' +
+      '<svg class="fp-score-ring" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">' +
+        '<circle class="fp-score-track" cx="11" cy="11" r="' + SCORE_RING_R + '"></circle>' +
+        '<circle class="fp-score-fill" cx="11" cy="11" r="' + SCORE_RING_R + '" stroke-dasharray="' + SCORE_RING_C.toFixed(2) + '" stroke-dashoffset="' + offset + '" transform="rotate(-90 11 11)"></circle>' +
+        '<text x="11" y="11" class="fp-score-letter" text-anchor="middle" dominant-baseline="middle">' + escapeHtml(item.score.band) + '</text>' +
+      '</svg>' +
+      '<span class="fp-score-value">' + value + '</span>' +
+    '</a>';
+  }
+
   function cardHtml(item) {
     var bullets = bulletsFor(item);
     var bulletsHtml = bullets.map(function (b) {
@@ -74,7 +102,7 @@
       '</div>' +
       '<div class="cc-body">' +
       cardArtHtml(item) +
-      '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + '</div>' +
+      '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div>' +
       '<ul class="cc-bullets">' + bulletsHtml + '</ul></div>' +
       '<div class="cc-facts">' +
       '<div class="cc-fact"><span class="k">' + STR.feeLabel + '</span><span class="v">' + escapeHtml(item.depotgebuehrText) + '</span></div>' +
