@@ -16,8 +16,10 @@
   framing instead (see the BU/Kfz/Baufinanzierung insurance tabs for the
   established pattern).
 - Both `finanzpal-production/` (local test copy) and `finanzpal-website/`
-  (the actual git checkout pushed to GitHub) need to stay in sync — changes
-  made in one must be copied to the other before committing.
+  (the actual git checkout pushed to GitHub, as `github.com/parthibanthiru/
+  finanzpal` — the local folder name predates the GitHub repo rename and
+  was kept as-is) need to stay in sync — changes made in one must be
+  copied to the other before committing.
 - **Maintenance scripts live in `tools/`** (committed to the repo, not the
   session scratchpad): `build_nav.py` regenerates the nav across all 74
   pages, `add_article_icons.py` sets Ratgeber icon/accent colors,
