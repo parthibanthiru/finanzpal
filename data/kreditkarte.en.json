@@ -46,7 +46,8 @@
       "recommended": false,
       "affiliateUrl": "#",
       "jahresgebuehr": "€0",
-      "bedingung": "Permanently free",
+      "bedingung": "Free — exact card name and terms to be checked with the provider before launch",
+      "scoreHold": "Card name and terms of the Consorsbank card not yet confirmed with the provider",
       "ohneBedingungen": false,
       "fremdwaehrung": "0%",
       "abhebung": "Free worldwide at Visa ATMs",
@@ -54,26 +55,15 @@
       "netzwerk": "Visa",
       "applePay": true,
       "googlePay": true,
-      "rating": 4.5,
-      "ratingStars": "★★★★★",
+      "rating": null,
+      "ratingStars": null,
       "kartentyp": "Credit card",
       "zinsfreieTage": null,
       "zinsfreieText": "Interest-free until the monthly settlement date",
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Automatic direct debit on the 15th or last business day of the month",
-      "hotelMietwagen": "geeignet",
-      "score": {
-        "value": 80.0,
-        "band": "A",
-        "breakdown": {
-          "jahresgebuehr": 100.0,
-          "abhebung": 100.0,
-          "ohneBedingungen": 50.0,
-          "zinsfreieTage": 50.0
-        },
-        "computedFrom": "2026-10"
-      }
+      "hotelMietwagen": "geeignet"
     },
     {
       "id": "barclays-visa",

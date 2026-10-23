@@ -72,6 +72,22 @@ preinstalled at `/opt/pw-browsers/chromium` (see the `executable_path` in
 the script). Elsewhere, run `playwright install chromium` first and drop
 that argument.
 
+## compute_scores.py
+
+Computes the Finanzpal-Score (0–100 + band A–D) for each category from fields
+already in `data/*.json` and writes `score` back into the DE file and, by id,
+into the matching EN file (DE is the source of truth). Rubrics and weights are
+documented in the script and on `ueber-uns.html#finanzpal-score`.
+
+```
+python3 -I tools/compute_scores.py
+```
+
+An item with `"scoreHold": "<reason>"` is skipped: it gets no score (an
+existing one is removed in DE and EN) until the field is deleted — use this
+when a score input for that provider isn't verified yet. After running, also
+run `cd mobile && npm run sync-data` so the app gets the same scores.
+
 ## Not included here
 
 Sitemap-generation scripts were deliberately left out: the ones used

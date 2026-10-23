@@ -374,6 +374,14 @@ def process_category(category):
 
     scores_by_id = {}
     for item in de_data["items"]:
+        # "scoreHold": "<reason>" on an item = its score inputs are not
+        # verified yet, so it gets no score at all rather than a clean-looking
+        # number built on unconfirmed data (data-integrity rule; same idea as
+        # Rechtsschutz having no score). Remove the field once verified.
+        if item.get("scoreHold"):
+            item.pop("score", None)
+            scores_by_id[item["id"]] = None
+            continue
         score = compute_item_score(item, rubric)
         item["score"] = score
         scores_by_id[item["id"]] = score
@@ -383,7 +391,10 @@ def process_category(category):
         f.write("\n")
     print(f"  wrote scores into {os.path.relpath(de_path, ROOT)}")
     for item in de_data["items"]:
-        s = item["score"]
+        s = item.get("score")
+        if s is None:
+            print(f"    {item['id']:<28}  —    on hold: {item.get('scoreHold')}")
+            continue
         print(f"    {item['id']:<28} {s['value']:>5} ({s['band']})  {s['breakdown']}")
 
     en_path = os.path.join(DATA_DIR, f"{category}.en.json")
@@ -396,6 +407,9 @@ def process_category(category):
     for item in en_data["items"]:
         if item["id"] not in scores_by_id:
             missing.append(item["id"])
+            continue
+        if scores_by_id[item["id"]] is None:
+            item.pop("score", None)
             continue
         item["score"] = scores_by_id[item["id"]]
     with open(en_path, "w", encoding="utf-8") as f:

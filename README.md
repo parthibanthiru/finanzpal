@@ -299,6 +299,15 @@ drei Stellen einsetzen.
 
 ## Finanzpal-Score
 
+**Score zurückhalten (`scoreHold`):** Ist bei einem Anbieter eine
+Score-Eingangsgröße (Gebühr, Zins …) noch nicht bestätigt, bekommt der Eintrag
+in `data/*.json` ein Feld `"scoreHold": "<Grund>"` — `tools/compute_scores.py`
+vergibt dann keinen Score (und entfernt einen vorhandenen, DE und EN), statt
+eine glatte Zahl auf unbestätigten Daten zu bauen. Die Seiten und die App
+zeigen ohne Score einfach kein Score-Badge. Feld entfernen, sobald die Daten
+bestätigt sind, und das Skript erneut laufen lassen. Aktuell: die
+Consorsbank-Kreditkarte (siehe offene Punkte).
+
 **Stand Oktober 2026 — Kategorien Girokonto, Kredite, Kreditkarte, Tagesgeld
 & Kinderdepot.** Zusätzlich zu den Rohdaten zeigen `girokonto.html`/
 `en/girokonto.html`, `kreditkarte.html`/`en/kreditkarte.html` und
@@ -464,30 +473,40 @@ Detailseite, keine neue Infrastruktur:
 
 ## Bekannte offene Punkte (bewusste Entscheidungen, nicht vergessen)
 
-1. **DEVK-Beitrag (Privathaftpflicht) ist eine Schätzung**, im Disclosure-Text
-   entsprechend markiert — vor Launch durch ein echtes Angebot ersetzen.
-2. **Consorsbank Visa Karte und drei der vier Hausrat-Anbieter** zeigen
-   Ratings, die noch nicht unabhängig verifiziert sind (im jeweiligen
-   Disclosure-Text offengelegt).
-3. **Alle `affiliateUrl`-Felder in `data/*.json` sind noch `"#"`.** Noch keine
+1. **Consorsbank-Kreditkarte: Kartenbezeichnung und Konditionen prüfen.**
+   Unser Eintrag „Consorsbank Visa Karte" (0 €, 0 % Fremdwährung) ließ sich
+   nicht bestätigen: Laut kreditkarte24.de (Stand 17.10.2026) ist die
+   kostenlose Kreditkarte der Consorsbank die „Visa Gold Light"
+   (Charge-Karte), die kostenlose Visa Debit kostet außerhalb der Eurozone
+   2,10 %, und Finanzflusss Bewertung (4,1) bezieht sich auf die
+   kostenpflichtige Visa Gold (108 €/Jahr). Die Sterne-Bewertung ist
+   entfernt (`rating: null`), die Bedingung weist auf die offene Prüfung hin;
+   vor Launch auf consorsbank.de verifizieren und den Eintrag korrigieren.
+2. **Alle `affiliateUrl`-Felder in `data/*.json` sind noch `"#"`.** Noch keine
    echten Partnerlinks (siehe Launch-Liste unten).
-4. **Scalable Capital: zwei leicht widersprüchliche Depotgebühr-Angaben
-   zusammengeführt.** Der ehemalige `broker.json`-Eintrag nannte die
-   gestaffelte Gebühr „0 € (Free Broker) / 4,99 €/Monat (Prime+)", der
-   ehemalige `depot.json`-Eintrag pauschal „0 €/Jahr". Nach der
-   Broker/Depot-Zusammenführung zeigt die Karte die differenziertere
-   `brokerDepotfee` als Hauptangabe; das Flag `depotgebuehrBedingungslos: true`
-   aus dem Depot-Datensatz steht weiter für den „Depotführung bedingungslos
-   kostenlos"-Filter/Badge. Vor Launch beim Anbieter verifizieren, welche
-   Angabe tatsächlich zutrifft.
-
-5. **Herkunft der Broker-Ratings (★, z. B. 4,3 / 5) ist nicht dokumentiert.**
+3. **Herkunft der Broker-Ratings (★, z. B. 4,3 / 5) ist nicht dokumentiert.**
    Die erfundenen Leserbewertungen und Bewertungszahlen („312 Bewertungen")
    auf den Broker-Detailseiten wurden am 23.10.2026 entfernt; die Sterne-
    Ratings sind seitdem ehrlich als „Finanzpal-Einschätzung" bzw.
    „Redaktionelle Einschätzung von Finanzpal" beschriftet. Vor dem Launch
    klären, worauf sie beruhen — dokumentieren (Methodik auf `ueber-uns.html`)
    oder durch den Finanzpal-Score ersetzen.
+
+**Am 23.10.2026 geklärt** (Quellen im jeweiligen Disclosure-Text bzw. in der
+Commit-Nachricht):
+- *DEVK-Beitrag (PHV)* ist keine Schätzung mehr, sondern als beworbener
+  Einstiegspreis des Anbieters gekennzeichnet („ab 3,50 €/Monat").
+- *PHV-Ratings:* Franke & Bornberg PHV-Rating 2026 (Single, 3.9.2026) —
+  HUK24, Adam Riese, VHV, AXA, Alte Leipziger und die Bayerische FFF+ (im
+  Feld `leistungen` vermerkt); DEVK, HanseMerkur und Allianz nicht unter den
+  FFF+-Tarifen → Sterne entfernt.
+- *Hausrat:* für HUK24, MVK und Schleswiger keine überprüfbare Quelle für die
+  Sterne gefunden → entfernt (InterRisk bleibt, F&B/Handelsblatt bestätigt).
+- *Scalable Capital:* laut Anbieter-Factsheet (07/2026) gibt es keine
+  Depotgebühr; die 4,99 €/Monat sind die optionale Prime+-Order-Flatrate.
+  `brokerDepotfee` und die Detailseite (DE/EN: Fakten, Gebührentabelle,
+  Fazit, Vor-/Nachteile, FAQ) entsprechend korrigiert; Guthabenzins mit
+  Hinweis auf die abweichenden Quellen (2,50 % vs. 2,60 %, variabel).
 
 ## Vor dem Launch unbedingt erledigen
 
