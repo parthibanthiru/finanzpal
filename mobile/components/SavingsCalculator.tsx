@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { calcSavings } from '@/lib/calc';
 import { formatEUR } from '@/lib/format';
-import { BarChart, NumberField, ResultTile, calcStyles } from './CalcUI';
+import { BarChart, NumberField, ResultTile, useCalcStyles } from './CalcUI';
 import { spacing } from './theme';
 
 type Range = { def: number; min: number; max: number; step: number };
@@ -13,6 +13,7 @@ export function SavingsCalculator({
 }: {
   intro: string; initial: Range; monthly: Range; years: Range; rate: Range; disclaimer: string | null;
 }) {
+  const calcStyles = useCalcStyles();
   const [initial, setInitial] = useState(i.def);
   const [monthly, setMonthly] = useState(mo.def);
   const [years, setYears] = useState(y.def);

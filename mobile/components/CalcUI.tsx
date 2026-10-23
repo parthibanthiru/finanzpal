@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
-import { colors, fonts, radius, spacing } from './theme';
+import { fonts, makeStyles, radius, spacing, useColors } from './theme';
 
 /** Number field with − / + steppers (no slider dependency needed). */
 export function NumberField({
@@ -8,6 +8,7 @@ export function NumberField({
   label: string; value: number; onChange: (n: number) => void;
   step: number; min: number; max: number; suffix: string; decimals?: number;
 }) {
+  const styles = useStyles();
   const clamp = (n: number) => Math.min(max, Math.max(min, n));
   const round = (n: number) => Number(n.toFixed(decimals));
   const shown = value.toLocaleString('de-DE', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
@@ -42,9 +43,11 @@ export function NumberField({
 }
 
 export function ResultTile({ label, value, strong }: { label: string; value: string; strong?: boolean }) {
+  const styles = useStyles();
+  const colors = useColors();
   return (
     <View style={[styles.tile, strong && { backgroundColor: colors.ink, borderColor: colors.ink }]}>
-      <Text style={[styles.tileLabel, strong && { color: '#C9D6E2' }]}>{label}</Text>
+      <Text style={[styles.tileLabel, strong && { color: colors.inkMuted }]}>{label}</Text>
       <Text style={[styles.tileValue, strong && { color: '#fff' }]}>{value}</Text>
     </View>
   );
@@ -58,6 +61,8 @@ export function BarChart({
   bottomLabel: string; topLabel: string;
   extraLegend?: { label: string; color: string };
 }) {
+  const styles = useStyles();
+  const colors = useColors();
   const max = Math.max(1, ...bars.map((b) => b.bottom + b.top));
   return (
     <View>
@@ -95,6 +100,8 @@ export function ChoiceField<T extends string | number>({
 }: {
   label: string; value: T; options: { value: T; label: string }[]; onChange: (v: T) => void;
 }) {
+  const colors = useColors();
+  const styles = useStyles();
   return (
     <View style={styles.field}>
       <Text style={styles.label}>{label}</Text>
@@ -109,7 +116,7 @@ export function ChoiceField<T extends string | number>({
               accessibilityRole="radio"
               accessibilityState={{ selected: on }}
             >
-              <Text style={[styles.choiceText, on && { color: '#fff' }]}>{o.label}</Text>
+              <Text style={[styles.choiceText, on && { color: colors.onPrimary }]}>{o.label}</Text>
             </Pressable>
           );
         })}
@@ -119,6 +126,8 @@ export function ChoiceField<T extends string | number>({
 }
 
 export function SwitchField({ label, value, onChange }: { label: string; value: boolean; onChange: (v: boolean) => void }) {
+  const styles = useStyles();
+  const colors = useColors();
   return (
     <View style={[styles.field, styles.switchRow]}>
       <Text style={[styles.label, { flex: 1, marginBottom: 0, fontWeight: '500' }]}>{label}</Text>
@@ -129,6 +138,8 @@ export function SwitchField({ label, value, onChange }: { label: string; value: 
 
 /** Label/value line for breakdown tables (e.g. Abgaben-Aufschlüsselung). */
 export function BreakdownRow({ label, value, strong }: { label: string; value: string; strong?: boolean }) {
+  const styles = useStyles();
+  const colors = useColors();
   return (
     <View style={[styles.bRow, strong && styles.bRowStrong]}>
       <Text style={[styles.bLabel, strong && { fontWeight: '700', color: colors.text }]}>{label}</Text>
@@ -137,14 +148,14 @@ export function BreakdownRow({ label, value, strong }: { label: string; value: s
   );
 }
 
-export const calcStyles = StyleSheet.create({
+export const useCalcStyles = makeStyles((colors) => ({
   intro: { fontSize: 15, color: colors.muted, lineHeight: 21, marginBottom: spacing.lg },
   tiles: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, marginVertical: spacing.md },
   section: { fontFamily: fonts.display, fontSize: 20, color: colors.text, marginTop: spacing.md, marginBottom: spacing.sm },
   disclaimer: { fontSize: 12, color: colors.muted, lineHeight: 17, marginTop: spacing.lg },
-});
+}));
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   field: { marginBottom: spacing.md },
   label: { fontSize: 14, fontWeight: '600', color: colors.text, marginBottom: 6 },
   row: { flexDirection: 'row', alignItems: 'center' },
@@ -175,4 +186,4 @@ const styles = StyleSheet.create({
   bRowStrong: { borderBottomWidth: 0, borderTopWidth: 2, borderTopColor: colors.text, marginTop: 2 },
   bLabel: { color: colors.muted, fontSize: 14, flex: 1, paddingRight: spacing.sm },
   bValue: { color: colors.text, fontSize: 14, fontWeight: '600' },
-});
+}));

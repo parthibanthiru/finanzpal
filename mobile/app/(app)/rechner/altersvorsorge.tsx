@@ -3,11 +3,13 @@ import { ScrollView, Text, View } from 'react-native';
 import { calcMonthlyPayout, calcPayoutSeries, calcSavings } from '@/lib/calc';
 import { disclosure } from '@/lib/disclosures';
 import { formatEUR } from '@/lib/format';
-import { BarChart, NumberField, ResultTile, calcStyles } from '@/components/CalcUI';
-import { colors, spacing } from '@/components/theme';
+import { BarChart, NumberField, ResultTile, useCalcStyles } from '@/components/CalcUI';
+import { spacing, useColors } from '@/components/theme';
 
 // Defaults and ranges = the sliders on altersvorsorge-rechner.html.
 export default function AltersvorsorgeScreen() {
+  const calcStyles = useCalcStyles();
+  const colors = useColors();
   const [age, setAge] = useState(30);
   const [retireAgeInput, setRetireAge] = useState(67);
   const [initial, setInitial] = useState(5000);

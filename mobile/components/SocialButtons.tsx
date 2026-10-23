@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { useAuth } from '@/context/AuthProvider';
-import { colors, radius, spacing } from './theme';
+import { makeStyles, radius, spacing, useColors, useTheme } from './theme';
 
 // "Weiter mit Google" (Android + iOS) and "Mit Apple fortfahren" (iOS only).
 // Shown on both the login and the register screen.
 export function SocialButtons({ onError }: { onError: (msg: string | null) => void }) {
+  const { scheme } = useTheme();
+  const styles = useStyles();
+  const colors = useColors();
   const { signInWithGoogle, signInWithApple } = useAuth();
   const [appleAvailable, setAppleAvailable] = useState(false);
   const [busy, setBusy] = useState<'google' | 'apple' | null>(null);
@@ -35,7 +38,11 @@ export function SocialButtons({ onError }: { onError: (msg: string | null) => vo
       {appleAvailable && (
         <AppleAuthentication.AppleAuthenticationButton
           buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
-          buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+          buttonStyle={
+            scheme === 'dark'
+              ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
+              : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+          }
           cornerRadius={radius.md}
           style={styles.appleButton}
           onPress={() => run('apple')}
@@ -61,7 +68,7 @@ export function SocialButtons({ onError }: { onError: (msg: string | null) => vo
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   dividerRow: { flexDirection: 'row', alignItems: 'center', marginVertical: spacing.lg },
   line: { flex: 1, height: 1, backgroundColor: colors.border },
   dividerText: { marginHorizontal: spacing.md, color: colors.muted },
@@ -78,4 +85,4 @@ const styles = StyleSheet.create({
   },
   googleG: { fontSize: 18, fontWeight: '800', color: '#4285F4', marginRight: spacing.sm },
   googleText: { fontSize: 16, fontWeight: '600', color: colors.text },
-});
+}));

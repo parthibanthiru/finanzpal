@@ -5,11 +5,13 @@ import { AuthScreen } from '@/components/AuthScreen';
 import { Button, ErrorText, InfoText, Input } from '@/components/ui';
 import { SocialButtons } from '@/components/SocialButtons';
 import { LegalLinks, openLegal } from '@/components/LegalLinks';
-import { colors, spacing } from '@/components/theme';
+import { makeStyles, spacing, useColors } from '@/components/theme';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function RegisterScreen() {
+  const colors = useColors();
+  const styles = useStyles();
   const { signUp } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -67,7 +69,7 @@ export default function RegisterScreen() {
       />
       <Pressable style={styles.checkRow} onPress={() => setAccepted(!accepted)} accessibilityRole="checkbox">
         <View style={[styles.checkbox, accepted && styles.checkboxOn]}>
-          {accepted && <Text style={{ color: '#fff', fontWeight: '800' }}>✓</Text>}
+          {accepted && <Text style={{ color: colors.onPrimary, fontWeight: '800' }}>✓</Text>}
         </View>
         <Text style={styles.checkText}>
           Ich habe die{' '}
@@ -87,7 +89,7 @@ export default function RegisterScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   checkRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: spacing.md },
   checkbox: {
     width: 22,
@@ -104,4 +106,4 @@ const styles = StyleSheet.create({
   checkText: { flex: 1, color: colors.muted, fontSize: 14, lineHeight: 20 },
   inlineLink: { color: colors.primary, fontWeight: '600', textDecorationLine: 'underline' },
   legal: { color: colors.muted, fontSize: 12, textAlign: 'center', marginTop: spacing.md },
-});
+}));

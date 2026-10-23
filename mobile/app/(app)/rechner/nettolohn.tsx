@@ -3,11 +3,12 @@ import { ScrollView, Text, View } from 'react-native';
 import { calcNetto } from '@/lib/calc';
 import { disclosure } from '@/lib/disclosures';
 import { formatEURCents } from '@/lib/format';
-import { BreakdownRow, ChoiceField, NumberField, ResultTile, SwitchField, calcStyles } from '@/components/CalcUI';
+import { BreakdownRow, ChoiceField, NumberField, ResultTile, SwitchField, useCalcStyles } from '@/components/CalcUI';
 import { spacing } from '@/components/theme';
 
 // Defaults, ranges and options = nettolohnrechner.html (Steuerklasse I, Werte 2026).
 export default function NettolohnScreen() {
+  const calcStyles = useCalcStyles();
   const [brutto, setBrutto] = useState(4000);
   const [zusatz, setZusatz] = useState(2.9);
   const [kinderlos, setKinderlos] = useState(false);

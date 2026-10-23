@@ -5,11 +5,14 @@ import {
   Buchung, KATEGORIEN, Typ, katLabel, loadBuchungen, newBuchung, saveBuchungen, summarize,
 } from '@/lib/haushaltsbuch';
 import { formatEURCents } from '@/lib/format';
-import { ChoiceField, ResultTile, calcStyles } from '@/components/CalcUI';
+import { ChoiceField, ResultTile, useCalcStyles } from '@/components/CalcUI';
 import { Button } from '@/components/ui';
-import { colors, radius, spacing } from '@/components/theme';
+import { makeStyles, radius, spacing, useColors } from '@/components/theme';
 
 export default function HaushaltsbuchScreen() {
+  const styles = useStyles();
+  const calcStyles = useCalcStyles();
+  const colors = useColors();
   const { user } = useAuth();
   const userId = user?.id ?? 'anon';
   const [items, setItems] = useState<Buchung[] | null>(null);
@@ -152,7 +155,7 @@ export default function HaushaltsbuchScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   negative: { color: colors.danger, fontSize: 13, marginTop: -spacing.sm, marginBottom: spacing.sm },
   label: { fontSize: 14, fontWeight: '600', color: colors.text, marginBottom: 6 },
   input: {
@@ -176,4 +179,4 @@ const styles = StyleSheet.create({
   kat: { color: colors.muted, fontSize: 12, marginTop: 2 },
   amt: { fontWeight: '700', fontSize: 15, marginLeft: spacing.sm },
   del: { paddingLeft: spacing.md, paddingVertical: 4 },
-});
+}));

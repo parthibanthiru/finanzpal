@@ -8,7 +8,7 @@ import {
   TextInputProps,
   View,
 } from 'react-native';
-import { colors, radius, spacing } from './theme';
+import { makeStyles, radius, spacing, useColors } from './theme';
 
 export function Button({
   title,
@@ -23,6 +23,8 @@ export function Button({
   variant?: 'primary' | 'secondary' | 'danger';
   disabled?: boolean;
 }) {
+  const styles = useStyles();
+  const colors = useColors();
   const isDisabled = disabled || loading;
   return (
     <Pressable
@@ -38,7 +40,7 @@ export function Button({
       ]}
     >
       {loading ? (
-        <ActivityIndicator color={variant === 'secondary' ? colors.primary : '#fff'} />
+        <ActivityIndicator color={variant === 'secondary' ? colors.primary : colors.onPrimary} />
       ) : (
         <Text style={[styles.buttonText, variant === 'secondary' && { color: colors.primary }]}>
           {title}
@@ -49,6 +51,8 @@ export function Button({
 }
 
 export function Input({ label, ...props }: TextInputProps & { label: string }) {
+  const styles = useStyles();
+  const colors = useColors();
   return (
     <View style={{ marginBottom: spacing.md }}>
       <Text style={styles.label}>{label}</Text>
@@ -58,16 +62,18 @@ export function Input({ label, ...props }: TextInputProps & { label: string }) {
 }
 
 export function ErrorText({ message }: { message: string | null }) {
+  const styles = useStyles();
   if (!message) return null;
   return <Text style={styles.error}>{message}</Text>;
 }
 
 export function InfoText({ message }: { message: string | null }) {
+  const styles = useStyles();
   if (!message) return null;
   return <Text style={styles.info}>{message}</Text>;
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   button: {
     backgroundColor: colors.primary,
     paddingVertical: 14,
@@ -81,7 +87,7 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
   },
   buttonDanger: { backgroundColor: colors.danger },
-  buttonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  buttonText: { color: colors.onPrimary, fontSize: 16, fontWeight: '600' },
   label: { fontSize: 14, fontWeight: '600', color: colors.text, marginBottom: 6 },
   input: {
     backgroundColor: colors.card,
@@ -95,16 +101,16 @@ const styles = StyleSheet.create({
   },
   error: {
     color: colors.danger,
-    backgroundColor: '#FBEAE8',
+    backgroundColor: colors.dangerBg,
     padding: spacing.sm + 4,
     borderRadius: radius.sm,
     marginBottom: spacing.md,
   },
   info: {
-    color: colors.primaryDark,
-    backgroundColor: '#E3F1EE',
+    color: colors.infoText,
+    backgroundColor: colors.infoBg,
     padding: spacing.sm + 4,
     borderRadius: radius.sm,
     marginBottom: spacing.md,
   },
-});
+}));

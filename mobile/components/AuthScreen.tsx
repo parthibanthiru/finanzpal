@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors, fonts, spacing } from './theme';
+import { fonts, makeStyles, spacing, useColors } from './theme';
 
 // Shared shell for login / register / reset screens.
 export function AuthScreen({
@@ -15,6 +15,8 @@ export function AuthScreen({
   children: React.ReactNode;
   showBrand?: boolean;
 }) {
+  const styles = useStyles();
+  const colors = useColors();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }} edges={['bottom', 'left', 'right', 'top']}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -36,11 +38,11 @@ export function AuthScreen({
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   container: { flexGrow: 1, justifyContent: 'center', padding: spacing.lg },
   brandRow: { flexDirection: 'row', alignItems: 'center', marginBottom: spacing.lg },
   logo: { width: 48, height: 48, marginRight: 12 },
   brand: { fontSize: 34, fontWeight: '700', letterSpacing: -1, color: colors.ink },
   title: { fontFamily: fonts.display, fontSize: 26, fontWeight: '500', color: colors.text, marginBottom: spacing.sm },
   subtitle: { fontSize: 15, color: colors.muted, marginBottom: spacing.lg, lineHeight: 21 },
-});
+}));

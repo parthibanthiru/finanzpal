@@ -5,10 +5,12 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider, useAuth } from '@/context/AuthProvider';
 import { FavoritesProvider } from '@/context/FavoritesProvider';
-import { colors } from '@/components/theme';
+import { ThemeProvider } from '@/context/ThemeProvider';
+import { useTheme } from '@/components/theme';
 
 // Sends logged-out users to /login and logged-in users into the app.
 function AuthGate() {
+  const { colors, scheme } = useTheme();
   const { session, loading } = useAuth();
   const segments = useSegments();
   const router = useRouter();
@@ -27,18 +29,25 @@ function AuthGate() {
       </View>
     );
   }
-  return <Slot />;
+  return (
+    <>
+      {/* App screens have dark brand headers -> light status bar; login screens follow the theme. */}
+      <StatusBar style={session || scheme === 'dark' ? 'light' : 'dark'} />
+      <Slot />
+    </>
+  );
 }
 
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
-      <AuthProvider>
-        <StatusBar style="dark" />
-        <FavoritesProvider>
-          <AuthGate />
-        </FavoritesProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <FavoritesProvider>
+            <AuthGate />
+          </FavoritesProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </SafeAreaProvider>
   );
 }

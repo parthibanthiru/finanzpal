@@ -15,7 +15,7 @@ import {
 import { useAuth } from '@/context/AuthProvider';
 import { HISTORY_LIMIT, HistoryItem, sendChatMessage } from '@/lib/api';
 import { ChatMsg as Msg, clearHistory, loadHistory, saveExchange } from '@/lib/history';
-import { colors, radius, spacing } from '@/components/theme';
+import { makeStyles, radius, spacing, useColors } from '@/components/theme';
 
 const QUICK_TOPICS = ['Tagesgeld', 'ETF-Sparplan', 'Girokonto', 'Versicherungen', 'Kredite', 'Altersvorsorge'];
 
@@ -23,6 +23,8 @@ const DISCLAIMER =
   'Hinweis: Finanzpal gibt allgemeine Informationen und Vergleiche, keine individuelle Anlage- oder Versicherungsberatung.';
 
 export default function ChatScreen() {
+  const styles = useStyles();
+  const colors = useColors();
   const { user } = useAuth();
   const firstName = (user?.user_metadata?.full_name as string | undefined)?.split(' ')[0];
 
@@ -129,7 +131,7 @@ export default function ChatScreen() {
         onContentSizeChange={() => listRef.current?.scrollToEnd({ animated: true })}
         renderItem={({ item }) => (
           <View style={[styles.bubble, item.role === 'user' ? styles.userBubble : styles.botBubble]}>
-            <Text style={{ color: item.role === 'user' ? '#fff' : colors.text, fontSize: 15, lineHeight: 21 }}>
+            <Text style={{ color: item.role === 'user' ? colors.onUserBubble : colors.text, fontSize: 15, lineHeight: 21 }}>
               {item.text}
             </Text>
           </View>
@@ -166,14 +168,14 @@ export default function ChatScreen() {
           disabled={!input.trim() || sending}
           accessibilityLabel="Senden"
         >
-          <Text style={{ color: '#fff', fontSize: 18, fontWeight: '700' }}>➤</Text>
+          <Text style={{ color: colors.onPrimary, fontSize: 18, fontWeight: '700' }}>➤</Text>
         </Pressable>
       </View>
     </KeyboardAvoidingView>
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   bubble: { maxWidth: '85%', padding: 12, borderRadius: radius.lg, marginBottom: spacing.sm },
   userBubble: { alignSelf: 'flex-end', backgroundColor: colors.userBubble, borderBottomRightRadius: 4 },
   botBubble: {
@@ -221,4 +223,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+}));

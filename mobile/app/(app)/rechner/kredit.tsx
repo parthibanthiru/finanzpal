@@ -4,11 +4,13 @@ import { useRouter } from 'expo-router';
 import { calcLoan } from '@/lib/calc';
 import { disclosure } from '@/lib/disclosures';
 import { formatEUR, formatEURCents } from '@/lib/format';
-import { BarChart, NumberField, ResultTile, calcStyles } from '@/components/CalcUI';
-import { colors, spacing } from '@/components/theme';
+import { BarChart, NumberField, ResultTile, useCalcStyles } from '@/components/CalcUI';
+import { spacing, useColors } from '@/components/theme';
 
 // Defaults and ranges = the sliders on kreditrechner.html.
 export default function KreditScreen() {
+  const calcStyles = useCalcStyles();
+  const colors = useColors();
   const router = useRouter();
   const [amount, setAmount] = useState(10000);
   const [rate, setRate] = useState(4);

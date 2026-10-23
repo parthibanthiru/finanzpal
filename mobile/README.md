@@ -4,7 +4,7 @@ The Finanzpal app, built with Expo SDK 57 / React Native 0.86 + TypeScript: one 
 It lives in `mobile/` inside the website repo and uses the **website as its single source of truth**:
 same comparison data, same disclosure texts, same calculator math and the same design tokens.
 
-**What's in it (v0.7)**
+**What's in it (v0.8)**
 - **Finanz-Check** (top of the home tab): the website's 6-question quiz with one recommendation each for
   Girokonto, Depot, Kreditkarte and Tagesgeld. Questions and weights are extracted from
   `assets/finanz-check.js`; results were checked against the website for all 96 answer combinations
@@ -26,6 +26,9 @@ same comparison data, same disclosure texts, same calculator math and the same d
 - **Ratgeber**: the 10 guides, opened on the website.
 - **Chat**, **Profil**, login with e-mail / Google / Apple, chat history, Datenschutz/Impressum links (from v0.1–v0.3).
 - Branding: FP5 logo as app icon/splash, website colors (`components/theme.ts` mirrors `assets/style.css`).
+- **Dark mode**: light and dark palettes from the website's tokens (`:root` / `[data-theme="dark"]`);
+  Profil → Darstellung: Wie System / Hell / Dunkel (stored like the website's toggle, key `fp-theme`).
+  All text/background pairs checked for WCAG contrast (≥ 4.5:1 for text; score badges ≥ 3:1).
 
 ```
 mobile/
@@ -41,6 +44,7 @@ mobile/
   lib/finanzCheck.ts              Finanz-Check scoring (port of finanz-check.js) + saved answers
   lib/favorites.ts, context/FavoritesProvider.tsx   Merkliste (Supabase, optimistic updates)
   lib/disclosures.ts              disclosure/disclaimer texts from the website
+  components/theme.ts, context/ThemeProvider.tsx   light/dark palettes, useColors() / makeStyles()
   lib/site.ts                     website base URL, opens site pages in-app
   data/                           copy of ../data/*.json + disclosures.json + finanz-check.json (generated, committed)
   tools/sync-data.mjs             refreshes data/ from the website

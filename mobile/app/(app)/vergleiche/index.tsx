@@ -6,10 +6,11 @@ import { useFavorites } from '@/context/FavoritesProvider';
 import { CATEGORIES, GROUPS } from '@/lib/categories';
 import { getBundled } from '@/lib/data';
 import { Answers, CATEGORY_KEYS, CATEGORY_META, QUESTIONS, loadAnswers, topPick } from '@/lib/finanzCheck';
-import { colors, fonts, radius, spacing } from '@/components/theme';
+import { fonts, makeStyles, radius, spacing, useColors } from '@/components/theme';
 
 /** Finanz-Check entry point; shows the saved picks once the quiz is done. */
 function FinanzCheckCard() {
+  const styles = useStyles();
   const { user } = useAuth();
   const router = useRouter();
   const [answers, setAnswers] = useState<Answers | null>(null);
@@ -69,6 +70,8 @@ function FinanzCheckCard() {
 
 /** Entry to the Merkliste; shows how many providers are saved. */
 function MerklisteRow() {
+  const styles = useStyles();
+  const colors = useColors();
   const router = useRouter();
   const { favorites } = useFavorites();
   const n = favorites.length;
@@ -86,6 +89,7 @@ function MerklisteRow() {
 
 // Home of the app: the same comparison categories as the website nav.
 export default function VergleicheScreen() {
+  const styles = useStyles();
   return (
     <ScrollView contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }}>
       <Text style={styles.hero}>Finanzen vergleichen — unabhängig und transparent.</Text>
@@ -127,7 +131,7 @@ export default function VergleicheScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   hero: { fontFamily: fonts.display, fontSize: 26, lineHeight: 32, color: colors.text, fontWeight: '500', marginTop: spacing.sm },
   heroSub: { fontSize: 15, color: colors.muted, lineHeight: 21, marginTop: spacing.sm, marginBottom: spacing.lg },
   group: { fontSize: 13, fontWeight: '700', color: colors.muted, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: spacing.sm },
@@ -148,13 +152,13 @@ const styles = StyleSheet.create({
   fc: { backgroundColor: colors.ink, borderRadius: radius.md, padding: spacing.md, marginBottom: spacing.lg },
   fcKicker: { color: colors.smile, fontWeight: '700', fontSize: 12, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: spacing.sm },
   fcTitle: { fontFamily: fonts.display, color: '#fff', fontSize: 20, lineHeight: 26 },
-  fcSub: { color: '#C9D6E2', fontSize: 13, marginTop: spacing.xs },
+  fcSub: { color: colors.inkMuted, fontSize: 13, marginTop: spacing.xs },
   fcBtn: { alignSelf: 'flex-start', backgroundColor: colors.smile, borderRadius: radius.sm, paddingVertical: 9, paddingHorizontal: 14, marginTop: spacing.md },
   fcBtnText: { color: colors.ink, fontWeight: '800' },
-  pickRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 10, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#2C4A60' },
-  pickCat: { color: '#C9D6E2', fontSize: 13, width: 92 },
+  pickRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 10, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.inkLine },
+  pickCat: { color: colors.inkMuted, fontSize: 13, width: 92 },
   pickName: { flex: 1, color: '#fff', fontSize: 15, fontWeight: '600' },
-  pickChevron: { color: '#C9D6E2', fontSize: 20, marginLeft: spacing.sm },
+  pickChevron: { color: colors.inkMuted, fontSize: 20, marginLeft: spacing.sm },
   fcLinks: { flexDirection: 'row', gap: spacing.lg, marginTop: spacing.sm },
   fcLink: { color: colors.smile, fontWeight: '700', fontSize: 14 },
-});
+}));

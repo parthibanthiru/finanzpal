@@ -5,11 +5,13 @@ import { useFavorites } from '@/context/FavoritesProvider';
 import { CATEGORIES, getCategory } from '@/lib/categories';
 import { getBundled, type Item } from '@/lib/data';
 import { FavoriteButton, ScoreBadge } from '@/components/ProviderCard';
-import { colors, fonts, radius, spacing } from '@/components/theme';
+import { fonts, makeStyles, radius, spacing, useColors } from '@/components/theme';
 
 type Row = { category: string; itemId: string; item?: Item };
 
 export default function MerklisteScreen() {
+  const styles = useStyles();
+  const colors = useColors();
   const router = useRouter();
   const { favorites, loading, toggleFavorite, reload } = useFavorites();
 
@@ -82,7 +84,7 @@ export default function MerklisteScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   group: { fontSize: 13, fontWeight: '700', color: colors.muted, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: spacing.sm },
   row: {
     flexDirection: 'row', alignItems: 'center', backgroundColor: colors.card, borderRadius: radius.md,
@@ -99,4 +101,4 @@ const styles = StyleSheet.create({
   emptyText: { fontSize: 14, color: colors.muted, textAlign: 'center', lineHeight: 20, marginTop: spacing.sm },
   emptyBtn: { marginTop: spacing.lg, borderWidth: 1, borderColor: colors.primary, borderRadius: radius.md, paddingVertical: 10, paddingHorizontal: 18 },
   emptyBtnText: { color: colors.primary, fontWeight: '700' },
-});
+}));

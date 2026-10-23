@@ -4,9 +4,12 @@ import { useAuth } from '@/context/AuthProvider';
 import { supabase } from '@/lib/supabase';
 import { Button, ErrorText, InfoText, Input } from '@/components/ui';
 import { LegalLinks } from '@/components/LegalLinks';
-import { colors, radius, spacing } from '@/components/theme';
+import { ChoiceField } from '@/components/CalcUI';
+import { makeStyles, radius, spacing, ThemePreference, useTheme } from '@/components/theme';
 
 export default function ProfileScreen() {
+  const styles = useStyles();
+  const { colors, preference, setPreference } = useTheme();
   const { user, signOut, deleteAccount } = useAuth();
   const [name, setName] = useState<string>((user?.user_metadata?.full_name as string) ?? '');
   const [saving, setSaving] = useState(false);
@@ -59,7 +62,19 @@ export default function ProfileScreen() {
       <Input label="Name" value={name} onChangeText={setName} />
       <Button title="Speichern" onPress={saveName} loading={saving} />
 
-      <View style={{ height: spacing.xl }} />
+      <View style={{ height: spacing.lg }} />
+      <ChoiceField<ThemePreference>
+        label="Darstellung"
+        value={preference}
+        onChange={setPreference}
+        options={[
+          { value: 'system', label: 'Wie System' },
+          { value: 'light', label: 'Hell' },
+          { value: 'dark', label: 'Dunkel' },
+        ]}
+      />
+
+      <View style={{ height: spacing.lg }} />
       <Button title="Abmelden" variant="secondary" onPress={signOut} />
       <Button title="Konto löschen" variant="danger" onPress={confirmDelete} />
       <LegalLinks />
@@ -67,7 +82,7 @@ export default function ProfileScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   card: {
     backgroundColor: colors.card,
     borderRadius: radius.md,
@@ -79,4 +94,4 @@ const styles = StyleSheet.create({
   label: { color: colors.muted, fontSize: 13 },
   email: { fontSize: 17, fontWeight: '700', color: colors.text, marginTop: 2 },
   meta: { color: colors.muted, fontSize: 13, marginTop: spacing.sm },
-});
+}));

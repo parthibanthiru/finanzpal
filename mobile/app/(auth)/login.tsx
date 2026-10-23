@@ -6,9 +6,11 @@ import { AuthScreen } from '@/components/AuthScreen';
 import { Button, ErrorText, Input } from '@/components/ui';
 import { SocialButtons } from '@/components/SocialButtons';
 import { LegalLinks } from '@/components/LegalLinks';
-import { colors, spacing } from '@/components/theme';
+import { makeStyles, spacing, useColors } from '@/components/theme';
 
 export default function LoginScreen() {
+  const styles = useStyles();
+  const colors = useColors();
   const { signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -68,7 +70,7 @@ export default function LoginScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   link: { color: colors.primary, fontWeight: '600' },
   footer: { flexDirection: 'row', justifyContent: 'center', marginTop: spacing.lg },
-});
+}));

@@ -3,7 +3,7 @@
     "name": "Finanzpal",
     "slug": "finanzpal",
     "scheme": "finanzpal",
-    "version": "0.7.0",
+    "version": "0.8.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "ios": {

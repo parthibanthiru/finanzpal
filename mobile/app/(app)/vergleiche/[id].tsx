@@ -7,11 +7,13 @@ import { openSite } from '@/lib/site';
 import { disclosure } from '@/lib/disclosures';
 import { ProviderCard } from '@/components/ProviderCard';
 import { useFavorites } from '@/context/FavoritesProvider';
-import { colors, radius, spacing } from '@/components/theme';
+import { makeStyles, radius, spacing, useColors } from '@/components/theme';
 
 type Sort = 'standard' | 'score';
 
 export default function CategoryScreen() {
+  const styles = useStyles();
+  const colors = useColors();
   // focus = provider id to scroll to and highlight (from the Finanz-Check)
   // from = where the link came from ('merkliste' or the Finanz-Check by default), for the highlight label
   const { id, focus, from } = useLocalSearchParams<{ id: string; focus?: string; from?: string }>();
@@ -72,7 +74,7 @@ export default function CategoryScreen() {
                   <Text style={styles.sortLabel}>Sortieren:</Text>
                   {(['standard', 'score'] as Sort[]).map((s) => (
                     <Pressable key={s} onPress={() => setSort(s)} style={[styles.chip, sort === s && styles.chipOn]}>
-                      <Text style={[styles.chipText, sort === s && { color: '#fff' }]}>
+                      <Text style={[styles.chipText, sort === s && { color: colors.onPrimary }]}>
                         {s === 'standard' ? 'Standard' : 'Finanzpal-Score'}
                       </Text>
                     </Pressable>
@@ -111,7 +113,7 @@ export default function CategoryScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   meta: { color: colors.muted, fontSize: 13, marginBottom: spacing.sm },
   info: {
     backgroundColor: colors.tag,
@@ -131,4 +133,4 @@ const styles = StyleSheet.create({
   disclosure: { fontSize: 12, color: colors.muted, lineHeight: 17, marginTop: spacing.sm },
   footerLinks: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, marginTop: spacing.md },
   link: { color: colors.primary, fontWeight: '600', textDecorationLine: 'underline', fontSize: 14 },
-});
+}));

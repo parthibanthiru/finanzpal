@@ -1,6 +1,6 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { colors, fonts, radius, spacing } from '@/components/theme';
+import { fonts, makeStyles, radius, spacing } from '@/components/theme';
 
 // Same 7 calculators as the website's "Rechner" menu, all built into the app
 // (math identical to the website's assets/*rechner.js — see lib/calc.ts).
@@ -19,6 +19,7 @@ const RECHNER: { title: string; sub: string; icon: string; route: Route }[] = [
 ];
 
 export default function RechnerScreen() {
+  const styles = useStyles();
   const router = useRouter();
   return (
     <ScrollView contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }}>
@@ -36,7 +37,7 @@ export default function RechnerScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   card: {
     flexDirection: 'row', alignItems: 'center', backgroundColor: colors.card, borderRadius: radius.md,
     borderWidth: 1, borderColor: colors.border, padding: spacing.md, marginBottom: spacing.sm,
@@ -45,4 +46,4 @@ const styles = StyleSheet.create({
   title: { fontFamily: fonts.display, fontSize: 18, color: colors.text },
   sub: { fontSize: 13, color: colors.muted, marginTop: 2 },
   chevron: { fontSize: 22, color: colors.muted, marginLeft: spacing.sm },
-});
+}));

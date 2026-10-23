@@ -8,11 +8,13 @@ import {
 } from '@/lib/finanzCheck';
 import { isRealLink } from '@/lib/site';
 import { ScoreBadge } from '@/components/ProviderCard';
-import { colors, fonts, radius, spacing } from '@/components/theme';
+import { fonts, makeStyles, radius, spacing, useColors } from '@/components/theme';
 
 type Pick = { cat: string; item: Item };
 
 export default function FinanzCheckScreen() {
+  const styles = useStyles();
+  const colors = useColors();
   const { user } = useAuth();
   const userId = user?.id ?? 'anon';
   const router = useRouter();
@@ -159,7 +161,7 @@ export default function FinanzCheckScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   track: { height: 6, backgroundColor: colors.rowAlt, borderRadius: 3, overflow: 'hidden', marginBottom: spacing.lg },
   fill: { height: 6, backgroundColor: colors.primary, borderRadius: 3 },
   stepLabel: { color: colors.muted, fontSize: 13, fontWeight: '600', marginBottom: spacing.sm },
@@ -186,8 +188,8 @@ const styles = StyleSheet.create({
   v: { flex: 1.3, color: colors.text, fontSize: 14, fontWeight: '500' },
   actions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.sm },
   cta: { backgroundColor: colors.primary, paddingVertical: 9, paddingHorizontal: 14, borderRadius: radius.sm },
-  ctaText: { color: '#fff', fontWeight: '700' },
+  ctaText: { color: colors.onPrimary, fontWeight: '700' },
   restart: { borderWidth: 1, borderColor: colors.primary, borderRadius: radius.md, paddingVertical: 12, alignItems: 'center', marginTop: spacing.sm },
   restartText: { color: colors.primary, fontWeight: '700', fontSize: 15 },
   note: { color: colors.muted, fontSize: 12, lineHeight: 17, marginTop: spacing.md },
-});
+}));

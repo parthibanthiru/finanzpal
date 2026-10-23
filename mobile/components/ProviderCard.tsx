@@ -2,11 +2,13 @@ import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { Item } from '@/lib/data';
 import type { Field } from '@/lib/categories';
 import { isRealLink, openSite } from '@/lib/site';
-import { bandColors, colors, fonts, radius, spacing } from './theme';
+import { bandColors, bandTextColor, fonts, makeStyles, radius, spacing, useColors } from './theme';
 
 /** Finanzpal-Score badge: same signal as the website's ring badge (0–100 + band A–D). */
 export function ScoreBadge({ value, band }: { value: number; band: string }) {
-  const c = bandColors[band] ?? colors.slate;
+  const styles = useStyles();
+  const colors = useColors();
+  const c = bandColors(colors)[band] ?? colors.slate;
   return (
     <Pressable
       onPress={() => openSite('ueber-uns.html#finanzpal-score')}
@@ -15,13 +17,15 @@ export function ScoreBadge({ value, band }: { value: number; band: string }) {
       style={[styles.score, { borderColor: c }]}
     >
       <Text style={[styles.scoreValue, { color: c }]}>{Math.round(value)}</Text>
-      <Text style={[styles.scoreBand, { backgroundColor: c }]}>{band}</Text>
+      <Text style={[styles.scoreBand, { backgroundColor: c, color: bandTextColor(colors, band) }]}>{band}</Text>
     </Pressable>
   );
 }
 
 /** Heart toggle for the Merkliste. */
 export function FavoriteButton({ active, onPress }: { active: boolean; onPress: () => void }) {
+  const styles = useStyles();
+  const colors = useColors();
   return (
     <Pressable
       onPress={onPress}
@@ -41,6 +45,8 @@ export function ProviderCard({
 }: {
   item: Item; fields: Field[]; highlight?: string; favorite?: boolean; onToggleFavorite?: () => void;
 }) {
+  const styles = useStyles();
+  const colors = useColors();
   const hasLink = isRealLink(item.affiliateUrl);
   return (
     <View style={[styles.card, item.recommended && styles.cardRecommended, highlight && styles.cardHighlight]}>
@@ -95,7 +101,7 @@ export function ProviderCard({
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((colors) => ({
   card: {
     backgroundColor: colors.card,
     borderRadius: radius.md,
@@ -130,15 +136,15 @@ const styles = StyleSheet.create({
   rating: { fontSize: 13, color: colors.muted, marginTop: 2 },
   score: { flexDirection: 'row', alignItems: 'center', borderWidth: 2, borderRadius: 999, paddingLeft: 9, paddingRight: 3, paddingVertical: 3, marginLeft: spacing.sm },
   scoreValue: { fontWeight: '800', fontSize: 15, marginRight: 5 },
-  scoreBand: { color: '#fff', fontWeight: '800', fontSize: 12, width: 20, height: 20, borderRadius: 10, textAlign: 'center', lineHeight: 20, overflow: 'hidden' },
+  scoreBand: { color: colors.onPrimary, fontWeight: '800', fontSize: 12, width: 20, height: 20, borderRadius: 10, textAlign: 'center', lineHeight: 20, overflow: 'hidden' },
   row: { flexDirection: 'row', paddingVertical: 7, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border },
   label: { flex: 1, color: colors.muted, fontSize: 13, paddingRight: spacing.sm },
   value: { color: colors.text, fontSize: 14, fontWeight: '500' },
   note: { color: colors.muted, fontSize: 12, marginTop: 3, lineHeight: 16 },
   actions: { flexDirection: 'row', justifyContent: 'flex-end', gap: spacing.sm, marginTop: spacing.sm },
   primaryBtn: { backgroundColor: colors.primary, paddingVertical: 10, paddingHorizontal: 16, borderRadius: radius.sm },
-  primaryText: { color: '#fff', fontWeight: '700' },
+  primaryText: { color: colors.onPrimary, fontWeight: '700' },
   secondaryBtn: { borderWidth: 1, borderColor: colors.primary, paddingVertical: 9, paddingHorizontal: 16, borderRadius: radius.sm },
   secondaryText: { color: colors.primary, fontWeight: '700' },
   ad: { textAlign: 'right', fontSize: 11, color: colors.muted, marginTop: 4 },
-});
+}));
