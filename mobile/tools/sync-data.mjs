@@ -7,6 +7,8 @@
 //     into mobile/data/finanz-check.json (questions carry de + en labels)
 //  4. extracts the Ratgeber article list (category, title, teaser) from ratgeber.html and
 //     en/ratgeber.html into mobile/data/ratgeber.json
+//  5. extracts the Finanzpal-Score factor labels (DE + EN) from the compare scripts into
+//     mobile/data/score-labels.json
 // Runs automatically before `npm start` (prestart). The copies are committed, so cloud
 // builds (EAS) work without the website folder next to them.
 import { copyFileSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -132,6 +134,67 @@ if (!Array.isArray(quiz.questions) || !quiz.weights || !Array.isArray(quiz.categ
   writeFileSync(join(dest, 'finanz-check.json'), JSON.stringify(quiz, null, 2) + '\n');
   console.log(`[sync-data] Finanz-Check: ${quiz.questions.length} Fragen, ${quiz.categoryKeys.length} Kategorien übernommen.`);
 }
+
+// 5. Finanzpal-Score factor labels (for the score breakdown), DE + EN, from the website's
+//    compare scripts. Each script's `var STR = …` is evaluated with LANG = 'de' / 'en' in an empty
+//    sandbox (only the object literal is built, no function in it runs); compare.js keeps the
+//    shared ones in SCORE_FACTOR_LABELS.
+function evalVar(src, name, sandbox) {
+  const start = src.indexOf(`var ${name} =`);
+  if (start < 0) return undefined;
+  let i = src.indexOf('=', start) + 1;
+  let depth = 0, inStr = null;
+  for (let j = i; j < src.length; j++) {
+    const c = src[j];
+    if (inStr) {
+      if (c === '\\') j++;
+      else if (c === inStr) inStr = null;
+      continue;
+    }
+    if (c === '"' || c === "'" || c === '`') inStr = c;
+    else if (c === '{' || c === '(' || c === '[') depth++;
+    else if (c === '}' || c === ')' || c === ']') depth--;
+    else if (c === ';' && depth === 0) {
+      return vm.runInNewContext(`(${src.slice(i, j)})`, Object.assign(Object.create(null), sandbox), { timeout: 1000 });
+    }
+  }
+  return undefined;
+}
+const SCORE_LABEL_SCRIPTS = {
+  girokonto: 'girokonto-compare.js',
+  broker: 'broker-compare.js',
+  kinderdepot: 'kinderdepot-compare.js',
+  kreditkarte: 'kreditkarte-compare.js',
+};
+const scoreLabels = { de: {}, en: {} };
+for (const [file, script] of Object.entries(SCORE_LABEL_SCRIPTS)) {
+  const src = readFileSync(join(site, 'assets', script), 'utf8');
+  for (const lang of ['de', 'en']) {
+    try {
+      const str = evalVar(src, 'STR', { LANG: lang });
+      if (str?.scoreLabels) scoreLabels[lang][file] = str.scoreLabels;
+    } catch (e) {
+      missing.push(`${script}: STR (${lang}) — ${e.message}`);
+    }
+  }
+}
+const shared = extractLiteral(readFileSync(join(site, 'assets', 'compare.js'), 'utf8'), 'SCORE_FACTOR_LABELS') || {};
+for (const [file, byLang] of Object.entries(shared)) {
+  for (const lang of ['de', 'en']) if (byLang[lang]) scoreLabels[lang][file] = byLang[lang];
+}
+// every factor that appears in a score breakdown must have a label in both languages
+for (const f of readdirSync(join(site, 'data'))) {
+  if (!f.endsWith('.json') || f.endsWith('.en.json')) continue;
+  const file = f.replace('.json', '');
+  const items = JSON.parse(readFileSync(join(site, 'data', f), 'utf8')).items || [];
+  const keys = new Set(items.flatMap((it) => Object.keys(it.score?.breakdown || {})));
+  for (const k of keys) {
+    for (const lang of ['de', 'en']) {
+      if (!scoreLabels[lang][file]?.[k]) missing.push(`score label "${k}" for ${file} (${lang})`);
+    }
+  }
+}
+writeFileSync(join(dest, 'score-labels.json'), JSON.stringify(scoreLabels, null, 2) + '\n');
 
 // 4. Ratgeber: articles and topic chips from ratgeber.html (+ en/). Articles are paired by
 //    page so each one has a German and an English title; `cat` = index of its topic chip

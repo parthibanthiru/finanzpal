@@ -71,7 +71,7 @@ export default function MerklisteScreen() {
                     <Text style={styles.name}>{r.item?.name ?? r.itemId}</Text>
                     {!r.item && <Text style={styles.gone}>{t.favorites.gone}</Text>}
                   </View>
-                  {r.item?.score && <ScoreBadge value={r.item.score.value} band={r.item.score.band} />}
+                  {r.item?.score && <ScoreBadge score={r.item.score} file={getCategory(r.category)?.file ?? r.category} name={r.item.name} />}
                 </Pressable>
                 <FavoriteButton active onPress={() => toggleFavorite(r.category, r.itemId)} />
               </View>

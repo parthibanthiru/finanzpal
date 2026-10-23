@@ -13,6 +13,7 @@ import { calcLoan } from '@/lib/calc';
 import { formatEURCents } from '@/lib/format';
 import { CATEGORY_KEYS, QUESTIONS, label } from '@/lib/finanzCheck';
 import { NO_FILTERS, etfs, filterEtfs, options } from '@/lib/etf';
+import { scoreRows } from '@/lib/scoreLabels';
 
 import HomeScreen from '@/app/(app)/vergleiche/index';
 import CategoryScreen from '@/app/(app)/vergleiche/[id]';
@@ -159,6 +160,19 @@ describe.each(LANGS)('interactions (%s)', (lang) => {
     await settle(1);
     expect(screen.getByText(t.etf.count(1))).toBeTruthy();
     expectCleanText();
+  });
+
+  it('Score badge: tapping it shows the breakdown with the website labels', async () => {
+    await renderScreen(CategoryScreen, { lang, params: { id: 'tagesgeld' } });
+    fireEvent.press(screen.getAllByHintText(t.card.scoreShow)[0]);
+    await settle(1);
+    const first = getBundled('tagesgeld', lang).items.find((i) => i.score)!;
+    for (const r of scoreRows('tagesgeld', first.score!, lang)) {
+      expect(r.label).not.toBe(r.key); // a real label, not the raw factor key
+      expect(screen.getAllByText(r.label).length).toBeGreaterThan(0);
+    }
+    expect(screen.getByText(t.card.scoreMethodology)).toBeTruthy();
+    fireEvent.press(screen.getAllByLabelText(t.card.scoreClose)[0]);
   });
 
   it('Merkliste: the heart on a provider card toggles', async () => {

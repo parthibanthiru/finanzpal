@@ -1,26 +1,39 @@
+import { useState } from 'react';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
-import type { Item } from '@/lib/data';
+import type { Item, Score } from '@/lib/data';
+import { ScoreBreakdown } from './ScoreBreakdown';
 import type { Field } from '@/lib/categories';
 import { isRealLink, openSite } from '@/lib/site';
 import { getLang, useT } from '@/lib/i18n';
 import { bandColors, bandTextColor, fonts, makeStyles, radius, spacing, useColors } from './theme';
 
-/** Finanzpal-Score badge: same signal as the website's ring badge (0–100 + band A–D). */
-export function ScoreBadge({ value, band }: { value: number; band: string }) {
+/**
+ * Finanzpal-Score badge: same signal as the website's ring badge (0–100 + band A–D).
+ * Tapping it opens the breakdown sheet (like the website's score popover).
+ * `file` = data file of the comparison (picks the factor labels), `name` = provider name.
+ */
+export function ScoreBadge({ score, file, name }: { score: Score; file: string; name: string }) {
   const t = useT();
   const styles = useStyles();
   const colors = useColors();
+  const [open, setOpen] = useState(false);
+  const { value, band } = score;
   const c = bandColors(colors)[band] ?? colors.slate;
   return (
-    <Pressable
-      onPress={() => openSite('ueber-uns.html#finanzpal-score')}
-      accessibilityRole="link"
-      accessibilityLabel={t.card.scoreA11y(Math.round(value), band)}
-      style={[styles.score, { borderColor: c }]}
-    >
-      <Text style={[styles.scoreValue, { color: c }]}>{Math.round(value)}</Text>
-      <Text style={[styles.scoreBand, { backgroundColor: c, color: bandTextColor(colors, band) }]}>{band}</Text>
-    </Pressable>
+    <>
+      <Pressable
+        onPress={() => setOpen(true)}
+        accessibilityRole="button"
+        accessibilityLabel={t.card.scoreA11y(Math.round(value), band)}
+        accessibilityHint={t.card.scoreShow}
+        style={[styles.score, { borderColor: c }]}
+        hitSlop={6}
+      >
+        <Text style={[styles.scoreValue, { color: c }]}>{Math.round(value)}</Text>
+        <Text style={[styles.scoreBand, { backgroundColor: c, color: bandTextColor(colors, band) }]}>{band}</Text>
+      </Pressable>
+      <ScoreBreakdown visible={open} onClose={() => setOpen(false)} score={score} file={file} name={name} />
+    </>
   );
 }
 
@@ -44,9 +57,9 @@ export function FavoriteButton({ active, onPress }: { active: boolean; onPress: 
 }
 
 export function ProviderCard({
-  item, fields, highlight, favorite, onToggleFavorite,
+  item, file, fields, highlight, favorite, onToggleFavorite,
 }: {
-  item: Item; fields: Field[]; highlight?: string; favorite?: boolean; onToggleFavorite?: () => void;
+  item: Item; file: string; fields: Field[]; highlight?: string; favorite?: boolean; onToggleFavorite?: () => void;
 }) {
   const t = useT();
   const styles = useStyles();
@@ -75,7 +88,7 @@ export function ProviderCard({
             </Text>
           )}
         </View>
-        {item.score && <ScoreBadge value={item.score.value} band={item.score.band} />}
+        {item.score && <ScoreBadge score={item.score} file={file} name={item.name} />}
         {onToggleFavorite && <FavoriteButton active={!!favorite} onPress={onToggleFavorite} />}
       </View>
 

@@ -89,6 +89,7 @@ export default function CategoryScreen() {
           renderItem={({ item }) => (
             <ProviderCard
               item={item}
+              file={cat.file}
               fields={cat.fields(item, t)}
               highlight={item.id === focus ? highlightLabel : undefined}
               favorite={isFavorite(cat.id, item.id)}

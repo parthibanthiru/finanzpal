@@ -263,6 +263,14 @@ export const de = {
     ad: 'Werbung · Partnerlink',
     favAdd: 'Auf die Merkliste',
     favRemove: 'Von der Merkliste entfernen',
+    // score breakdown sheet = assets/score-popover.js
+    scoreTitle: 'Finanzpal-Score',
+    scoreBand: (band: string) => `Note ${band}`,
+    scoreOf100: '/ 100',
+    scoreEach: 'Jeder Faktor von 0 bis 100 — zusammen ergeben sie den Score.',
+    scoreMethodology: 'Zur Methodik →',
+    scoreClose: 'Schließen',
+    scoreShow: 'Score-Aufschlüsselung anzeigen',
   },
 
   favorites: {

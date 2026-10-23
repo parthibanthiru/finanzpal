@@ -1,0 +1,84 @@
+{
+  "de": {
+    "girokonto": {
+      "kontofuehrung": "Kontoführung",
+      "dispozins": "Dispozins",
+      "guthabenzins": "Guthabenzins",
+      "karteFlexibilitaet": "Karte & Flexibilität"
+    },
+    "broker": {
+      "depotgebuehr": "Depotgebühr",
+      "etfSparplaene": "ETF-Sparplan-Angebot",
+      "guthabenzins": "Guthabenzins",
+      "mindestsparrate": "Mindestsparrate"
+    },
+    "kinderdepot": {
+      "depotgebuehr": "Depotgebühr",
+      "mindestsparrate": "Mindestsparrate",
+      "guthabenzins": "Guthabenzins",
+      "elternAufwand": "Eltern-Aufwand"
+    },
+    "kreditkarte": {
+      "jahresgebuehr": "Jahresgebühr",
+      "abhebung": "Abhebung weltweit",
+      "ohneBedingungen": "Ohne Bedingungen",
+      "zinsfreieTage": "Zinsfreie Tage"
+    },
+    "kredite": {
+      "zinssatz": "Zinssatz",
+      "sondertilgung": "Sondertilgung",
+      "kreditrahmen": "Kreditrahmen"
+    },
+    "tagesgeld": {
+      "zins": "Zins",
+      "garantiedauer": "Zins-Garantiedauer",
+      "einlagensicherung": "Einlagensicherung"
+    },
+    "versicherungen": {
+      "beitrag": "Jahresbeitrag",
+      "ratingBestaetigt": "Rating-Bestätigung (F&B PHV FFF+)",
+      "deckung": "Deckungssumme"
+    }
+  },
+  "en": {
+    "girokonto": {
+      "kontofuehrung": "Account fee",
+      "dispozins": "Overdraft rate",
+      "guthabenzins": "Cash interest",
+      "karteFlexibilitaet": "Card & flexibility"
+    },
+    "broker": {
+      "depotgebuehr": "Account fee",
+      "etfSparplaene": "ETF savings plan offer",
+      "guthabenzins": "Cash interest",
+      "mindestsparrate": "Min. savings rate"
+    },
+    "kinderdepot": {
+      "depotgebuehr": "Account fee",
+      "mindestsparrate": "Min. savings rate",
+      "guthabenzins": "Cash interest",
+      "elternAufwand": "Parent-account effort"
+    },
+    "kreditkarte": {
+      "jahresgebuehr": "Annual fee",
+      "abhebung": "Worldwide withdrawal",
+      "ohneBedingungen": "No conditions",
+      "zinsfreieTage": "Interest-free days"
+    },
+    "kredite": {
+      "zinssatz": "Interest rate",
+      "sondertilgung": "Special repayment",
+      "kreditrahmen": "Loan amount range"
+    },
+    "tagesgeld": {
+      "zins": "Interest rate",
+      "garantiedauer": "Rate-guarantee duration",
+      "einlagensicherung": "Deposit protection"
+    },
+    "versicherungen": {
+      "beitrag": "Annual premium",
+      "ratingBestaetigt": "Rating confirmation (F&B PHV FFF+)",
+      "deckung": "Cover amount"
+    }
+  }
+}

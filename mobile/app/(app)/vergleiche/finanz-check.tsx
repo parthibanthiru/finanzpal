@@ -121,7 +121,7 @@ export default function FinanzCheckScreen() {
                   </Text>
                 </View>
                 <Text style={styles.name}>{item.name}</Text>
-                {item.score && <ScoreBadge value={item.score.value} band={item.score.band} />}
+                {item.score && <ScoreBadge score={item.score} file={CATEGORY_META[cat].file} name={item.name} />}
               </View>
               {factRows(cat, item, t).map(([k, v]) => (
                 <View key={k} style={styles.row}>

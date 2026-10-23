@@ -260,6 +260,13 @@ export const en: Strings = {
     ad: 'Advertising · partner link',
     favAdd: 'Add to watchlist',
     favRemove: 'Remove from watchlist',
+    scoreTitle: 'Finanzpal Score',
+    scoreBand: (band: string) => `Grade ${band}`,
+    scoreOf100: '/ 100',
+    scoreEach: 'Each factor from 0 to 100 — together they make up the score.',
+    scoreMethodology: 'Full methodology →',
+    scoreClose: 'Close',
+    scoreShow: 'Show score breakdown',
   },
 
   favorites: {
