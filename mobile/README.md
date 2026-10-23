@@ -1,6 +1,6 @@
 # Finanzpal App (Android & iOS)
 
-The Finanzpal app, built with Expo / React Native + TypeScript: one codebase for Android and iOS, with Supabase accounts.
+The Finanzpal app, built with Expo SDK 57 / React Native 0.86 + TypeScript: one codebase for Android and iOS, with Supabase accounts.
 It lives in `mobile/` inside the website repo and uses the **website as its single source of truth**:
 same comparison data, same disclosure texts, same calculator math and the same design tokens.
 
@@ -46,7 +46,7 @@ mobile/
 
 ## Automatic checks (GitHub Actions)
 `.github/workflows/mobile-app.yml` runs on every push that touches the app or the website data it uses:
-`npm install` → `npx expo install --fix` → website-data sync check → `tsc --noEmit` → Android and iOS
+`npm install` → `npx expo install --check` (versions match the Expo SDK) → website-data sync check → `tsc --noEmit` → Android and iOS
 bundle builds (`expo export`) → `expo-doctor` (advice only). A failing step also posts its last 80 output lines
 as an annotation on the commit (`tools/ci-step.sh`). Results: the commit's ✓/✗ on GitHub, or the
 repo's **Actions** tab.
@@ -80,8 +80,7 @@ Needs Node 20+ on your computer and the **Expo Go** app on your phone (Play Stor
 ```bash
 cd mobile
 cp .env.example .env          # fill in the Supabase values + backend URL
-npm install
-npx expo install --fix        # aligns all package versions to your Expo SDK
+npm install                   # versions are pinned to Expo SDK 57
 npx expo start
 ```
 Scan the QR code with Expo Go (Android) or the iPhone camera. Phone and computer must be on the same Wi-Fi.

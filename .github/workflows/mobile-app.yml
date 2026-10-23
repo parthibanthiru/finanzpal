@@ -1,5 +1,5 @@
 # Checks the Finanzpal app (mobile/) on every change, so errors show up without manual testing:
-# installs the packages, aligns them to the Expo SDK, checks the website data sync,
+# installs the packages, checks they match the Expo SDK and the website data sync,
 # runs the full TypeScript check and builds the Android and iOS JavaScript bundles.
 # Failures are also posted as annotations on the commit (see mobile/tools/ci-step.sh).
 name: Mobile app check
@@ -30,22 +30,24 @@ jobs:
         working-directory: mobile
         shell: bash
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install packages
         id: install
         run: tools/ci-step.sh "npm install" npm install --no-audit --no-fund
 
-      - name: Align package versions with the Expo SDK
+      # Report-only: versions are pinned in package.json to the SDK's tested set
+      # (fixing them here would rewrite node_modules while the Expo CLI is running).
+      - name: Package versions match the Expo SDK
         id: align
-        run: tools/ci-step.sh "expo install --fix" npx expo install --fix
+        run: tools/ci-step.sh "expo install --check - fix locally with npx expo install --fix" npx expo install --check
 
       - name: Report resolved versions
-        if: ${{ !cancelled() && steps.align.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: |
           versions="$(node -e '
             const p=require("./package.json");
@@ -64,19 +66,19 @@ jobs:
           tools/ci-step.sh "mobile/data out of date (run: cd mobile && npm run sync-data)" git diff --exit-code -- data
 
       - name: TypeScript check
-        if: ${{ !cancelled() && steps.align.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: tools/ci-step.sh "TypeScript" npx tsc --noEmit --pretty false
 
       - name: Build Android bundle
-        if: ${{ !cancelled() && steps.align.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: tools/ci-step.sh "Android bundle" npx expo export --platform android --output-dir "$RUNNER_TEMP/export-android"
 
       - name: Build iOS bundle
-        if: ${{ !cancelled() && steps.align.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: tools/ci-step.sh "iOS bundle" npx expo export --platform ios --output-dir "$RUNNER_TEMP/export-ios"
 
       - name: Expo doctor (advice only)
-        if: ${{ !cancelled() && steps.align.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         continue-on-error: true
         run: |
           out="$(npx expo-doctor 2>&1)"; status=$?
