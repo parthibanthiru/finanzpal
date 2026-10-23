@@ -12,11 +12,13 @@ import { disclosure } from '@/lib/disclosures';
 import { calcLoan } from '@/lib/calc';
 import { formatEURCents } from '@/lib/format';
 import { CATEGORY_KEYS, QUESTIONS, label } from '@/lib/finanzCheck';
+import { NO_FILTERS, etfs, filterEtfs, options } from '@/lib/etf';
 
 import HomeScreen from '@/app/(app)/vergleiche/index';
 import CategoryScreen from '@/app/(app)/vergleiche/[id]';
 import FinanzCheckScreen from '@/app/(app)/vergleiche/finanz-check';
 import MerklisteScreen from '@/app/(app)/vergleiche/merkliste';
+import EtfScreen from '@/app/(app)/vergleiche/etf';
 import RechnerScreen from '@/app/(app)/rechner/index';
 import SparplanScreen from '@/app/(app)/rechner/sparplan';
 import ZinseszinsScreen from '@/app/(app)/rechner/zinseszins';
@@ -71,6 +73,7 @@ const CASES: Case[] = [
   ),
   { name: 'Finanz-Check', Screen: FinanzCheckScreen, expect: (t, lang) => label(QUESTIONS[0].text, lang) },
   { name: 'Merkliste', Screen: MerklisteScreen, expect: (t) => t.favorites.emptyTitle },
+  { name: 'ETF-Suche', Screen: EtfScreen, expect: (t) => t.etf.intro },
   { name: 'Rechner (Liste)', Screen: RechnerScreen, expect: (t) => t.calc.list.sparplan.title },
   { name: 'Sparplanrechner', Screen: SparplanScreen, expect: (t) => t.calc.savings.introSparplan },
   { name: 'Zinseszinsrechner', Screen: ZinseszinsScreen, expect: (t) => t.calc.savings.introZinseszins },
@@ -141,6 +144,21 @@ describe.each(LANGS)('interactions (%s)', (lang) => {
     const shown = visibleText(screen.toJSON()).join(' | ');
     expect(shown).not.toContain(t.calc.haushalt.errAmount);
     expect(shown).toContain(formatEURCents(12.5));
+  });
+
+  it('ETF-Suche: an asset-class chip and the text search filter the list', async () => {
+    await renderScreen(EtfScreen, { lang });
+    const all = etfs(lang);
+    expect(screen.getByText(t.etf.count(all.length))).toBeTruthy();
+    const bonds = options(lang, 'anlageklasse')[1]; // Anleihen / Bonds
+    fireEvent.press(screen.getByText(bonds));
+    await settle(1);
+    expect(screen.getByText(t.etf.count(filterEtfs(all, { ...NO_FILTERS, klasse: bonds }).length))).toBeTruthy();
+    fireEvent.press(screen.getByText(t.etf.reset));
+    fireEvent.changeText(screen.getByLabelText(t.etf.search), 'IE00B4L5Y983');
+    await settle(1);
+    expect(screen.getByText(t.etf.count(1))).toBeTruthy();
+    expectCleanText();
   });
 
   it('Merkliste: the heart on a provider card toggles', async () => {

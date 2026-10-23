@@ -126,6 +126,19 @@ export default function VergleicheScreen() {
                 </Link>
               );
             })}
+            {group === 'Broker' && (
+              // ETF-Suche sits in the website's Broker menu too
+              <Link href="/vergleiche/etf" asChild>
+                <Pressable style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]}>
+                  <Text style={styles.icon}>🔎</Text>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.title}>{t.etf.title}</Text>
+                    <Text style={styles.sub}>{t.etf.homeSub(getBundled('etf', lang).items.length)}</Text>
+                  </View>
+                  <Text style={styles.chevron}>›</Text>
+                </Pressable>
+              </Link>
+            )}
           </View>
         );
       })}

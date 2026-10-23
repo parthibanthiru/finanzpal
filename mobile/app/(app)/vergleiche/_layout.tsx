@@ -18,6 +18,7 @@ export default function VergleicheLayout() {
       <Stack.Screen name="index" options={{ title: t.tabs.compare }} />
       <Stack.Screen name="finanz-check" options={{ title: t.check.title }} />
       <Stack.Screen name="merkliste" options={{ title: t.favorites.title }} />
+      <Stack.Screen name="etf" options={{ title: t.etf.title }} />
       <Stack.Screen name="[id]" options={{ title: '' }} />
     </Stack>
   );
