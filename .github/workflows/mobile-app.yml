@@ -73,7 +73,9 @@ jobs:
       # Renders every screen in German/English, light/dark, plus the main flows (__tests__/)
       - name: Screen tests
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: tools/ci-step.sh "Screen tests" npx jest --ci
+        run: |
+          npx jest --ci --silent --json --outputFile="$RUNNER_TEMP/jest.json" || true
+          tools/ci-step.sh "Screen tests" node tools/jest-summary.mjs "$RUNNER_TEMP/jest.json"
 
       - name: Build Android bundle
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
