@@ -101,6 +101,11 @@ export const de = {
     favTitle: 'Meine Merkliste',
     favCount: (n: number) => `${n} Anbieter gespeichert`,
     favEmpty: 'Anbieter mit dem Herz merken',
+    searchPlaceholder: 'Anbieter, ETF, Rechner oder Ratgeber suchen',
+    searchCount: (n: number) => (n === 1 ? '1 Treffer' : `${n} Treffer`),
+    searchNone: 'Nichts gefunden. Probier einen anderen Namen oder eine ISIN.',
+    searchKinds: { provider: 'Anbieter', etf: 'ETFs', page: 'Vergleiche, Rechner & Ratgeber' },
+    searchClear: 'Suche löschen',
   },
 
   groups: {

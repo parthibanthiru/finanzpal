@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { FlatList, Pressable, Text, TextInput, View } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 import { useI18n } from '@/lib/i18n';
 import { disclosure } from '@/lib/disclosures';
 import { formatPct } from '@/lib/format';
@@ -91,7 +92,9 @@ export default function EtfScreen() {
   const colors = useColors();
   const { t, lang } = useI18n();
   const L = t.etf;
-  const [f, setF] = useState<EtfFilters>(NO_FILTERS);
+  // the home search opens a single ETF via ?q=<ISIN>
+  const { q } = useLocalSearchParams<{ q?: string }>();
+  const [f, setF] = useState<EtfFilters>(() => (q ? { ...NO_FILTERS, query: String(q) } : NO_FILTERS));
   const [more, setMore] = useState(false);
 
   const all = etfs(lang);

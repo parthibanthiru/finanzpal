@@ -14,6 +14,7 @@ import { formatEURCents } from '@/lib/format';
 import { CATEGORY_KEYS, QUESTIONS, label } from '@/lib/finanzCheck';
 import { NO_FILTERS, etfs, filterEtfs, options } from '@/lib/etf';
 import { scoreRows } from '@/lib/scoreLabels';
+import { search } from '@/lib/search';
 
 import HomeScreen from '@/app/(app)/vergleiche/index';
 import CategoryScreen from '@/app/(app)/vergleiche/[id]';
@@ -160,6 +161,36 @@ describe.each(LANGS)('interactions (%s)', (lang) => {
     await settle(1);
     expect(screen.getByText(t.etf.count(1))).toBeTruthy();
     expectCleanText();
+  });
+
+  it('Home search: a provider name finds it in every comparison, an ISIN finds the ETF', async () => {
+    const hits = search('dkb', lang, t);
+    const cats = new Set(hits.filter((h) => h.kind === 'provider').map((h) => (h as { categoryId: string }).categoryId));
+    expect(cats.size).toBeGreaterThanOrEqual(4); // Girokonto, Tagesgeld, Kreditkarte, Broker …
+    expect(search('IE00B4L5Y983', lang, t).filter((h) => h.kind === 'etf')).toHaveLength(1);
+    expect(search('x', lang, t)).toHaveLength(0);
+
+    await renderScreen(HomeScreen, { lang });
+    fireEvent.changeText(screen.getByLabelText(t.home.searchPlaceholder), 'DKB');
+    await settle(1);
+    expect(screen.getByText(t.home.searchCount(hits.length))).toBeTruthy();
+    expect(screen.queryByText(t.home.favTitle)).toBeNull(); // results replace the category list
+    const router = require('expo-router').__router;
+    router.push.mockClear();
+    fireEvent.press(screen.getAllByText(hits[0].title)[0]);
+    expect(router.push).toHaveBeenCalledWith(expect.objectContaining({ pathname: '/vergleiche/[id]' }));
+    fireEvent.changeText(screen.getByLabelText(t.home.searchPlaceholder), 'qqqqzzz');
+    await settle(1);
+    expect(screen.getByText(t.home.searchNone)).toBeTruthy();
+    fireEvent.press(screen.getByLabelText(t.home.searchClear));
+    await settle(1);
+    expect(screen.getByText(t.home.favTitle)).toBeTruthy();
+    expectCleanText();
+  });
+
+  it('ETF-Suche opened from the search shows just that ETF', async () => {
+    await renderScreen(EtfScreen, { lang, params: { q: 'IE00B4L5Y983' } });
+    expect(screen.getByText(t.etf.count(1))).toBeTruthy();
   });
 
   it('Score badge: tapping it shows the breakdown with the website labels', async () => {

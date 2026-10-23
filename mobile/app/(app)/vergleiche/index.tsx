@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useMemo, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Link, useFocusEffect, useRouter } from 'expo-router';
 import { useAuth } from '@/context/AuthProvider';
 import { useFavorites } from '@/context/FavoritesProvider';
@@ -7,6 +7,8 @@ import { CATEGORIES, GROUPS } from '@/lib/categories';
 import { useI18n } from '@/lib/i18n';
 import { getBundled } from '@/lib/data';
 import { Answers, CATEGORY_KEYS, CATEGORY_META, QUESTIONS, loadAnswers, topPick } from '@/lib/finanzCheck';
+import { Hit, search } from '@/lib/search';
+import { openSite } from '@/lib/site';
 import { fonts, makeStyles, radius, spacing, useColors } from '@/components/theme';
 
 /** Finanz-Check entry point; shows the saved picks once the quiz is done. */
@@ -90,15 +92,91 @@ function MerklisteRow() {
   );
 }
 
-// Home of the app: the same comparison categories as the website nav.
-export default function VergleicheScreen() {
+/** Results of the home search, grouped like the website's search: providers, ETFs, pages. */
+function SearchResults({ query }: { query: string }) {
   const { t, lang } = useI18n();
   const styles = useStyles();
+  const router = useRouter();
+  const hits = useMemo(() => search(query, lang, t), [query, lang, t]);
+  const open = (h: Hit) => {
+    if (h.kind === 'provider') router.push({ pathname: '/vergleiche/[id]', params: { id: h.categoryId, focus: h.itemId } });
+    else if (h.kind === 'etf') router.push({ pathname: '/vergleiche/etf', params: { q: h.isin } });
+    else if (h.route) router.push(h.route as never);
+    else if (h.sitePage) openSite(h.sitePage);
+  };
   return (
-    <ScrollView contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }}>
+    <View>
+      <Text style={styles.searchCount}>{hits.length ? t.home.searchCount(hits.length) : t.home.searchNone}</Text>
+      {(['provider', 'etf', 'page'] as const).map((kind) => {
+        const group = hits.filter((h) => h.kind === kind);
+        if (!group.length) return null;
+        return (
+          <View key={kind} style={{ marginBottom: spacing.lg }}>
+            <Text style={styles.group}>{t.home.searchKinds[kind]}</Text>
+            {group.map((h) => (
+              <Pressable key={h.key} style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]} onPress={() => open(h)} accessibilityRole="button">
+                {h.kind === 'page' ? (
+                  <Text style={styles.icon}>{h.icon}</Text>
+                ) : (
+                  <View style={[styles.avatar, { backgroundColor: h.color ?? '#64748b' }]}>
+                    <Text style={styles.avatarText}>{h.initials ?? h.title.slice(0, 2)}</Text>
+                  </View>
+                )}
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.hitTitle} numberOfLines={2}>{h.title}</Text>
+                  <Text style={styles.sub} numberOfLines={1}>{h.sub}</Text>
+                </View>
+                <Text style={styles.chevron}>›</Text>
+              </Pressable>
+            ))}
+          </View>
+        );
+      })}
+    </View>
+  );
+}
+
+// Home of the app: the same comparison categories as the website nav.
+export default function VergleicheScreen() {
+  const { t } = useI18n();
+  const styles = useStyles();
+  const colors = useColors();
+  const [query, setQuery] = useState('');
+  const searching = query.trim().length >= 2;
+  return (
+    <ScrollView contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }} keyboardShouldPersistTaps="handled">
       <Text style={styles.hero}>{t.home.hero}</Text>
       <Text style={styles.heroSub}>{t.home.heroSub}</Text>
 
+      <View style={styles.searchRow}>
+        <TextInput
+          style={styles.search}
+          value={query}
+          onChangeText={setQuery}
+          placeholder={t.home.searchPlaceholder}
+          placeholderTextColor={colors.muted}
+          autoCorrect={false}
+          autoCapitalize="none"
+          returnKeyType="search"
+          accessibilityLabel={t.home.searchPlaceholder}
+        />
+        {query ? (
+          <Pressable onPress={() => setQuery('')} hitSlop={10} style={styles.searchClear} accessibilityRole="button" accessibilityLabel={t.home.searchClear}>
+            <Text style={styles.searchClearText}>×</Text>
+          </Pressable>
+        ) : null}
+      </View>
+
+      {searching ? <SearchResults query={query} /> : <HomeContent />}
+    </ScrollView>
+  );
+}
+
+function HomeContent() {
+  const { t, lang } = useI18n();
+  const styles = useStyles();
+  return (
+    <>
       <FinanzCheckCard />
       <View style={{ marginBottom: spacing.lg }}>
         <MerklisteRow />
@@ -142,7 +220,7 @@ export default function VergleicheScreen() {
           </View>
         );
       })}
-    </ScrollView>
+    </>
   );
 }
 
@@ -176,4 +254,15 @@ const useStyles = makeStyles((colors) => ({
   pickChevron: { color: colors.inkMuted, fontSize: 20, marginLeft: spacing.sm },
   fcLinks: { flexDirection: 'row', gap: spacing.lg, marginTop: spacing.sm },
   fcLink: { color: colors.smile, fontWeight: '700', fontSize: 14 },
+  searchRow: { flexDirection: 'row', alignItems: 'center', marginBottom: spacing.lg },
+  search: {
+    flex: 1, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border, borderRadius: radius.md,
+    paddingLeft: spacing.md, paddingRight: 40, paddingVertical: 11, fontSize: 16, color: colors.text,
+  },
+  searchClear: { position: 'absolute', right: 12 },
+  searchClearText: { fontSize: 24, color: colors.muted },
+  searchCount: { color: colors.muted, fontSize: 13, marginBottom: spacing.md },
+  avatar: { width: 36, height: 36, borderRadius: 9, alignItems: 'center', justifyContent: 'center', marginRight: spacing.md },
+  avatarText: { color: '#fff', fontWeight: '700', fontSize: 12 },
+  hitTitle: { fontSize: 16, fontWeight: '600', color: colors.text },
 }));
