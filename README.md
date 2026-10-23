@@ -391,6 +391,42 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   dort ebenfalls ergänzen. Der `title`-Tooltip bleibt zusätzlich bestehen
   (Progressive Enhancement, kein Funktionsverlust ohne JS/mit altem Browser).
 
+## "Wie wir bewerten"-Links (Methodik-Transparenz)
+
+**Seit 2026-10-23, auf allen 7 Vergleichsseiten (DE+EN = 14 Seiten).** Ein
+kleiner, immer sichtbarer Link direkt über der Ergebnisliste — nicht erst
+im Footer oder hinter einem Klick auf den Score-Badge versteckt, sondern
+genau da, wo jemand kurz vor dem Klick auf eine CTA steht:
+- Kartenlayout-Seiten (`girokonto.html`, `kreditkarte.html`,
+  `kinderdepot.html`, `broker.html`, je DE/EN): in der `.kk-toolbar`-Zeile,
+  direkt neben der Ergebnis-Anzahl (`<span class="kk-toolbar-left">…</span>`
+  gruppiert beide, damit das bestehende `justify-content: space-between`
+  der Toolbar nicht durch ein drittes Flex-Kind verzerrt wird).
+- Tabellenlayout-Seiten (`kredite.html`, `tagesgeld.html`,
+  `versicherungen.html`, je DE/EN): rechtsbündig in der `.filters`-Zeile
+  über der Tabelle (`.filters .method-link { margin-left: auto; }`).
+
+Zusätzlich verlinkt der bestehende Affiliate-Disclosure-Absatz
+(`.disclosure-note`) unter jeder Tabelle/Kartenliste jetzt ebenfalls auf
+die Methodik — zwei Seiten (`girokonto.html`, `kinderdepot.html`) hatten
+dort bisher gar keinen Link, die übrigen fünf verlinkten nur pauschal auf
+`ueber-uns.html` statt auf den passenden Abschnitt.
+
+Beide Link-Typen zeigen, je nach Kategorie, auf einen von zwei Ankern in
+`ueber-uns.html`/`en/ueber-uns.html`:
+- **`#finanzpal-score`** für die 5 Kategorien mit Finanzpal-Score
+  (Girokonto, Kredite, Tagesgeld, Kreditkarte, Kinderdepot).
+- **`#methodik`** (neu, auf dem bestehenden Abschnitt „Unsere Methodik je
+  Kategorie") für Broker & Depot und Versicherungen, die noch keinen Score
+  haben.
+
+Neue CSS-Klassen in `assets/style.css`: `.method-link` (das Link-Styling
+selbst), `.kk-toolbar-left` (Wrapper für Kartenlayout-Seiten),
+`.filters .method-link` (rechtsbündig für Tabellenlayout-Seiten). Neue
+Kategorie mit Score = denselben Link in Toolbar/Filters und
+Disclosure-Note ergänzen, Anchor je nachdem ob die Kategorie schon einen
+Score hat.
+
 ## Kopf-an-Kopf-Seiten ("vs"-Seiten)
 
 **Pilot, seit 2026-10-23 — eine einzige Seite, bewusst nicht auf andere
