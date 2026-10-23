@@ -11,7 +11,7 @@ import { getBundled } from '@/lib/data';
 import { disclosure } from '@/lib/disclosures';
 import { calcLoan } from '@/lib/calc';
 import { formatEURCents } from '@/lib/format';
-import { CATEGORY_KEYS, QUESTIONS, label } from '@/lib/finanzCheck';
+import { CATEGORY_KEYS, CATEGORY_META, QUESTIONS, label, reasonsFor, topPick } from '@/lib/finanzCheck';
 import { NO_FILTERS, etfs, filterEtfs, options } from '@/lib/etf';
 import { scoreRows } from '@/lib/scoreLabels';
 import { search } from '@/lib/search';
@@ -127,6 +127,17 @@ describe.each(LANGS)('interactions (%s)', (lang) => {
     }
     expect(await screen.findByText(t.check.resultTitle)).toBeTruthy();
     for (const cat of CATEGORY_KEYS) expect(screen.getByText(t.check.categories[cat])).toBeTruthy();
+    // "why this pick": the website's reasons for each top pick are shown on its card
+    const answers = Object.fromEntries(QUESTIONS.map((q) => [q.id, q.options[0].id]));
+    let shown = 0;
+    for (const cat of CATEGORY_KEYS) {
+      const pick = topPick(cat, answers, getBundled(CATEGORY_META[cat].file, lang).items)!;
+      for (const r of reasonsFor(cat, pick.id, answers, lang)) {
+        expect(screen.getAllByText(r).length).toBeGreaterThan(0);
+        shown++;
+      }
+    }
+    expect(shown).toBeGreaterThan(0);
     expectCleanText();
   });
 

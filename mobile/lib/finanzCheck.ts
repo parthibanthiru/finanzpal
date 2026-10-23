@@ -11,7 +11,9 @@ export type Question = { id: string; text: Label; options: { id: string; label: 
 type Weights = Record<string, Record<string, Record<string, Record<string, number>>>>;
 export type Answers = Record<string, string>;
 
-const QUIZ: { questions: Question[]; weights: Weights; categoryKeys: string[] } = require('../data/finanz-check.json');
+const QUIZ: {
+  questions: Question[]; weights: Weights; categoryKeys: string[]; reasonTemplate: Partial<Record<Lang, string>>;
+} = require('../data/finanz-check.json');
 
 export const QUESTIONS = QUIZ.questions;
 export const CATEGORY_KEYS = QUIZ.categoryKeys;
@@ -46,6 +48,27 @@ export function topPick(cat: string, answers: Answers, items: Item[]): Item | un
   let ranked = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
   if (!ranked.length) ranked = items.map((it) => it.id);
   return byId[ranked[0]];
+}
+
+/**
+ * "Why this pick" — port of reasonsFor() on the website: the answered questions that gave this
+ * provider at least 2 points, in question order, at most 2. A readout of the scoring that ran,
+ * not a separate claim about the provider. Wording = STR.reasonTemplate (synced).
+ */
+export function reasonsFor(cat: string, itemId: string, answers: Answers, lang: Lang): string[] {
+  const tpl = QUIZ.reasonTemplate[lang] ?? QUIZ.reasonTemplate.de;
+  if (!tpl) return [];
+  const reasons: string[] = [];
+  for (const q of QUESTIONS) {
+    const oid = answers[q.id];
+    if (!oid) continue;
+    const points = QUIZ.weights[cat]?.[q.id]?.[oid]?.[itemId];
+    const opt = q.options.find((o) => o.id === oid);
+    if (points && points >= 2 && opt) {
+      reasons.push(tpl.replace('{q}', label(q.text, lang)).replace('{o}', label(opt.label, lang)));
+    }
+  }
+  return reasons.slice(0, 2);
 }
 
 /** The three facts shown on each result card — same as factRows() on the website. */

@@ -4,7 +4,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useAuth } from '@/context/AuthProvider';
 import { loadData, type Item } from '@/lib/data';
 import {
-  Answers, CATEGORY_KEYS, CATEGORY_META, QUESTIONS, factRows, label, loadAnswers, saveAnswers, topPick,
+  Answers, CATEGORY_KEYS, CATEGORY_META, QUESTIONS, factRows, label, loadAnswers, reasonsFor, saveAnswers, topPick,
 } from '@/lib/finanzCheck';
 import { useI18n } from '@/lib/i18n';
 import { isRealLink } from '@/lib/site';
@@ -129,6 +129,12 @@ export default function FinanzCheckScreen() {
                   <Text style={styles.v}>{v}</Text>
                 </View>
               ))}
+              {reasonsFor(cat, item.id, answers, lang).map((r) => (
+                <View key={r} style={styles.reason}>
+                  <Text style={styles.reasonMark}>✓</Text>
+                  <Text style={styles.reasonText}>{r}</Text>
+                </View>
+              ))}
               <View style={styles.actions}>
                 <Pressable
                   onPress={() =>
@@ -180,6 +186,9 @@ const useStyles = makeStyles((colors) => ({
   row: { flexDirection: 'row', paddingVertical: 6, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border },
   k: { flex: 1, color: colors.muted, fontSize: 13 },
   v: { flex: 1.3, color: colors.text, fontSize: 14, fontWeight: '500' },
+  reason: { flexDirection: 'row', marginTop: spacing.xs },
+  reasonMark: { color: colors.primary, fontWeight: '800', fontSize: 13, width: 18 },
+  reasonText: { flex: 1, color: colors.text, fontSize: 13, lineHeight: 18 },
   actions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.sm },
   cta: { backgroundColor: colors.primary, paddingVertical: 9, paddingHorizontal: 14, borderRadius: radius.sm },
   ctaText: { color: colors.onPrimary, fontWeight: '700' },

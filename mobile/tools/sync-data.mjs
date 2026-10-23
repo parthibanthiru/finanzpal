@@ -125,7 +125,18 @@ const quiz = {
   questions: extractLiteral(fc, 'QUESTIONS'),
   weights: extractLiteral(fc, 'WEIGHTS'),
   categoryKeys: extractLiteral(fc, 'CATEGORY_KEYS'),
+  // "why this pick" sentence (STR.reasonTemplate), stored with {q}/{o} placeholders
+  reasonTemplate: {},
 };
+for (const lang of ['de', 'en']) {
+  try {
+    const tpl = evalVar(fc, 'STR', { LANG: lang })?.reasonTemplate?.('{q}', '{o}');
+    if (typeof tpl === 'string' && tpl.includes('{q}') && tpl.includes('{o}')) quiz.reasonTemplate[lang] = tpl;
+    else missing.push(`finanz-check.js: STR.reasonTemplate (${lang})`);
+  } catch (e) {
+    missing.push(`finanz-check.js: STR.reasonTemplate (${lang}) — ${e.message}`);
+  }
+}
 if (!Array.isArray(quiz.questions) || !quiz.weights || !Array.isArray(quiz.categoryKeys)) {
   missing.push('assets/finanz-check.js (QUESTIONS/WEIGHTS/CATEGORY_KEYS)');
 } else {
