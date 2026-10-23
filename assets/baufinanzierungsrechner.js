@@ -123,10 +123,12 @@
             : 'Bei diesem Zins deckt die Monatsrate nicht einmal die Zinsen — die Restschuld würde wachsen statt sinken. Erhöhe die Tilgungsrate.';
         } else {
           payoffNote.textContent = (LANG === 'en'
-            ? 'If the interest rate stayed exactly as entered above for the whole term (illustrative only — real mortgages renegotiate the rate after the fixed period), full repayment would take about '
+            ? 'If the interest rate stayed exactly as entered above for the whole term (illustrative only — real mortgages renegotiate the rate after the fixed period), you would be debt-free after about '
             : 'Bliebe der Zinssatz über die gesamte Laufzeit exakt wie oben eingegeben (nur zur Orientierung — bei einer echten Finanzierung wird der Zins nach der Zinsbindung neu verhandelt), wärst du nach rund ')
-            + STR.years(Math.round(payoffYears))
-            + (LANG === 'en' ? ' debt-free.' : ' schuldenfrei.');
+            + (LANG === 'en'
+              ? STR.years(Math.round(payoffYears)) + '.'
+              // dative after "nach": "nach rund 29 Jahren"
+              : Math.round(payoffYears) + ' ' + (Math.round(payoffYears) === 1 ? 'Jahr' : 'Jahren') + ' schuldenfrei.');
         }
       }
 
