@@ -137,9 +137,10 @@ describe.each(LANGS)('interactions (%s)', (lang) => {
     fireEvent.changeText(screen.getByPlaceholderText(t.calc.haushalt.amountPlaceholder), lang === 'de' ? '12,50' : '12.50');
     fireEvent.press(screen.getByText(t.calc.haushalt.add));
     await settle(1);
-    // "Ausgaben" tile and the entry row both show the amount
-    expect(screen.getAllByText(new RegExp(formatEURCents(12.5).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))).length).toBeGreaterThan(0);
-    expect(screen.queryByText(t.calc.haushalt.errAmount)).toBeNull();
+    // the "Ausgaben"/"Expenses" tile and the new entry row both show the amount
+    const shown = visibleText(screen.toJSON()).join(' | ');
+    expect(shown).not.toContain(t.calc.haushalt.errAmount);
+    expect(shown).toContain(formatEURCents(12.5));
   });
 
   it('Merkliste: the heart on a provider card toggles', async () => {
