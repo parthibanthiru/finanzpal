@@ -17,6 +17,7 @@
       pick: 'Unsere Empfehlung',
       notRated: 'noch nicht bewertet',
       cta: 'Zum Anbieter',
+      ctaAria: function (name) { return 'Zum Anbieter: ' + name; },
       moreDetails: 'Mehr Details',
       lessDetails: 'Weniger Details',
       network: 'Netzwerk',
@@ -57,7 +58,8 @@
       viewTable: 'Table',
       pick: 'Our pick',
       notRated: 'not yet rated',
-      cta: 'View offer',
+      cta: 'View provider',
+      ctaAria: function (name) { return 'View provider: ' + name; },
       moreDetails: 'More details',
       lessDetails: 'Less details',
       network: 'Network',
@@ -242,7 +244,7 @@
           '<div class="cc-cta-col">' +
             '<div class="cc-price"><div class="amount">' + item.jahresgebuehr + '</div><div class="label">' + STR.priceLabel + '</div></div>' +
             ratingHtml(item) +
-            '<a href="' + item.affiliateUrl + '" class="cta-btn" rel="sponsored nofollow">' + STR.cta + '</a>' +
+            '<a href="' + item.affiliateUrl + '" class="cta-btn" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a>' +
           '</div>' +
         '</div>' +
         '<hr class="cc-divider">' +
@@ -266,7 +268,7 @@
           '<td class="num-cell">' + item.fremdwaehrung + '</td>' +
           '<td class="num-cell">' + item.abhebung + '</td>' +
           '<td>' + ratingHtml(item) + '</td>' +
-          '<td><a href="' + item.affiliateUrl + '" class="' + (item.recommended ? 'cta-btn2' : 'cta-btn2 secondary') + '" rel="sponsored nofollow">' + STR.cta + '</a></td>' +
+          '<td><a href="' + item.affiliateUrl + '" class="' + (item.recommended ? 'cta-btn2' : 'cta-btn2 secondary') + '" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a></td>' +
           '</tr>';
       }).join('');
       return '<div class="table-scroll"><table class="compare"><thead><tr>' +

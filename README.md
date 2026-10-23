@@ -400,6 +400,29 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   dort ebenfalls ergänzen. Der `title`-Tooltip bleibt zusätzlich bestehen
   (Progressive Enhancement, kein Funktionsverlust ohne JS/mit altem Browser).
 
+## CTA-Buttons: Copy-Konsistenz & Screenreader-Labels
+
+**Seit 2026-10-24.** Audit der Anbieter-CTA-Buttons auf allen Vergleichsseiten
+(nicht der grünen `.best-rate-banner`-Buttons im Hero — die bleiben bewusst
+`href="#"`, siehe „Vor dem Launch unbedingt erledigen"):
+- **Copy vereinheitlicht.** Vorher uneinheitlich: 4 von 5 Render-Skripten
+  nutzten DE „Zum Anbieter" + EN „View offer" (inhaltlich nicht dieselbe
+  Aussage), `broker-compare.js` nutzte als einziges „Zum Angebot"/„View
+  offer". Jetzt überall **„Zum Anbieter" / „View provider"** — ehrlicher
+  als „Angebot"/„offer", weil der Link tatsächlich nur zur Anbieter-Seite
+  führt, nicht zu einer zugesicherten Sonderkonditionen-Seite.
+- **Screenreader-Label pro Button.** Eine Liste mit 10+ Karten/Zeilen hatte
+  vorher 10+ identische Links „Zum Anbieter" ohne Unterscheidung — für
+  Screenreader-Nutzer, die per Linkliste statt visuell navigieren, nicht
+  unterscheidbar. Jeder CTA-Button bekommt jetzt zusätzlich
+  `aria-label="Zum Anbieter: <Anbietername>"` (sichtbarer Text bleibt
+  knapp „Zum Anbieter"). Betroffen: `assets/compare.js` (Kredite/
+  Tagesgeld/Versicherungen), `girokonto-compare.js`,
+  `kinderdepot-compare.js`, `kreditkarte-compare.js` (Karten- **und**
+  Tabellenansicht), `broker-compare.js`. Neue Kategorie mit Anbieter-CTA =
+  `ctaAria(name)`-Funktion im jeweiligen `STR`-Objekt ergänzen und ins
+  `aria-label` des CTA-Links einbauen, nach demselben Muster.
+
 ## "Wie wir bewerten"-Links (Methodik-Transparenz)
 
 **Seit 2026-10-23, auf allen 7 Vergleichsseiten (DE+EN = 14 Seiten).** Ein

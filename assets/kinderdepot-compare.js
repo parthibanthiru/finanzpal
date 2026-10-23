@@ -15,7 +15,8 @@
     ageLabel: 'Age / conditions',
     detailsMore: 'More details',
     detailsLess: 'Fewer details',
-    cta: 'View offer',
+    cta: 'View provider',
+    ctaAria: function (name) { return 'View provider: ' + name; },
     provider: 'Provider',
     sourceLabel: 'Sources',
     scoreTooltip: function (b) {
@@ -38,6 +39,7 @@
     detailsMore: 'Mehr Details',
     detailsLess: 'Weniger Details',
     cta: 'Zum Anbieter',
+    ctaAria: function (name) { return 'Zum Anbieter: ' + name; },
     provider: 'Anbieter',
     sourceLabel: 'Quellen',
     scoreTooltip: function (b) {
@@ -120,7 +122,7 @@
       '<div class="cc-fact"><span class="k">' + STR.feeLabel + '</span><span class="v">' + escapeHtml(item.depotgebuehrText) + '</span></div>' +
       '<div class="cc-fact"><span class="k">' + STR.rateLabel + '</span><span class="v">' + item.mindestsparrate + ' €</span></div>' +
       '</div>' +
-      '<div class="cc-cta-col"><a href="' + escapeHtml(item.affiliateUrl) + '" class="cta-btn" rel="sponsored nofollow">' + STR.cta + '</a></div>' +
+      '<div class="cc-cta-col"><a href="' + escapeHtml(item.affiliateUrl) + '" class="cta-btn" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a></div>' +
       '</div>' +
       '<hr class="cc-divider">' +
       '<button type="button" class="kk-toggle" data-toggle>' + STR.detailsMore + ' ▾</button>' +

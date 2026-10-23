@@ -28,7 +28,8 @@
     intervalLabel: 'Execution intervals',
     detailsMore: 'More details',
     detailsLess: 'Fewer details',
-    cta: 'View offer',
+    cta: 'View provider',
+    ctaAria: function (name) { return 'View provider: ' + name; },
     reviewLink: 'Read our full review →',
     provider: 'Provider'
   } : {
@@ -59,7 +60,8 @@
     intervalLabel: 'Ausführungsintervalle',
     detailsMore: 'Mehr Details',
     detailsLess: 'Weniger Details',
-    cta: 'Zum Angebot',
+    cta: 'Zum Anbieter',
+    ctaAria: function (name) { return 'Zum Anbieter: ' + name; },
     reviewLink: 'Unseren ausführlichen Test lesen →',
     provider: 'Anbieter'
   };
@@ -114,7 +116,7 @@
       '<div class="cc-fact"><span class="k">' + STR.orderLabel + '</span><span class="v">' + escapeHtml(item.orderfee) + '</span></div>' +
       '<div class="cc-fact"><span class="k">' + STR.rateLabel + '</span><span class="v">' + escapeHtml(item.sparplanAb) + '</span></div>' +
       '</div>' +
-      '<div class="cc-cta-col"><a href="' + escapeHtml(item.affiliateUrl) + '" class="cta-btn" rel="sponsored nofollow">' + STR.cta + '</a></div>' +
+      '<div class="cc-cta-col"><a href="' + escapeHtml(item.affiliateUrl) + '" class="cta-btn" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a></div>' +
       '</div>' +
       '<hr class="cc-divider">' +
       '<button type="button" class="kk-toggle" data-toggle>' + STR.detailsMore + ' ▾</button>' +

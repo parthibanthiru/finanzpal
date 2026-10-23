@@ -3,9 +3,9 @@
 (function () {
   var LANG = (document.documentElement.lang || 'de').toLowerCase().indexOf('en') === 0 ? 'en' : 'de';
   var STR = {
-    de: { pick: 'Unsere Empfehlung', cta: 'Zum Anbieter', loading: 'Lade Vergleichsdaten …', notRated: 'noch nicht bewertet',
+    de: { pick: 'Unsere Empfehlung', cta: 'Zum Anbieter', ctaAria: function (name) { return 'Zum Anbieter: ' + name; }, loading: 'Lade Vergleichsdaten …', notRated: 'noch nicht bewertet',
       error: function (msg) { return 'Daten konnten nicht geladen werden (' + msg + '). Lokal? Bitte über einen lokalen Server öffnen, z. B. <code>python3 -m http.server</code> — direktes Öffnen der Datei (file://) blockiert den Datenabruf im Browser.'; } },
-    en: { pick: 'Our pick', cta: 'View offer', loading: 'Loading comparison data …', notRated: 'not yet rated',
+    en: { pick: 'Our pick', cta: 'View provider', ctaAria: function (name) { return 'View provider: ' + name; }, loading: 'Loading comparison data …', notRated: 'not yet rated',
       error: function (msg) { return 'Could not load data (' + msg + '). Running locally? Please serve the files via a local server, e.g. <code>python3 -m http.server</code> — opening the file directly (file://) blocks the request in the browser.'; } }
   };
 
@@ -116,7 +116,7 @@
 
   function ctaHtml(item) {
     var cls = item.recommended ? 'cta-btn2' : 'cta-btn2 secondary';
-    return '<a href="' + item.affiliateUrl + '" class="' + cls + '" rel="sponsored nofollow">' + STR[LANG].cta + '</a>';
+    return '<a href="' + item.affiliateUrl + '" class="' + cls + '" rel="sponsored nofollow" aria-label="' + escapeHtml(STR[LANG].ctaAria(item.name)) + '">' + STR[LANG].cta + '</a>';
   }
 
   var renderers = {

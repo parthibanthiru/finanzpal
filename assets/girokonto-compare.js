@@ -11,6 +11,7 @@
       resultCount: function (n, total) { return n + ' von ' + total + ' Girokonten'; },
       noResults: 'Kein Konto erfüllt diese Filter — probiere weniger Filter.',
       cta: 'Zum Anbieter',
+      ctaAria: function (name) { return 'Zum Anbieter: ' + name; },
       moreDetails: 'Mehr Details',
       lessDetails: 'Weniger Details',
       kontofuehrung: 'Kontoführung',
@@ -32,6 +33,7 @@
       resultCount: function (n, total) { return n + ' of ' + total + ' checking accounts'; },
       noResults: 'No account matches these filters — try removing a filter.',
       cta: 'View provider',
+      ctaAria: function (name) { return 'View provider: ' + name; },
       moreDetails: 'More details',
       lessDetails: 'Less details',
       kontofuehrung: 'Account fee',
@@ -159,7 +161,7 @@
             '<div class="cc-fact"><span class="k">' + STR.dispozins + '</span><span class="v">' + dispoText + '</span></div>' +
           '</div>' +
           '<div class="cc-cta-col">' +
-            '<a href="' + item.affiliateUrl + '" class="cta-btn" rel="sponsored nofollow">' + STR.cta + '</a>' +
+            '<a href="' + item.affiliateUrl + '" class="cta-btn" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a>' +
           '</div>' +
         '</div>' +
         '<hr class="cc-divider">' +
