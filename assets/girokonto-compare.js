@@ -23,7 +23,8 @@
       anbieter: 'Anbieter',
       scoreTooltip: function (b) {
         return 'Finanzpal-Score: Kontoführung ' + b.kontofuehrung + ' · Dispozins ' + b.dispozins + ' · Guthabenzins ' + b.guthabenzins + ' · Karte & Flexibilität ' + b.karteFlexibilitaet + ' (je von 100). Methodik: ueber-uns.html#finanzpal-score';
-      }
+      },
+      scoreLabels: { kontofuehrung: 'Kontoführung', dispozins: 'Dispozins', guthabenzins: 'Guthabenzins', karteFlexibilitaet: 'Karte & Flexibilität' }
     },
     en: {
       loading: 'Loading comparison data …',
@@ -43,9 +44,19 @@
       anbieter: 'Provider',
       scoreTooltip: function (b) {
         return 'Finanzpal Score: Account fee ' + b.kontofuehrung + ' · Overdraft rate ' + b.dispozins + ' · Cash interest ' + b.guthabenzins + ' · Card & flexibility ' + b.karteFlexibilitaet + ' (each out of 100). Methodology: ueber-uns.html#finanzpal-score';
-      }
+      },
+      scoreLabels: { kontofuehrung: 'Account fee', dispozins: 'Overdraft rate', guthabenzins: 'Cash interest', karteFlexibilitaet: 'Card & flexibility' }
     }
   }[LANG];
+
+  function scoreBreakdownRows(breakdown) {
+    var rows = [];
+    for (var key in breakdown) {
+      if (!Object.prototype.hasOwnProperty.call(breakdown, key)) continue;
+      rows.push({ label: (STR.scoreLabels || {})[key] || key, value: breakdown[key] });
+    }
+    return rows;
+  }
 
   var SCORE_RING_R = 8;
   var SCORE_RING_C = 2 * Math.PI * SCORE_RING_R;
@@ -55,11 +66,12 @@
     var band = (item.score.band || '').toLowerCase();
     var value = item.score.value;
     var title = STR.scoreTooltip(item.score.breakdown || {});
+    var rowsJson = escapeHtml(JSON.stringify(scoreBreakdownRows(item.score.breakdown || {})));
     var ariaLabel = LANG === 'en'
       ? 'Finanzpal Score ' + value + ', grade ' + item.score.band
       : 'Finanzpal-Score ' + value + ', Note ' + item.score.band;
     var offset = (SCORE_RING_C * (1 - Math.max(0, Math.min(100, value)) / 100)).toFixed(2);
-    return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '" aria-label="' + escapeHtml(ariaLabel) + '">' +
+    return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '" aria-label="' + escapeHtml(ariaLabel) + '" data-score-value="' + value + '" data-score-band="' + escapeHtml(item.score.band) + '" data-score-rows=\'' + rowsJson + '\' aria-haspopup="dialog" aria-expanded="false">' +
       '<svg class="fp-score-ring" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">' +
         '<circle class="fp-score-track" cx="11" cy="11" r="' + SCORE_RING_R + '"></circle>' +
         '<circle class="fp-score-fill" cx="11" cy="11" r="' + SCORE_RING_R + '" stroke-dasharray="' + SCORE_RING_C.toFixed(2) + '" stroke-dashoffset="' + offset + '" transform="rotate(-90 11 11)"></circle>' +

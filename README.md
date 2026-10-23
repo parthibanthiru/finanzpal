@@ -372,6 +372,22 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   `compare.js`) **und** Methodik-Text auf `ueber-uns.html`/
   `en/ueber-uns.html` (`#finanzpal-score`) erweitern — nie eine Kategorie
   stillschweigend bewerten, ohne die Kriterien dort offenzulegen.
+- **Breakdown-Popover (seit 2026-10-23).** Der Badge trug das Teilkriterien-
+  Breakdown bisher nur im nativen `title`-Tooltip — auf Touch-Geräten (also
+  dem Großteil des Traffics auf einer Vergleichsseite) nie sichtbar, da ein
+  `title`-Tooltip kein Hover kennt. Jede der vier Badge-Render-Funktionen
+  schreibt das Breakdown jetzt zusätzlich als `data-score-rows`-JSON
+  (`{label, value}`-Paare) ins Markup; `assets/score-popover.js` (neu,
+  event-delegiert auf `document`, somit unabhängig davon, wann/wo ein Badge
+  nachträglich ins DOM gerendert wird) öffnet daraus per Klick/Tap ein
+  kleines Panel mit einer Mini-Balkenanzeige pro Faktor, Escape/Außenklick/
+  Close-Button schließen es wieder, Tastatur- und Screenreader-zugänglich
+  (`aria-haspopup`, `aria-expanded`, Fokus wandert beim Öffnen ins Panel).
+  Eingebunden auf allen 10 Seiten mit bewerteten Kategorien (`girokonto`,
+  `kredite`, `tagesgeld`, `kreditkarte`, `kinderdepot`, je DE/EN) direkt nach
+  dem jeweiligen Vergleichs-Skript. Neue bewertete Kategorie = Script-Tag
+  dort ebenfalls ergänzen. Der `title`-Tooltip bleibt zusätzlich bestehen
+  (Progressive Enhancement, kein Funktionsverlust ohne JS/mit altem Browser).
 
 ## Bekannte offene Punkte (bewusste Entscheidungen, nicht vergessen)
 

@@ -39,6 +39,20 @@
     return prefix + parts.join(' · ') + suffix;
   }
 
+  // Same breakdown as scoreTooltip() above, but as {label, value} rows for
+  // assets/score-popover.js to render as a tappable panel (a native `title`
+  // tooltip never shows on touch devices, so mobile visitors otherwise have
+  // no way to see what the score is made of).
+  function scoreBreakdownRows(type, breakdown) {
+    var labels = (SCORE_FACTOR_LABELS[type] || {})[LANG] || {};
+    var rows = [];
+    for (var key in breakdown) {
+      if (!Object.prototype.hasOwnProperty.call(breakdown, key)) continue;
+      rows.push({ label: labels[key] || key, value: breakdown[key] });
+    }
+    return rows;
+  }
+
   var SCORE_RING_R = 8;
   var SCORE_RING_C = 2 * Math.PI * SCORE_RING_R;
 
@@ -47,11 +61,12 @@
     var band = (item.score.band || '').toLowerCase();
     var value = item.score.value;
     var title = scoreTooltip(type, item.score.breakdown || {});
+    var rowsJson = escapeHtml(JSON.stringify(scoreBreakdownRows(type, item.score.breakdown || {})));
     var ariaLabel = LANG === 'en'
       ? 'Finanzpal Score ' + value + ', grade ' + item.score.band
       : 'Finanzpal-Score ' + value + ', Note ' + item.score.band;
     var offset = (SCORE_RING_C * (1 - Math.max(0, Math.min(100, value)) / 100)).toFixed(2);
-    return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '" aria-label="' + escapeHtml(ariaLabel) + '">' +
+    return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '" aria-label="' + escapeHtml(ariaLabel) + '" data-score-value="' + value + '" data-score-band="' + escapeHtml(item.score.band) + '" data-score-rows=\'' + rowsJson + '\' aria-haspopup="dialog" aria-expanded="false">' +
       '<svg class="fp-score-ring" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">' +
         '<circle class="fp-score-track" cx="11" cy="11" r="' + SCORE_RING_R + '"></circle>' +
         '<circle class="fp-score-fill" cx="11" cy="11" r="' + SCORE_RING_R + '" stroke-dasharray="' + SCORE_RING_C.toFixed(2) + '" stroke-dashoffset="' + offset + '" transform="rotate(-90 11 11)"></circle>' +
