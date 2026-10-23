@@ -412,15 +412,24 @@ Kfz, Rechtsschutz) stehen im Projektdokument
 4. **"Zum Anbieter"-Buttons verlinken.** Alle Affiliate-CTAs sind aktuell
    `href="#"` mit `rel="sponsored nofollow"` vorbereitet — echte Partnerlinks
    in den JSON-Dateien unter `affiliateUrl` eintragen.
-5. **Echtes Logo ergänzen.** Aktuell nur Text-Wordmark + generisches SVG-Icon
-   (`assets/favicon.svg`, `assets/icon-512.png`); ein fertiges Logo liegt im
-   Projekt-Dokument `brand/finanzpal-logo-fp5.md` bereit zur Einbindung.
-6. **Newsletter-Formular hat kein Backend.** Das Eingabefeld auf der
+5. **Newsletter-Formular hat kein Backend.** Das Eingabefeld auf der
    Startseite (`.newsletter-form`) sammelt aktuell nichts — ESP (z. B. Brevo,
    Mailchimp) anbinden, sobald entschieden.
-7. **Netlify-SSO-Gate entfernen**, sobald die Seite öffentlich gehen soll
+6. **Netlify-SSO-Gate entfernen**, sobald die Seite öffentlich gehen soll
    (aktuell bewusst dahinter, nur fürs Team sichtbar).
-8. Entscheidung zu den bekannten offenen Punkten oben treffen.
+7. Entscheidung zu den bekannten offenen Punkten oben treffen.
+
+**Erledigt:** Echtes Logo eingebunden (2026-10-23) — das FP5-Icon
+(`assets/favicon.svg`, `assets/icon-512.png`) war bereits das fertige Icon aus
+dem Projekt-Dokument `brand/finanzpal-logo-fp5.md` (Navy-Hintergrund, F/P als
+weiße Buchstaben, grüner Lächeln-Schwung); nur die Wordmark im Header/Footer
+lief noch über `--font-body` (Inter). Jetzt lädt jede Seite zusätzlich
+**Sora SemiBold** (Google Fonts, `&family=Sora:wght@600`) und `.wordmark`
+nutzt eine neue `--font-logo`-Variable (Sora, Fallback Inter) mit
+`letter-spacing: -0.03em` statt `-0.02em` — passend zur Vorgabe im
+Logo-Dokument. Alle anderen Überschriften/Fließtext bleiben unverändert
+(Source Serif 4 / Inter); das ist eine bewusst unangetastete,
+separate Entscheidung.
 
 ## Lokal testen
 

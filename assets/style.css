@@ -6,6 +6,7 @@
   --teal: #1C6E65; --slate: #3C5A72;
   --font-display: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-logo: 'Sora', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -34,7 +35,7 @@ a { color: inherit; }
 /* Header / nav (shared) */
 header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 20; }
 .site-bar { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; max-width: 1080px; margin: 0 auto; gap: 16px; }
-.wordmark { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-body); font-size: 19px; font-weight: 700; letter-spacing: -0.02em; text-decoration: none; flex-shrink: 0; }
+.wordmark { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-logo); font-size: 19px; font-weight: 600; letter-spacing: -0.03em; text-decoration: none; flex-shrink: 0; }
 .wordmark .logo-mark { flex-shrink: 0; border-radius: 7px; }
 .wordmark .logo-text { color: var(--logo-ink); }
 .wordmark .logo-text .pal { color: var(--logo-pal); }
