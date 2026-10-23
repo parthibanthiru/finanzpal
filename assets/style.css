@@ -314,11 +314,6 @@ table.fees td { padding: 12px 16px; font-size: 14px; border-bottom: 1px solid va
 table.fees tr:last-child td { border-bottom: none; }
 table.fees tr:nth-child(even) td { background: var(--row-alt); }
 table.fees td.num { font-variant-numeric: tabular-nums; text-align: right; }
-.review-card { border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; background: var(--bg-raised); margin-bottom: 14px; }
-.review-card .rev-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
-.review-card .rev-stars { color: var(--gold); font-size: 13px; letter-spacing: 1px; }
-.review-card .rev-who { font-size: 12.5px; color: var(--ink-soft); }
-.review-card p { margin: 0; font-size: 14px; }
 .side-card { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 8px; padding: 22px; position: sticky; top: 92px; margin-bottom: 20px; }
 .side-card .sc-score { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
 .side-card .sc-score .num { font-family: var(--font-display); font-size: 34px; color: var(--green-deep); }

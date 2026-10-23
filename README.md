@@ -391,22 +391,16 @@ Kfz, Rechtsschutz) stehen im Projektdokument
 
 ## Bekannte offene Punkte (bewusste Entscheidungen, nicht vergessen)
 
-1. **Fiktive Kundenbewertungen auf den Broker-Detailseiten.** Die Abschnitte
-   „Erfahrungen aus unserer Leserschaft" (`broker-trade-republic.html` etc.)
-   zeigen erfundene Namen, Sterne und Bewertungszahlen (z. B. „312
-   Bewertungen") — Finanzpal hat noch keine echten Nutzerbewertungen. Auf
-   explizite Entscheidung bewusst unverändert gelassen, aber vor dem Launch
-   zu klären: entfernen oder als redaktionelle Einschätzung umlabeln.
-2. **DEVK-Beitrag (Privathaftpflicht) ist eine Schätzung**, im Disclosure-Text
+1. **DEVK-Beitrag (Privathaftpflicht) ist eine Schätzung**, im Disclosure-Text
    entsprechend markiert — vor Launch durch ein echtes Angebot ersetzen.
-3. **Consorsbank Visa Karte und drei der vier Hausrat-Anbieter** zeigen
+2. **Consorsbank Visa Karte und drei der vier Hausrat-Anbieter** zeigen
    Ratings, die noch nicht unabhängig verifiziert sind (im jeweiligen
    Disclosure-Text offengelegt).
-4. **Alle `affiliateUrl`-Felder in `data/*.json` sind noch `"#"`.** Noch keine
+3. **Alle `affiliateUrl`-Felder in `data/*.json` sind noch `"#"`.** Noch keine
    echten Partnerlinks (siehe Launch-Liste unten).
-5. **Filter-Chips auf `ratgeber.html`** (Alle/Investieren/Zahlen/…) sind noch
+4. **Filter-Chips auf `ratgeber.html`** (Alle/Investieren/Zahlen/…) sind noch
    rein optisch — kein JS filtert die Artikelkarten danach.
-6. **Scalable Capital: zwei leicht widersprüchliche Depotgebühr-Angaben
+5. **Scalable Capital: zwei leicht widersprüchliche Depotgebühr-Angaben
    zusammengeführt.** Der ehemalige `broker.json`-Eintrag nannte die
    gestaffelte Gebühr „0 € (Free Broker) / 4,99 €/Monat (Prime+)", der
    ehemalige `depot.json`-Eintrag pauschal „0 €/Jahr". Nach der
@@ -415,6 +409,14 @@ Kfz, Rechtsschutz) stehen im Projektdokument
    aus dem Depot-Datensatz steht weiter für den „Depotführung bedingungslos
    kostenlos"-Filter/Badge. Vor Launch beim Anbieter verifizieren, welche
    Angabe tatsächlich zutrifft.
+
+6. **Herkunft der Broker-Ratings (★, z. B. 4,3 / 5) ist nicht dokumentiert.**
+   Die erfundenen Leserbewertungen und Bewertungszahlen („312 Bewertungen")
+   auf den Broker-Detailseiten wurden am 23.10.2026 entfernt; die Sterne-
+   Ratings sind seitdem ehrlich als „Finanzpal-Einschätzung" bzw.
+   „Redaktionelle Einschätzung von Finanzpal" beschriftet. Vor dem Launch
+   klären, worauf sie beruhen — dokumentieren (Methodik auf `ueber-uns.html`)
+   oder durch den Finanzpal-Score ersetzen.
 
 ## Vor dem Launch unbedingt erledigen
 
