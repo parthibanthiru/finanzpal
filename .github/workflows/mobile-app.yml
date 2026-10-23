@@ -1,0 +1,86 @@
+# Checks the Finanzpal app (mobile/) on every change, so errors show up without manual testing:
+# installs the packages, aligns them to the Expo SDK, checks the website data sync,
+# runs the full TypeScript check and builds the Android and iOS JavaScript bundles.
+# Failures are also posted as annotations on the commit (see mobile/tools/ci-step.sh).
+name: Mobile app check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'mobile/**'
+      - 'data/**'
+      - 'assets/*rechner.js'
+      - 'assets/haushaltsbuch.js'
+      - 'assets/finanz-check.js'
+      - 'assets/insurance-tabs.js'
+      - '*.html'
+      - '.github/workflows/mobile-app.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: mobile
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install packages
+        id: install
+        run: tools/ci-step.sh "npm install" npm install --no-audit --no-fund
+
+      - name: Align package versions with the Expo SDK
+        id: align
+        run: tools/ci-step.sh "expo install --fix" npx expo install --fix
+
+      - name: Report resolved versions
+        if: ${{ !cancelled() && steps.align.outcome == 'success' }}
+        run: |
+          versions="$(node -e '
+            const p=require("./package.json");
+            const out={};
+            for (const n of Object.keys({...p.dependencies,...p.devDependencies})) {
+              try { out[n]=require(require.resolve(n+"/package.json",{paths:[process.cwd()]})).version } catch { out[n]="?" }
+            }
+            console.log(Object.entries(out).map(([k,v])=>k+"@"+v).join(", "));
+          ')"
+          echo "::notice title=Resolved package versions::${versions}"
+
+      - name: Website data in sync
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: |
+          tools/ci-step.sh "sync-data" node tools/sync-data.mjs
+          tools/ci-step.sh "mobile/data out of date (run: cd mobile && npm run sync-data)" git diff --exit-code -- data
+
+      - name: TypeScript check
+        if: ${{ !cancelled() && steps.align.outcome == 'success' }}
+        run: tools/ci-step.sh "TypeScript" npx tsc --noEmit --pretty false
+
+      - name: Build Android bundle
+        if: ${{ !cancelled() && steps.align.outcome == 'success' }}
+        run: tools/ci-step.sh "Android bundle" npx expo export --platform android --output-dir "$RUNNER_TEMP/export-android"
+
+      - name: Build iOS bundle
+        if: ${{ !cancelled() && steps.align.outcome == 'success' }}
+        run: tools/ci-step.sh "iOS bundle" npx expo export --platform ios --output-dir "$RUNNER_TEMP/export-ios"
+
+      - name: Expo doctor (advice only)
+        if: ${{ !cancelled() && steps.align.outcome == 'success' }}
+        continue-on-error: true
+        run: |
+          out="$(npx expo-doctor 2>&1)"; status=$?
+          echo "$out"
+          if [ $status -ne 0 ]; then
+            echo "::warning title=expo-doctor::$(echo "$out" | tail -n 60 | sed -e 's/%/%25/g' -e ':a;N;$!ba;s/\n/%0A/g')"
+          fi

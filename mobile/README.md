@@ -44,6 +44,13 @@ mobile/
   supabase/schema.sql, backend-auth/
 ```
 
+## Automatic checks (GitHub Actions)
+`.github/workflows/mobile-app.yml` runs on every push that touches the app or the website data it uses:
+`npm install` → `npx expo install --fix` → website-data sync check → `tsc --noEmit` → Android and iOS
+bundle builds (`expo export`) → `expo-doctor` (advice only). A failing step also posts its last 80 output lines
+as an annotation on the commit (`tools/ci-step.sh`). Results: the commit's ✓/✗ on GitHub, or the
+repo's **Actions** tab.
+
 ## Keeping app and website in sync
 The app ships a copy of the website's `data/*.json` and extracts the disclosure texts (comparison pages,
 insurance tabs, and the `calc-disclaimer` of all 7 calculator pages) plus the Finanz-Check questions and

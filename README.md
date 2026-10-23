@@ -113,7 +113,8 @@ finanzpal/
 ├── mobile/                         Finanzpal-App (Android & iOS, Expo/React Native) — nutzt
 │                                     data/*.json + Disclosure-Texte dieser Website, siehe
 │                                     Abschnitt „Mobile App" und mobile/README.md
-├── netlify.toml                    Kein Deploy bei Commits nur in mobile/; /mobile/* nie ausliefern
+├── .github/workflows/mobile-app.yml Automatische App-Prüfung (GitHub Actions)
+├── netlify.toml                    Kein Deploy bei Commits nur in mobile/ oder .github/; /mobile/* nie ausliefern
 └── README.md                       Diese Datei
 ```
 
@@ -465,6 +466,13 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   springt im jeweiligen Vergleich direkt zum empfohlenen Anbieter.
 - **Farben/Logo:** `mobile/components/theme.ts` spiegelt die Tokens aus
   `assets/style.css`; App-Icon = FP5-Logo.
+
+**Automatische Prüfung:** `.github/workflows/mobile-app.yml` (GitHub Actions)
+installiert die App-Pakete, prüft TypeScript und baut die Android-/iOS-Bundles
+bei jedem Push, der `mobile/`, `data/` oder die von der App genutzten
+Website-Skripte betrifft — Fehler erscheinen als ✗ am Commit, ohne die App
+manuell testen zu müssen. Commits nur in `.github/` lösen ebenfalls keinen
+Netlify-Deploy aus.
 
 **Pflege:** Wer `data/*.json`, einen Disclosure-Text, einen `calc-disclaimer`,
 die Finanz-Check-Fragen/-Gewichte oder die Rechner-Logik ändert, führt danach `cd mobile && npm run sync-data` aus
