@@ -40,7 +40,8 @@ gibt es doppelt: einmal auf Deutsch im Projekt-Root, einmal auf Englisch unter
 | `altersvorsorge-rechner.html` | Altersvorsorge-/Rentenlücken-Rechner |
 
 **Ratgeber** — `ratgeber.html` zeigt alle Artikel als Karten (je mit eigenem
-Icon + Akzentfarbe, siehe unten); aktuell 10 Artikel über 6 Kategorien
+Icon + Akzentfarbe, siehe unten), filterbar über die Themen-Chips
+(`assets/ratgeber-filter.js`, verlinkbar z. B. `ratgeber.html#absichern`); aktuell 10 Artikel über 6 Kategorien
 (Investieren / Zahlen / Sparen / Finanzieren / Absichern / Vorsorge):
 ETF-Sparplan, Kreditkarte, Tagesgeld-vs-Festgeld, Ratenkredit, Haftpflicht,
 Berufsunfähigkeit, Girokonto, Depot, Steuerprogramm, Altersvorsorgedepot. Der
@@ -94,6 +95,7 @@ finanzpal/
 │   │                                Renderlogik statt des generischen compare.js, da jede
 │   │                                Seite eigene Filter-/Ansichtslogik braucht)
 │   ├── etf-search.js               Filterlogik für etf-suche.html
+│   ├── ratgeber-filter.js          Themen-Filter (Chips) auf ratgeber.html, Filter im URL-Hash (#investieren)
 │   ├── kk-skeleton.js              Lade-Skeleton für Kreditkarten-/Depot-Karten
 │   ├── compare-bar.js              Fixierte „Vergleichen"-Leiste (Mehrfachauswahl → Vergleich)
 │   ├── sparplanrechner.js          Logik für Sparplanrechner & Zinseszinsrechner
@@ -398,9 +400,7 @@ Kfz, Rechtsschutz) stehen im Projektdokument
    Disclosure-Text offengelegt).
 3. **Alle `affiliateUrl`-Felder in `data/*.json` sind noch `"#"`.** Noch keine
    echten Partnerlinks (siehe Launch-Liste unten).
-4. **Filter-Chips auf `ratgeber.html`** (Alle/Investieren/Zahlen/…) sind noch
-   rein optisch — kein JS filtert die Artikelkarten danach.
-5. **Scalable Capital: zwei leicht widersprüchliche Depotgebühr-Angaben
+4. **Scalable Capital: zwei leicht widersprüchliche Depotgebühr-Angaben
    zusammengeführt.** Der ehemalige `broker.json`-Eintrag nannte die
    gestaffelte Gebühr „0 € (Free Broker) / 4,99 €/Monat (Prime+)", der
    ehemalige `depot.json`-Eintrag pauschal „0 €/Jahr". Nach der
@@ -410,7 +410,7 @@ Kfz, Rechtsschutz) stehen im Projektdokument
    kostenlos"-Filter/Badge. Vor Launch beim Anbieter verifizieren, welche
    Angabe tatsächlich zutrifft.
 
-6. **Herkunft der Broker-Ratings (★, z. B. 4,3 / 5) ist nicht dokumentiert.**
+5. **Herkunft der Broker-Ratings (★, z. B. 4,3 / 5) ist nicht dokumentiert.**
    Die erfundenen Leserbewertungen und Bewertungszahlen („312 Bewertungen")
    auf den Broker-Detailseiten wurden am 23.10.2026 entfernt; die Sterne-
    Ratings sind seitdem ehrlich als „Finanzpal-Einschätzung" bzw.

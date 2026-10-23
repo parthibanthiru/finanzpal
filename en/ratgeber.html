@@ -87,14 +87,15 @@
     <p>Explained plainly, without jargon — everything you should know before a financial decision.</p>
   </section>
 
-  <nav class="rat-filters">
-    <span class="chip active">All</span>
-    <span class="chip">Investing</span>
-    <span class="chip">Spending</span>
-    <span class="chip">Saving</span>
-    <span class="chip">Financing</span>
-    <span class="chip">Protecting</span>
-    <span class="chip">Retirement</span>
+  <nav class="rat-filters" aria-label="Filter by topic">
+    <button type="button" class="chip active" data-filter="" aria-pressed="true">All</button>
+    <button type="button" class="chip" data-filter="Investing" aria-pressed="false">Investing</button>
+    <button type="button" class="chip" data-filter="Spending" aria-pressed="false">Spending</button>
+    <button type="button" class="chip" data-filter="Saving" aria-pressed="false">Saving</button>
+    <button type="button" class="chip" data-filter="Financing" aria-pressed="false">Financing</button>
+    <button type="button" class="chip" data-filter="Protecting" aria-pressed="false">Protecting</button>
+    <button type="button" class="chip" data-filter="Retirement" aria-pressed="false">Retirement</button>
+    <span id="rat-filter-status" class="visually-hidden" role="status" aria-live="polite" data-one="{n} article" data-many="{n} articles"></span>
   </nav>
 
   <div class="rat-grid">
@@ -201,5 +202,6 @@
 </footer>
 
 <script src="../assets/nav.js"></script>
+<script src="../assets/ratgeber-filter.js"></script>
 </body>
 </html>
