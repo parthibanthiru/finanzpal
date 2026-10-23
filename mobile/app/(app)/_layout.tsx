@@ -1,8 +1,8 @@
-import { Text } from 'react-native';
+import { ColorValue, Text } from 'react-native';
 import { Tabs } from 'expo-router';
 import { colors } from '@/components/theme';
 
-const icon = (glyph: string) => ({ color }: { color: string }) => <Text style={{ fontSize: 20, color }}>{glyph}</Text>;
+const icon = (glyph: string) => ({ color }: { color: ColorValue }) => <Text style={{ fontSize: 20, color }}>{glyph}</Text>;
 
 export default function AppLayout() {
   return (

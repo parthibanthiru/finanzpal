@@ -81,7 +81,8 @@ jobs:
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         continue-on-error: true
         run: |
-          out="$(npx expo-doctor 2>&1)"; status=$?
+          status=0
+          out="$(npx expo-doctor 2>&1)" || status=$?
           echo "$out"
           if [ $status -ne 0 ]; then
             echo "::warning title=expo-doctor::$(echo "$out" | tail -n 60 | sed -e 's/%/%25/g' -e ':a;N;$!ba;s/\n/%0A/g')"
