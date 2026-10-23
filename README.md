@@ -762,23 +762,33 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   zieht das Sync-Skript direkt aus `assets/finanz-check.js` (für alle 96
   Antwortkombinationen gegen die Website getestet, identisch). In der App
   oben auf der Startseite; nach dem Quiz zeigt sie „Deine Empfehlungen" und
-  springt im jeweiligen Vergleich direkt zum empfohlenen Anbieter.
+  springt im jeweiligen Vergleich direkt zum empfohlenen Anbieter. Die
+  „Warum diese Empfehlung"-Gründe (`reasonsFor()`) zeigt die App genauso an.
+- **Suche, ETF-Suche, Score-Aufschlüsselung:** Suchfeld auf der Startseite
+  (Anbieter in allen Vergleichen, ETFs per Name/ISIN, Rechner und Ratgeber);
+  ETF-Suche mit den Filtern von `etf-suche.html` (Logik aus `assets/etf-search.js`
+  portiert, gegen die Website getestet); Tipp auf den Finanzpal-Score zeigt die
+  Faktoren mit den Labels der Website (`STR.scoreLabels` der Vergleichsskripte bzw.
+  `SCORE_FACTOR_LABELS` in `compare.js`, per Sync nach `mobile/data/score-labels.json`).
 - **Farben/Logo:** `mobile/components/theme.ts` spiegelt die Tokens aus
   `assets/style.css`; App-Icon = FP5-Logo.
 
 **Automatische Prüfung:** `.github/workflows/mobile-app.yml` (GitHub Actions)
-installiert die App-Pakete, prüft TypeScript und baut die Android-/iOS-Bundles
+installiert die App-Pakete, prüft TypeScript, lässt die Screen-Tests laufen
+(jeder Screen auf DE/EN, hell/dunkel, plus Klick-Abläufe) und baut die Android-/iOS-Bundles
 bei jedem Push, der `mobile/`, `data/` oder die von der App genutzten
 Website-Skripte betrifft — Fehler erscheinen als ✗ am Commit, ohne die App
 manuell testen zu müssen. Commits nur in `.github/` lösen ebenfalls keinen
 Netlify-Deploy aus.
 
 **Pflege:** Wer `data/*.json` / `*.en.json`, einen Disclosure-Text (DE oder EN),
-einen `calc-disclaimer`, die Finanz-Check-Fragen/-Gewichte, die Ratgeber-Artikelliste
+einen `calc-disclaimer`, die Finanz-Check-Fragen/-Gewichte/-Begründungstexte, die Score-Faktor-Labels
+(`*-compare.js` `STR.scoreLabels`, `compare.js` `SCORE_FACTOR_LABELS`), die Ratgeber-Artikelliste
 (`ratgeber.html` / `en/ratgeber.html`) oder die Rechner-Logik ändert, führt danach `cd mobile && npm run sync-data` aus
 und committet `mobile/data/` mit (bei Rechner-Änderungen zusätzlich
 `mobile/lib/calc.ts` angleichen, inkl. der 2026er Steuer-/SV-Werte im
-Brutto-Netto-Rechner). Commits, die nur `mobile/` ändern, lösen dank `netlify.toml`
+Brutto-Netto-Rechner; bei Änderungen an `assets/etf-search.js` bzw. `reasonsFor()` in
+`finanz-check.js` die Ports `mobile/lib/etf.ts` bzw. `mobile/lib/finanzCheck.ts`). Commits, die nur `mobile/` ändern, lösen dank `netlify.toml`
 keinen Netlify-Deploy aus (spart Build-Minuten); `/mobile/*` wird nie als Teil
 der Website ausgeliefert. Details und App-Setup: `mobile/README.md`.
 

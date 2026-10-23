@@ -41,11 +41,14 @@
   scripts out of git.
 - **Mobile app in `mobile/`** uses this website as its single source of truth.
   After changing `data/*.json` or `*.en.json`, a disclosure text (DE or EN), a
-  `calc-disclaimer`, the Finanz-Check questions/weights in `assets/finanz-check.js`,
+  `calc-disclaimer`, the Finanz-Check questions/weights/`STR.reasonTemplate` in `assets/finanz-check.js`,
+  Finanzpal-Score factor labels (`STR.scoreLabels` in `girokonto-`/`broker-`/`kinderdepot-`/`kreditkarte-compare.js`,
+  `SCORE_FACTOR_LABELS` in `compare.js`),
   the guide list in `ratgeber.html` / `en/ratgeber.html`, or calculator logic (any `assets/*rechner.js` or `haushaltsbuch.js`, incl. the
   yearly tax/SV values in `nettolohnrechner.js`), run
   `cd mobile && npm run sync-data` (and mirror calculator changes in
-  `mobile/lib/calc.ts` / `mobile/lib/haushaltsbuch.ts`), then commit
+  `mobile/lib/calc.ts` / `mobile/lib/haushaltsbuch.ts`; mirror `assets/etf-search.js` filter
+  changes in `mobile/lib/etf.ts` and `reasonsFor()` changes in `mobile/lib/finanzCheck.ts`), then commit
   `mobile/data/` in the same commit. Commits touching only `mobile/` don't
   trigger a Netlify deploy (`netlify.toml` ignore rule).
 - **App text in two languages:** any new interface text in `mobile/` goes into

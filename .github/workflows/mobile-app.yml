@@ -15,7 +15,11 @@ on:
       - 'assets/haushaltsbuch.js'
       - 'assets/finanz-check.js'
       - 'assets/insurance-tabs.js'
+      - 'assets/*-compare.js'
+      - 'assets/compare.js'
+      - 'assets/etf-search.js'
       - '*.html'
+      - 'en/*.html'
       - '.github/workflows/mobile-app.yml'
   workflow_dispatch:
 
