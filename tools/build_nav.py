@@ -28,6 +28,7 @@ FILE_TO_KEY = {
     "broker-consorsbank.html": ("broker", "broker.html"),
     "broker-scalable-capital.html": ("broker", "broker.html"),
     "broker-trade-republic.html": ("broker", "broker.html"),
+    "broker-trade-republic-vs-scalable-capital.html": ("broker", "broker.html"),
     "etf-suche.html": ("broker", "etf-suche.html"),
     "kinderdepot.html": ("broker", "kinderdepot.html"),
     # Steuerprogramm (standalone, "Tax")

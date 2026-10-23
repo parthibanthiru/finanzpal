@@ -16,7 +16,7 @@ gibt es doppelt: einmal auf Deutsch im Projekt-Root, einmal auf Englisch unter
 **Vergleiche**
 | Seite | Inhalt |
 |---|---|
-| `broker.html` (+ 3 Detailseiten) | Broker- & Depot-Vergleich in einer Seite: Depot-/Ordergebühr, ETF-Sparpläne, Mindestsparrate, Guthabenzins, Rating — kartenbasiert (ehemals zwei getrennte Seiten `broker.html`/`depot.html`, seit Oktober 2026 zusammengeführt) |
+| `broker.html` (+ 3 Detailseiten + 1 "vs"-Seite) | Broker- & Depot-Vergleich in einer Seite: Depot-/Ordergebühr, ETF-Sparpläne, Mindestsparrate, Guthabenzins, Rating — kartenbasiert (ehemals zwei getrennte Seiten `broker.html`/`depot.html`, seit Oktober 2026 zusammengeführt); `broker-trade-republic-vs-scalable-capital.html` stellt zwei Broker direkt gegenüber (Pilot, siehe „Kopf-an-Kopf-Seiten" unten) |
 | `girokonto.html` | Girokonto-Vergleich |
 | `tagesgeld.html` | Tagesgeld-Vergleich |
 | `kinderdepot.html` | Junior-/Kinderdepot-Vergleich, mit Filter „ohne eigenes Elterndepot" |
@@ -390,6 +390,41 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   dem jeweiligen Vergleichs-Skript. Neue bewertete Kategorie = Script-Tag
   dort ebenfalls ergänzen. Der `title`-Tooltip bleibt zusätzlich bestehen
   (Progressive Enhancement, kein Funktionsverlust ohne JS/mit altem Browser).
+
+## Kopf-an-Kopf-Seiten ("vs"-Seiten)
+
+**Pilot, seit 2026-10-23 — eine einzige Seite, bewusst nicht auf andere
+Paare/Kategorien ausgeweitet, bis das mit dem Nutzer abgestimmt ist.**
+`broker-trade-republic-vs-scalable-capital.html` / `en/...` stellen zwei
+Broker direkt gegenüber (3-spaltige Vergleichstabelle, zwei CTAs, zwei
+Vorteils-Spalten, Verdict-Absatz, FAQ) statt sie nur in der großen
+`broker.html`-Übersicht nebeneinander zu zeigen. Technisch eine normale
+Detailseite, keine neue Infrastruktur:
+- Wiederverwendet bestehende Komponenten der Broker-Detailseiten
+  (`.broker-hero`, `.hero-id`, `.broker-mark`, `table.fees`, `.pros-cons`/
+  `.pc-col`, `.side-card`, `.alt-list`) statt ein eigenes Layout zu bauen.
+  Neu in `assets/style.css`: `.dual-cta-row` (zwei CTA-Buttons
+  nebeneinander), `table.fees td.num.win` (grün/fett für den jeweils
+  besseren Wert einer Zeile), `.pc-col.alt` (petrolfarbene Überschrift für
+  eine Vorteils-Spalte, die — anders als `.pc-col.con` — keine Nachteile
+  zeigt, sondern die Pluspunkte des *anderen* Anbieters im direkten
+  Vergleich; `.con` nur verwenden, wenn die Spalte tatsächlich Nachteile
+  auflistet), `.fine` (vorher nur innerhalb `.hero-cta` gültig, jetzt
+  global nutzbar).
+  Folgt dem Daten-Integritäts-Prinzip: keine fiktiven Sterne-Bewertungen in
+  der Vergleichstabelle, bestehende Unsicherheiten der Quelldaten
+  (schwankende ETF-Sparplan-Zahl, Guthabenzins 2,25 %/2,50 %) als
+  Fußnote übernommen statt einer scheinbar exakten Zahl.
+- Eingebunden ins übrige Site-Gerüst wie jede andere Seite: Eintrag in
+  `tools/build_nav.py` (`FILE_TO_KEY`, Gruppe „Broker"), zwei neue
+  Such-Einträge in `assets/nav.js`, zwei neue `<url>`-Blöcke in
+  `sitemap.xml`, Querverlinkung („⇄ vs. …") im `.alt-list` beider
+  Einzeltestseiten (`broker-trade-republic.html`, `broker-scalable-capital.html`,
+  je DE/EN).
+- Bevor weitere Paare oder Kategorien (Girokonto, Kreditkarte, …) nach
+  diesem Muster gebaut werden: Rücksprache mit dem Nutzer, da das deutlich
+  mehr Seiten/Pflegeaufwand bedeutet — diese eine Seite ist absichtlich nur
+  ein Testballon.
 
 ## Bekannte offene Punkte (bewusste Entscheidungen, nicht vergessen)
 

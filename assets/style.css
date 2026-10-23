@@ -288,7 +288,8 @@ td.num-cell { font-variant-numeric: tabular-nums; }
 .rating-row .score { font-weight: 600; font-size: 15px; }
 .rating-row .count { font-size: 13px; color: var(--ink-soft); }
 .hero-cta { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-.hero-cta .fine { font-size: 11.5px; color: var(--ink-soft); }
+.fine { font-size: 11.5px; color: var(--ink-soft); }
+.broker-hero .fine { display: block; margin-top: 8px; }
 .badge-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
 .badge { font-size: 12.5px; font-weight: 600; color: var(--green-deep); background: var(--tag-bg); padding: 6px 12px; border-radius: 100px; }
 .facts-strip { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); background: var(--bg-raised); margin-top: 28px; }
@@ -311,6 +312,7 @@ td.num-cell { font-variant-numeric: tabular-nums; }
 .pc-col h3 { font-size: 13px; font-weight: 700; margin: 0 0 12px; }
 .pc-col.pro h3 { color: var(--green-deep); }
 .pc-col.con h3 { color: var(--red-soft); }
+.pc-col.alt h3 { color: var(--teal); }
 .pc-col ul { margin: 0; padding-left: 18px; font-size: 14px; }
 .pc-col li { margin-bottom: 8px; }
 table.fees { width: 100%; border-collapse: collapse; border: 1px solid var(--line); background: var(--bg-raised); }
@@ -319,6 +321,13 @@ table.fees td { padding: 12px 16px; font-size: 14px; border-bottom: 1px solid va
 table.fees tr:last-child td { border-bottom: none; }
 table.fees tr:nth-child(even) td { background: var(--row-alt); }
 table.fees td.num { font-variant-numeric: tabular-nums; text-align: right; }
+table.fees td.num.win { color: var(--green-deep); font-weight: 700; }
+.dual-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+.review-card { border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; background: var(--bg-raised); margin-bottom: 14px; }
+.review-card .rev-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.review-card .rev-stars { color: var(--gold); font-size: 13px; letter-spacing: 1px; }
+.review-card .rev-who { font-size: 12.5px; color: var(--ink-soft); }
+.review-card p { margin: 0; font-size: 14px; }
 .side-card { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 8px; padding: 22px; position: sticky; top: 92px; margin-bottom: 20px; }
 .side-card .sc-score { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
 .side-card .sc-score .num { font-family: var(--font-display); font-size: 34px; color: var(--green-deep); }
