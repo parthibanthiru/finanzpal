@@ -92,7 +92,8 @@ describe.each(LANGS)('every screen renders (%s)', (lang) => {
   describe.each(SCHEMES)('%s theme', (scheme) => {
     it.each(CASES.map((c) => [c.name, c] as const))('%s', async (_name, c) => {
       await renderScreen(c.Screen, { lang, scheme, params: c.params });
-      expect(screen.getByText(c.expect(t, lang))).toBeTruthy();
+      // labels like "Kontoführung" appear on every provider card, so any number ≥ 1 is fine
+      expect(screen.getAllByText(c.expect(t, lang)).length).toBeGreaterThan(0);
       expectCleanText();
     });
   });
