@@ -21,16 +21,20 @@
     "plugins": [
       "expo-router",
       "expo-web-browser",
-      "expo-apple-authentication"
+      "expo-apple-authentication",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash.png",
+          "imageWidth": 160,
+          "resizeMode": "contain",
+          "backgroundColor": "#0F2A3D"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": false
     },
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#0F2A3D"
-    }
+    "icon": "./assets/icon.png"
   }
 }
