@@ -400,6 +400,33 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   dort ebenfalls ergänzen. Der `title`-Tooltip bleibt zusätzlich bestehen
   (Progressive Enhancement, kein Funktionsverlust ohne JS/mit altem Browser).
 
+## Affiliate-Disclosure: Konsistenz & Lesbarkeit
+
+**Seit 2026-10-24.** Audit aller drei Disclosure-Stellen (`.disclosure-note`
+unter Vergleichstabellen/-karten, `.fine` neben dem Hero-CTA und `.sc-fine`
+in der Sidebar der Broker-Detailseiten):
+- **Wortlaut-Inkonsistenz behoben.** Auf allen drei Broker-Detailseiten
+  (Trade Republic, Scalable Capital, Consorsbank, je DE/EN) sagte der
+  Hero-CTA-Hinweis etwas anderes als der Sidebar-Hinweis auf derselben
+  Seite (DE: „Finanzpal erhält ggf. eine Provision" vs. „ggf. Provision
+  für Finanzpal"; EN: „Finanzpal may receive a commission" vs. „possible
+  commission for Finanzpal") — jetzt überall identischer Wortlaut. Auf den
+  EN-Vergleichsseiten gab es zusätzlich einen Advertising/Advertisement-
+  Split (3 von 7 Seiten sagten „Advertising: … may earn a commission",
+  die übrigen „Advertisement: … may receive a commission") — auf
+  „Advertisement: … may receive a commission" vereinheitlicht.
+- **Lesbarkeit erhöht**, ohne aus dezentem Kleingedrucktem eine laute
+  Warnung zu machen: `.disclosure-note` 12,5px → 13px, `.fine` 11,5px →
+  12px, `.sc-fine` 11px → 11,5px; das jeweils erste Wort
+  („Werbung"/„Advertisement") ist jetzt fett und in der normalen
+  Textfarbe (`--ink` statt `--ink-soft`) gesetzt, der Rest bleibt
+  gedämpft — der Hinweis soll als ehrliche Kennzeichnung auffallen,
+  nicht wie Rechtstext wirken, aber auch nicht wie eine Warnmeldung.
+- Neue Disclosure-Stelle ergänzen = erstes Wort in `<strong>` setzen,
+  identischen Wortlaut wie die anderen Vorkommen auf derselben Seite
+  verwenden (`.disclosure-note strong, .fine strong, .sc-fine strong` in
+  `style.css` übernimmt die Farbe automatisch).
+
 ## CTA-Buttons: Copy-Konsistenz & Screenreader-Labels
 
 **Seit 2026-10-24.** Audit der Anbieter-CTA-Buttons auf allen Vergleichsseiten
