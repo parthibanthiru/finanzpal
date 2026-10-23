@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { getCategory } from '@/lib/categories';
+import { useI18n } from '@/lib/i18n';
 import { DataFile, formatUpdated, loadData } from '@/lib/data';
 import { openSite } from '@/lib/site';
 import { disclosure } from '@/lib/disclosures';
@@ -14,10 +15,11 @@ type Sort = 'standard' | 'score';
 export default function CategoryScreen() {
   const styles = useStyles();
   const colors = useColors();
+  const { t, lang } = useI18n();
   // focus = provider id to scroll to and highlight (from the Finanz-Check)
   // from = where the link came from ('merkliste' or the Finanz-Check by default), for the highlight label
   const { id, focus, from } = useLocalSearchParams<{ id: string; focus?: string; from?: string }>();
-  const highlightLabel = from === 'merkliste' ? 'Auf deiner Merkliste' : 'Dein Finanz-Check-Ergebnis';
+  const highlightLabel = from === 'merkliste' ? t.compare.highlightFav : t.compare.highlightCheck;
   const listRef = useRef<FlatList>(null);
   const { isFavorite, toggleFavorite } = useFavorites();
   const cat = getCategory(String(id));
@@ -25,8 +27,8 @@ export default function CategoryScreen() {
   const [sort, setSort] = useState<Sort>('standard');
 
   useEffect(() => {
-    if (cat) loadData(cat.file).then(setData);
-  }, [cat?.file]);
+    if (cat) loadData(cat.file, lang).then(setData);
+  }, [cat?.file, lang]);
 
   const hasScores = !!data?.items.some((i) => i.score);
   const items = useMemo(() => {
@@ -44,11 +46,12 @@ export default function CategoryScreen() {
     return () => clearTimeout(t);
   }, [focusIndex]);
 
-  if (!cat) return <Text style={{ padding: spacing.lg }}>Kategorie nicht gefunden.</Text>;
+  if (!cat) return <Text style={{ padding: spacing.lg }}>{t.compare.notFound}</Text>;
+  const text = t.categories[cat.id];
 
   return (
     <>
-      <Stack.Screen options={{ title: cat.title }} />
+      <Stack.Screen options={{ title: text.title }} />
       {!data ? (
         <ActivityIndicator style={{ marginTop: spacing.xl }} color={colors.primary} />
       ) : (
@@ -65,17 +68,17 @@ export default function CategoryScreen() {
           ListHeaderComponent={
             <View>
               <Text style={styles.meta}>
-                {data.items.length} Anbieter{data.updated ? ` · Stand ${formatUpdated(data.updated)}` : ''}
+                {t.common.providers(data.items.length)}{data.updated ? ` · ${t.compare.asOf(formatUpdated(data.updated) ?? '')}` : ''}
               </Text>
-              {cat.topNote ? <Text style={styles.info}>{cat.topNote}</Text> : null}
+              {text.topNote ? <Text style={styles.info}>{text.topNote}</Text> : null}
               {data.profileNote ? <Text style={styles.info}>{data.profileNote}</Text> : null}
               {hasScores && (
                 <View style={styles.sortRow}>
-                  <Text style={styles.sortLabel}>Sortieren:</Text>
+                  <Text style={styles.sortLabel}>{t.compare.sortLabel}</Text>
                   {(['standard', 'score'] as Sort[]).map((s) => (
                     <Pressable key={s} onPress={() => setSort(s)} style={[styles.chip, sort === s && styles.chipOn]}>
                       <Text style={[styles.chipText, sort === s && { color: colors.onPrimary }]}>
-                        {s === 'standard' ? 'Standard' : 'Finanzpal-Score'}
+                        {s === 'standard' ? t.compare.sortStandard : t.compare.sortScore}
                       </Text>
                     </Pressable>
                   ))}
@@ -86,7 +89,7 @@ export default function CategoryScreen() {
           renderItem={({ item }) => (
             <ProviderCard
               item={item}
-              fields={cat.fields(item)}
+              fields={cat.fields(item, t)}
               highlight={item.id === focus ? highlightLabel : undefined}
               favorite={isFavorite(cat.id, item.id)}
               onToggleFavorite={() => toggleFavorite(cat.id, item.id)}
@@ -98,11 +101,11 @@ export default function CategoryScreen() {
               <View style={styles.footerLinks}>
                 {hasScores && (
                   <Pressable onPress={() => openSite('ueber-uns.html#finanzpal-score')}>
-                    <Text style={styles.link}>Wie berechnen wir den Score?</Text>
+                    <Text style={styles.link}>{t.compare.scoreHow}</Text>
                   </Pressable>
                 )}
                 <Pressable onPress={() => openSite(cat.page)}>
-                  <Text style={styles.link}>Auf finanzpal.de ansehen</Text>
+                  <Text style={styles.link}>{t.compare.onSite}</Text>
                 </Pressable>
               </View>
             </View>

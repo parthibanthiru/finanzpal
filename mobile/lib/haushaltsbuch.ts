@@ -2,6 +2,7 @@
 // Like on the website, entries stay on this device only (AsyncStorage instead of localStorage);
 // nothing is sent to Supabase or any server.
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { strings, type Strings } from './i18n';
 
 export type Typ = 'einnahme' | 'ausgabe';
 export type Buchung = {
@@ -13,23 +14,14 @@ export type Buchung = {
   createdAt: number;
 };
 
-export const KATEGORIEN: Record<Typ, { id: string; label: string }[]> = {
-  einnahme: [
-    { id: 'gehalt', label: 'Gehalt' },
-    { id: 'sonstige-einnahme', label: 'Sonstige Einnahme' },
-  ],
-  ausgabe: [
-    { id: 'wohnen', label: 'Wohnen' },
-    { id: 'lebensmittel', label: 'Lebensmittel' },
-    { id: 'transport', label: 'Transport' },
-    { id: 'versicherungen', label: 'Versicherungen' },
-    { id: 'freizeit', label: 'Freizeit & Shopping' },
-    { id: 'sonstiges', label: 'Sonstiges' },
-  ],
+// Category ids = KATEGORIEN in assets/haushaltsbuch.js; labels: strings().calc.haushalt.categories.
+export const KATEGORIEN: Record<Typ, string[]> = {
+  einnahme: ['gehalt', 'sonstige-einnahme'],
+  ausgabe: ['wohnen', 'lebensmittel', 'transport', 'versicherungen', 'freizeit', 'sonstiges'],
 };
 
-export function katLabel(typ: Typ, katId: string) {
-  return KATEGORIEN[typ].find((k) => k.id === katId)?.label ?? katId;
+export function katLabel(katId: string, t: Strings = strings()) {
+  return t.calc.haushalt.categories[katId] ?? katId;
 }
 
 // Same key as the website, scoped per account so two people sharing a phone don't see each other's entries.

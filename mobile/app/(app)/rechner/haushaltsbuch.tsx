@@ -4,7 +4,8 @@ import { useAuth } from '@/context/AuthProvider';
 import {
   Buchung, KATEGORIEN, Typ, katLabel, loadBuchungen, newBuchung, saveBuchungen, summarize,
 } from '@/lib/haushaltsbuch';
-import { formatEURCents } from '@/lib/format';
+import { formatDate, formatEURCents, formatPct, parseNumber } from '@/lib/format';
+import { useT } from '@/lib/i18n';
 import { ChoiceField, ResultTile, useCalcStyles } from '@/components/CalcUI';
 import { Button } from '@/components/ui';
 import { makeStyles, radius, spacing, useColors } from '@/components/theme';
@@ -13,11 +14,13 @@ export default function HaushaltsbuchScreen() {
   const styles = useStyles();
   const calcStyles = useCalcStyles();
   const colors = useColors();
+  const t = useT();
+  const L = t.calc.haushalt;
   const { user } = useAuth();
   const userId = user?.id ?? 'anon';
   const [items, setItems] = useState<Buchung[] | null>(null);
   const [typ, setTyp] = useState<Typ>('ausgabe');
-  const [kategorie, setKategorie] = useState(KATEGORIEN.ausgabe[0].id);
+  const [kategorie, setKategorie] = useState(KATEGORIEN.ausgabe[0]);
   const [beschreibung, setBeschreibung] = useState('');
   const [betrag, setBetrag] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -36,12 +39,12 @@ export default function HaushaltsbuchScreen() {
 
   function changeTyp(t: Typ) {
     setTyp(t);
-    setKategorie(KATEGORIEN[t][0].id);
+    setKategorie(KATEGORIEN[t][0]);
   }
 
   function add() {
-    const value = parseFloat(betrag.replace(/\./g, '').replace(',', '.'));
-    if (!value || value <= 0) return setError('Bitte gib einen Betrag größer als 0 ein.');
+    const value = parseNumber(betrag);
+    if (!value || value <= 0) return setError(L.errAmount);
     setError(null);
     update([...(items ?? []), newBuchung(typ, kategorie, beschreibung, value)]);
     setBetrag('');
@@ -50,9 +53,9 @@ export default function HaushaltsbuchScreen() {
 
   function reset() {
     if (!items?.length) return;
-    Alert.alert('Alles löschen?', 'Wirklich alle Buchungen löschen? Das kann nicht rückgängig gemacht werden.', [
-      { text: 'Abbrechen', style: 'cancel' },
-      { text: 'Löschen', style: 'destructive', onPress: () => update([]) },
+    Alert.alert(L.resetTitle, L.resetText, [
+      { text: t.common.cancel, style: 'cancel' },
+      { text: t.common.delete, style: 'destructive', onPress: () => update([]) },
     ]);
   }
 
@@ -61,51 +64,51 @@ export default function HaushaltsbuchScreen() {
   return (
     <ScrollView contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }} keyboardShouldPersistTaps="handled">
       <View style={calcStyles.tiles}>
-        <ResultTile label="Einnahmen" value={formatEURCents(sum.einnahmen)} />
-        <ResultTile label="Ausgaben" value={formatEURCents(sum.ausgaben)} />
-        <ResultTile strong label="Saldo" value={formatEURCents(sum.saldo)} />
+        <ResultTile label={L.income} value={formatEURCents(sum.einnahmen)} />
+        <ResultTile label={L.expenses} value={formatEURCents(sum.ausgaben)} />
+        <ResultTile strong label={L.balance} value={formatEURCents(sum.saldo)} />
       </View>
-      {sum.saldo < 0 && <Text style={styles.negative}>Du gibst mehr aus, als du einnimmst.</Text>}
+      {sum.saldo < 0 && <Text style={styles.negative}>{L.negative}</Text>}
 
-      <Text style={calcStyles.section}>Neue Buchung</Text>
+      <Text style={calcStyles.section}>{L.newEntry}</Text>
       <ChoiceField
-        label="Art"
+        label={L.type}
         value={typ}
         onChange={changeTyp}
         options={[
-          { value: 'ausgabe', label: 'Ausgabe' },
-          { value: 'einnahme', label: 'Einnahme' },
+          { value: 'ausgabe', label: L.expense },
+          { value: 'einnahme', label: L.incomeOne },
         ]}
       />
-      <ChoiceField label="Kategorie" value={kategorie} onChange={setKategorie} options={KATEGORIEN[typ].map((k) => ({ value: k.id, label: k.label }))} />
-      <Text style={styles.label}>Beschreibung (optional)</Text>
-      <TextInput style={styles.input} value={beschreibung} onChangeText={setBeschreibung} placeholder="z. B. Miete Oktober" placeholderTextColor={colors.muted} />
-      <Text style={styles.label}>Betrag</Text>
+      <ChoiceField label={L.category} value={kategorie} onChange={setKategorie} options={KATEGORIEN[typ].map((k) => ({ value: k, label: katLabel(k, t) }))} />
+      <Text style={styles.label}>{L.description}</Text>
+      <TextInput style={styles.input} value={beschreibung} onChangeText={setBeschreibung} placeholder={L.descPlaceholder} placeholderTextColor={colors.muted} />
+      <Text style={styles.label}>{L.amount}</Text>
       <View style={styles.amountRow}>
         <TextInput
           style={[styles.input, { flex: 1, marginBottom: 0 }]}
           value={betrag}
           onChangeText={setBetrag}
           keyboardType="decimal-pad"
-          placeholder="0,00"
+          placeholder={L.amountPlaceholder}
           placeholderTextColor={colors.muted}
           onSubmitEditing={add}
         />
         <Text style={styles.euro}>€</Text>
       </View>
       {error && <Text style={styles.error}>{error}</Text>}
-      <Button title="Hinzufügen" onPress={add} />
+      <Button title={L.add} onPress={add} />
 
-      <Text style={calcStyles.section}>Ausgaben nach Kategorie</Text>
+      <Text style={calcStyles.section}>{L.byCategory}</Text>
       {sum.breakdown.length === 0 ? (
-        <Text style={styles.empty}>Noch keine Ausgaben zur Aufschlüsselung nach Kategorie.</Text>
+        <Text style={styles.empty}>{L.noExpenses}</Text>
       ) : (
         sum.breakdown.map((r) => (
           <View key={r.katId} style={{ marginBottom: spacing.sm }}>
             <View style={styles.catHead}>
-              <Text style={styles.catLabel}>{katLabel('ausgabe', r.katId)}</Text>
+              <Text style={styles.catLabel}>{katLabel(r.katId, t)}</Text>
               <Text style={styles.catValue}>
-                {formatEURCents(r.betrag)} · {r.pct.toFixed(0)} %
+                {formatEURCents(r.betrag)} · {formatPct(r.pct, 0)}
               </Text>
             </View>
             <View style={styles.track}>
@@ -115,16 +118,16 @@ export default function HaushaltsbuchScreen() {
         ))
       )}
 
-      <Text style={calcStyles.section}>Buchungen</Text>
+      <Text style={calcStyles.section}>{L.entries}</Text>
       {sorted.length === 0 ? (
-        <Text style={styles.empty}>Noch keine Buchungen — füge oben deine erste Einnahme oder Ausgabe hinzu.</Text>
+        <Text style={styles.empty}>{L.empty}</Text>
       ) : (
         sorted.map((tx) => (
           <View key={tx.id} style={styles.row}>
             <View style={{ flex: 1 }}>
-              <Text style={styles.desc}>{tx.beschreibung || katLabel(tx.typ, tx.kategorie)}</Text>
+              <Text style={styles.desc}>{tx.beschreibung || katLabel(tx.kategorie, t)}</Text>
               <Text style={styles.kat}>
-                {katLabel(tx.typ, tx.kategorie)} · {new Date(tx.createdAt).toLocaleDateString('de-DE')}
+                {katLabel(tx.kategorie, t)} · {formatDate(tx.createdAt)}
               </Text>
             </View>
             <Text style={[styles.amt, { color: tx.typ === 'einnahme' ? colors.pal : colors.danger }]}>
@@ -133,7 +136,7 @@ export default function HaushaltsbuchScreen() {
             <Pressable
               onPress={() => update(items.filter((x) => x.id !== tx.id))}
               style={styles.del}
-              accessibilityLabel="Löschen"
+              accessibilityLabel={t.common.delete}
               hitSlop={8}
             >
               <Text style={{ color: colors.muted, fontSize: 18 }}>×</Text>
@@ -143,14 +146,11 @@ export default function HaushaltsbuchScreen() {
       )}
       {sorted.length > 0 && (
         <Pressable onPress={reset} style={{ marginTop: spacing.md }}>
-          <Text style={{ color: colors.danger, fontWeight: '600' }}>Alle Buchungen löschen</Text>
+          <Text style={{ color: colors.danger, fontWeight: '600' }}>{L.deleteAll}</Text>
         </Pressable>
       )}
 
-      <Text style={calcStyles.disclaimer}>
-        Deine Buchungen werden nur auf diesem Gerät gespeichert — nicht in deinem Finanzpal-Konto und auf keinem Server.
-        Auf einem anderen Gerät sind sie nicht sichtbar, und beim Löschen der App gehen sie verloren.
-      </Text>
+      <Text style={calcStyles.disclaimer}>{L.storageNote}</Text>
     </ScrollView>
   );
 }

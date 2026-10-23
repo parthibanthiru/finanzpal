@@ -5,6 +5,7 @@ import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import { supabase } from '@/lib/supabase';
 import { deleteBuchungen } from '@/lib/haushaltsbuch';
+import { strings } from '@/lib/i18n';
 
 // Closes the login popup correctly when running as a web app.
 WebBrowser.maybeCompleteAuthSession();
@@ -29,14 +30,16 @@ type AuthContextValue = {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 // Map Supabase's English errors to friendly German messages.
-function toGerman(message: string): string {
+// Supabase's English error messages -> friendly messages in the app's current language.
+function friendlyError(message: string): string {
+  const e = strings().auth.errors;
   const m = message.toLowerCase();
-  if (m.includes('invalid login credentials')) return 'E-Mail oder Passwort ist falsch.';
-  if (m.includes('email not confirmed')) return 'Bitte bestätige zuerst deine E-Mail-Adresse.';
-  if (m.includes('already registered')) return 'Diese E-Mail-Adresse ist bereits registriert.';
-  if (m.includes('password should be at least')) return 'Das Passwort muss mindestens 8 Zeichen lang sein.';
-  if (m.includes('rate limit')) return 'Zu viele Versuche. Bitte warte kurz und versuche es erneut.';
-  if (m.includes('network')) return 'Keine Verbindung. Bitte prüfe deine Internetverbindung.';
+  if (m.includes('invalid login credentials')) return e.invalidLogin;
+  if (m.includes('email not confirmed')) return e.emailNotConfirmed;
+  if (m.includes('already registered')) return e.alreadyRegistered;
+  if (m.includes('password should be at least')) return e.passwordTooShort;
+  if (m.includes('rate limit')) return e.rateLimit;
+  if (m.includes('network')) return e.network;
   return message;
 }
 
@@ -62,7 +65,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     async signIn(email, password) {
       const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
-      return error ? toGerman(error.message) : null;
+      return error ? friendlyError(error.message) : null;
     },
 
     async signUp(email, password, name) {
@@ -71,7 +74,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         password,
         options: { data: { full_name: name.trim() } },
       });
-      return error ? toGerman(error.message) : null;
+      return error ? friendlyError(error.message) : null;
     },
 
     // Google: opens Google's login page in a secure in-app browser (works on Android and iOS).
@@ -82,7 +85,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         provider: 'google',
         options: { redirectTo, skipBrowserRedirect: true },
       });
-      if (error || !data?.url) return toGerman(error?.message ?? 'Google-Anmeldung fehlgeschlagen.');
+      if (error || !data?.url) return friendlyError(error?.message ?? strings().auth.errors.googleFailed);
 
       const result = await WebBrowser.openAuthSessionAsync(data.url, redirectTo);
       if (result.type !== 'success') return null; // cancelled / dismissed
@@ -91,10 +94,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const errDesc = firstParam(params.error_description as string | string[] | undefined);
       if (errDesc) return errDesc;
       const code = firstParam(params.code as string | string[] | undefined);
-      if (!code) return 'Google-Anmeldung fehlgeschlagen.';
+      if (!code) return strings().auth.errors.googleFailed;
 
       const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
-      return exchangeError ? toGerman(exchangeError.message) : null;
+      return exchangeError ? friendlyError(exchangeError.message) : null;
     },
 
     // Apple: native iOS sheet (Face ID / Touch ID). Not offered on Android.
@@ -106,13 +109,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             AppleAuthentication.AppleAuthenticationScope.EMAIL,
           ],
         });
-        if (!credential.identityToken) return 'Apple-Anmeldung fehlgeschlagen.';
+        if (!credential.identityToken) return strings().auth.errors.appleFailed;
 
         const { data, error } = await supabase.auth.signInWithIdToken({
           provider: 'apple',
           token: credential.identityToken,
         });
-        if (error) return toGerman(error.message);
+        if (error) return friendlyError(error.message);
 
         // Apple only sends the user's name on the very first sign-in – store it right away.
         const fullName = [credential.fullName?.givenName, credential.fullName?.familyName]
@@ -125,13 +128,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return null;
       } catch (e: unknown) {
         if ((e as { code?: string })?.code === 'ERR_REQUEST_CANCELED') return null;
-        return 'Apple-Anmeldung fehlgeschlagen.';
+        return strings().auth.errors.appleFailed;
       }
     },
 
     async resetPassword(email) {
       const { error } = await supabase.auth.resetPasswordForEmail(email.trim());
-      return error ? toGerman(error.message) : null;
+      return error ? friendlyError(error.message) : null;
     },
 
     async signOut() {
@@ -143,7 +146,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     async deleteAccount() {
       const userId = session?.user.id;
       const { error } = await supabase.rpc('delete_own_account');
-      if (error) return toGerman(error.message);
+      if (error) return friendlyError(error.message);
       if (userId) await deleteBuchungen(userId); // budget entries stored only on this device
       await supabase.auth.signOut();
       return null;

@@ -3,7 +3,8 @@
 // tools/sync-data.mjs; the scoring below is a direct port of scoreCategory()/renderResult().
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Item } from './data';
-import { formatPct } from './format';
+import { formatEUR, formatPct } from './format';
+import { strings, type Lang, type Strings } from './i18n';
 
 type Label = { de: string; en?: string };
 export type Question = { id: string; text: Label; options: { id: string; label: Label }[] };
@@ -15,13 +16,16 @@ const QUIZ: { questions: Question[]; weights: Weights; categoryKeys: string[] } 
 export const QUESTIONS = QUIZ.questions;
 export const CATEGORY_KEYS = QUIZ.categoryKeys;
 
-/** Quiz category -> app comparison (route id + data file) and display name. */
-export const CATEGORY_META: Record<string, { routeId: string; file: string; title: string }> = {
-  girokonto: { routeId: 'girokonto', file: 'girokonto', title: 'Girokonto' },
-  depot: { routeId: 'broker', file: 'broker', title: 'Depot' },
-  kreditkarte: { routeId: 'kreditkarte', file: 'kreditkarte', title: 'Kreditkarte' },
-  tagesgeld: { routeId: 'tagesgeld', file: 'tagesgeld', title: 'Tagesgeld' },
+/** Quiz category -> app comparison (route id + data file). Display names: strings().check.categories. */
+export const CATEGORY_META: Record<string, { routeId: string; file: string }> = {
+  girokonto: { routeId: 'girokonto', file: 'girokonto' },
+  depot: { routeId: 'broker', file: 'broker' },
+  kreditkarte: { routeId: 'kreditkarte', file: 'kreditkarte' },
+  tagesgeld: { routeId: 'tagesgeld', file: 'tagesgeld' },
 };
+
+/** Question/answer text in the given language; falls back to German if the website lacks English. */
+export const label = (l: Label, lang: Lang) => (lang === 'en' && l.en ? l.en : l.de);
 
 /** Points per provider id for one category — same as scoreCategory() on the website. */
 export function scoreCategory(cat: string, answers: Answers): Record<string, number> {
@@ -45,33 +49,34 @@ export function topPick(cat: string, answers: Answers, items: Item[]): Item | un
 }
 
 /** The three facts shown on each result card — same as factRows() on the website. */
-export function factRows(cat: string, item: Item): [string, string][] {
+export function factRows(cat: string, item: Item, t: Strings = strings()): [string, string][] {
+  const f = t.check.facts;
   const s = (v: unknown) => (v == null || v === '' ? '–' : String(v));
   if (cat === 'girokonto') {
     return [
-      ['Kontoführung', s(item.kontofuehrung)],
-      ['Dispozins', item.dispozins != null ? formatPct(item.dispozins) : 'Kein Dispo'],
-      ['Karte', s(item.karteNetzwerk)],
+      [f.kontofuehrung, s(item.kontofuehrung)],
+      [f.dispozins, item.dispozins != null ? formatPct(item.dispozins) : f.noDispo],
+      [f.karte, s(item.karteNetzwerk)],
     ];
   }
   if (cat === 'depot') {
     return [
-      ['Depotgebühr', s(item.depotgebuehrText)],
-      ['Mind. Sparrate', item.mindestsparrate != null ? `${item.mindestsparrate} €` : '–'],
-      ['Guthabenzins', item.guthabenzins ? formatPct(item.guthabenzins) : '–'],
+      [f.depotgebuehr, s(item.depotgebuehrText)],
+      [f.mindestsparrate, item.mindestsparrate != null ? formatEUR(item.mindestsparrate) : '–'],
+      [f.guthabenzins, item.guthabenzins ? formatPct(item.guthabenzins) : '–'],
     ];
   }
   if (cat === 'kreditkarte') {
     return [
-      ['Jahresgebühr', s(item.jahresgebuehr)],
-      ['Kartentyp', s(item.kartentyp)],
-      ['Fremdwährung', s(item.fremdwaehrung)],
+      [f.jahresgebuehr, s(item.jahresgebuehr)],
+      [f.kartentyp, s(item.kartentyp)],
+      [f.fremdwaehrung, s(item.fremdwaehrung)],
     ];
   }
   return [
-    ['Zins', s(item.rate)],
-    ['Garantie', s(item.guarantee)],
-    ['Einlagensicherung', s(item.protection)],
+    [f.zins, s(item.rate)],
+    [f.garantie, s(item.guarantee)],
+    [f.einlagensicherung, s(item.protection)],
   ];
 }
 

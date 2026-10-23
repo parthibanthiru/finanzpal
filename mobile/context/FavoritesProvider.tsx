@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 import { Alert } from 'react-native';
 import { useAuth } from './AuthProvider';
 import { Favorite, addFavorite, favKey, fetchFavorites, removeFavorite } from '@/lib/favorites';
+import { strings } from '@/lib/i18n';
 
 type FavoritesContextValue = {
   favorites: Favorite[];          // newest first
@@ -55,7 +56,8 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
       );
       (wasFav ? removeFavorite(user.id, category, itemId) : addFavorite(user.id, category, itemId)).catch(() => {
         setFavorites(previous);
-        Alert.alert('Merkliste', 'Das hat leider nicht geklappt. Bitte prüfe deine Internetverbindung und versuche es erneut.');
+        const t = strings().favorites;
+        Alert.alert(t.title, t.saveFailed);
       });
     },
     [user?.id, keys, favorites]

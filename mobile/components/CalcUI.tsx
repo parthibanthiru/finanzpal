@@ -1,7 +1,13 @@
 import { Pressable, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import { fonts, makeStyles, radius, spacing, useColors } from './theme';
+import { useI18n } from '@/lib/i18n';
+import { formatNumber, parseNumber } from '@/lib/format';
 
-/** Number field with − / + steppers (no slider dependency needed). */
+/**
+ * Number field with − / + steppers (no slider dependency needed).
+ * Shows and reads numbers in the app language ("1.000,5" / "1,000.5"); a "€" unit sits
+ * after the number in German and before it in English.
+ */
 export function NumberField({
   label, value, onChange, step, min, max, suffix, decimals = 0,
 }: {
@@ -9,32 +15,35 @@ export function NumberField({
   step: number; min: number; max: number; suffix: string; decimals?: number;
 }) {
   const styles = useStyles();
+  const { t, lang } = useI18n();
   const clamp = (n: number) => Math.min(max, Math.max(min, n));
   const round = (n: number) => Number(n.toFixed(decimals));
-  const shown = value.toLocaleString('de-DE', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  const shown = formatNumber(value, decimals);
+  const prefix = suffix === '€' && lang === 'en';
   return (
     <View style={styles.field}>
       <Text style={styles.label}>{label}</Text>
       <View style={styles.row}>
-        <Pressable style={styles.step} onPress={() => onChange(round(clamp(value - step)))} accessibilityLabel={`${label} verringern`}>
+        <Pressable style={styles.step} onPress={() => onChange(round(clamp(value - step)))} accessibilityLabel={t.calc.decrease(label)}>
           <Text style={styles.stepText}>−</Text>
         </Pressable>
         <View style={styles.inputWrap}>
+          {prefix && <Text style={[styles.suffix, { marginRight: 4 }]}>€</Text>}
           <TextInput
             style={styles.input}
             keyboardType="decimal-pad"
             defaultValue={shown}
-            key={shown /* re-sync after stepper taps */}
+            key={`${lang}:${shown}` /* re-sync after stepper taps or a language change */}
             onEndEditing={(e) => {
-              const n = Number(e.nativeEvent.text.replace(/\./g, '').replace(',', '.'));
+              const n = parseNumber(e.nativeEvent.text);
               onChange(Number.isFinite(n) ? round(clamp(n)) : value);
             }}
             selectTextOnFocus
             accessibilityLabel={label}
           />
-          <Text style={styles.suffix}>{suffix}</Text>
+          {!prefix && <Text style={styles.suffix}>{suffix}</Text>}
         </View>
-        <Pressable style={styles.step} onPress={() => onChange(round(clamp(value + step)))} accessibilityLabel={`${label} erhöhen`}>
+        <Pressable style={styles.step} onPress={() => onChange(round(clamp(value + step)))} accessibilityLabel={t.calc.increase(label)}>
           <Text style={styles.stepText}>+</Text>
         </Pressable>
       </View>

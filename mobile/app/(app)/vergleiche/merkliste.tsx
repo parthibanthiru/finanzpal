@@ -3,6 +3,7 @@ import { ActivityIndicator, Pressable, RefreshControl, ScrollView, StyleSheet, T
 import { useRouter } from 'expo-router';
 import { useFavorites } from '@/context/FavoritesProvider';
 import { CATEGORIES, getCategory } from '@/lib/categories';
+import { useI18n } from '@/lib/i18n';
 import { getBundled, type Item } from '@/lib/data';
 import { FavoriteButton, ScoreBadge } from '@/components/ProviderCard';
 import { fonts, makeStyles, radius, spacing, useColors } from '@/components/theme';
@@ -12,6 +13,7 @@ type Row = { category: string; itemId: string; item?: Item };
 export default function MerklisteScreen() {
   const styles = useStyles();
   const colors = useColors();
+  const { t, lang } = useI18n();
   const router = useRouter();
   const { favorites, loading, toggleFavorite, reload } = useFavorites();
 
@@ -19,17 +21,17 @@ export default function MerklisteScreen() {
   const groups = useMemo(() => {
     const out: { id: string; title: string; rows: Row[] }[] = [];
     for (const c of CATEGORIES) {
-      const items = getBundled(c.file).items;
+      const items = getBundled(c.file, lang).items;
       const rows = favorites
         .filter((f) => f.category === c.id)
         .map((f) => ({ category: f.category, itemId: f.itemId, item: items.find((i) => i.id === f.itemId) }));
-      if (rows.length) out.push({ id: c.id, title: c.title, rows });
+      if (rows.length) out.push({ id: c.id, title: t.categories[c.id].title, rows });
     }
     // Favorites of a comparison that no longer exists in the app
     const unknown = favorites.filter((f) => !getCategory(f.category));
-    if (unknown.length) out.push({ id: '_', title: 'Sonstige', rows: unknown.map((f) => ({ category: f.category, itemId: f.itemId })) });
+    if (unknown.length) out.push({ id: '_', title: t.favorites.other, rows: unknown.map((f) => ({ category: f.category, itemId: f.itemId })) });
     return out;
-  }, [favorites]);
+  }, [favorites, t, lang]);
 
   if (loading && !favorites.length) return <ActivityIndicator style={{ marginTop: spacing.xl }} color={colors.primary} />;
 
@@ -41,13 +43,10 @@ export default function MerklisteScreen() {
       {groups.length === 0 ? (
         <View style={styles.empty}>
           <Text style={styles.emptyIcon}>♡</Text>
-          <Text style={styles.emptyTitle}>Deine Merkliste ist noch leer</Text>
-          <Text style={styles.emptyText}>
-            Tippe in einem Vergleich auf das Herz bei einem Anbieter, um ihn hier zu speichern. Deine Merkliste ist mit deinem
-            Konto verbunden und auf all deinen Geräten verfügbar.
-          </Text>
+          <Text style={styles.emptyTitle}>{t.favorites.emptyTitle}</Text>
+          <Text style={styles.emptyText}>{t.favorites.emptyText}</Text>
           <Pressable onPress={() => router.back()} style={styles.emptyBtn}>
-            <Text style={styles.emptyBtnText}>Zu den Vergleichen</Text>
+            <Text style={styles.emptyBtnText}>{t.favorites.emptyBtn}</Text>
           </Pressable>
         </View>
       ) : (
@@ -70,7 +69,7 @@ export default function MerklisteScreen() {
                   </View>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.name}>{r.item?.name ?? r.itemId}</Text>
-                    {!r.item && <Text style={styles.gone}>Nicht mehr im Vergleich</Text>}
+                    {!r.item && <Text style={styles.gone}>{t.favorites.gone}</Text>}
                   </View>
                   {r.item?.score && <ScoreBadge value={r.item.score.value} band={r.item.score.band} />}
                 </Pressable>

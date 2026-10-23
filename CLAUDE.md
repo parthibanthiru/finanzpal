@@ -40,10 +40,14 @@
   too if they're reusable across sessions; keep truly single-use debugging
   scripts out of git.
 - **Mobile app in `mobile/`** uses this website as its single source of truth.
-  After changing `data/*.json`, a disclosure text, a `calc-disclaimer`, the
-  Finanz-Check questions/weights in `assets/finanz-check.js`, or calculator logic (any `assets/*rechner.js` or `haushaltsbuch.js`, incl. the
+  After changing `data/*.json` or `*.en.json`, a disclosure text (DE or EN), a
+  `calc-disclaimer`, the Finanz-Check questions/weights in `assets/finanz-check.js`,
+  the guide list in `ratgeber.html` / `en/ratgeber.html`, or calculator logic (any `assets/*rechner.js` or `haushaltsbuch.js`, incl. the
   yearly tax/SV values in `nettolohnrechner.js`), run
   `cd mobile && npm run sync-data` (and mirror calculator changes in
   `mobile/lib/calc.ts` / `mobile/lib/haushaltsbuch.ts`), then commit
   `mobile/data/` in the same commit. Commits touching only `mobile/` don't
   trigger a Netlify deploy (`netlify.toml` ignore rule).
+- **App text in two languages:** any new interface text in `mobile/` goes into
+  both `mobile/lib/strings/de.ts` and `en.ts` (the type check fails otherwise);
+  English wording follows the website's `en/` pages.

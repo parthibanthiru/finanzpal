@@ -2,10 +2,12 @@ import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { Item } from '@/lib/data';
 import type { Field } from '@/lib/categories';
 import { isRealLink, openSite } from '@/lib/site';
+import { getLang, useT } from '@/lib/i18n';
 import { bandColors, bandTextColor, fonts, makeStyles, radius, spacing, useColors } from './theme';
 
 /** Finanzpal-Score badge: same signal as the website's ring badge (0–100 + band A–D). */
 export function ScoreBadge({ value, band }: { value: number; band: string }) {
+  const t = useT();
   const styles = useStyles();
   const colors = useColors();
   const c = bandColors(colors)[band] ?? colors.slate;
@@ -13,7 +15,7 @@ export function ScoreBadge({ value, band }: { value: number; band: string }) {
     <Pressable
       onPress={() => openSite('ueber-uns.html#finanzpal-score')}
       accessibilityRole="link"
-      accessibilityLabel={`Finanzpal-Score ${Math.round(value)} von 100, Note ${band}. Wie berechnen wir das?`}
+      accessibilityLabel={t.card.scoreA11y(Math.round(value), band)}
       style={[styles.score, { borderColor: c }]}
     >
       <Text style={[styles.scoreValue, { color: c }]}>{Math.round(value)}</Text>
@@ -24,6 +26,7 @@ export function ScoreBadge({ value, band }: { value: number; band: string }) {
 
 /** Heart toggle for the Merkliste. */
 export function FavoriteButton({ active, onPress }: { active: boolean; onPress: () => void }) {
+  const t = useT();
   const styles = useStyles();
   const colors = useColors();
   return (
@@ -32,7 +35,7 @@ export function FavoriteButton({ active, onPress }: { active: boolean; onPress: 
       hitSlop={10}
       style={styles.fav}
       accessibilityRole="button"
-      accessibilityLabel={active ? 'Von der Merkliste entfernen' : 'Auf die Merkliste'}
+      accessibilityLabel={active ? t.card.favRemove : t.card.favAdd}
       accessibilityState={{ selected: active }}
     >
       <Text style={[styles.favIcon, active && { color: colors.danger }]}>{active ? '♥' : '♡'}</Text>
@@ -45,14 +48,16 @@ export function ProviderCard({
 }: {
   item: Item; fields: Field[]; highlight?: string; favorite?: boolean; onToggleFavorite?: () => void;
 }) {
+  const t = useT();
   const styles = useStyles();
   const colors = useColors();
   const hasLink = isRealLink(item.affiliateUrl);
+  const ratingText = item.rating != null ? (getLang() === 'en' ? String(item.rating) : String(item.rating).replace('.', ',')) : '';
   return (
     <View style={[styles.card, item.recommended && styles.cardRecommended, highlight && styles.cardHighlight]}>
       <View style={styles.badges}>
         {highlight ? <Text style={[styles.recommended, styles.highlightBadge]}>{highlight}</Text> : null}
-        {item.recommended && <Text style={styles.recommended}>Unsere Empfehlung</Text>}
+        {item.recommended && <Text style={styles.recommended}>{t.card.recommended}</Text>}
       </View>
 
       <View style={styles.head}>
@@ -65,8 +70,8 @@ export function ProviderCard({
           <Text style={styles.name}>{item.name}</Text>
           {item.anbieter ? <Text style={styles.anbieter}>{item.anbieter}</Text> : null}
           {item.rating != null && (
-            <Text style={styles.rating} accessibilityLabel={`Bewertung ${item.rating} von 5`}>
-              <Text style={{ color: colors.accent }}>{item.ratingStars ?? '★'}</Text> {String(item.rating).replace('.', ',')}
+            <Text style={styles.rating} accessibilityLabel={t.card.ratingA11y(ratingText)}>
+              <Text style={{ color: colors.accent }}>{item.ratingStars ?? '★'}</Text> {ratingText}
             </Text>
           )}
         </View>
@@ -87,16 +92,16 @@ export function ProviderCard({
       <View style={styles.actions}>
         {item.detailUrl ? (
           <Pressable style={styles.secondaryBtn} onPress={() => openSite(item.detailUrl)}>
-            <Text style={styles.secondaryText}>Details</Text>
+            <Text style={styles.secondaryText}>{t.card.details}</Text>
           </Pressable>
         ) : null}
         {hasLink && (
           <Pressable style={styles.primaryBtn} onPress={() => Linking.openURL(item.affiliateUrl!)}>
-            <Text style={styles.primaryText}>Zum Anbieter ›</Text>
+            <Text style={styles.primaryText}>{t.card.toProvider}</Text>
           </Pressable>
         )}
       </View>
-      {hasLink && <Text style={styles.ad}>Werbung · Partnerlink</Text>}
+      {hasLink && <Text style={styles.ad}>{t.card.ad}</Text>}
     </View>
   );
 }

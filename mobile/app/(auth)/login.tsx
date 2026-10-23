@@ -7,8 +7,10 @@ import { Button, ErrorText, Input } from '@/components/ui';
 import { SocialButtons } from '@/components/SocialButtons';
 import { LegalLinks } from '@/components/LegalLinks';
 import { makeStyles, spacing, useColors } from '@/components/theme';
+import { useT } from '@/lib/i18n';
 
 export default function LoginScreen() {
+  const t = useT();
   const styles = useStyles();
   const colors = useColors();
   const { signIn } = useAuth();
@@ -18,7 +20,7 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
 
   async function onSubmit() {
-    if (!email || !password) return setError('Bitte E-Mail und Passwort eingeben.');
+    if (!email || !password) return setError(t.auth.login.missing);
     setError(null);
     setLoading(true);
     const err = await signIn(email, password);
@@ -28,20 +30,20 @@ export default function LoginScreen() {
   }
 
   return (
-    <AuthScreen showBrand title="Willkommen zurück" subtitle="Melde dich an, um deine Finanzfragen zu stellen.">
+    <AuthScreen showBrand title={t.auth.login.title} subtitle={t.auth.login.subtitle}>
       <ErrorText message={error} />
       <Input
-        label="E-Mail"
+        label={t.auth.email}
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
         autoComplete="email"
         keyboardType="email-address"
         textContentType="emailAddress"
-        placeholder="name@beispiel.de"
+        placeholder={t.auth.emailPlaceholder}
       />
       <Input
-        label="Passwort"
+        label={t.auth.password}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -52,16 +54,16 @@ export default function LoginScreen() {
       />
       <Link href="/forgot-password" asChild>
         <Pressable style={{ alignSelf: 'flex-end', marginBottom: spacing.md }}>
-          <Text style={styles.link}>Passwort vergessen?</Text>
+          <Text style={styles.link}>{t.auth.login.forgot}</Text>
         </Pressable>
       </Link>
-      <Button title="Anmelden" onPress={onSubmit} loading={loading} />
+      <Button title={t.auth.login.submit} onPress={onSubmit} loading={loading} />
       <SocialButtons onError={setError} />
       <View style={styles.footer}>
-        <Text style={{ color: colors.muted }}>Noch kein Konto? </Text>
+        <Text style={{ color: colors.muted }}>{t.auth.login.noAccount}</Text>
         <Link href="/register" asChild>
           <Pressable>
-            <Text style={styles.link}>Jetzt registrieren</Text>
+            <Text style={styles.link}>{t.auth.login.register}</Text>
           </Pressable>
         </Link>
       </View>

@@ -4,12 +4,14 @@ import { Link, useFocusEffect, useRouter } from 'expo-router';
 import { useAuth } from '@/context/AuthProvider';
 import { useFavorites } from '@/context/FavoritesProvider';
 import { CATEGORIES, GROUPS } from '@/lib/categories';
+import { useI18n } from '@/lib/i18n';
 import { getBundled } from '@/lib/data';
 import { Answers, CATEGORY_KEYS, CATEGORY_META, QUESTIONS, loadAnswers, topPick } from '@/lib/finanzCheck';
 import { fonts, makeStyles, radius, spacing, useColors } from '@/components/theme';
 
 /** Finanz-Check entry point; shows the saved picks once the quiz is done. */
 function FinanzCheckCard() {
+  const { t, lang } = useI18n();
   const styles = useStyles();
   const { user } = useAuth();
   const router = useRouter();
@@ -25,11 +27,11 @@ function FinanzCheckCard() {
   if (!answers) {
     return (
       <Pressable style={({ pressed }) => [styles.fc, pressed && { opacity: 0.9 }]} onPress={() => router.push('/vergleiche/finanz-check')}>
-        <Text style={styles.fcKicker}>Finanz-Check</Text>
-        <Text style={styles.fcTitle}>Welches Konto, Depot und welche Karte passen zu dir?</Text>
-        <Text style={styles.fcSub}>{QUESTIONS.length} kurze Fragen · eine Empfehlung pro Kategorie</Text>
+        <Text style={styles.fcKicker}>{t.home.fcKicker}</Text>
+        <Text style={styles.fcTitle}>{t.home.fcTitle}</Text>
+        <Text style={styles.fcSub}>{t.home.fcSub(QUESTIONS.length)}</Text>
         <View style={styles.fcBtn}>
-          <Text style={styles.fcBtnText}>Jetzt starten ›</Text>
+          <Text style={styles.fcBtnText}>{t.home.fcStart}</Text>
         </View>
       </Pressable>
     );
@@ -37,10 +39,10 @@ function FinanzCheckCard() {
 
   return (
     <View style={styles.fc}>
-      <Text style={styles.fcKicker}>Deine Empfehlungen</Text>
+      <Text style={styles.fcKicker}>{t.home.fcPicks}</Text>
       {CATEGORY_KEYS.map((cat) => {
         const meta = CATEGORY_META[cat];
-        const item = topPick(cat, answers, getBundled(meta.file).items);
+        const item = topPick(cat, answers, getBundled(meta.file, lang).items);
         if (!item) return null;
         return (
           <Pressable
@@ -48,7 +50,7 @@ function FinanzCheckCard() {
             style={styles.pickRow}
             onPress={() => router.push({ pathname: '/vergleiche/[id]', params: { id: meta.routeId, focus: item.id } })}
           >
-            <Text style={styles.pickCat}>{meta.title}</Text>
+            <Text style={styles.pickCat}>{t.check.categories[cat]}</Text>
             <Text style={styles.pickName} numberOfLines={1}>
               {item.name}
             </Text>
@@ -58,10 +60,10 @@ function FinanzCheckCard() {
       })}
       <View style={styles.fcLinks}>
         <Pressable onPress={() => router.push({ pathname: '/vergleiche/finanz-check', params: { show: 'result' } })}>
-          <Text style={styles.fcLink}>Details ansehen</Text>
+          <Text style={styles.fcLink}>{t.home.fcDetails}</Text>
         </Pressable>
         <Pressable onPress={() => router.push('/vergleiche/finanz-check')}>
-          <Text style={styles.fcLink}>Neu starten</Text>
+          <Text style={styles.fcLink}>{t.home.fcRestart}</Text>
         </Pressable>
       </View>
     </View>
@@ -70,6 +72,7 @@ function FinanzCheckCard() {
 
 /** Entry to the Merkliste; shows how many providers are saved. */
 function MerklisteRow() {
+  const { t } = useI18n();
   const styles = useStyles();
   const colors = useColors();
   const router = useRouter();
@@ -79,8 +82,8 @@ function MerklisteRow() {
     <Pressable style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]} onPress={() => router.push('/vergleiche/merkliste')}>
       <Text style={[styles.icon, { color: n ? colors.danger : colors.muted }]}>{n ? '♥' : '♡'}</Text>
       <View style={{ flex: 1 }}>
-        <Text style={styles.title}>Meine Merkliste</Text>
-        <Text style={styles.sub}>{n ? `${n} Anbieter gespeichert` : 'Anbieter mit dem Herz merken'}</Text>
+        <Text style={styles.title}>{t.home.favTitle}</Text>
+        <Text style={styles.sub}>{n ? t.home.favCount(n) : t.home.favEmpty}</Text>
       </View>
       <Text style={styles.chevron}>›</Text>
     </Pressable>
@@ -89,13 +92,12 @@ function MerklisteRow() {
 
 // Home of the app: the same comparison categories as the website nav.
 export default function VergleicheScreen() {
+  const { t, lang } = useI18n();
   const styles = useStyles();
   return (
     <ScrollView contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }}>
-      <Text style={styles.hero}>Finanzen vergleichen — unabhängig und transparent.</Text>
-      <Text style={styles.heroSub}>
-        Echte Konditionen, transparenter Finanzpal-Score, keine versteckte Bevorzugung von Partnern.
-      </Text>
+      <Text style={styles.hero}>{t.home.hero}</Text>
+      <Text style={styles.heroSub}>{t.home.heroSub}</Text>
 
       <FinanzCheckCard />
       <View style={{ marginBottom: spacing.lg }}>
@@ -106,17 +108,17 @@ export default function VergleicheScreen() {
         const cats = CATEGORIES.filter((c) => c.group === group);
         return (
           <View key={group} style={{ marginBottom: spacing.lg }}>
-            <Text style={styles.group}>{group}</Text>
+            <Text style={styles.group}>{t.groups[group]}</Text>
             {cats.map((c) => {
-              const count = getBundled(c.file).items.length;
+              const count = getBundled(c.file, lang).items.length;
               return (
                 <Link key={c.id} href={{ pathname: '/vergleiche/[id]', params: { id: c.id } }} asChild>
                   <Pressable style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]}>
                     <Text style={styles.icon}>{c.icon}</Text>
                     <View style={{ flex: 1 }}>
-                      <Text style={styles.title}>{c.title}</Text>
+                      <Text style={styles.title}>{t.categories[c.id].title}</Text>
                       <Text style={styles.sub}>
-                        {c.subtitle} · {count} Anbieter
+                        {t.categories[c.id].subtitle} · {t.common.providers(count)}
                       </Text>
                     </View>
                     <Text style={styles.chevron}>›</Text>

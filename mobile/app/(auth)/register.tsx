@@ -6,10 +6,12 @@ import { Button, ErrorText, InfoText, Input } from '@/components/ui';
 import { SocialButtons } from '@/components/SocialButtons';
 import { LegalLinks, openLegal } from '@/components/LegalLinks';
 import { makeStyles, spacing, useColors } from '@/components/theme';
+import { useT } from '@/lib/i18n';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function RegisterScreen() {
+  const t = useT();
   const colors = useColors();
   const styles = useStyles();
   const { signUp } = useAuth();
@@ -24,35 +26,35 @@ export default function RegisterScreen() {
 
   async function onSubmit() {
     setError(null);
-    if (!name.trim()) return setError('Bitte gib deinen Namen ein.');
-    if (!EMAIL_RE.test(email.trim())) return setError('Bitte gib eine gültige E-Mail-Adresse ein.');
-    if (password.length < 8) return setError('Das Passwort muss mindestens 8 Zeichen lang sein.');
-    if (password !== password2) return setError('Die Passwörter stimmen nicht überein.');
-    if (!accepted) return setError('Bitte akzeptiere die Datenschutzerklärung.');
+    if (!name.trim()) return setError(t.auth.register.errName);
+    if (!EMAIL_RE.test(email.trim())) return setError(t.auth.register.errEmail);
+    if (password.length < 8) return setError(t.auth.register.errPassword);
+    if (password !== password2) return setError(t.auth.register.errMismatch);
+    if (!accepted) return setError(t.auth.register.errConsent);
 
     setLoading(true);
     const err = await signUp(email, password, name);
     setLoading(false);
     if (err) return setError(err);
-    setInfo('Fast geschafft! Wir haben dir eine Bestätigungs-E-Mail geschickt. Bitte klicke auf den Link und melde dich dann an.');
+    setInfo(t.auth.register.done);
   }
 
   return (
-    <AuthScreen title="Konto erstellen" subtitle="Kostenlos und in einer Minute erledigt.">
+    <AuthScreen title={t.auth.register.title} subtitle={t.auth.register.subtitle}>
       <ErrorText message={error} />
       <InfoText message={info} />
-      <Input label="Name" value={name} onChangeText={setName} autoComplete="name" placeholder="Max Mustermann" />
+      <Input label={t.auth.register.name} value={name} onChangeText={setName} autoComplete="name" placeholder={t.auth.register.namePlaceholder} />
       <Input
-        label="E-Mail"
+        label={t.auth.email}
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
         autoComplete="email"
         keyboardType="email-address"
-        placeholder="name@beispiel.de"
+        placeholder={t.auth.emailPlaceholder}
       />
       <Input
-        label="Passwort (mind. 8 Zeichen)"
+        label={t.auth.register.password}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -60,7 +62,7 @@ export default function RegisterScreen() {
         textContentType="newPassword"
       />
       <Input
-        label="Passwort wiederholen"
+        label={t.auth.register.password2}
         value={password2}
         onChangeText={setPassword2}
         secureTextEntry
@@ -72,18 +74,16 @@ export default function RegisterScreen() {
           {accepted && <Text style={{ color: colors.onPrimary, fontWeight: '800' }}>✓</Text>}
         </View>
         <Text style={styles.checkText}>
-          Ich habe die{' '}
+          {t.auth.register.consentBefore}
           <Text style={styles.inlineLink} onPress={() => openLegal('datenschutz')}>
-            Datenschutzerklärung
-          </Text>{' '}
-          gelesen und stimme der Verarbeitung meiner Daten zu.
+            {t.auth.register.consentLink}
+          </Text>
+          {t.auth.register.consentAfter}
         </Text>
       </Pressable>
-      <Button title="Registrieren" onPress={onSubmit} loading={loading} disabled={!!info} />
+      <Button title={t.auth.register.submit} onPress={onSubmit} loading={loading} disabled={!!info} />
       {!info && <SocialButtons onError={setError} />}
-      <Text style={styles.legal}>
-        Mit der Anmeldung über Google oder Apple stimmst du ebenfalls der Datenschutzerklärung zu.
-      </Text>
+      <Text style={styles.legal}>{t.auth.register.socialNote}</Text>
       <LegalLinks />
     </AuthScreen>
   );

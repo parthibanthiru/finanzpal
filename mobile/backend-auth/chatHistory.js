@@ -7,9 +7,12 @@
 //   const { buildMessages } = require('./chatHistory');
 //   ...
 //   app.post('/api/chat', requireUser, async (req, res) => {
-//     const { sessionId, message, history } = req.body;
+//     const { sessionId, message, history, language } = req.body;
 //     const messages = buildMessages(sessions.get(sessionId), history, message);
-//     const response = await anthropic.messages.create({ model, system, tools, messages, max_tokens });
+//     const response = await anthropic.messages.create({
+//       model, tools, messages, max_tokens,
+//       system: system + languageInstruction(language),   // app in English -> answers in English
+//     });
 //     ...
 //   });
 //
@@ -57,4 +60,15 @@ function buildMessages(sessionMessages, history, message) {
   return [...base, { role: 'user', content: String(message).slice(0, MAX_CHARS) }];
 }
 
-module.exports = { buildMessages, cleanHistory };
+/**
+ * The app sends `language: "de" | "en"`. Returns a line to append to the system prompt so the
+ * bot answers in the user's app language (German stays the default).
+ */
+function languageInstruction(language) {
+  return language === 'en'
+    ? '\n\nThe user is using the app in English. Answer in English; keep German product and legal terms ' +
+        '(e.g. Tagesgeld, Girokonto, Riester) where they matter, with a short English explanation.'
+    : '';
+}
+
+module.exports = { buildMessages, cleanHistory, languageInstruction };

@@ -1,26 +1,28 @@
 // The app's comparison categories = the website's comparison pages (same grouping as the
 // site nav: Konten / Broker / Kredite / Versicherungen / Steuerprogramm).
-// Each category says which fields of its data/*.json item to show, in website wording.
+// Each category says which fields of its data item to show. Labels come from the strings
+// (lib/strings/*.ts, website wording); values come from data/<file>.json or <file>.en.json,
+// so they are already in the current language.
 import type { Item } from './data';
-import { formatPct } from './format';
+import { formatEUR, formatNumber, formatPct } from './format';
+import { strings, type Strings } from './i18n';
 
 export type Field = { label: string; value: string; note?: string };
 
+export type CategoryId = keyof Strings['categories'];
+export type Group = keyof Strings['groups'];
+
 export type Category = {
-  id: string;          // route id
+  id: CategoryId;      // route id + key in strings.categories
   file: string;        // data/<file>.json + key in disclosures.json
-  title: string;
-  subtitle: string;
-  group: 'Konten' | 'Broker' | 'Kredite' | 'Versicherungen' | 'Steuern';
+  group: Group;
   icon: string;
-  page: string;        // website page for "Auf finanzpal.de ansehen"
-  fields: (item: Item) => Field[];
-  topNote?: string;    // shown above the list (e.g. "no single price")
+  page: string;        // website page for "Auf finanzpal.de ansehen" (en/ prefix added for English)
+  fields: (item: Item, t: Strings) => Field[];
 };
 
-const yesNo = (b?: boolean | null) => (b == null ? '–' : b ? 'Ja' : 'Nein');
 const txt = (v: unknown) => (v == null || v === '' ? null : String(v).replace(/<br\s*\/?>/gi, '\n'));
-const num = (n?: number | null) => (n == null ? null : n.toLocaleString('de-DE'));
+const yesNo = (t: Strings, b?: boolean | null) => (b == null ? '–' : b ? t.common.yes : t.common.no);
 
 /** Builds a field list, dropping rows whose value is null/empty. */
 function rows(...list: (Field | [string, string | null | undefined, string?] | null | false)[]): Field[] {
@@ -35,144 +37,162 @@ function rows(...list: (Field | [string, string | null | undefined, string?] | n
   return out;
 }
 
-const insurance = (beitragLabel: string, deckungLabel: string) => (i: Item) =>
-  rows([beitragLabel, txt(i.beitrag)], [deckungLabel, txt(i.deckung)], ['Leistungen', txt(i.leistungen)]);
+const insurance =
+  (beitrag: keyof Strings['fields'], deckung: keyof Strings['fields']) =>
+  (i: Item, t: Strings) =>
+    rows(
+      [t.fields[beitrag] as string, txt(i.beitrag)],
+      [t.fields[deckung] as string, txt(i.deckung)],
+      [t.fields.leistungen, txt(i.leistungen)]
+    );
 
 export const CATEGORIES: Category[] = [
   // ── Konten
   {
     id: 'girokonto', file: 'girokonto', group: 'Konten', icon: '🏦', page: 'girokonto.html',
-    title: 'Girokonto', subtitle: 'Kontoführung, Dispo, Karte',
-    fields: (i) =>
+    fields: (i, t) =>
       rows(
-        ['Kontoführung', txt(i.kontofuehrung), i.bedingungslos ? undefined : txt(i.bedingung) ?? undefined],
-        ['Karte', txt(i.karteText)],
-        ['Dispozins', i.dispozins != null ? formatPct(i.dispozins) : null],
-        ['Bargeld abheben', txt(i.abhebung)],
-        ['Fremdwährung', txt(i.fremdwaehrung)],
-        ['Guthabenzins', i.guthabenzins != null ? formatPct(i.guthabenzins) : null],
-        ['Einlagensicherung', txt(i.einlagensicherung)]
+        [t.fields.kontofuehrung, txt(i.kontofuehrung), i.bedingungslos ? undefined : txt(i.bedingung) ?? undefined],
+        [t.fields.karte, txt(i.karteText)],
+        [t.fields.dispozins, i.dispozins != null ? formatPct(i.dispozins) : null],
+        [t.fields.abhebung, txt(i.abhebung)],
+        [t.fields.fremdwaehrung, txt(i.fremdwaehrung)],
+        [t.fields.guthabenzins, i.guthabenzins != null ? formatPct(i.guthabenzins) : null],
+        [t.fields.einlagensicherung, txt(i.einlagensicherung)]
       ),
   },
   {
     id: 'tagesgeld', file: 'tagesgeld', group: 'Konten', icon: '💶', page: 'tagesgeld.html',
-    title: 'Tagesgeld', subtitle: 'Zins, Zinsgarantie, Einlagensicherung',
-    fields: (i) =>
-      rows(['Zins p. a.', txt(i.rate)], ['Zinsgarantie', txt(i.guarantee)], ['Mindesteinlage', txt(i.minDeposit)], ['Einlagensicherung', txt(i.protection)]),
+    fields: (i, t) =>
+      rows(
+        [t.fields.zins, txt(i.rate)],
+        [t.fields.zinsgarantie, txt(i.guarantee)],
+        [t.fields.mindesteinlage, txt(i.minDeposit)],
+        [t.fields.einlagensicherung, txt(i.protection)]
+      ),
   },
   {
     id: 'kreditkarte', file: 'kreditkarte', group: 'Konten', icon: '💳', page: 'kreditkarte.html',
-    title: 'Kreditkarte', subtitle: 'Jahresgebühr, Ausland, Bedingungen',
-    fields: (i) =>
+    fields: (i, t) =>
       rows(
-        ['Jahresgebühr', txt(i.jahresgebuehr), i.ohneBedingungen ? undefined : txt(i.bedingung) ?? undefined],
-        ['Kartentyp', [txt(i.kartentyp), txt(i.netzwerk)].filter(Boolean).join(' · ') || null],
-        ['Fremdwährung', txt(i.fremdwaehrung)],
-        ['Bargeld abheben', txt(i.abhebung)],
-        ['Zinsfreie Tage', txt(i.zinsfreieText)],
-        ['Apple Pay / Google Pay', `${yesNo(i.applePay)} / ${yesNo(i.googlePay)}`]
+        [t.fields.jahresgebuehr, txt(i.jahresgebuehr), i.ohneBedingungen ? undefined : txt(i.bedingung) ?? undefined],
+        [t.fields.kartentyp, [txt(i.kartentyp), txt(i.netzwerk)].filter(Boolean).join(' · ') || null],
+        [t.fields.fremdwaehrung, txt(i.fremdwaehrung)],
+        [t.fields.abhebung, txt(i.abhebung)],
+        [t.fields.zinsfreieTage, txt(i.zinsfreieText)],
+        [t.fields.mobilePay, `${yesNo(t, i.applePay)} / ${yesNo(t, i.googlePay)}`]
       ),
   },
   // ── Broker
   {
     id: 'broker', file: 'broker', group: 'Broker', icon: '📈', page: 'broker.html',
-    title: 'Broker & Depot', subtitle: 'Depot- und Ordergebühr, ETF-Sparpläne',
-    fields: (i) =>
+    fields: (i, t) =>
       rows(
-        ['Depotgebühr', txt(i.depotgebuehrText ?? i.brokerDepotfee)],
-        ['Ordergebühr', txt(i.orderfee)],
-        ['ETF-Sparpläne', i.etfSparplaeneAnzahl != null ? `${num(i.etfSparplaeneAnzahl)}${i.etfSparplaeneKostenlos ? ' kostenlos' : ''}` : null, txt(i.etfSparplaeneCaveat) ?? undefined],
-        ['Sparplan', txt(i.sparplanAb)],
-        ['Guthabenzins', i.guthabenzins != null ? formatPct(i.guthabenzins) : null, txt(i.guthabenzinsCaveat) ?? undefined],
-        ['Verwahrentgelt', txt(i.verwahrentgeltText)]
+        [t.fields.depotgebuehr, txt(i.depotgebuehrText ?? i.brokerDepotfee)],
+        [t.fields.ordergebuehr, txt(i.orderfee)],
+        [
+          t.fields.etfSparplaene,
+          i.etfSparplaeneAnzahl != null
+            ? i.etfSparplaeneKostenlos
+              ? t.fields.etfFree(formatNumber(i.etfSparplaeneAnzahl))
+              : formatNumber(i.etfSparplaeneAnzahl)
+            : null,
+          txt(i.etfSparplaeneCaveat) ?? undefined,
+        ],
+        [t.fields.sparplan, txt(i.sparplanAb)],
+        [t.fields.guthabenzins, i.guthabenzins != null ? formatPct(i.guthabenzins) : null, txt(i.guthabenzinsCaveat) ?? undefined],
+        [t.fields.verwahrentgelt, txt(i.verwahrentgeltText)]
       ),
   },
   {
     id: 'kinderdepot', file: 'kinderdepot', group: 'Broker', icon: '🧒', page: 'kinderdepot.html',
-    title: 'Kinderdepot', subtitle: 'Junior-Depots im Vergleich',
-    fields: (i) =>
+    fields: (i, t) =>
       rows(
-        ['Depotgebühr', txt(i.depotgebuehrText)],
-        ['Mindestsparrate', i.mindestsparrate != null ? `${num(i.mindestsparrate)} €` : null],
-        ['ETF-Sparpläne', num(i.etfSparplaeneAnzahl), txt(i.etfSparplaeneCaveat) ?? undefined],
-        ['Guthabenzins', i.guthabenzins != null ? formatPct(i.guthabenzins) : null, txt(i.guthabenzinsCaveat) ?? undefined],
-        ['Eigenes Elterndepot nötig', yesNo(i.parentDepotRequired)],
-        ['Alter', txt(i.ageLimitText)],
-        ['Besonderheiten', txt(i.besonderheitenText)]
+        [t.fields.depotgebuehr, txt(i.depotgebuehrText)],
+        [t.fields.mindestsparrate, i.mindestsparrate != null ? formatEUR(i.mindestsparrate) : null],
+        [t.fields.etfSparplaene, i.etfSparplaeneAnzahl != null ? formatNumber(i.etfSparplaeneAnzahl) : null, txt(i.etfSparplaeneCaveat) ?? undefined],
+        [t.fields.guthabenzins, i.guthabenzins != null ? formatPct(i.guthabenzins) : null, txt(i.guthabenzinsCaveat) ?? undefined],
+        [t.fields.elterndepot, yesNo(t, i.parentDepotRequired)],
+        [t.fields.alter, txt(i.ageLimitText)],
+        [t.fields.besonderheiten, txt(i.besonderheitenText)]
       ),
   },
   // ── Kredite
   {
     id: 'kredite', file: 'kredite', group: 'Kredite', icon: '💰', page: 'kredite.html',
-    title: 'Ratenkredit', subtitle: 'Zins, Kreditrahmen, Sondertilgung',
-    topNote: 'Der „ab“-Zins ist der beworbene Mindestzins. Dein tatsächlicher Zins hängt von deiner Bonität ab.',
-    fields: (i) =>
-      rows(['Effektiver Jahreszins', txt(i.rate)], ['Kreditbetrag', txt(i.amount)], ['Laufzeit', txt(i.term)], ['Sondertilgung', txt(i.sondertilgung)]),
+    fields: (i, t) =>
+      rows(
+        [t.fields.effJahreszins, txt(i.rate)],
+        [t.fields.kreditbetrag, txt(i.amount)],
+        [t.fields.laufzeit, txt(i.term)],
+        [t.fields.sondertilgung, txt(i.sondertilgung)]
+      ),
   },
   {
     id: 'baufinanzierung', file: 'baufinanzierung', group: 'Kredite', icon: '🏠', page: 'baufinanzierung.html',
-    title: 'Baufinanzierung', subtitle: 'Vermittler im Vergleich',
-    topNote: 'Bewusst ohne Zinssatz: Bei einer Baufinanzierung ist der Zins so individuell, dass eine pauschale Zahl irreführend wäre.',
-    fields: (i) =>
-      rows(['Partnerbanken', txt(i.partnerbankenText)], ['Standorte', txt(i.standorteText)], ['Beratung', txt(i.beratungText)], ['Besonderheiten', txt(i.besonderheitenText)]),
+    fields: (i, t) =>
+      rows(
+        [t.fields.partnerbanken, txt(i.partnerbankenText)],
+        [t.fields.standorte, txt(i.standorteText)],
+        [t.fields.beratung, txt(i.beratungText)],
+        [t.fields.besonderheiten, txt(i.besonderheitenText)]
+      ),
   },
   // ── Versicherungen (same 5 tabs as versicherungen.html)
   {
     id: 'haftpflicht', file: 'versicherungen', group: 'Versicherungen', icon: '🛡️', page: 'versicherungen.html',
-    title: 'Privathaftpflicht', subtitle: 'Beitrag, Deckungssumme',
-    fields: insurance('Jahresbeitrag', 'Deckungssumme'),
+    fields: insurance('phvBeitrag', 'phvDeckung'),
   },
   {
     id: 'hausrat', file: 'hausrat', group: 'Versicherungen', icon: '🛋️', page: 'versicherungen.html#hausrat',
-    title: 'Hausrat', subtitle: 'Beitrag für einen Modellhaushalt',
-    fields: insurance('Jahresbeitrag', 'Versicherungssumme'),
+    fields: insurance('hausratBeitrag', 'hausratDeckung'),
   },
   {
     id: 'bu', file: 'bu', group: 'Versicherungen', icon: '🩺', page: 'versicherungen.html#berufsunfaehigkeit',
-    title: 'Berufsunfähigkeit', subtitle: 'Fachratings statt Pauschalpreis',
-    fields: insurance('Beitrag', 'BU-Rente'),
+    fields: insurance('buBeitrag', 'buDeckung'),
   },
   {
     id: 'rechtsschutz', file: 'rechtsschutz', group: 'Versicherungen', icon: '⚖️', page: 'versicherungen.html#rechtsschutz',
-    title: 'Rechtsschutz', subtitle: 'Leistungspakete',
-    fields: insurance('Jahresbeitrag', 'Umfang'),
+    fields: insurance('rsBeitrag', 'rsDeckung'),
   },
   {
     id: 'kfz', file: 'autoversicherung', group: 'Versicherungen', icon: '🚗', page: 'versicherungen.html#kfz',
-    title: 'Kfz-Versicherung', subtitle: 'Leistungen und Deckung',
-    fields: insurance('Beitrag', 'Deckungssumme'),
+    fields: insurance('kfzBeitrag', 'kfzDeckung'),
   },
   // ── Steuern
   {
     id: 'steuerprogramm', file: 'steuerprogramm', group: 'Steuern', icon: '🧾', page: 'steuerprogramm.html',
-    title: 'Steuerprogramm', subtitle: 'Steuersoftware im Vergleich',
-    fields: (i) => {
+    fields: (i, t) => {
       const plattform = i.plattform
         ? Object.entries(i.plattform as Record<string, boolean>)
             .filter(([, v]) => v)
-            .map(([k]) => ({ web: 'Browser', app: 'App', desktop: 'Desktop' } as Record<string, string>)[k] ?? k)
+            .map(([k]) => t.fields.platformNames[k] ?? k)
             .join(', ')
         : null;
-      const ZG: Record<string, string> = {
-        angestellte: 'Angestellte', selbststaendige: 'Selbstständige', vermietung: 'Vermietung',
-        kapitalertraege: 'Kapitalerträge', rente: 'Rentner',
-      };
       const zielgruppen = i.zielgruppen
-        ? Object.entries(i.zielgruppen as Record<string, boolean>).filter(([, v]) => v).map(([k]) => ZG[k] ?? k).join(', ')
+        ? Object.entries(i.zielgruppen as Record<string, boolean>)
+            .filter(([, v]) => v)
+            .map(([k]) => t.fields.zielgruppen[k] ?? k)
+            .join(', ')
         : null;
       return rows(
-        ['Preis', txt(i.preis)],
-        ['Plattform', plattform],
-        ['Geeignet für', zielgruppen],
-        ['Vorjahresdaten-Import', yesNo(i.vorjahresImport)],
-        ['ELSTER-Zertifikat', txt(i.elsterZertifikat)]
+        [t.fields.preis, txt(i.preis)],
+        [t.fields.plattform, plattform],
+        [t.fields.geeignetFuer, zielgruppen],
+        [t.fields.vorjahresImport, yesNo(t, i.vorjahresImport)],
+        [t.fields.elster, txt(i.elsterZertifikat)]
       );
     },
   },
 ];
 
-export const GROUPS: Category['group'][] = ['Konten', 'Broker', 'Kredite', 'Versicherungen', 'Steuern'];
+export const GROUPS: Group[] = ['Konten', 'Broker', 'Kredite', 'Versicherungen', 'Steuern'];
 
 export function getCategory(id: string) {
   return CATEGORIES.find((c) => c.id === id);
+}
+
+/** Title / subtitle / note of a category in the given (default: current) language. */
+export function categoryText(id: CategoryId, t: Strings = strings()) {
+  return t.categories[id];
 }

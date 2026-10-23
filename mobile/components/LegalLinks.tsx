@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { openSite } from '@/lib/site';
 import { makeStyles, spacing } from './theme';
+import { useT } from '@/lib/i18n';
 
 // Both pages must exist on the website before the app goes to the stores.
 // Apple and Google ask for the privacy-policy URL in the store listing as well.
@@ -15,15 +16,16 @@ export function openLegal(page: keyof typeof LEGAL_PAGES) {
 }
 
 export function LegalLinks() {
+  const t = useT();
   const styles = useStyles();
   return (
     <View style={styles.row}>
       <Pressable onPress={() => openLegal('datenschutz')} accessibilityRole="link">
-        <Text style={styles.link}>Datenschutz</Text>
+        <Text style={styles.link}>{t.legal.privacy}</Text>
       </Pressable>
       <Text style={styles.sep}>·</Text>
       <Pressable onPress={() => openLegal('impressum')} accessibilityRole="link">
-        <Text style={styles.link}>Impressum</Text>
+        <Text style={styles.link}>{t.legal.imprint}</Text>
       </Pressable>
     </View>
   );

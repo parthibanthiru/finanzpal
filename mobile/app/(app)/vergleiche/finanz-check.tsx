@@ -4,8 +4,9 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useAuth } from '@/context/AuthProvider';
 import { loadData, type Item } from '@/lib/data';
 import {
-  Answers, CATEGORY_KEYS, CATEGORY_META, QUESTIONS, factRows, loadAnswers, saveAnswers, topPick,
+  Answers, CATEGORY_KEYS, CATEGORY_META, QUESTIONS, factRows, label, loadAnswers, saveAnswers, topPick,
 } from '@/lib/finanzCheck';
+import { useI18n } from '@/lib/i18n';
 import { isRealLink } from '@/lib/site';
 import { ScoreBadge } from '@/components/ProviderCard';
 import { fonts, makeStyles, radius, spacing, useColors } from '@/components/theme';
@@ -15,6 +16,7 @@ type Pick = { cat: string; item: Item };
 export default function FinanzCheckScreen() {
   const styles = useStyles();
   const colors = useColors();
+  const { t, lang } = useI18n();
   const { user } = useAuth();
   const userId = user?.id ?? 'anon';
   const router = useRouter();
@@ -43,7 +45,7 @@ export default function FinanzCheckScreen() {
   useEffect(() => {
     if (!done) return;
     let cancelled = false;
-    Promise.all(CATEGORY_KEYS.map((cat) => loadData(CATEGORY_META[cat].file))).then((datasets) => {
+    Promise.all(CATEGORY_KEYS.map((cat) => loadData(CATEGORY_META[cat].file, lang))).then((datasets) => {
       if (cancelled) return;
       const result: Pick[] = [];
       CATEGORY_KEYS.forEach((cat, i) => {
@@ -55,7 +57,7 @@ export default function FinanzCheckScreen() {
     return () => {
       cancelled = true;
     };
-  }, [done, answers]);
+  }, [done, answers, lang]);
 
   function choose(qid: string, oid: string) {
     const next = { ...answers, [qid]: oid };
@@ -82,10 +84,8 @@ export default function FinanzCheckScreen() {
 
       {!done ? (
         <View>
-          <Text style={styles.stepLabel}>
-            Frage {step + 1} von {QUESTIONS.length}
-          </Text>
-          <Text style={styles.question}>{QUESTIONS[step].text.de}</Text>
+          <Text style={styles.stepLabel}>{t.check.step(step + 1, QUESTIONS.length)}</Text>
+          <Text style={styles.question}>{label(QUESTIONS[step].text, lang)}</Text>
           {QUESTIONS[step].options.map((o) => {
             const selected = answers[QUESTIONS[step].id] === o.id;
             return (
@@ -95,28 +95,25 @@ export default function FinanzCheckScreen() {
                 style={({ pressed }) => [styles.option, selected && styles.optionSelected, pressed && { opacity: 0.85 }]}
                 accessibilityRole="button"
               >
-                <Text style={[styles.optionText, selected && { color: colors.primaryDark }]}>{o.label.de}</Text>
+                <Text style={[styles.optionText, selected && { color: colors.primaryDark }]}>{label(o.label, lang)}</Text>
               </Pressable>
             );
           })}
           {step > 0 && (
             <Pressable onPress={() => setStep(step - 1)} style={{ marginTop: spacing.md }}>
-              <Text style={styles.link}>← Zurück</Text>
+              <Text style={styles.link}>{t.check.back}</Text>
             </Pressable>
           )}
         </View>
       ) : !picks ? (
-        <Text style={styles.lede}>Lade dein Ergebnis …</Text>
+        <Text style={styles.lede}>{t.check.loading}</Text>
       ) : (
         <View>
-          <Text style={styles.question}>Dein Finanz-Check-Ergebnis</Text>
-          <Text style={styles.lede}>
-            Basierend auf deinen Antworten — eine Empfehlung pro Kategorie. Den vollständigen Vergleich mit allen Details
-            findest du in der jeweiligen Kategorie.
-          </Text>
+          <Text style={styles.question}>{t.check.resultTitle}</Text>
+          <Text style={styles.lede}>{t.check.resultLede}</Text>
           {picks.map(({ cat, item }) => (
             <View key={cat} style={styles.card}>
-              <Text style={styles.catLabel}>{CATEGORY_META[cat].title}</Text>
+              <Text style={styles.catLabel}>{t.check.categories[cat]}</Text>
               <View style={styles.head}>
                 <View style={[styles.avatar, { backgroundColor: item.color ?? colors.primaryDark }]}>
                   <Text style={styles.avatarText} numberOfLines={1} adjustsFontSizeToFit>
@@ -126,7 +123,7 @@ export default function FinanzCheckScreen() {
                 <Text style={styles.name}>{item.name}</Text>
                 {item.score && <ScoreBadge value={item.score.value} band={item.score.band} />}
               </View>
-              {factRows(cat, item).map(([k, v]) => (
+              {factRows(cat, item, t).map(([k, v]) => (
                 <View key={k} style={styles.row}>
                   <Text style={styles.k}>{k}</Text>
                   <Text style={styles.v}>{v}</Text>
@@ -138,23 +135,20 @@ export default function FinanzCheckScreen() {
                     router.push({ pathname: '/vergleiche/[id]', params: { id: CATEGORY_META[cat].routeId, focus: item.id } })
                   }
                 >
-                  <Text style={styles.link}>Zum vollständigen Vergleich →</Text>
+                  <Text style={styles.link}>{t.check.seeAll}</Text>
                 </Pressable>
                 {isRealLink(item.affiliateUrl) && (
                   <Pressable style={styles.cta} onPress={() => Linking.openURL(item.affiliateUrl!)}>
-                    <Text style={styles.ctaText}>Zum Anbieter</Text>
+                    <Text style={styles.ctaText}>{t.check.cta}</Text>
                   </Pressable>
                 )}
               </View>
             </View>
           ))}
           <Pressable style={styles.restart} onPress={restart}>
-            <Text style={styles.restartText}>Finanz-Check neu starten</Text>
+            <Text style={styles.restartText}>{t.check.restart}</Text>
           </Pressable>
-          <Text style={styles.note}>
-            Allgemeine Orientierung anhand weniger Fragen — keine individuelle Anlage- oder Finanzberatung. Deine Antworten
-            werden nur auf diesem Gerät gespeichert.
-          </Text>
+          <Text style={styles.note}>{t.check.note}</Text>
         </View>
       )}
     </ScrollView>

@@ -1,10 +1,12 @@
-// Keeps the app in sync with the website (single source of truth = the website):
-//  1. copies ../data/*.json (German files, not *.en.json) into mobile/data/
-//  2. extracts the German disclosure texts ("Werbung: … Stand …") from the website's
-//     comparison pages, assets/insurance-tabs.js and the calculator pages into
-//     mobile/data/disclosures.json
+// Keeps the app in sync with the website (single source of truth = the website), in German and English:
+//  1. copies ../data/*.json and ../data/*.en.json into mobile/data/
+//  2. extracts the disclosure texts ("Werbung: … Stand …") from the website's comparison pages,
+//     assets/insurance-tabs.js and the calculator pages into mobile/data/disclosures.json (German,
+//     from the root pages) and mobile/data/disclosures.en.json (English, from en/)
 //  3. extracts the Finanz-Check quiz (questions + weights) from assets/finanz-check.js
-//     into mobile/data/finanz-check.json
+//     into mobile/data/finanz-check.json (questions carry de + en labels)
+//  4. extracts the Ratgeber article list (category, title, teaser) from ratgeber.html and
+//     en/ratgeber.html into mobile/data/ratgeber.json
 // Runs automatically before `npm start` (prestart). The copies are committed, so cloud
 // builds (EAS) work without the website folder next to them.
 import { copyFileSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -16,11 +18,13 @@ const here = dirname(fileURLToPath(import.meta.url));
 const site = join(here, '..', '..');
 const dest = join(here, '..', 'data');
 mkdirSync(dest, { recursive: true });
+const missing = [];
+const LANGS = { de: '', en: 'en/' }; // language -> folder of the website pages
 
-// 1. data files
+// 1. data files (German + English)
 let n = 0;
 for (const f of readdirSync(join(site, 'data'))) {
-  if (!f.endsWith('.json') || f.endsWith('.en.json')) continue;
+  if (!f.endsWith('.json')) continue;
   copyFileSync(join(site, 'data', f), join(dest, f));
   n++;
 }
@@ -51,38 +55,42 @@ const PAGES = {
   steuerprogramm: 'steuerprogramm.html',
   etf: 'etf-suche.html',
 };
-const disclosures = {};
-const missing = [];
-for (const [key, page] of Object.entries(PAGES)) {
-  const html = readFileSync(join(site, page), 'utf8');
-  const m = html.match(/class="disclosure-note"[^>]*>([\s\S]*?)<\/(?:p|div)>/);
-  if (m) disclosures[key] = decode(m[1]);
-  else missing.push(page);
-}
-
-// insurance types: TYPES[].key + disclosure.de in assets/insurance-tabs.js
-const tabs = readFileSync(join(site, 'assets', 'insurance-tabs.js'), 'utf8');
-const typeRe = /key:\s*'([a-z]+)'[\s\S]*?disclosure:\s*\{\s*de:\s*'((?:[^'\\]|\\.)*)'/g;
-let t;
-while ((t = typeRe.exec(tabs))) disclosures[t[1]] = decode(t[2]);
-for (const k of ['versicherungen', 'hausrat', 'bu', 'rechtsschutz', 'autoversicherung']) {
-  if (!disclosures[k]) missing.push(`insurance-tabs.js:${k}`);
-}
-
 // calculator disclaimers: first <p class="calc-disclaimer"> without an id on each calculator page
 // (the one with an id, e.g. bf-payoff-note, is filled in by JavaScript at runtime)
 const RECHNER = [
   'sparplanrechner', 'zinseszinsrechner', 'kreditrechner', 'baufinanzierungsrechner',
   'nettolohnrechner', 'altersvorsorge-rechner', 'haushaltsbuch',
 ];
-for (const page of RECHNER) {
-  const html = readFileSync(join(site, `${page}.html`), 'utf8');
-  const m = html.match(/<p class="calc-disclaimer"(?![^>]*\bid=)[^>]*>([\s\S]*?)<\/p>/);
-  if (m) disclosures[`rechner:${page}`] = decode(m[1]);
-  else missing.push(`${page}.html (calc-disclaimer)`);
-}
+const INSURANCE = ['versicherungen', 'hausrat', 'bu', 'rechtsschutz', 'autoversicherung'];
+const tabs = readFileSync(join(site, 'assets', 'insurance-tabs.js'), 'utf8');
+const counts = {};
 
-writeFileSync(join(dest, 'disclosures.json'), JSON.stringify(disclosures, null, 2) + '\n');
+for (const [lang, dir] of Object.entries(LANGS)) {
+  const disclosures = {};
+  for (const [key, page] of Object.entries(PAGES)) {
+    const html = readFileSync(join(site, dir, page), 'utf8');
+    const m = html.match(/class="disclosure-note"[^>]*>([\s\S]*?)<\/(?:p|div)>/);
+    if (m) disclosures[key] = decode(m[1]);
+    else missing.push(`${dir}${page}`);
+  }
+  // insurance types: TYPES[].key + disclosure.{de,en} in assets/insurance-tabs.js
+  const typeRe = new RegExp(
+    String.raw`key:\s*'([a-z]+)'[\s\S]*?disclosure:\s*\{\s*de:\s*'((?:[^'\\]|\\.)*)',\s*en:\s*'((?:[^'\\]|\\.)*)'`,
+    'g'
+  );
+  let t;
+  while ((t = typeRe.exec(tabs))) disclosures[t[1]] = decode(lang === 'de' ? t[2] : t[3]);
+  for (const k of INSURANCE) if (!disclosures[k]) missing.push(`insurance-tabs.js:${k} (${lang})`);
+  for (const page of RECHNER) {
+    const html = readFileSync(join(site, dir, `${page}.html`), 'utf8');
+    const m = html.match(/<p class="calc-disclaimer"(?![^>]*\bid=)[^>]*>([\s\S]*?)<\/p>/);
+    if (m) disclosures[`rechner:${page}`] = decode(m[1]);
+    else missing.push(`${dir}${page}.html (calc-disclaimer)`);
+  }
+  const file = lang === 'de' ? 'disclosures.json' : `disclosures.${lang}.json`;
+  writeFileSync(join(dest, file), JSON.stringify(disclosures, null, 2) + '\n');
+  counts[lang] = Object.keys(disclosures).length;
+}
 
 // 3. Finanz-Check quiz: QUESTIONS, WEIGHTS and CATEGORY_KEYS from assets/finanz-check.js
 //    (plain data literals inside the script — evaluated in an empty sandbox, nothing else runs)
@@ -119,11 +127,46 @@ const quiz = {
 if (!Array.isArray(quiz.questions) || !quiz.weights || !Array.isArray(quiz.categoryKeys)) {
   missing.push('assets/finanz-check.js (QUESTIONS/WEIGHTS/CATEGORY_KEYS)');
 } else {
+  const noEn = quiz.questions.filter((q) => !q.text.en || q.options.some((o) => !o.label.en));
+  if (noEn.length) missing.push(`finanz-check.js: English text missing for ${noEn.map((q) => q.id).join(', ')}`);
   writeFileSync(join(dest, 'finanz-check.json'), JSON.stringify(quiz, null, 2) + '\n');
   console.log(`[sync-data] Finanz-Check: ${quiz.questions.length} Fragen, ${quiz.categoryKeys.length} Kategorien übernommen.`);
 }
 
-console.log(`[sync-data] ${n} Datendateien + ${Object.keys(disclosures).length} Hinweistexte übernommen.`);
+// 4. Ratgeber: articles and topic chips from ratgeber.html (+ en/). Articles are paired by
+//    page so each one has a German and an English title; `cat` = index of its topic chip
+//    (same order in both languages), so colors don't depend on the translated chip text.
+const ratgeber = {};
+for (const [lang, dir] of Object.entries(LANGS)) {
+  const html = readFileSync(join(site, dir, 'ratgeber.html'), 'utf8');
+  const chips = [...html.matchAll(/<button[^>]*class="chip[^"]*"[^>]*data-filter="([^"]*)"[^>]*>([\s\S]*?)<\/button>/g)]
+    .map((m) => ({ filter: decode(m[1]), label: decode(m[2]) }))
+    .filter((c) => c.filter);
+  const articles = [...html.matchAll(/<a href="(ratgeber-[^"]+\.html)" class="guide-card">([\s\S]*?)<\/a>/g)].map((m) => {
+    const body = m[2];
+    const cat = decode((body.match(/<span class="guide-cat">([\s\S]*?)<\/span>/) || [])[1] || '');
+    return {
+      page: m[1],
+      cat: chips.findIndex((c) => c.filter === cat),
+      catLabel: cat,
+      title: decode((body.match(/<h3>([\s\S]*?)<\/h3>/) || [])[1] || ''),
+      teaser: decode((body.match(/<p>([\s\S]*?)<\/p>/) || [])[1] || ''),
+    };
+  });
+  if (!chips.length || !articles.length || articles.some((a) => a.cat < 0 || !a.title)) {
+    missing.push(`${dir}ratgeber.html (topic chips / guide cards)`);
+  }
+  ratgeber[lang] = { topics: chips.map((c) => c.label), articles };
+}
+if (ratgeber.de && ratgeber.en && ratgeber.de.articles.map((a) => a.page).join() !== ratgeber.en.articles.map((a) => a.page).join()) {
+  missing.push('ratgeber.html vs en/ratgeber.html: different article lists');
+}
+writeFileSync(join(dest, 'ratgeber.json'), JSON.stringify(ratgeber, null, 2) + '\n');
+
+console.log(
+  `[sync-data] ${n} Datendateien (DE + EN), ${counts.de} + ${counts.en} Hinweistexte (DE + EN), ` +
+    `${ratgeber.de?.articles.length ?? 0} Ratgeber-Artikel übernommen.`
+);
 if (missing.length) {
   console.warn(`[sync-data] WARNUNG: nicht gefunden: ${missing.join(', ')}`);
   process.exitCode = 1;

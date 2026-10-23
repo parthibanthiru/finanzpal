@@ -4,6 +4,7 @@ import { calcSavings } from '@/lib/calc';
 import { formatEUR } from '@/lib/format';
 import { BarChart, NumberField, ResultTile, useCalcStyles } from './CalcUI';
 import { spacing } from './theme';
+import { useT } from '@/lib/i18n';
 
 type Range = { def: number; min: number; max: number; step: number };
 
@@ -11,9 +12,11 @@ type Range = { def: number; min: number; max: number; step: number };
 export function SavingsCalculator({
   intro, initial: i, monthly: mo, years: y, rate: r, disclaimer,
 }: {
-  intro: string; initial: Range; monthly: Range; years: Range; rate: Range; disclaimer: string | null;
+  intro: string; initial: Range; monthly: Range; years: Range; rate: Range; disclaimer: string | null; // intro: already translated by the screen
 }) {
   const calcStyles = useCalcStyles();
+  const t = useT();
+  const L = t.calc.savings;
   const [initial, setInitial] = useState(i.def);
   const [monthly, setMonthly] = useState(mo.def);
   const [years, setYears] = useState(y.def);
@@ -24,24 +27,24 @@ export function SavingsCalculator({
   const step = series.length > 20 ? Math.ceil(series.length / 20) : 1;
   const bars = series
     .filter((p, idx) => idx % step === 0 || idx === series.length - 1)
-    .map((p) => ({ key: String(p.year), bottom: p.contributed, top: Math.max(0, p.interest), label: `Jahr ${p.year}` }));
+    .map((p) => ({ key: String(p.year), bottom: p.contributed, top: Math.max(0, p.interest), label: t.common.yearLabel(p.year) }));
 
   return (
     <ScrollView contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }} keyboardShouldPersistTaps="handled">
       <Text style={calcStyles.intro}>{intro}</Text>
-      <NumberField label="Einmalanlage" value={initial} onChange={setInitial} step={i.step} min={i.min} max={i.max} suffix="€" />
-      <NumberField label="Monatliche Sparrate" value={monthly} onChange={setMonthly} step={mo.step} min={mo.min} max={mo.max} suffix="€" />
-      <NumberField label="Anlagedauer" value={years} onChange={setYears} step={y.step} min={y.min} max={y.max} suffix="Jahre" />
-      <NumberField label="Zins / Rendite p. a." value={rate} onChange={setRate} step={r.step} min={r.min} max={r.max} suffix="%" decimals={1} />
+      <NumberField label={L.initial} value={initial} onChange={setInitial} step={i.step} min={i.min} max={i.max} suffix="€" />
+      <NumberField label={L.monthly} value={monthly} onChange={setMonthly} step={mo.step} min={mo.min} max={mo.max} suffix="€" />
+      <NumberField label={L.years} value={years} onChange={setYears} step={y.step} min={y.min} max={y.max} suffix={t.calc.unitYears} />
+      <NumberField label={L.rate} value={rate} onChange={setRate} step={r.step} min={r.min} max={r.max} suffix="%" decimals={1} />
 
       <View style={calcStyles.tiles}>
-        <ResultTile strong label={`Endkapital nach ${years} ${years === 1 ? 'Jahr' : 'Jahren'}`} value={formatEUR(last.balance)} />
-        <ResultTile label="Eingezahlt" value={formatEUR(last.contributed)} />
-        <ResultTile label="Zinsen & Erträge" value={formatEUR(last.interest)} />
+        <ResultTile strong label={L.final(years)} value={formatEUR(last.balance)} />
+        <ResultTile label={L.contributed} value={formatEUR(last.contributed)} />
+        <ResultTile label={L.interest} value={formatEUR(last.interest)} />
       </View>
 
-      <Text style={calcStyles.section}>Entwicklung</Text>
-      <BarChart bars={bars} bottomLabel="Eingezahlt" topLabel="Zinsen & Erträge" />
+      <Text style={calcStyles.section}>{L.chart}</Text>
+      <BarChart bars={bars} bottomLabel={L.contributed} topLabel={L.interest} />
 
       {disclaimer ? <Text style={calcStyles.disclaimer}>{disclaimer}</Text> : null}
     </ScrollView>

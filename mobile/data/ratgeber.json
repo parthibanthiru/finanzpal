@@ -1,0 +1,166 @@
+{
+  "de": {
+    "topics": [
+      "Investieren",
+      "Zahlen",
+      "Sparen",
+      "Finanzieren",
+      "Absichern",
+      "Vorsorge"
+    ],
+    "articles": [
+      {
+        "page": "ratgeber-etf-sparplan.html",
+        "cat": 0,
+        "catLabel": "Investieren",
+        "title": "ETF-Sparplan starten: Die ersten Schritte",
+        "teaser": "Was du vor der ersten Order wissen solltest — ohne Fachjargon."
+      },
+      {
+        "page": "ratgeber-kreditkarte-guide.html",
+        "cat": 1,
+        "catLabel": "Zahlen",
+        "title": "Kostenlose Kreditkarte: Worauf du wirklich achten solltest",
+        "teaser": "0 € Jahresgebühr ist nur die halbe Miete."
+      },
+      {
+        "page": "ratgeber-tagesgeld-vs-festgeld.html",
+        "cat": 2,
+        "catLabel": "Sparen",
+        "title": "Tagesgeld oder Festgeld: Was passt zu dir?",
+        "teaser": "Der Unterschied in drei Minuten erklärt, mit Rechenbeispiel."
+      },
+      {
+        "page": "ratgeber-ratenkredit-vergleichen.html",
+        "cat": 3,
+        "catLabel": "Finanzieren",
+        "title": "Ratenkredit vergleichen: So findest du den günstigsten Zins",
+        "teaser": "Effektiver Jahreszins statt Sollzins, mit Rechenbeispiel."
+      },
+      {
+        "page": "ratgeber-haftpflicht-basics.html",
+        "cat": 4,
+        "catLabel": "Absichern",
+        "title": "Private Haftpflicht: Was wirklich zählt",
+        "teaser": "Deckungssumme, Ausschlüsse und worauf es beim Abschluss ankommt."
+      },
+      {
+        "page": "ratgeber-berufsunfaehigkeit-guide.html",
+        "cat": 4,
+        "catLabel": "Absichern",
+        "title": "Berufsunfähigkeitsversicherung: Brauchst du sie wirklich?",
+        "teaser": "Warum die gesetzliche Absicherung oft nicht reicht."
+      },
+      {
+        "page": "ratgeber-girokonto-guide.html",
+        "cat": 1,
+        "catLabel": "Zahlen",
+        "title": "Kostenloses Girokonto: Worauf es wirklich ankommt",
+        "teaser": "0 € Kontoführung ist nur die halbe Miete."
+      },
+      {
+        "page": "ratgeber-depot-guide.html",
+        "cat": 0,
+        "catLabel": "Investieren",
+        "title": "Das richtige Depot für deinen ETF-Sparplan",
+        "teaser": "Nicht jedes Depot, das einen Broker-Test gewinnt, passt auch für Sparpläne."
+      },
+      {
+        "page": "ratgeber-steuerprogramm-guide.html",
+        "cat": 1,
+        "catLabel": "Zahlen",
+        "title": "Steuererklärung mit Software: Lohnt sich das?",
+        "teaser": "ELSTER ist kostenlos — warum zahlen trotzdem so viele?"
+      },
+      {
+        "page": "ratgeber-altersvorsorgedepot.html",
+        "cat": 5,
+        "catLabel": "Vorsorge",
+        "title": "Das Altersvorsorgedepot: Was sich 2027 ändert",
+        "teaser": "Die Riester-Rente wird abgelöst — was feststeht, was noch offen ist."
+      }
+    ]
+  },
+  "en": {
+    "topics": [
+      "Investing",
+      "Spending",
+      "Saving",
+      "Financing",
+      "Protecting",
+      "Retirement"
+    ],
+    "articles": [
+      {
+        "page": "ratgeber-etf-sparplan.html",
+        "cat": 0,
+        "catLabel": "Investing",
+        "title": "Starting an ETF savings plan: first steps",
+        "teaser": "What to know before your first order — no jargon."
+      },
+      {
+        "page": "ratgeber-kreditkarte-guide.html",
+        "cat": 1,
+        "catLabel": "Spending",
+        "title": "Free credit card: what to actually watch for",
+        "teaser": "€0 annual fee is only half the story."
+      },
+      {
+        "page": "ratgeber-tagesgeld-vs-festgeld.html",
+        "cat": 2,
+        "catLabel": "Saving",
+        "title": "Instant savings account or fixed deposit: which fits you?",
+        "teaser": "The difference explained in three minutes, with a worked example."
+      },
+      {
+        "page": "ratgeber-ratenkredit-vergleichen.html",
+        "cat": 3,
+        "catLabel": "Financing",
+        "title": "Comparing instalment loans: finding the lowest rate",
+        "teaser": "Effective annual rate vs. nominal rate, with a worked example."
+      },
+      {
+        "page": "ratgeber-haftpflicht-basics.html",
+        "cat": 4,
+        "catLabel": "Protecting",
+        "title": "Personal liability insurance: what actually matters",
+        "teaser": "Cover amount, exclusions, and what to check before signing up."
+      },
+      {
+        "page": "ratgeber-berufsunfaehigkeit-guide.html",
+        "cat": 4,
+        "catLabel": "Protecting",
+        "title": "Disability income insurance: do you really need it?",
+        "teaser": "Why statutory protection often isn't enough."
+      },
+      {
+        "page": "ratgeber-girokonto-guide.html",
+        "cat": 1,
+        "catLabel": "Spending",
+        "title": "Free checking account: what really matters",
+        "teaser": "€0 account fees are only half the story."
+      },
+      {
+        "page": "ratgeber-depot-guide.html",
+        "cat": 0,
+        "catLabel": "Investing",
+        "title": "The right custody account for your ETF savings plan",
+        "teaser": "Not every account that wins a broker test is the best fit for savings plans."
+      },
+      {
+        "page": "ratgeber-steuerprogramm-guide.html",
+        "cat": 1,
+        "catLabel": "Spending",
+        "title": "Tax filing software: is it worth it?",
+        "teaser": "ELSTER is free — so why do so many people still pay?"
+      },
+      {
+        "page": "ratgeber-altersvorsorgedepot.html",
+        "cat": 5,
+        "catLabel": "Retirement",
+        "title": "The Altersvorsorgedepot: what changes in 2027",
+        "teaser": "The Riester pension is being retired — what's confirmed, what's still open."
+      }
+    ]
+  }
+}

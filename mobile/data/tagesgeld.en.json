@@ -1,0 +1,225 @@
+{
+  "updated": "2026-10",
+  "items": [
+    {
+      "id": "openbank",
+      "name": "Openbank",
+      "initials": "OB",
+      "color": "#6B2FA0",
+      "recommended": true,
+      "affiliateUrl": "#",
+      "rate": "4.00%",
+      "guarantee": "4 months (up to €100,000)",
+      "minDeposit": "none",
+      "protection": "€100,000 (DE)",
+      "score": {
+        "value": 93.3,
+        "band": "A",
+        "breakdown": {
+          "zins": 100.0,
+          "garantiedauer": 66.7,
+          "einlagensicherung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "consorsbank-tagesgeld",
+      "name": "Consorsbank",
+      "initials": "CB",
+      "color": "#13395E",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "3.80%",
+      "guarantee": "5 months (up to €1,000,000)",
+      "minDeposit": "none",
+      "protection": "€100,000 (FR, FGDR)",
+      "score": {
+        "value": 93.9,
+        "band": "A",
+        "breakdown": {
+          "zins": 95.0,
+          "garantiedauer": 83.3,
+          "einlagensicherung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "suresse-direkt",
+      "name": "Suresse Direkt Bank",
+      "initials": "SD",
+      "color": "#0057A0",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "3.70%",
+      "guarantee": "6 months",
+      "minDeposit": "€1",
+      "protection": "€100,000 (ES, EU-wide)",
+      "score": {
+        "value": 95.9,
+        "band": "A",
+        "breakdown": {
+          "zins": 92.5,
+          "garantiedauer": 100.0,
+          "einlagensicherung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "ing",
+      "name": "ING",
+      "initials": "ING",
+      "color": "#FF6200",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "3.20%",
+      "guarantee": "4 months (up to €250,000)",
+      "minDeposit": "none",
+      "protection": "€100,000 (DE)",
+      "score": {
+        "value": 82.3,
+        "band": "A",
+        "breakdown": {
+          "zins": 80.0,
+          "garantiedauer": 66.7,
+          "einlagensicherung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "dkb-tagesgeld",
+      "name": "DKB",
+      "initials": "DKB",
+      "color": "#004F9F",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "1.00%",
+      "guarantee": "none (variable base rate)",
+      "minDeposit": "none",
+      "protection": "€100,000 (DE)",
+      "score": {
+        "value": 38.8,
+        "band": "C",
+        "breakdown": {
+          "zins": 25.0,
+          "garantiedauer": 0.0,
+          "einlagensicherung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "1822direkt-tagesgeld",
+      "name": "1822direkt",
+      "initials": "18",
+      "color": "#C8102E",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "3.50% (new customers)",
+      "guarantee": "6 months (up to €250,000), then 0.60% base rate",
+      "minDeposit": "none stated in source",
+      "protection": "€100,000 (DE, Sparkassen group)",
+      "score": {
+        "value": 93.1,
+        "band": "A",
+        "breakdown": {
+          "zins": 87.5,
+          "garantiedauer": 100.0,
+          "einlagensicherung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "renault-bank-direkt-tagesgeld",
+      "name": "Renault Bank direkt",
+      "initials": "RB",
+      "color": "#FFCC00",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "3.50% (new customers)",
+      "guarantee": "3 months (up to €250,000), then 2.00% (RCI Banque, new customers with no relationship in the last 2 years)",
+      "minDeposit": "not stated in source",
+      "protection": "€100,000 (FR guarantee fund, per a 2026 source — terms may since have changed)",
+      "score": {
+        "value": 83.1,
+        "band": "A",
+        "breakdown": {
+          "zins": 87.5,
+          "garantiedauer": 50.0,
+          "einlagensicherung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "klarna-tagesgeld",
+      "name": "Klarna Flexkonto",
+      "initials": "KL",
+      "color": "#FFB3C7",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "2.20%",
+      "guarantee": "none (ongoing variable rate, no new-customer promo)",
+      "minDeposit": "none (from €0.01, provider page is slightly inconsistent)",
+      "protection": "Sweden (statutory deposit insurance, roughly €100,000-equivalent — exact conversion stated inconsistently across sources)",
+      "score": {
+        "value": 45.3,
+        "band": "C",
+        "breakdown": {
+          "zins": 55.0,
+          "garantiedauer": 0.0,
+          "einlagensicherung": 60.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "jt-direktbank-tagesgeld",
+      "name": "J&T Direktbank",
+      "initials": "JT",
+      "color": "#8B1E3F",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "2.25%",
+      "guarantee": "none (ongoing rate, no promo period, for new and existing customers)",
+      "minDeposit": "not stated in source",
+      "protection": "Czech Republic (statutory guarantee scheme, typical EU-wide €100,000 threshold)",
+      "score": {
+        "value": 55.9,
+        "band": "B",
+        "breakdown": {
+          "zins": 56.2,
+          "garantiedauer": 0.0,
+          "einlagensicherung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "trade-republic-tagesgeld",
+      "name": "Trade Republic",
+      "initials": "TR",
+      "color": "#1F4E36",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "rate": "2.50% (tied to the ECB deposit rate)",
+      "guarantee": "no rate guarantee, can be changed at any time",
+      "minDeposit": "none (no maximum)",
+      "protection": "€100,000 via partner banks (Germany: Deutsche Bank/J.P. Morgan; further partners in FR/SE — source is inconsistent on the exact number of partner banks; some funds may be held in money-market funds without deposit protection)",
+      "score": {
+        "value": 44.4,
+        "band": "C",
+        "breakdown": {
+          "zins": 62.5,
+          "garantiedauer": 0.0,
+          "einlagensicherung": 40.0
+        },
+        "computedFrom": "2026-10"
+      }
+    }
+  ]
+}

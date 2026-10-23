@@ -1,42 +1,31 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { openSite } from '@/lib/site';
+import { useI18n } from '@/lib/i18n';
 import { Colors, fonts, makeStyles, radius, spacing, useColors } from '@/components/theme';
 
-// The 10 guides from ratgeber.html (same titles, teasers and categories).
-// Articles open on finanzpal.de, so content is maintained in one place only.
-const ARTIKEL = [
-  { cat: 'Investieren', page: 'ratgeber-etf-sparplan.html', title: 'ETF-Sparplan starten: Die ersten Schritte', teaser: 'Was du vor der ersten Order wissen solltest — ohne Fachjargon.' },
-  { cat: 'Investieren', page: 'ratgeber-depot-guide.html', title: 'Das richtige Depot für deinen ETF-Sparplan', teaser: 'Nicht jedes Depot, das einen Broker-Test gewinnt, passt auch für Sparpläne.' },
-  { cat: 'Zahlen', page: 'ratgeber-girokonto-guide.html', title: 'Kostenloses Girokonto: Worauf es wirklich ankommt', teaser: '0 € Kontoführung ist nur die halbe Miete.' },
-  { cat: 'Zahlen', page: 'ratgeber-kreditkarte-guide.html', title: 'Kostenlose Kreditkarte: Worauf du wirklich achten solltest', teaser: '0 € Jahresgebühr ist nur die halbe Miete.' },
-  { cat: 'Zahlen', page: 'ratgeber-steuerprogramm-guide.html', title: 'Steuererklärung mit Software: Lohnt sich das?', teaser: 'ELSTER ist kostenlos — warum zahlen trotzdem so viele?' },
-  { cat: 'Sparen', page: 'ratgeber-tagesgeld-vs-festgeld.html', title: 'Tagesgeld oder Festgeld: Was passt zu dir?', teaser: 'Der Unterschied in drei Minuten erklärt, mit Rechenbeispiel.' },
-  { cat: 'Finanzieren', page: 'ratgeber-ratenkredit-vergleichen.html', title: 'Ratenkredit vergleichen: So findest du den günstigsten Zins', teaser: 'Effektiver Jahreszins statt Sollzins, mit Rechenbeispiel.' },
-  { cat: 'Absichern', page: 'ratgeber-haftpflicht-basics.html', title: 'Private Haftpflicht: Was wirklich zählt', teaser: 'Deckungssumme, Ausschlüsse und worauf es beim Abschluss ankommt.' },
-  { cat: 'Absichern', page: 'ratgeber-berufsunfaehigkeit-guide.html', title: 'Berufsunfähigkeitsversicherung: Brauchst du sie wirklich?', teaser: 'Warum die gesetzliche Absicherung oft nicht reicht.' },
-  { cat: 'Vorsorge', page: 'ratgeber-altersvorsorgedepot.html', title: 'Das Altersvorsorgedepot: Was sich 2027 ändert', teaser: 'Die Riester-Rente wird abgelöst — was feststeht, was noch offen ist.' },
-];
+// The guides from ratgeber.html / en/ratgeber.html (titles, teasers, topics), synced into
+// data/ratgeber.json by tools/sync-data.mjs. Articles open on the website in the app's language,
+// so content is maintained in one place only.
+type Guide = { page: string; cat: number; catLabel: string; title: string; teaser: string };
+const GUIDES: Record<'de' | 'en', { topics: string[]; articles: Guide[] }> = require('../../data/ratgeber.json');
 
-const catColors = (colors: Colors): Record<string, string> => ({
-  Investieren: colors.primary,
-  Zahlen: colors.slate,
-  Sparen: colors.teal,
-  Finanzieren: colors.accent,
-  Absichern: colors.primaryDark,
-  Vorsorge: colors.pal,
-});
+// Accent color per topic, in the website's chip order:
+// Investieren · Zahlen · Sparen · Finanzieren · Absichern · Vorsorge
+const topicColors = (colors: Colors) => [colors.primary, colors.slate, colors.teal, colors.accent, colors.primaryDark, colors.pal];
 
 export default function RatgeberScreen() {
   const styles = useStyles();
   const colors = useColors();
+  const { t, lang } = useI18n();
+  const accents = topicColors(colors);
   return (
     <ScrollView style={{ backgroundColor: colors.bg }} contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }}>
-      <Text style={styles.intro}>Verständlich erklärt, ohne Fachjargon — damit du selbst gut entscheiden kannst.</Text>
-      {ARTIKEL.map((a) => (
+      <Text style={styles.intro}>{t.guides.intro}</Text>
+      {GUIDES[lang].articles.map((a) => (
         <Pressable key={a.page} style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]} onPress={() => openSite(a.page)}>
-          <View style={[styles.stripe, { backgroundColor: catColors(colors)[a.cat] ?? colors.primary }]} />
+          <View style={[styles.stripe, { backgroundColor: accents[a.cat] ?? colors.primary }]} />
           <View style={{ flex: 1, padding: spacing.md }}>
-            <Text style={[styles.cat, { color: catColors(colors)[a.cat] ?? colors.primary }]}>{a.cat}</Text>
+            <Text style={[styles.cat, { color: accents[a.cat] ?? colors.primary }]}>{a.catLabel}</Text>
             <Text style={styles.title}>{a.title}</Text>
             <Text style={styles.teaser}>{a.teaser}</Text>
           </View>

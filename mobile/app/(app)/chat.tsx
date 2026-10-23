@@ -16,22 +16,19 @@ import { useAuth } from '@/context/AuthProvider';
 import { HISTORY_LIMIT, HistoryItem, sendChatMessage } from '@/lib/api';
 import { ChatMsg as Msg, clearHistory, loadHistory, saveExchange } from '@/lib/history';
 import { makeStyles, radius, spacing, useColors } from '@/components/theme';
-
-const QUICK_TOPICS = ['Tagesgeld', 'ETF-Sparplan', 'Girokonto', 'Versicherungen', 'Kredite', 'Altersvorsorge'];
-
-const DISCLAIMER =
-  'Hinweis: Finanzpal gibt allgemeine Informationen und Vergleiche, keine individuelle Anlage- oder Versicherungsberatung.';
+import { useT } from '@/lib/i18n';
 
 export default function ChatScreen() {
   const styles = useStyles();
   const colors = useColors();
+  const t = useT();
   const { user } = useAuth();
   const firstName = (user?.user_metadata?.full_name as string | undefined)?.split(' ')[0];
 
   const welcome: Msg = {
     id: 'welcome',
     role: 'bot',
-    text: `Hallo${firstName ? ` ${firstName}` : ''}! 👋 Wobei kann ich dir heute helfen? Wähle ein Thema oder stell einfach deine Frage.`,
+    text: t.chat.welcome(firstName),
   };
 
   // New backend conversation id on every start / after "Neu" (backend keeps context per id).
@@ -52,10 +49,10 @@ export default function ChatScreen() {
   }, []);
 
   function confirmClear() {
-    Alert.alert('Neuer Chat', 'Deinen bisherigen Chatverlauf löschen und neu beginnen?', [
-      { text: 'Abbrechen', style: 'cancel' },
+    Alert.alert(t.chat.newChat, t.chat.clearConfirm, [
+      { text: t.common.cancel, style: 'cancel' },
       {
-        text: 'Löschen',
+        text: t.common.delete,
         style: 'destructive',
         onPress: async () => {
           try {
@@ -63,7 +60,7 @@ export default function ChatScreen() {
             setMessages([welcome]);
             setSessionId(`${user?.id ?? 'anon'}-${Date.now()}`);
           } catch {
-            Alert.alert('Fehler', 'Der Verlauf konnte nicht gelöscht werden. Bitte versuche es später erneut.');
+            Alert.alert(t.common.error, t.chat.clearFailed);
           }
         },
       },
@@ -75,8 +72,8 @@ export default function ChatScreen() {
     <Tabs.Screen
       options={{
         headerRight: () => (
-          <Pressable onPress={confirmClear} style={{ paddingHorizontal: spacing.md }} accessibilityLabel="Neuer Chat">
-            <Text style={{ color: '#fff', fontWeight: '600', fontSize: 15 }}>Neu</Text>
+          <Pressable onPress={confirmClear} style={{ paddingHorizontal: spacing.md }} accessibilityLabel={t.chat.newChat}>
+            <Text style={{ color: '#fff', fontWeight: '600', fontSize: 15 }}>{t.chat.newShort}</Text>
           </Pressable>
         ),
       }}
@@ -109,7 +106,7 @@ export default function ChatScreen() {
       setMessages((m) => [...m, { id: `b-${Date.now()}`, role: 'bot', text: reply }]);
       if (user) saveExchange(user.id, trimmed, reply); // fire-and-forget; errors are only logged
     } catch (e) {
-      const msg = e instanceof Error ? e.message : 'Unbekannter Fehler.';
+      const msg = e instanceof Error ? e.message : t.common.unknownError;
       setMessages((m) => [...m, { id: `e-${Date.now()}`, role: 'bot', text: `⚠️ ${msg}` }]);
     } finally {
       setSending(false);
@@ -141,14 +138,14 @@ export default function ChatScreen() {
             {sending && <ActivityIndicator color={colors.primary} style={{ alignSelf: 'flex-start', margin: spacing.sm }} />}
             {messages.length === 1 && (
               <View style={styles.chips}>
-                {QUICK_TOPICS.map((t) => (
-                  <Pressable key={t} style={styles.chip} onPress={() => send(`Ich interessiere mich für ${t}.`)}>
-                    <Text style={styles.chipText}>{t}</Text>
+                {t.chat.topics.map((topic) => (
+                  <Pressable key={topic} style={styles.chip} onPress={() => send(t.chat.topicMessage(topic))}>
+                    <Text style={styles.chipText}>{topic}</Text>
                   </Pressable>
                 ))}
               </View>
             )}
-            <Text style={styles.disclaimer}>{DISCLAIMER}</Text>
+            <Text style={styles.disclaimer}>{t.chat.disclaimer}</Text>
           </>
         }
       />
@@ -157,7 +154,7 @@ export default function ChatScreen() {
           style={styles.input}
           value={input}
           onChangeText={setInput}
-          placeholder="Deine Frage…"
+          placeholder={t.chat.placeholder}
           placeholderTextColor={colors.muted}
           multiline
           onSubmitEditing={() => send(input)}
@@ -166,7 +163,7 @@ export default function ChatScreen() {
           style={[styles.sendBtn, (!input.trim() || sending) && { opacity: 0.4 }]}
           onPress={() => send(input)}
           disabled={!input.trim() || sending}
-          accessibilityLabel="Senden"
+          accessibilityLabel={t.chat.send}
         >
           <Text style={{ color: colors.onPrimary, fontSize: 18, fontWeight: '700' }}>➤</Text>
         </Pressable>

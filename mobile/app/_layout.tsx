@@ -6,6 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider, useAuth } from '@/context/AuthProvider';
 import { FavoritesProvider } from '@/context/FavoritesProvider';
 import { ThemeProvider } from '@/context/ThemeProvider';
+import { LanguageProvider } from '@/context/LanguageProvider';
 import { useTheme } from '@/components/theme';
 
 // Sends logged-out users to /login and logged-in users into the app.
@@ -42,11 +43,13 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <ThemeProvider>
-        <AuthProvider>
-          <FavoritesProvider>
-            <AuthGate />
-          </FavoritesProvider>
-        </AuthProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <FavoritesProvider>
+              <AuthGate />
+            </FavoritesProvider>
+          </AuthProvider>
+        </LanguageProvider>
       </ThemeProvider>
     </SafeAreaProvider>
   );

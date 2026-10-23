@@ -3,10 +3,12 @@ import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from '
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { useAuth } from '@/context/AuthProvider';
 import { makeStyles, radius, spacing, useColors, useTheme } from './theme';
+import { useT } from '@/lib/i18n';
 
 // "Weiter mit Google" (Android + iOS) and "Mit Apple fortfahren" (iOS only).
 // Shown on both the login and the register screen.
 export function SocialButtons({ onError }: { onError: (msg: string | null) => void }) {
+  const t = useT();
   const { scheme } = useTheme();
   const styles = useStyles();
   const colors = useColors();
@@ -31,7 +33,7 @@ export function SocialButtons({ onError }: { onError: (msg: string | null) => vo
     <View>
       <View style={styles.dividerRow}>
         <View style={styles.line} />
-        <Text style={styles.dividerText}>oder</Text>
+        <Text style={styles.dividerText}>{t.auth.or}</Text>
         <View style={styles.line} />
       </View>
 
@@ -60,7 +62,7 @@ export function SocialButtons({ onError }: { onError: (msg: string | null) => vo
         ) : (
           <>
             <Text style={styles.googleG}>G</Text>
-            <Text style={styles.googleText}>Weiter mit Google</Text>
+            <Text style={styles.googleText}>{t.auth.google}</Text>
           </>
         )}
       </Pressable>
