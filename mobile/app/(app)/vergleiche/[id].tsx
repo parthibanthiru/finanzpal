@@ -6,14 +6,18 @@ import { DataFile, formatUpdated, loadData } from '@/lib/data';
 import { openSite } from '@/lib/site';
 import { disclosure } from '@/lib/disclosures';
 import { ProviderCard } from '@/components/ProviderCard';
+import { useFavorites } from '@/context/FavoritesProvider';
 import { colors, radius, spacing } from '@/components/theme';
 
 type Sort = 'standard' | 'score';
 
 export default function CategoryScreen() {
   // focus = provider id to scroll to and highlight (from the Finanz-Check)
-  const { id, focus } = useLocalSearchParams<{ id: string; focus?: string }>();
+  // from = where the link came from ('merkliste' or the Finanz-Check by default), for the highlight label
+  const { id, focus, from } = useLocalSearchParams<{ id: string; focus?: string; from?: string }>();
+  const highlightLabel = from === 'merkliste' ? 'Auf deiner Merkliste' : 'Dein Finanz-Check-Ergebnis';
   const listRef = useRef<FlatList>(null);
+  const { isFavorite, toggleFavorite } = useFavorites();
   const cat = getCategory(String(id));
   const [data, setData] = useState<DataFile | null>(null);
   const [sort, setSort] = useState<Sort>('standard');
@@ -78,7 +82,13 @@ export default function CategoryScreen() {
             </View>
           }
           renderItem={({ item }) => (
-            <ProviderCard item={item} fields={cat.fields(item)} highlight={item.id === focus ? 'Dein Finanz-Check-Ergebnis' : undefined} />
+            <ProviderCard
+              item={item}
+              fields={cat.fields(item)}
+              highlight={item.id === focus ? highlightLabel : undefined}
+              favorite={isFavorite(cat.id, item.id)}
+              onToggleFavorite={() => toggleFavorite(cat.id, item.id)}
+            />
           )}
           ListFooterComponent={
             <View>

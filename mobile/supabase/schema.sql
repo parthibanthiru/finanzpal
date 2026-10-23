@@ -84,3 +84,31 @@ create policy "Users insert own messages"
 drop policy if exists "Users delete own messages" on public.messages;
 create policy "Users delete own messages"
   on public.messages for delete using (auth.uid() = user_id);
+
+-- ─────────────────────────────────────────────────────────────
+-- v0.7: Merkliste (saved providers, synced across the user's devices)
+-- Safe to run again on an existing project.
+-- category = app comparison id (e.g. 'girokonto', 'broker', 'haftpflicht'),
+-- item_id  = the provider's id in the website's data/*.json
+-- ─────────────────────────────────────────────────────────────
+create table if not exists public.favorites (
+  user_id     uuid not null references auth.users(id) on delete cascade,
+  category    text not null check (char_length(category) <= 40),
+  item_id     text not null check (char_length(item_id) <= 80),
+  created_at  timestamptz not null default now(),
+  primary key (user_id, category, item_id)
+);
+
+alter table public.favorites enable row level security;
+
+drop policy if exists "Users read own favorites" on public.favorites;
+create policy "Users read own favorites"
+  on public.favorites for select using (auth.uid() = user_id);
+
+drop policy if exists "Users insert own favorites" on public.favorites;
+create policy "Users insert own favorites"
+  on public.favorites for insert with check (auth.uid() = user_id);
+
+drop policy if exists "Users delete own favorites" on public.favorites;
+create policy "Users delete own favorites"
+  on public.favorites for delete using (auth.uid() = user_id);

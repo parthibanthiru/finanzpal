@@ -4,12 +4,15 @@ The Finanzpal app, built with Expo SDK 57 / React Native 0.86 + TypeScript: one 
 It lives in `mobile/` inside the website repo and uses the **website as its single source of truth**:
 same comparison data, same disclosure texts, same calculator math and the same design tokens.
 
-**What's in it (v0.6)**
+**What's in it (v0.7)**
 - **Finanz-Check** (top of the home tab): the website's 6-question quiz with one recommendation each for
   Girokonto, Depot, Kreditkarte and Tagesgeld. Questions and weights are extracted from
   `assets/finanz-check.js`; results were checked against the website for all 96 answer combinations
   (identical). Answers are saved on the device per account, so the home screen then shows
   "Deine Empfehlungen"; tapping one opens the comparison scrolled to that provider, highlighted.
+- **Merkliste**: a heart on every provider card saves it to the user's account (Supabase table
+  `favorites`), so the list is the same on every device; "Meine Merkliste" on the home tab, grouped by
+  comparison, tap opens the provider in its comparison. Needs `supabase/schema.sql` run once more (v0.7 part).
 - **Vergleiche** (home tab): all 13 comparisons from the website: Girokonto, Tagesgeld, Kreditkarte,
   Broker & Depot, Kinderdepot, Ratenkredit, Baufinanzierung, the 5 insurance types, Steuerprogramm.
   Provider cards with the website's fields, caveats (ⓘ), "Unsere Empfehlung", ratings, **Finanzpal-Score**
@@ -36,6 +39,7 @@ mobile/
   lib/calc.ts                     calculator math (identical to the website's assets/*rechner.js)
   lib/haushaltsbuch.ts            budget tracker storage + totals
   lib/finanzCheck.ts              Finanz-Check scoring (port of finanz-check.js) + saved answers
+  lib/favorites.ts, context/FavoritesProvider.tsx   Merkliste (Supabase, optimistic updates)
   lib/disclosures.ts              disclosure/disclaimer texts from the website
   lib/site.ts                     website base URL, opens site pages in-app
   data/                           copy of ../data/*.json + disclosures.json + finanz-check.json (generated, committed)

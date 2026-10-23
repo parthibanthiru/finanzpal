@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Link, useFocusEffect, useRouter } from 'expo-router';
 import { useAuth } from '@/context/AuthProvider';
+import { useFavorites } from '@/context/FavoritesProvider';
 import { CATEGORIES, GROUPS } from '@/lib/categories';
 import { getBundled } from '@/lib/data';
 import { Answers, CATEGORY_KEYS, CATEGORY_META, QUESTIONS, loadAnswers, topPick } from '@/lib/finanzCheck';
@@ -66,6 +67,23 @@ function FinanzCheckCard() {
   );
 }
 
+/** Entry to the Merkliste; shows how many providers are saved. */
+function MerklisteRow() {
+  const router = useRouter();
+  const { favorites } = useFavorites();
+  const n = favorites.length;
+  return (
+    <Pressable style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]} onPress={() => router.push('/vergleiche/merkliste')}>
+      <Text style={[styles.icon, { color: n ? colors.danger : colors.muted }]}>{n ? '♥' : '♡'}</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={styles.title}>Meine Merkliste</Text>
+        <Text style={styles.sub}>{n ? `${n} Anbieter gespeichert` : 'Anbieter mit dem Herz merken'}</Text>
+      </View>
+      <Text style={styles.chevron}>›</Text>
+    </Pressable>
+  );
+}
+
 // Home of the app: the same comparison categories as the website nav.
 export default function VergleicheScreen() {
   return (
@@ -76,6 +94,9 @@ export default function VergleicheScreen() {
       </Text>
 
       <FinanzCheckCard />
+      <View style={{ marginBottom: spacing.lg }}>
+        <MerklisteRow />
+      </View>
 
       {GROUPS.map((group) => {
         const cats = CATEGORIES.filter((c) => c.group === group);

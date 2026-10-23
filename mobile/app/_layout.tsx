@@ -4,6 +4,7 @@ import { Slot, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider, useAuth } from '@/context/AuthProvider';
+import { FavoritesProvider } from '@/context/FavoritesProvider';
 import { colors } from '@/components/theme';
 
 // Sends logged-out users to /login and logged-in users into the app.
@@ -34,7 +35,9 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <AuthProvider>
         <StatusBar style="dark" />
-        <AuthGate />
+        <FavoritesProvider>
+          <AuthGate />
+        </FavoritesProvider>
       </AuthProvider>
     </SafeAreaProvider>
   );

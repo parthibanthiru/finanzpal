@@ -20,7 +20,27 @@ export function ScoreBadge({ value, band }: { value: number; band: string }) {
   );
 }
 
-export function ProviderCard({ item, fields, highlight }: { item: Item; fields: Field[]; highlight?: string }) {
+/** Heart toggle for the Merkliste. */
+export function FavoriteButton({ active, onPress }: { active: boolean; onPress: () => void }) {
+  return (
+    <Pressable
+      onPress={onPress}
+      hitSlop={10}
+      style={styles.fav}
+      accessibilityRole="button"
+      accessibilityLabel={active ? 'Von der Merkliste entfernen' : 'Auf die Merkliste'}
+      accessibilityState={{ selected: active }}
+    >
+      <Text style={[styles.favIcon, active && { color: colors.danger }]}>{active ? '♥' : '♡'}</Text>
+    </Pressable>
+  );
+}
+
+export function ProviderCard({
+  item, fields, highlight, favorite, onToggleFavorite,
+}: {
+  item: Item; fields: Field[]; highlight?: string; favorite?: boolean; onToggleFavorite?: () => void;
+}) {
   const hasLink = isRealLink(item.affiliateUrl);
   return (
     <View style={[styles.card, item.recommended && styles.cardRecommended, highlight && styles.cardHighlight]}>
@@ -45,6 +65,7 @@ export function ProviderCard({ item, fields, highlight }: { item: Item; fields: 
           )}
         </View>
         {item.score && <ScoreBadge value={item.score.value} band={item.score.band} />}
+        {onToggleFavorite && <FavoriteButton active={!!favorite} onPress={onToggleFavorite} />}
       </View>
 
       {fields.map((f) => (
@@ -85,6 +106,8 @@ const styles = StyleSheet.create({
   },
   cardRecommended: { borderColor: colors.primary, borderWidth: 2 },
   cardHighlight: { borderColor: colors.smile, borderWidth: 3 },
+  fav: { marginLeft: spacing.sm, paddingHorizontal: 4 },
+  favIcon: { fontSize: 24, color: colors.muted, lineHeight: 28 },
   badges: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   highlightBadge: { backgroundColor: colors.ink, color: colors.smile },
   recommended: {
