@@ -436,6 +436,14 @@ Kategorie mit Score = denselben Link in Toolbar/Filters und
 Disclosure-Note ergänzen, Anchor je nachdem ob die Kategorie schon einen
 Score hat.
 
+**Polish-Pass (gleicher Tag):** `ⓘ`-Icon vor dem Linktext (`<span
+class="mi">`) für bessere Scanbarkeit neben Chips/Select; eigener
+`:focus-visible`-Ring auf `.method-link` (vorher nur `:hover`, Tastatur-
+Nutzer sahen keinen Fokus-Indikator); Linktext für die beiden Kategorien
+ohne Score (Broker & Depot, Versicherungen) auf „Wie wir vergleichen →"
+geändert statt „Wie wir bewerten →" — Letzteres würde einen Score
+suggerieren, den es dort (bewusst) noch nicht gibt.
+
 ## Kopf-an-Kopf-Seiten ("vs"-Seiten)
 
 **Pilot, seit 2026-10-23 — eine einzige Seite, bewusst nicht auf andere
