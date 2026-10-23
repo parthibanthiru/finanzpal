@@ -413,6 +413,76 @@ BROKER_RUBRIC = [
 
 
 # ---------------------------------------------------------------------------
+# Versicherungen (Privathaftpflicht only) rubric
+# Jahresbeitrag 35% · Rating-Bestätigung (F&B PHV-Rating FFF+) 40% ·
+# Deckungssumme 25%
+#
+# Scoped to Privathaftpflicht ONLY. The `versicherungen` category covers five
+# sub-tabs (Privathaftpflicht, Hausrat, BU, Rechtsschutz, Kfz) sharing one
+# tab UI (assets/insurance-tabs.js) but five separate data files — only
+# data/versicherungen.json (Privathaftpflicht) has, for nearly every
+# provider, a clean parseable annual premium AND a disclosed independent
+# rating-confirmation flag. The other four remain unscored:
+#   - Hausrat (data/hausrat.json): 6 of 10 providers' premium field is
+#     literally "Prämie ... nicht separat recherchiert (Testergebnis
+#     kostenpflichtig)" — no number to parse for most of the category.
+#   - BU (data/bu.json): `beitrag` is free text ("individuell,
+#     altersabhängig") for every provider — there is no per-provider number
+#     at all, by the nature of BU underwriting.
+#   - Rechtsschutz (data/rechtsschutz.json): `beitrag` is a footnoted
+#     "ab X €/Jahr*" estimate the page's own disclosure says is not
+#     individually verified per provider.
+#   - Kfz/Autoversicherung (data/autoversicherung.json): `beitrag` is
+#     literally "Individuell" — Kfz premiums are too rating-class/
+#     postcode/vehicle-dependent to quote one verifiable number per
+#     provider at all.
+# Scoring any of those four would mean inventing precision the source data
+# itself says doesn't exist — exactly what the data-integrity rule above
+# is meant to prevent. Weighting rating-confirmation above raw price is
+# deliberate too: for liability insurance, the disclosed Franke & Bornberg
+# PHV-Rating 2026 FFF+ confirmation (whether the tariff is independently
+# rated at the top tier, not just cheap) is the more decision-relevant fact,
+# consistent with the category's own existing disclosure text.
+# ---------------------------------------------------------------------------
+
+def _phv_beitrag(item):
+    m = re.search(r"(\d+(?:,\d+)?)\s*€/Jahr", item.get("beitrag") or "")
+    if not m:
+        return 0.0
+    fee = float(m.group(1).replace(",", "."))
+    # Fixed anchors: €30/year = 100 points, €90/year = 0 points.
+    return clamp(100.0 - (fee - 30.0) * (100.0 / 60.0))
+
+
+def _phv_deckung(item):
+    nums = re.findall(r"\d+", item.get("deckung") or "")
+    if not nums:
+        return 50.0
+    # Conservative for tariff-variable cover (e.g. "50 oder 100 Mio. €
+    # (tarifabhängig)"): take the first/lower stated figure, not the best
+    # case the provider could reach on a higher tariff.
+    cover = float(nums[0])
+    # Fixed anchor: €50m cover = 100 points, capped — no extra credit for
+    # going higher, since €50m already exceeds any realistic PHV claim.
+    return clamp((cover / 50.0) * 100.0)
+
+
+def _phv_rating_confirmed(item):
+    # `rating` is non-null only for the tariffs the page's own disclosure
+    # text names as confirmed in the Franke & Bornberg PHV-Rating 2026 at
+    # the FFF+ tier. A null rating isn't scored as "bad" — just "not
+    # independently confirmed at that tier", a real, disclosed difference.
+    return 100.0 if item.get("rating") is not None else 40.0
+
+
+PRIVATHAFTPFLICHT_RUBRIC = [
+    ("beitrag", 0.35, _phv_beitrag),
+    ("ratingBestaetigt", 0.40, _phv_rating_confirmed),
+    ("deckung", 0.25, _phv_deckung),
+]
+
+
+# ---------------------------------------------------------------------------
 # Registry: category -> rubric. Add new categories here once their rubric
 # is agreed (see the design doc's open questions before adding one).
 # ---------------------------------------------------------------------------
@@ -424,6 +494,7 @@ RUBRICS = {
     "tagesgeld": TAGESGELD_RUBRIC,
     "kinderdepot": KINDERDEPOT_RUBRIC,
     "broker": BROKER_RUBRIC,
+    "versicherungen": PRIVATHAFTPFLICHT_RUBRIC,
 }
 
 

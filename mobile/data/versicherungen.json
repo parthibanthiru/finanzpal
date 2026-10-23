@@ -1,15 +1,226 @@
 {
   "updated": "2026-10",
   "items": [
-    { "id": "huk24", "name": "HUK24", "initials": "HUK", "color": "#007A3D", "recommended": true, "affiliateUrl": "#", "beitrag": "34 €/Jahr", "deckung": "100 Mio. €", "leistungen": "Schlüsselversicherung · Mietwagen<br>Forderungsausfall bis 50 Mio. € · weltweit<br>Franke & Bornberg PHV-Rating 2026 (Single): FFF+ (Tarife Classic und PHPlus)", "rating": 4.6, "ratingStars": "★★★★★" },
-    { "id": "devk", "name": "DEVK", "initials": "DEVK", "color": "#E2001A", "recommended": false, "affiliateUrl": "#", "beitrag": "ab 42 €/Jahr (Werbepreis des Anbieters: ab 3,50 €/Monat)", "deckung": "50 Mio. €", "leistungen": "Mietsachschäden · Forderungsausfall<br>Deutschlandweit<br>Nicht unter den FFF+-Tarifen im Franke & Bornberg PHV-Rating 2026 (Single)", "rating": null, "ratingStars": null },
-    { "id": "hansemerkur", "name": "HanseMerkur", "initials": "HM", "color": "#8B1E3F", "recommended": false, "affiliateUrl": "#", "beitrag": "59 €/Jahr", "deckung": "50 Mio. €", "leistungen": "Schlüsselversicherung · Mietwagen<br>Forderungsausfall mit Rechtsschutz · weltweit<br>Nicht unter den FFF+-Tarifen im Franke & Bornberg PHV-Rating 2026 (Single)", "rating": null, "ratingStars": null },
-    { "id": "allianz", "name": "Allianz", "initials": "ALZ", "color": "#003781", "recommended": false, "affiliateUrl": "#", "beitrag": "59 €/Jahr", "deckung": "50 Mio. €", "leistungen": "Mietsachschäden · Forderungsausfall<br>Deutschlandweit<br>Nicht unter den FFF+-Tarifen im Franke & Bornberg PHV-Rating 2026 (Single)", "rating": null, "ratingStars": null },
-    { "id": "adam-riese-phv", "name": "Adam Riese", "initials": "AR", "color": "#1F6F54", "recommended": false, "affiliateUrl": "#", "beitrag": "ab 46 €/Jahr (Tarif „Riesig“), 55 €/Jahr für „Riesig plus“", "deckung": "50 Mio. €", "leistungen": "Schlüsselversicherung für private und berufliche Schlüssel<br>Mietsachschäden je nach Tarifvariante unterschiedlich abgedeckt<br>Franke & Bornberg PHV-Rating 2026 (Single): FFF+ (Tarif Riesig)", "rating": 4.7, "ratingStars": "★★★★★" },
-    { "id": "vhv-phv", "name": "VHV", "initials": "VHV", "color": "#004C97", "recommended": false, "affiliateUrl": "#", "beitrag": "56 €/Jahr (Tarif Exklusiv + Best-Leistung)", "deckung": "50 Mio. €", "leistungen": "Best-Leistungs-Garantie · Schlüsselversicherung bis 30.000 €<br>(Zuordnung des Limits laut Quelle nicht eindeutig)<br>Franke & Bornberg PHV-Rating 2026 (Single): FFF+ (Klassik-Garant Exklusiv)", "rating": 4.7, "ratingStars": "★★★★★" },
-    { "id": "axa-phv", "name": "AXA", "initials": "AXA", "color": "#00008F", "recommended": false, "affiliateUrl": "#", "beitrag": "45 €/Jahr (Tarif Komfort)", "deckung": "60 Mio. €", "leistungen": "Komfort-Tarif mit höherer Deckungssumme als die meisten Vergleichstarife<br>Details laut Testportal, nicht von Finanzpal selbst geprüft<br>Franke & Bornberg PHV-Rating 2026 (Single): FFF+ (Tarif komfort)", "rating": 4.6, "ratingStars": "★★★★☆" },
-    { "id": "alte-leipziger-phv", "name": "Alte Leipziger", "initials": "AL", "color": "#8A5F2F", "recommended": false, "affiliateUrl": "#", "beitrag": "ab 46 €/Jahr (comfort 50 Mio.), 52 €/Jahr (comfort 100 Mio.)", "deckung": "50 oder 100 Mio. € (tarifabhängig)", "leistungen": "Zwei Deckungssummen-Varianten wählbar<br>Details laut Testportal, nicht von Finanzpal selbst geprüft<br>Franke & Bornberg PHV-Rating 2026 (Single): FFF+ (Tarif comfort)", "rating": 4.65, "ratingStars": "★★★★☆" },
-    { "id": "die-bayerische-phv", "name": "Die Bayerische", "initials": "DB", "color": "#5B2F6B", "recommended": false, "affiliateUrl": "#", "beitrag": "51 €/Jahr (Tarif Prestige)", "deckung": "50 Mio. €", "leistungen": "Tarif „Prestige“<br>Details laut Testportal, nicht von Finanzpal selbst geprüft<br>Franke & Bornberg PHV-Rating 2026 (Single): FFF+ (Tarif Prestige)", "rating": 4.6, "ratingStars": "★★★★☆" },
-    { "id": "getsafe-phv", "name": "Getsafe", "initials": "GS", "color": "#2F8F6B", "recommended": false, "affiliateUrl": "#", "beitrag": "Kein pauschaler Jahresbeitrag öffentlich genannt — volldigitale Tarifermittlung über die Anbieter-App", "deckung": "20 oder 50 Mio. € (tarifabhängig: Comfort/Premium)", "leistungen": "Forderungsausfalldeckung · volldigitaler Abschluss<br>Tagesgenau kündbar · Details zu Schlüsselverlust/Mietsachschäden auf Quellseite nicht genannt", "rating": null, "ratingStars": null }
+    {
+      "id": "huk24",
+      "name": "HUK24",
+      "initials": "HUK",
+      "color": "#007A3D",
+      "recommended": true,
+      "affiliateUrl": "#",
+      "beitrag": "34 €/Jahr",
+      "deckung": "100 Mio. €",
+      "leistungen": "Schlüsselversicherung · Mietwagen<br>Forderungsausfall bis 50 Mio. € · weltweit<br>Franke & Bornberg PHV-Rating 2026 (Single): FFF+ (Tarife Classic und PHPlus)",
+      "rating": 4.6,
+      "ratingStars": "★★★★★",
+      "score": {
+        "value": 97.7,
+        "band": "A",
+        "breakdown": {
+          "beitrag": 93.3,
+          "ratingBestaetigt": 100.0,
+          "deckung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "devk",
+      "name": "DEVK",
+      "initials": "DEVK",
+      "color": "#E2001A",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "ab 42 €/Jahr (Werbepreis des Anbieters: ab 3,50 €/Monat)",
+      "deckung": "50 Mio. €",
+      "leistungen": "Mietsachschäden · Forderungsausfall<br>Deutschlandweit<br>Nicht unter den FFF+-Tarifen im Franke & Bornberg PHV-Rating 2026 (Single)",
+      "rating": null,
+      "ratingStars": null,
+      "score": {
+        "value": 69.0,
+        "band": "B",
+        "breakdown": {
+          "beitrag": 80.0,
+          "ratingBestaetigt": 40.0,
+          "deckung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "hansemerkur",
+      "name": "HanseMerkur",
+      "initials": "HM",
+      "color": "#8B1E3F",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "59 €/Jahr",
+      "deckung": "50 Mio. €",
+      "leistungen": "Schlüsselversicherung · Mietwagen<br>Forderungsausfall mit Rechtsschutz · weltweit<br>Nicht unter den FFF+-Tarifen im Franke & Bornberg PHV-Rating 2026 (Single)",
+      "rating": null,
+      "ratingStars": null,
+      "score": {
+        "value": 59.1,
+        "band": "B",
+        "breakdown": {
+          "beitrag": 51.7,
+          "ratingBestaetigt": 40.0,
+          "deckung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "allianz",
+      "name": "Allianz",
+      "initials": "ALZ",
+      "color": "#003781",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "59 €/Jahr",
+      "deckung": "50 Mio. €",
+      "leistungen": "Mietsachschäden · Forderungsausfall<br>Deutschlandweit<br>Nicht unter den FFF+-Tarifen im Franke & Bornberg PHV-Rating 2026 (Single)",
+      "rating": null,
+      "ratingStars": null,
+      "score": {
+        "value": 59.1,
+        "band": "B",
+        "breakdown": {
+          "beitrag": 51.7,
+          "ratingBestaetigt": 40.0,
+          "deckung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "adam-riese-phv",
+      "name": "Adam Riese",
+      "initials": "AR",
+      "color": "#1F6F54",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "ab 46 €/Jahr (Tarif „Riesig“), 55 €/Jahr für „Riesig plus“",
+      "deckung": "50 Mio. €",
+      "leistungen": "Schlüsselversicherung für private und berufliche Schlüssel<br>Mietsachschäden je nach Tarifvariante unterschiedlich abgedeckt<br>Franke & Bornberg PHV-Rating 2026 (Single): FFF+ (Tarif Riesig)",
+      "rating": 4.7,
+      "ratingStars": "★★★★★",
+      "score": {
+        "value": 90.7,
+        "band": "A",
+        "breakdown": {
+          "beitrag": 73.3,
+          "ratingBestaetigt": 100.0,
+          "deckung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "vhv-phv",
+      "name": "VHV",
+      "initials": "VHV",
+      "color": "#004C97",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "56 €/Jahr (Tarif Exklusiv + Best-Leistung)",
+      "deckung": "50 Mio. €",
+      "leistungen": "Best-Leistungs-Garantie · Schlüsselversicherung bis 30.000 €<br>(Zuordnung des Limits laut Quelle nicht eindeutig)<br>Franke & Bornberg PHV-Rating 2026 (Single): FFF+ (Klassik-Garant Exklusiv)",
+      "rating": 4.7,
+      "ratingStars": "★★★★★",
+      "score": {
+        "value": 84.8,
+        "band": "A",
+        "breakdown": {
+          "beitrag": 56.7,
+          "ratingBestaetigt": 100.0,
+          "deckung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "axa-phv",
+      "name": "AXA",
+      "initials": "AXA",
+      "color": "#00008F",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "45 €/Jahr (Tarif Komfort)",
+      "deckung": "60 Mio. €",
+      "leistungen": "Komfort-Tarif mit höherer Deckungssumme als die meisten Vergleichstarife<br>Details laut Testportal, nicht von Finanzpal selbst geprüft<br>Franke & Bornberg PHV-Rating 2026 (Single): FFF+ (Tarif komfort)",
+      "rating": 4.6,
+      "ratingStars": "★★★★☆",
+      "score": {
+        "value": 91.2,
+        "band": "A",
+        "breakdown": {
+          "beitrag": 75.0,
+          "ratingBestaetigt": 100.0,
+          "deckung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "alte-leipziger-phv",
+      "name": "Alte Leipziger",
+      "initials": "AL",
+      "color": "#8A5F2F",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "ab 46 €/Jahr (comfort 50 Mio.), 52 €/Jahr (comfort 100 Mio.)",
+      "deckung": "50 oder 100 Mio. € (tarifabhängig)",
+      "leistungen": "Zwei Deckungssummen-Varianten wählbar<br>Details laut Testportal, nicht von Finanzpal selbst geprüft<br>Franke & Bornberg PHV-Rating 2026 (Single): FFF+ (Tarif comfort)",
+      "rating": 4.65,
+      "ratingStars": "★★★★☆",
+      "score": {
+        "value": 90.7,
+        "band": "A",
+        "breakdown": {
+          "beitrag": 73.3,
+          "ratingBestaetigt": 100.0,
+          "deckung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "die-bayerische-phv",
+      "name": "Die Bayerische",
+      "initials": "DB",
+      "color": "#5B2F6B",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "51 €/Jahr (Tarif Prestige)",
+      "deckung": "50 Mio. €",
+      "leistungen": "Tarif „Prestige“<br>Details laut Testportal, nicht von Finanzpal selbst geprüft<br>Franke & Bornberg PHV-Rating 2026 (Single): FFF+ (Tarif Prestige)",
+      "rating": 4.6,
+      "ratingStars": "★★★★☆",
+      "score": {
+        "value": 87.8,
+        "band": "A",
+        "breakdown": {
+          "beitrag": 65.0,
+          "ratingBestaetigt": 100.0,
+          "deckung": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
+    },
+    {
+      "id": "getsafe-phv",
+      "name": "Getsafe",
+      "initials": "GS",
+      "color": "#2F8F6B",
+      "recommended": false,
+      "affiliateUrl": "#",
+      "beitrag": "Kein pauschaler Jahresbeitrag öffentlich genannt — volldigitale Tarifermittlung über die Anbieter-App",
+      "deckung": "20 oder 50 Mio. € (tarifabhängig: Comfort/Premium)",
+      "leistungen": "Forderungsausfalldeckung · volldigitaler Abschluss<br>Tagesgenau kündbar · Details zu Schlüsselverlust/Mietsachschäden auf Quellseite nicht genannt",
+      "rating": null,
+      "ratingStars": null,
+      "scoreHold": "Kein pauschaler Jahresbeitrag öffentlich genannt — volldigitale Tarifermittlung über die Anbieter-App, daher kein vergleichbarer Beitragswert"
+    }
   ]
 }

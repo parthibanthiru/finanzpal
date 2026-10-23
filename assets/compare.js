@@ -22,6 +22,14 @@
     tagesgeld: {
       de: { zins: 'Zins', garantiedauer: 'Zins-Garantiedauer', einlagensicherung: 'Einlagensicherung' },
       en: { zins: 'Interest rate', garantiedauer: 'Rate-guarantee duration', einlagensicherung: 'Deposit protection' }
+    },
+    // Only the Privathaftpflicht tab (data-type="versicherungen") has scored
+    // items — Hausrat/BU/Rechtsschutz/Kfz share this same renderer but their
+    // items carry no `score` field, so scoreBadgeHtml() returns '' for them
+    // and these labels are never used there.
+    versicherungen: {
+      de: { beitrag: 'Jahresbeitrag', ratingBestaetigt: 'Rating-Bestätigung (F&B PHV FFF+)', deckung: 'Deckungssumme' },
+      en: { beitrag: 'Annual premium', ratingBestaetigt: 'Rating confirmation (F&B PHV FFF+)', deckung: 'Cover amount' }
     }
   };
 

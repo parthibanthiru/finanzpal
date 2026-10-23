@@ -309,12 +309,15 @@ bestätigt sind, und das Skript erneut laufen lassen. Aktuell: die
 Consorsbank-Kreditkarte (siehe offene Punkte).
 
 **Stand Oktober 2026 — Kategorien Girokonto, Kredite, Kreditkarte, Tagesgeld,
-Kinderdepot & Broker/Depot.** Zusätzlich zu den Rohdaten zeigen `girokonto.html`/
+Kinderdepot, Broker/Depot & Versicherungen (nur Privathaftpflicht).**
+Zusätzlich zu den Rohdaten zeigen `girokonto.html`/
 `en/girokonto.html`, `kreditkarte.html`/`en/kreditkarte.html` und
 `kinderdepot.html`/`en/kinderdepot.html` (alle drei Karten-Layout, jeweils
-eigenes Vergleichs-JS) sowie `kredite.html`/`en/kredite.html` und
-`tagesgeld.html`/`en/tagesgeld.html` (Tabellen-Layout, `assets/compare.js`)
-einen Finanzpal-Score-Badge pro Zeile (`.fp-score-badge`):
+eigenes Vergleichs-JS) sowie `kredite.html`/`en/kredite.html`,
+`tagesgeld.html`/`en/tagesgeld.html` und der Privathaftpflicht-Reiter von
+`versicherungen.html`/`en/versicherungen.html` (Tabellen-Layout,
+`assets/compare.js`) einen Finanzpal-Score-Badge pro Zeile
+(`.fp-score-badge`):
 ein kleiner Fortschritts-Ring (SVG, `stroke-dasharray`/`-dashoffset`) mit der
 Note (A–D) in der Mitte und der Zahl (0–100) daneben, in den vier bestehenden
 Band-Farben grün/petrol/gold/schiefergrau. Der Ring füllt sich proportional
@@ -361,6 +364,34 @@ ohnehin schon stehen:
     `assets/score-popover.js`, und ihr „Wie wir bewerten"-Link (siehe
     unten) zeigt entsprechend wieder auf `#finanzpal-score` statt
     `#methodik`.
+  - **Versicherungen — nur Privathaftpflicht (neu, 2026-10-24):**
+    Jahresbeitrag 35 % · Rating-Bestätigung 40 % · Deckungssumme 25 %.
+    `versicherungen.html`/`en/` bündelt fünf Versicherungs-Reiter
+    (Privathaftpflicht/Hausrat/BU/Rechtsschutz/Kfz, siehe
+    `assets/insurance-tabs.js`) über ein gemeinsames Tabellen-Layout
+    (`assets/compare.js`, `data-type` wechselt pro Reiter) — bewusst nur
+    der erste Reiter (`data/versicherungen.json`, `data-type="versicherungen"`)
+    bekommt einen Score. Die anderen vier bleiben unbewertet, weil ihre
+    Daten die oben beschriebene Mindestqualität nicht erfüllen: Hausrat hat
+    bei 6 von 10 Anbietern gar keinen recherchierten Beitrag ("Prämie ...
+    nicht separat recherchiert"), BU/Rechtsschutz/Kfz haben überhaupt
+    keinen parsebaren Einzelpreis (freier Text wie "individuell,
+    altersabhängig" oder "ab 299 €/Jahr*"). Die Badge-Beschränkung passiert
+    nicht durch Sonderlogik, sondern einfach dadurch, dass nur
+    `data/versicherungen.json`/`.en.json` ein `score`-Feld bekommen haben —
+    `scoreBadgeHtml()` zeigt ohnehin nichts an, wenn `item.score` fehlt, und
+    die anderen vier Reiter teilen sich zwar denselben Renderer
+    (`renderers.hausrat = renderers.versicherungen` usw. in `compare.js`),
+    aber eben ohne `score`-Daten. Rating-Bestätigung zählt bewusst mit dem
+    höchsten Gewicht: das vorhandene `rating`-Feld ist bereits das
+    disclosure-dokumentierte Franke & Bornberg PHV-Rating-2026-FFF+-Flag
+    (`null` = nicht in der FFF+-Gruppe, kein Werturteil "schlecht"). Getsafe
+    bekommt `"scoreHold"` (kein pauschaler Jahresbeitrag, volldigitale
+    Tarifermittlung in der App — analog zur Consorsbank-Kreditkarte).
+    `versicherungen.html`/`en/` laden jetzt zusätzlich
+    `assets/score-popover.js`; ihr Methodik-Link bleibt bei "Wie wir
+    vergleichen"/`#methodik`, weil die Seite nur zu einem Fünftel bewertet
+    ist, nicht auf "Wie wir bewerten"/`#finanzpal-score` umgestellt.
 
 Design-Hintergrund und die vollständigen Bewertungskriterien für alle
 Kategorien (inkl. der bewusst noch nicht bewerteten: Baufinanzierung, BU,
@@ -378,8 +409,8 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   lieferte — seither wird nur noch einmal, aus der DE-Datei, gerechnet).
 - Ausführen nach jeder Datenänderung an einer bewerteten Kategorie:
   `python3 tools/compute_scores.py girokonto kredite kreditkarte tagesgeld
-  kinderdepot broker` (oder ohne Argument für alle registrierten
-  Kategorien). Danach, weil `data/broker.json` sich ändert:
+  kinderdepot broker versicherungen` (oder ohne Argument für alle
+  registrierten Kategorien). Danach, weil `data/*.json` sich ändert:
   `cd mobile && npm run sync-data` nicht vergessen (siehe „Mobile App"
   unten).
 - Jedes `score`-Objekt enthält `value`, `band`, ein `breakdown` je Teilkriterium
@@ -390,13 +421,14 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   `assets/girokonto-compare.js`, `assets/kreditkarte-compare.js` und
   `assets/kinderdepot-compare.js` (jeweils Karten, Kreditkarte zusätzlich
   mit einer Tabellen-Ansicht im selben Skript) sowie dieselben Funktionen
-  generisch in `assets/compare.js` (Tabellen, geteilt mit Versicherungen,
-  das noch kein `score`-Feld hat — der Badge erscheint dort nur, sobald
-  eins in den Daten steht; `SCORE_FACTOR_LABELS.tagesgeld` zeigt das Muster
+  generisch in `assets/compare.js` (Tabellen, geteilt zwischen Kredite,
+  Tagesgeld und den fünf Versicherungs-Reitern — Badge erscheint nur, wenn
+  `item.score` in den Daten steht, aktuell nur bei `data/versicherungen.json`
+  (Privathaftpflicht); `SCORE_FACTOR_LABELS.versicherungen` zeigt das Muster
   für die Tooltip-Labels einer neuen Tabellen-Kategorie).
 - Neue Kategorie bewerten = Rubrik in `compute_scores.py` ergänzen (siehe
   `GIROKONTO_RUBRIC`/`KREDITE_RUBRIC`/`KREDITKARTE_RUBRIC`/`TAGESGELD_RUBRIC`/
-  `KINDERDEPOT_RUBRIC` als Vorlage), Badge-Rendering an der richtigen Stelle
+  `KINDERDEPOT_RUBRIC`/`PRIVATHAFTPFLICHT_RUBRIC` als Vorlage), Badge-Rendering an der richtigen Stelle
   anschließen (jeweiliges Karten-Skript oder `SCORE_FACTOR_LABELS` in
   `compare.js`) **und** Methodik-Text auf `ueber-uns.html`/
   `en/ueber-uns.html` (`#finanzpal-score`) erweitern — nie eine Kategorie
@@ -412,11 +444,12 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   kleines Panel mit einer Mini-Balkenanzeige pro Faktor, Escape/Außenklick/
   Close-Button schließen es wieder, Tastatur- und Screenreader-zugänglich
   (`aria-haspopup`, `aria-expanded`, Fokus wandert beim Öffnen ins Panel).
-  Eingebunden auf allen 10 Seiten mit bewerteten Kategorien (`girokonto`,
-  `kredite`, `tagesgeld`, `kreditkarte`, `kinderdepot`, je DE/EN) direkt nach
-  dem jeweiligen Vergleichs-Skript. Neue bewertete Kategorie = Script-Tag
-  dort ebenfalls ergänzen. Der `title`-Tooltip bleibt zusätzlich bestehen
-  (Progressive Enhancement, kein Funktionsverlust ohne JS/mit altem Browser).
+  Eingebunden auf allen Seiten mit bewerteten Kategorien (`girokonto`,
+  `kredite`, `tagesgeld`, `kreditkarte`, `kinderdepot`, `broker`,
+  `versicherungen`, je DE/EN) direkt nach dem jeweiligen Vergleichs-Skript.
+  Neue bewertete Kategorie = Script-Tag dort ebenfalls ergänzen. Der
+  `title`-Tooltip bleibt zusätzlich bestehen (Progressive Enhancement, kein
+  Funktionsverlust ohne JS/mit altem Browser).
 
 ## Affiliate-Disclosure: Konsistenz & Lesbarkeit
 
@@ -491,12 +524,14 @@ dort bisher gar keinen Link, die übrigen fünf verlinkten nur pauschal auf
 
 Beide Link-Typen zeigen, je nach Kategorie, auf einen von zwei Ankern in
 `ueber-uns.html`/`en/ueber-uns.html`:
-- **`#finanzpal-score`** für die 5 Kategorien mit Finanzpal-Score
-  (Girokonto, Kredite, Tagesgeld, Kreditkarte, Kinderdepot, seit
-  2026-10-24 auch Broker & Depot).
+- **`#finanzpal-score`** für die Kategorien mit Finanzpal-Score
+  (Girokonto, Kredite, Tagesgeld, Kreditkarte, Kinderdepot, Broker & Depot).
 - **`#methodik`** (auf dem bestehenden Abschnitt „Unsere Methodik je
-  Kategorie") für Versicherungen, die als einzige Kategorie noch keinen
-  Score hat.
+  Kategorie") für `versicherungen.html`, weil die Seite nur in ihrem ersten
+  Reiter (Privathaftpflicht) einen Score hat — die vier anderen Reiter
+  (Hausrat, BU, Rechtsschutz, Kfz) haben keinen. Ein Pro-Seiten-Link kann
+  nicht pro Reiter unterscheiden, daher bleibt die generische „vergleichen"-
+  Formulierung, solange nicht alle fünf Reiter bewertet sind.
 
 Neue CSS-Klassen in `assets/style.css`: `.method-link` (das Link-Styling
 selbst), `.kk-toolbar-left` (Wrapper für Kartenlayout-Seiten),
@@ -516,8 +551,16 @@ gibt.
 **2026-10-24:** Broker & Depot bekam einen Finanzpal-Score (siehe
 „Finanzpal-Score" oben) und wechselte dadurch von „Wie wir vergleichen →"
 / `#methodik` zurück auf „Wie wir bewerten →" / `#finanzpal-score`, in
-Toolbar-Link und Disclosure-Note gleichermaßen — Versicherungen ist seitdem
-die einzige verbleibende Kategorie mit „Wie wir vergleichen →".
+Toolbar-Link und Disclosure-Note gleichermaßen.
+
+**2026-10-24 (später am selben Tag):** Versicherungen bekam ebenfalls einen
+Finanzpal-Score, aber **nur für den Privathaftpflicht-Reiter** (siehe
+„Finanzpal-Score" oben) — Hausrat, BU, Rechtsschutz und Kfz bleiben ohne
+Score. Da der Methodik-Link pro Seite (nicht pro Reiter) gilt und vier von
+fünf Reitern weiterhin unbewertet sind, bleibt `versicherungen.html`/`en/`
+bei „Wie wir vergleichen →" / `#methodik`, statt auf „Wie wir bewerten →"
+umzustellen — eine Umstellung würde für Besucher auf den vier unbewerteten
+Reitern einen Score suggerieren, den es dort nicht gibt.
 
 ## Kopf-an-Kopf-Seiten ("vs"-Seiten)
 
@@ -579,6 +622,16 @@ Detailseite, keine neue Infrastruktur:
    Sterne-Bewertung selbst steht aber weiterhin unverändert daneben — ob
    sie ganz entfernt, dokumentiert oder dauerhaft parallel zum Score
    gezeigt wird, ist noch offen.
+4. **Versicherungen-Reiter: Finanzpal-Score nur für Privathaftpflicht.**
+   `versicherungen.html`/`en/` zeigt fünf Reiter über ein gemeinsames
+   Tabellen-Layout; seit 2026-10-24 hat nur der erste (Privathaftpflicht)
+   einen Finanzpal-Score. Hausrat, BU, Rechtsschutz und Kfz bleiben bewusst
+   unbewertet, weil ihre Rohdaten die Mindestqualität nicht erfüllen (siehe
+   „Finanzpal-Score" oben für Details je Reiter). Sollte sich die
+   Datenqualität für einen dieser Reiter verbessern (z. B. Hausrat-Prämien
+   vollständig recherchiert statt „nicht separat recherchiert"), ist eine
+   eigene Rubrik dafür zu ergänzen — nicht einfach die bestehende
+   `PRIVATHAFTPFLICHT_RUBRIC` auf andere Felder anwenden.
 
 **Am 23.10.2026 geklärt** (Quellen im jeweiligen Disclosure-Text bzw. in der
 Commit-Nachricht):
