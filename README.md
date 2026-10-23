@@ -597,6 +597,52 @@ Detailseite, keine neue Infrastruktur:
   mehr Seiten/Pflegeaufwand bedeutet — diese eine Seite ist absichtlich nur
   ein Testballon.
 
+## Finanz-Check: Design-Polish (2026-10-24)
+
+`finanz-check.html`/`en/` (das kombinierte 6-Fragen-Quiz über alle vier
+Konten-Kategorien, `assets/finanz-check.js`) bekam einen visuellen Polish-
+Pass, ohne Fragen, Gewichte oder die zugrunde liegenden Live-Daten
+anzufassen:
+- **Schritt-Punkte (`#fc-step-dots`)** neben dem bestehenden dünnen
+  Fortschrittsbalken — ein Punkt pro Frage, aktueller Schritt vergrößert,
+  erledigte Schritte eingefärbt. Macht auf einen Blick klar, wie viele
+  Fragen noch kommen, was der reine Prozent-Balken allein nicht zeigt.
+- **Verlaufsfarbener Akzentbalken** oben auf der Quiz-Box
+  (`.fc-quiz-box::before`, grün-deep → gold) sowie ein eigener, pro
+  Kategorie eingefärbter Akzentstreifen oben auf jeder Ergebniskarte
+  (`--fc-accent` als Inline-Custom-Property, über
+  `CATEGORY_ACCENT` in `finanz-check.js` gesetzt — nutzt ausschließlich
+  bestehende Design-Tokens: `--green-deep`/`--gold`/`--red-soft`/`--green`
+  für Girokonto/Depot/Kreditkarte/Tagesgeld, keine neuen Farben, daher ohne
+  Zusatzaufwand dark-mode-fest).
+- **Kategorie-Icons** (kleine Inline-SVG-Strichzeichnungen,
+  `CATEGORY_ICON` in `finanz-check.js`) vor dem Kategorienamen auf jeder
+  Ergebniskarte, in einem getönten Kreis in der jeweiligen Akzentfarbe.
+- **Lettered Options (A/B/C …)**: jede Antwort-Schaltfläche bekommt einen
+  kleinen Kreis mit Buchstabe davor (`.fc-opt-letter`) — rein dekorativ,
+  macht die Optionsliste scanbarer.
+- **Kurze Auswahl-Rückmeldung:** ein Klick markiert die gewählte Antwort
+  sichtbar (`.is-selected`), bevor nach 180 ms zur nächsten Frage
+  gewechselt wird, statt sofort umzuschalten.
+- **Fade/Slide-Übergang** (`.fc-panel` + `@keyframes fcFadeIn`) beim
+  Wechsel zwischen Fragen und zum Ergebnis.
+- **„Warum diese Wahl?"-Begründungen**: jede Ergebniskarte zeigt jetzt bis
+  zu zwei Gründe als Checkliste (`.quiz-reasons`, dieselbe Klasse/Optik wie
+  im bestehenden `assets/broker-quiz.js`-Muster) — welche beantworteten
+  Fragen für genau diesen Gewinner am stärksten ins Gewicht gefallen sind
+  (`reasonsFor(cat, itemId)`, Schwelle Gewichtung ≥ 2, analog zu
+  `broker-quiz.js`s `reasonsFor()`). Das ist kein neuer, separat
+  behaupteter Wert, sondern eine Offenlegung der ohnehin schon
+  berechneten Punktzahl — keine erfundene „Match-Prozentzahl", die dem
+  Daten-Integritätsprinzip widersprechen würde.
+- Karten bekommen beim Hover ein leichtes Anheben (`transform`/
+  `box-shadow`), konsistent mit anderen Karten-Hover-Effekten im Rest der
+  Seite.
+
+Fragen, Gewichte und die vier zugrunde liegenden `data/*.json`-Dateien
+sind unverändert — daher kein `npm run sync-data`-Datendrift (geprüft:
+`mobile/data/` blieb nach dem Sync identisch).
+
 ## Bekannte offene Punkte (bewusste Entscheidungen, nicht vergessen)
 
 1. **Consorsbank-Kreditkarte: Kartenbezeichnung und Konditionen prüfen.**

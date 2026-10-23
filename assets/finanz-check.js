@@ -32,7 +32,8 @@
     categories: { girokonto: 'Checking account', depot: 'Custody account', kreditkarte: 'Credit card', tagesgeld: 'Instant savings account' },
     loading: 'Loading your result …',
     noDispo: 'No overdraft', noZins: '–',
-    cta: 'View offer'
+    cta: 'View offer',
+    reasonTemplate: function (q, opt) { return 'For "' + q + '" you picked "' + opt + '".'; }
   } : {
     of: function (n, total) { return 'Frage ' + n + ' von ' + total; },
     back: '← Zurück',
@@ -43,8 +44,21 @@
     categories: { girokonto: 'Girokonto', depot: 'Depot', kreditkarte: 'Kreditkarte', tagesgeld: 'Tagesgeld' },
     loading: 'Lade dein Ergebnis …',
     noDispo: 'Kein Dispo', noZins: '–',
-    cta: 'Zum Anbieter'
+    cta: 'Zum Anbieter',
+    reasonTemplate: function (q, opt) { return 'Du hast bei „' + q + '" „' + opt + '" gewählt.'; }
   };
+
+  // Small line-icon + accent color per category, purely decorative — makes
+  // the four result cards scannable at a glance and ties each one back to
+  // its full comparison page's own visual identity. Reuses existing design
+  // tokens (no new colors) so it behaves correctly in dark mode for free.
+  var CATEGORY_ICON = {
+    girokonto: '<svg viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l7-4 7 4"/><path d="M4 8v7M8 8v7M12 8v7M16 8v7"/><path d="M2.5 17h15"/></svg>',
+    depot: '<svg viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17V11M9 17V7M15 17V4"/><path d="M2.5 17h15"/></svg>',
+    kreditkarte: '<svg viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="15" height="11" rx="2"/><path d="M2.5 8.5h15"/></svg>',
+    tagesgeld: '<svg viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M7 13l6-6M7.3 8.2h.01M12.7 11.8h.01"/></svg>'
+  };
+  var CATEGORY_ACCENT = { girokonto: 'var(--green-deep)', depot: 'var(--gold)', kreditkarte: 'var(--red-soft)', tagesgeld: 'var(--green)' };
 
   var QUESTIONS = [
     {
@@ -128,16 +142,36 @@
     });
   }
 
+  var OPT_LETTERS = ['A', 'B', 'C', 'D'];
+
   function init() {
     var area = document.getElementById('fc-area');
     var progressBar = document.getElementById('fc-progress-bar');
+    var stepDotsEl = document.getElementById('fc-step-dots');
     if (!area) return;
 
     var answers = {};
     var step = 0;
 
+    // Re-triggers the fade/slide-in animation on every question/result
+    // change by toggling the class off and back on (a plain class add
+    // wouldn't replay a CSS animation that's already "finished" on this
+    // element).
+    function animateIn() {
+      area.classList.remove('fc-panel');
+      void area.offsetWidth;
+      area.classList.add('fc-panel');
+    }
+
     function renderProgress() {
       progressBar.style.width = Math.min(100, (step / QUESTIONS.length) * 100) + '%';
+      if (!stepDotsEl) return;
+      var dots = '';
+      for (var i = 0; i < QUESTIONS.length; i++) {
+        var cls = 'fc-step-dot' + (i < step ? ' is-done' : '') + (i === step ? ' is-current' : '');
+        dots += '<span class="' + cls + '"></span>';
+      }
+      stepDotsEl.innerHTML = dots;
     }
 
     function renderQuestion() {
@@ -146,19 +180,31 @@
       var html = '<div class="quiz-step-label">' + STR.of(step + 1, QUESTIONS.length) + '</div>';
       html += '<h3 class="quiz-question">' + escapeHtml(q.text[LANG]) + '</h3>';
       html += '<div class="quiz-options">';
-      q.options.forEach(function (opt) {
-        html += '<button type="button" class="quiz-opt-btn" data-qid="' + q.id + '" data-oid="' + opt.id + '">' + escapeHtml(opt.label[LANG]) + '</button>';
+      q.options.forEach(function (opt, i) {
+        html += '<button type="button" class="quiz-opt-btn" data-qid="' + q.id + '" data-oid="' + opt.id + '">' +
+          '<span class="fc-opt-letter">' + (OPT_LETTERS[i] || (i + 1)) + '</span>' +
+          '<span>' + escapeHtml(opt.label[LANG]) + '</span>' +
+          '</button>';
       });
       html += '</div>';
       if (step > 0) html += '<button type="button" class="quiz-back-btn" id="fc-back">' + STR.back + '</button>';
       area.innerHTML = html;
+      animateIn();
 
       area.querySelectorAll('.quiz-opt-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
+          if (btn.classList.contains('is-selected')) return;
+          area.querySelectorAll('.quiz-opt-btn').forEach(function (b) { b.classList.remove('is-selected'); });
+          btn.classList.add('is-selected');
           answers[btn.getAttribute('data-qid')] = btn.getAttribute('data-oid');
-          step++;
-          if (step >= QUESTIONS.length) renderResult();
-          else renderQuestion();
+          // A short pause so the selected state is actually visible before
+          // the next question replaces it — a bare instant swap reads as a
+          // glitch rather than a deliberate pick.
+          setTimeout(function () {
+            step++;
+            if (step >= QUESTIONS.length) renderResult();
+            else renderQuestion();
+          }, 180);
         });
       });
       var backBtn = document.getElementById('fc-back');
@@ -173,6 +219,25 @@
         Object.keys(pointMap).forEach(function (id) { scores[id] = (scores[id] || 0) + pointMap[id]; });
       });
       return scores;
+    }
+
+    // Same pattern as assets/broker-quiz.js's reasonsFor(): walk the
+    // answered questions and surface the ones that actually moved the
+    // needle for this winning item (weight >= 2), so the "why this pick"
+    // list is a real readout of the scoring that already ran, not a new,
+    // separately-asserted claim about the provider.
+    function reasonsFor(cat, itemId) {
+      var reasons = [];
+      QUESTIONS.forEach(function (q) {
+        var oid = answers[q.id];
+        if (!oid) return;
+        var pointMap = (WEIGHTS[cat][q.id] && WEIGHTS[cat][q.id][oid]) || {};
+        if (pointMap[itemId] && pointMap[itemId] >= 2) {
+          var opt = q.options.filter(function (o) { return o.id === oid; })[0];
+          reasons.push(STR.reasonTemplate(q.text[LANG], opt.label[LANG]));
+        }
+      });
+      return reasons.slice(0, 2);
     }
 
     function factRows(cat, item) {
@@ -205,20 +270,27 @@
       ];
     }
 
-    function resultCardHtml(cat, item) {
+    function resultCardHtml(cat, item, reasons) {
       var rows = factRows(cat, item);
       var rowsHtml = rows.map(function (r) {
         return '<div class="sf-row"><span class="k">' + escapeHtml(r[0]) + '</span><span class="v">' + escapeHtml(String(r[1])) + '</span></div>';
       }).join('');
       var anchor = (cat === 'tagesgeld') ? PAGE_URL[cat] : PAGE_URL[cat] + '#' + item.id;
+      var reasonsHtml = reasons && reasons.length
+        ? '<ul class="quiz-reasons fc-why">' + reasons.map(function (r) { return '<li>' + escapeHtml(r) + '</li>'; }).join('') + '</ul>'
+        : '';
       return (
-        '<div class="result-card fc-result-card">' +
+        '<div class="result-card fc-result-card" style="--fc-accent:' + CATEGORY_ACCENT[cat] + ';">' +
+        '<div class="fc-cat-head">' +
+        '<span class="fc-cat-icon">' + CATEGORY_ICON[cat] + '</span>' +
         '<div class="fc-cat-label">' + escapeHtml(STR.categories[cat]) + '</div>' +
+        '</div>' +
         '<div class="quiz-result-head">' +
         '<div class="broker-mark" style="background:' + (item.color || '#163A66') + ';">' + escapeHtml(item.initials) + '</div>' +
         '<div class="broker-name">' + escapeHtml(item.name) + '</div>' +
         '</div>' +
         '<div class="side-facts" style="margin:14px 0;">' + rowsHtml + '</div>' +
+        reasonsHtml +
         '<div class="quiz-result-actions">' +
         '<a href="' + escapeHtml(item.affiliateUrl) + '" class="cta-btn2" rel="sponsored nofollow">' + STR.cta + '</a>' +
         '<a href="' + anchor + '" class="quiz-see-all">' + STR.seeAll + '</a>' +
@@ -229,6 +301,9 @@
 
     function renderResult() {
       progressBar.style.width = '100%';
+      if (stepDotsEl) {
+        stepDotsEl.innerHTML = QUESTIONS.map(function () { return '<span class="fc-step-dot is-done"></span>'; }).join('');
+      }
       area.innerHTML = '<p class="calc-disclaimer">' + STR.loading + '</p>';
 
       Promise.all(CATEGORY_KEYS.map(function (cat) {
@@ -244,11 +319,12 @@
           var ranked = Object.keys(scores).sort(function (a, b) { return scores[b] - scores[a]; });
           if (!ranked.length) ranked = datasets[i].items.map(function (it) { return it.id; });
           var top = byId[ranked[0]];
-          if (top) html += resultCardHtml(cat, top);
+          if (top) html += resultCardHtml(cat, top, reasonsFor(cat, ranked[0]));
         });
         html += '</div>';
         html += '<button type="button" class="cta-btn2 secondary" id="fc-restart">' + STR.restart + '</button>';
         area.innerHTML = html;
+        animateIn();
 
         document.getElementById('fc-restart').addEventListener('click', function () {
           answers = {};

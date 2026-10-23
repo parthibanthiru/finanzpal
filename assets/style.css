@@ -524,6 +524,37 @@ h3.quiz-question { font-family: var(--font-display); font-weight: 500; font-size
 .quiz-result-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
 .quiz-see-all { font-size: 13.5px; color: var(--green-deep); text-decoration: underline; }
 
+/* Finanz-Check: polish pass (2026-10-24) — accent header bar, step dots,
+   animated panel transitions, lettered option buttons, and per-category
+   result cards with an accent stripe + icon + "why this pick" reasons
+   (reusing .quiz-reasons from the broker-quiz pattern above). */
+.fc-quiz-box { position: relative; overflow: hidden; }
+.fc-quiz-box::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--green-deep), var(--gold)); }
+.fc-progress-wrap { margin-bottom: 22px; }
+.fc-step-dots { display: flex; gap: 6px; justify-content: center; margin-top: 12px; }
+.fc-step-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--line); transition: background 0.2s ease, transform 0.2s ease; }
+.fc-step-dot.is-done { background: var(--green-deep); }
+.fc-step-dot.is-current { background: var(--green-deep); transform: scale(1.4); }
+
+.fc-panel { animation: fcFadeIn 0.3s ease; }
+@keyframes fcFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+.quiz-opt-btn { display: flex; align-items: center; gap: 12px; }
+.fc-opt-letter { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 600; color: var(--ink-soft); background: var(--bg-raised); transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease; }
+.quiz-opt-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(15, 25, 15, 0.08); }
+.quiz-opt-btn:hover .fc-opt-letter { border-color: var(--green-deep); color: var(--green-deep); background: var(--tag-bg); }
+.quiz-opt-btn.is-selected { border-color: var(--green-deep); background: var(--tag-bg); }
+.quiz-opt-btn.is-selected .fc-opt-letter { border-color: var(--green-deep); color: var(--bg-raised); background: var(--green-deep); }
+
+.fc-results-grid { gap: 18px; }
+.fc-result-card { position: relative; overflow: hidden; border-radius: 14px; transition: transform 0.18s ease, box-shadow 0.18s ease; }
+.fc-result-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--fc-accent, var(--green-deep)); }
+.fc-result-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(15, 25, 15, 0.10); }
+.fc-cat-head { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+.fc-cat-icon { flex-shrink: 0; width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--fc-accent, var(--green-deep)) 15%, var(--bg-raised)); color: var(--fc-accent, var(--green-deep)); }
+.fc-cat-head .fc-cat-label { margin-bottom: 0; }
+.fc-why { margin-top: 10px; }
+
 /* Kreditkarte: filterable card-list + table comparison */
 .kk-layout { display: grid; grid-template-columns: 260px 1fr; gap: 32px; align-items: start; margin: 28px 0 56px; }
 @media (max-width: 860px) { .kk-layout { grid-template-columns: 1fr; } }
