@@ -319,6 +319,100 @@ KINDERDEPOT_RUBRIC = [
 
 
 # ---------------------------------------------------------------------------
+# Broker & Depot rubric
+# Depotführung 30% · ETF-Sparplan-Angebot 25% · Guthabenzins 25% ·
+# Mindestsparrate 20%
+#
+# Deliberately excludes two fields that ARE shown on the page but aren't
+# scored here:
+#   - `orderfee`: free text, and for several providers (justtrade, the
+#     dkb-broker foreign-order fee) the source itself flags contradictory
+#     figures ("Angaben widersprüchlich") rather than one clean number.
+#     Scoring that would mean parsing a specific digit out of a field the
+#     page itself says is disputed — exactly what the data-integrity rule
+#     is meant to prevent.
+#   - `rating`/`ratingStars`: this is the pre-existing, undocumented
+#     editorial star rating (see README "Bekannte offene Punkte" #3) —
+#     its own methodology isn't disclosed anywhere, so folding it into a
+#     score that advertises itself as "computed only from fields shown on
+#     the page" would just launder an unscored number through a scored
+#     one. The Finanzpal-Score here is meant as the transparent
+#     alternative to it, not a blend of the two.
+# ---------------------------------------------------------------------------
+
+def _broker_depotgebuehr(item):
+    if item.get("depotgebuehrBedingungslos"):
+        return 100.0
+    text = (item.get("depotgebuehrText") or "")
+    m = re.search(r"(\d+(?:,\d+)?)\s*€/Jahr", text)
+    if not m:
+        return 50.0
+    fee = float(m.group(1).replace(",", "."))
+    if fee == 0:
+        # Headline fee is €0/year but with a stated waiver condition (ING:
+        # a trade or holding in the last 6 months; the dkb-broker: only
+        # while a DKB-Girokonto serves as its settlement account) — real
+        # risk of the fee applying, same treatment as a conditionally-free
+        # Girokonto.
+        return 70.0
+    # Fixed anchor: €0/year = 100, each €10/year of fee costs ~13 points —
+    # comdirect's full €23.40/year fee (itself waivable under easier
+    # conditions than the €0-with-condition providers above) lands at a
+    # comparable ~70.
+    return clamp(100.0 - fee * 1.3)
+
+
+def _broker_etf(item):
+    count = item.get("etfSparplaeneAnzahl")
+    if count is None:
+        return 0.0
+    # Fixed anchor: 3,000 ETF savings plans = 100 points.
+    score = clamp((count / 3000.0) * 100.0)
+    if not item.get("etfSparplaeneKostenlos"):
+        # Same size universe, but the plans themselves aren't fee-free —
+        # a real cost difference on top of the raw count.
+        score *= 0.6
+    return round(score, 1)
+
+
+def _broker_guthabenzins(item):
+    zins = item.get("guthabenzins")
+    if zins is None:
+        return 0.0
+    # Same fixed anchor as Girokonto/Kinderdepot: 2.5% p.a. = 100 points.
+    score = clamp((zins / 2.5) * 100.0)
+    limit_text = (item.get("guthabenzinsLimitText") or "").lower()
+    if "tagesgeld" in limit_text:
+        # Rate applies to a separate linked account, not the brokerage
+        # cash balance itself (comdirect's "Tagesgeld PLUS-Konto") — real
+        # value, but not the same thing as interest on your settlement
+        # balance.
+        score *= 0.6
+    elif re.search(r"\d+\s*monat", limit_text):
+        # Time-limited promotional rate (ING: 4 months) — same discount
+        # already used for Kinderdepot's "Neukundenaktion" case.
+        score *= 0.8
+    return round(score, 1)
+
+
+def _broker_mindestsparrate(item):
+    rate = item.get("mindestsparrate")
+    if rate is None:
+        return 50.0
+    # Same fixed anchor as Kinderdepot: €1 minimum = 100, each further €1
+    # costs 4 points.
+    return clamp(100.0 - (rate - 1) * 4.0)
+
+
+BROKER_RUBRIC = [
+    ("depotgebuehr", 0.30, _broker_depotgebuehr),
+    ("etfSparplaene", 0.25, _broker_etf),
+    ("guthabenzins", 0.25, _broker_guthabenzins),
+    ("mindestsparrate", 0.20, _broker_mindestsparrate),
+]
+
+
+# ---------------------------------------------------------------------------
 # Registry: category -> rubric. Add new categories here once their rubric
 # is agreed (see the design doc's open questions before adding one).
 # ---------------------------------------------------------------------------
@@ -329,6 +423,7 @@ RUBRICS = {
     "kreditkarte": KREDITKARTE_RUBRIC,
     "tagesgeld": TAGESGELD_RUBRIC,
     "kinderdepot": KINDERDEPOT_RUBRIC,
+    "broker": BROKER_RUBRIC,
 }
 
 

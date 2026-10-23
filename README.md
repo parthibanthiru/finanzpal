@@ -308,8 +308,8 @@ zeigen ohne Score einfach kein Score-Badge. Feld entfernen, sobald die Daten
 bestätigt sind, und das Skript erneut laufen lassen. Aktuell: die
 Consorsbank-Kreditkarte (siehe offene Punkte).
 
-**Stand Oktober 2026 — Kategorien Girokonto, Kredite, Kreditkarte, Tagesgeld
-& Kinderdepot.** Zusätzlich zu den Rohdaten zeigen `girokonto.html`/
+**Stand Oktober 2026 — Kategorien Girokonto, Kredite, Kreditkarte, Tagesgeld,
+Kinderdepot & Broker/Depot.** Zusätzlich zu den Rohdaten zeigen `girokonto.html`/
 `en/girokonto.html`, `kreditkarte.html`/`en/kreditkarte.html` und
 `kinderdepot.html`/`en/kinderdepot.html` (alle drei Karten-Layout, jeweils
 eigenes Vergleichs-JS) sowie `kredite.html`/`en/kredite.html` und
@@ -346,6 +346,21 @@ ohnehin schon stehen:
     Erwachsenen-Depot unterscheidet. Ein als Neukundenaktion gekennzeichneter
     Guthabenzins wird leicht abgewertet (×0,8), da er laut Anbieter nach
     einer Frist wieder sinken kann.
+  - **Broker & Depot (neu, 2026-10-24):** Depotführung 30 % ·
+    ETF-Sparplan-Angebot 25 % · Guthabenzins 25 % · Mindestsparrate 20 %.
+    Zwei auf der Seite ebenfalls gezeigte Felder fließen bewusst **nicht**
+    in den Score ein: die Ordergebühr, weil mehrere Anbieter dafür selbst
+    widersprüchliche Angaben nennen (justtrade, dkb-broker), und die
+    bestehende Sterne-Bewertung (`rating`/`ratingStars`) neben dem Namen
+    — die ist eine bislang undokumentierte redaktionelle Einschätzung
+    (siehe „Bekannte offene Punkte" #3) und soll durch den Score ergänzt,
+    nicht mit ihm vermischt werden. `broker-compare.js` bekam dafür
+    dieselben `scoreTooltip`/`scoreLabels`/`scoreBreakdownRows`/
+    `scoreBadgeHtml`-Bausteine wie die anderen vier Kategorien;
+    `broker.html`/`en/broker.html` laden jetzt zusätzlich
+    `assets/score-popover.js`, und ihr „Wie wir bewerten"-Link (siehe
+    unten) zeigt entsprechend wieder auf `#finanzpal-score` statt
+    `#methodik`.
 
 Design-Hintergrund und die vollständigen Bewertungskriterien für alle
 Kategorien (inkl. der bewusst noch nicht bewerteten: Baufinanzierung, BU,
@@ -363,7 +378,10 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   lieferte — seither wird nur noch einmal, aus der DE-Datei, gerechnet).
 - Ausführen nach jeder Datenänderung an einer bewerteten Kategorie:
   `python3 tools/compute_scores.py girokonto kredite kreditkarte tagesgeld
-  kinderdepot` (oder ohne Argument für alle registrierten Kategorien).
+  kinderdepot broker` (oder ohne Argument für alle registrierten
+  Kategorien). Danach, weil `data/broker.json` sich ändert:
+  `cd mobile && npm run sync-data` nicht vergessen (siehe „Mobile App"
+  unten).
 - Jedes `score`-Objekt enthält `value`, `band`, ein `breakdown` je Teilkriterium
   (im Badge-Tooltip sichtbar) und `computedFrom` (Monat der Berechnung) — bewusst
   offengelegt statt einer nackten Zahl.
@@ -474,10 +492,11 @@ dort bisher gar keinen Link, die übrigen fünf verlinkten nur pauschal auf
 Beide Link-Typen zeigen, je nach Kategorie, auf einen von zwei Ankern in
 `ueber-uns.html`/`en/ueber-uns.html`:
 - **`#finanzpal-score`** für die 5 Kategorien mit Finanzpal-Score
-  (Girokonto, Kredite, Tagesgeld, Kreditkarte, Kinderdepot).
-- **`#methodik`** (neu, auf dem bestehenden Abschnitt „Unsere Methodik je
-  Kategorie") für Broker & Depot und Versicherungen, die noch keinen Score
-  haben.
+  (Girokonto, Kredite, Tagesgeld, Kreditkarte, Kinderdepot, seit
+  2026-10-24 auch Broker & Depot).
+- **`#methodik`** (auf dem bestehenden Abschnitt „Unsere Methodik je
+  Kategorie") für Versicherungen, die als einzige Kategorie noch keinen
+  Score hat.
 
 Neue CSS-Klassen in `assets/style.css`: `.method-link` (das Link-Styling
 selbst), `.kk-toolbar-left` (Wrapper für Kartenlayout-Seiten),
@@ -489,10 +508,16 @@ Score hat.
 **Polish-Pass (gleicher Tag):** `ⓘ`-Icon vor dem Linktext (`<span
 class="mi">`) für bessere Scanbarkeit neben Chips/Select; eigener
 `:focus-visible`-Ring auf `.method-link` (vorher nur `:hover`, Tastatur-
-Nutzer sahen keinen Fokus-Indikator); Linktext für die beiden Kategorien
-ohne Score (Broker & Depot, Versicherungen) auf „Wie wir vergleichen →"
-geändert statt „Wie wir bewerten →" — Letzteres würde einen Score
-suggerieren, den es dort (bewusst) noch nicht gibt.
+Nutzer sahen keinen Fokus-Indikator); Linktext für Kategorien ohne Score
+auf „Wie wir vergleichen →" geändert statt „Wie wir bewerten →" —
+Letzteres würde einen Score suggerieren, den es dort (bewusst) noch nicht
+gibt.
+
+**2026-10-24:** Broker & Depot bekam einen Finanzpal-Score (siehe
+„Finanzpal-Score" oben) und wechselte dadurch von „Wie wir vergleichen →"
+/ `#methodik` zurück auf „Wie wir bewerten →" / `#finanzpal-score`, in
+Toolbar-Link und Disclosure-Note gleichermaßen — Versicherungen ist seitdem
+die einzige verbleibende Kategorie mit „Wie wir vergleichen →".
 
 ## Kopf-an-Kopf-Seiten ("vs"-Seiten)
 
@@ -548,7 +573,12 @@ Detailseite, keine neue Infrastruktur:
    Ratings sind seitdem ehrlich als „Finanzpal-Einschätzung" bzw.
    „Redaktionelle Einschätzung von Finanzpal" beschriftet. Vor dem Launch
    klären, worauf sie beruhen — dokumentieren (Methodik auf `ueber-uns.html`)
-   oder durch den Finanzpal-Score ersetzen.
+   oder durch den Finanzpal-Score ersetzen. **Teilweise erledigt
+   (2026-10-24):** Broker & Depot hat jetzt einen Finanzpal-Score als
+   offengelegte Alternative dazu (siehe „Finanzpal-Score" oben); die
+   Sterne-Bewertung selbst steht aber weiterhin unverändert daneben — ob
+   sie ganz entfernt, dokumentiert oder dauerhaft parallel zum Score
+   gezeigt wird, ist noch offen.
 
 **Am 23.10.2026 geklärt** (Quellen im jeweiligen Disclosure-Text bzw. in der
 Commit-Nachricht):

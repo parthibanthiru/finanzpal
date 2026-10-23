@@ -25,7 +25,18 @@
       "guthabenzinsCaveat": "Anbieter nennt je nach Quelle 2,25 % oder 2,50 % p. a. — hier der aktuellere, häufiger genannte Wert",
       "guthabenzinsLimitText": "unbegrenzte Anlagesumme",
       "verwahrentgeltText": "Keine laufende Verwahrgebühr (außer ggf. bei Xetra-Gold, ADRs/GDRs — Höhe vom Anbieter nicht beziffert)",
-      "mindesteinlage": null
+      "mindesteinlage": null,
+      "score": {
+        "value": 98.5,
+        "band": "A",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "etfSparplaene": 94.2,
+          "guthabenzins": 100.0,
+          "mindestsparrate": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "scalable-capital",
@@ -51,7 +62,18 @@
       "guthabenzinsCaveat": "Variabel: Anbieter-Factsheet (Stand 07/2026) nennt 2,50 %, justETF (10/2026) 2,60 % p. a.",
       "guthabenzinsLimitText": "unbegrenzte Anlagesumme (Free Broker: Einlagensicherung bis 100.000 €, PRIME+: mehrfache Einlagensicherung bis 500.000 €)",
       "verwahrentgeltText": "Keine Verwahrgebühr, Depotführung grundsätzlich kostenlos",
-      "mindesteinlage": null
+      "mindesteinlage": null,
+      "score": {
+        "value": 100.0,
+        "band": "A",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "etfSparplaene": 100.0,
+          "guthabenzins": 100.0,
+          "mindestsparrate": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "consorsbank",
@@ -77,7 +99,18 @@
       "guthabenzinsCaveat": "Zins auf das Verrechnungskonto nicht ausgewiesen — Anbieter kommuniziert nur befristete Tagesgeld-Aktionszinsen für Neukunden (z. B. 3,8–4,0 % für 5–6 Monate)",
       "guthabenzinsLimitText": null,
       "verwahrentgeltText": "Keine laufenden Gebühren, solange Wertpapiere in üblicher Sammelverwahrung liegen",
-      "mindesteinlage": null
+      "mindesteinlage": null,
+      "score": {
+        "value": 59.5,
+        "band": "B",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "etfSparplaene": 66.7,
+          "guthabenzins": 0.0,
+          "mindestsparrate": 64.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "comdirect",
@@ -103,7 +136,18 @@
       "guthabenzinsCaveat": null,
       "guthabenzinsLimitText": "auf dem Tagesgeld PLUS-Konto, bis 250.000 €",
       "verwahrentgeltText": "Keine gesonderte Verwahrgebühr neben der Depotgebühr",
-      "mindesteinlage": null
+      "mindesteinlage": null,
+      "score": {
+        "value": 66.7,
+        "band": "B",
+        "breakdown": {
+          "depotgebuehr": 69.6,
+          "etfSparplaene": 43.2,
+          "guthabenzins": 60.0,
+          "mindestsparrate": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "flatex",
@@ -129,7 +173,18 @@
       "guthabenzinsCaveat": "Zins auf das Verrechnungskonto vom Anbieter nicht ausgewiesen",
       "guthabenzinsLimitText": null,
       "verwahrentgeltText": "Keine allgemeine Verwahrgebühr (außer ggf. bei Xetra-Gold, ADRs/GDRs — Höhe nicht beziffert)",
-      "mindesteinlage": null
+      "mindesteinlage": null,
+      "score": {
+        "value": 39.9,
+        "band": "C",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "etfSparplaene": 36.4,
+          "guthabenzins": 0.0,
+          "mindestsparrate": 4.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "dkb-broker",
@@ -155,7 +210,18 @@
       "guthabenzinsCaveat": null,
       "guthabenzinsLimitText": "auf das gesamte Guthaben ohne Limit",
       "verwahrentgeltText": "Keine laufende Verwahrgebühr (außer ggf. bei Xetra-Gold, ADRs/GDRs — Höhe vom Anbieter nicht beziffert)",
-      "mindesteinlage": null
+      "mindesteinlage": null,
+      "score": {
+        "value": 42.8,
+        "band": "C",
+        "breakdown": {
+          "depotgebuehr": 70.0,
+          "etfSparplaene": 44.0,
+          "guthabenzins": 40.0,
+          "mindestsparrate": 4.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "smartbroker-plus",
@@ -181,7 +247,18 @@
       "guthabenzinsCaveat": "Konditionentabelle nennt 2,25 % p. a., Beschreibung nennt dagegen 2 % p. a. (variabel) für Guthaben zwischen 100.000 € und 1.000.000 € — Zins kann von der Guthabenhöhe abhängen",
       "guthabenzinsLimitText": null,
       "verwahrentgeltText": "Keine Verwahrgebühr (außer ggf. bei Xetra-Gold, ADRs/GDRs)",
-      "mindesteinlage": null
+      "mindesteinlage": null,
+      "score": {
+        "value": 90.4,
+        "band": "A",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "etfSparplaene": 71.6,
+          "guthabenzins": 90.0,
+          "mindestsparrate": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "finanzen-net-zero",
@@ -207,7 +284,18 @@
       "guthabenzinsCaveat": "Zinssatz auf das Verrechnungskonto vom Testportal nicht beziffert",
       "guthabenzinsLimitText": null,
       "verwahrentgeltText": "Keine Depotgebühren laut Test",
-      "mindesteinlage": null
+      "mindesteinlage": null,
+      "score": {
+        "value": 64.8,
+        "band": "B",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "etfSparplaene": 59.3,
+          "guthabenzins": 0.0,
+          "mindestsparrate": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "justtrade",
@@ -233,7 +321,18 @@
       "guthabenzinsCaveat": "Laut Anbieter keine Zinszahlung auf das Verrechnungskonto",
       "guthabenzinsLimitText": null,
       "verwahrentgeltText": "Keine Verwahrgebühr; Ordergebühr selbst uneinheitlich angegeben (0 € plus ca. 1 € Drittkosten laut Zusammenfassung, 2,90 € laut Konditionentabelle)",
-      "mindesteinlage": null
+      "mindesteinlage": null,
+      "score": {
+        "value": 32.3,
+        "band": "C",
+        "breakdown": {
+          "depotgebuehr": 100.0,
+          "etfSparplaene": 5.9,
+          "guthabenzins": 0.0,
+          "mindestsparrate": 4.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "ing",
@@ -259,7 +358,18 @@
       "guthabenzinsCaveat": "Befristet auf 4 Monate und bis 250.000 €; FAQ nennt davon abweichend 3,50 % — ohne Aktion laut FAQ kein Guthabenzins",
       "guthabenzinsLimitText": "4 Monate, bis 250.000 €",
       "verwahrentgeltText": "Keine gesonderte Verwahrgebühr",
-      "mindesteinlage": null
+      "mindesteinlage": null,
+      "score": {
+        "value": 71.4,
+        "band": "B",
+        "breakdown": {
+          "depotgebuehr": 70.0,
+          "etfSparplaene": 41.6,
+          "guthabenzins": 80.0,
+          "mindestsparrate": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     }
   ]
 }
