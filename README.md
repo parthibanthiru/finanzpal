@@ -627,22 +627,44 @@ anzufassen:
   gewechselt wird, statt sofort umzuschalten.
 - **Fade/Slide-Übergang** (`.fc-panel` + `@keyframes fcFadeIn`) beim
   Wechsel zwischen Fragen und zum Ergebnis.
-- **„Warum diese Wahl?"-Begründungen**: jede Ergebniskarte zeigt jetzt bis
-  zu zwei Gründe als Checkliste (`.quiz-reasons`, dieselbe Klasse/Optik wie
-  im bestehenden `assets/broker-quiz.js`-Muster) — welche beantworteten
-  Fragen für genau diesen Gewinner am stärksten ins Gewicht gefallen sind
-  (`reasonsFor(cat, itemId)`, Schwelle Gewichtung ≥ 2, analog zu
-  `broker-quiz.js`s `reasonsFor()`). Das ist kein neuer, separat
-  behaupteter Wert, sondern eine Offenlegung der ohnehin schon
-  berechneten Punktzahl — keine erfundene „Match-Prozentzahl", die dem
-  Daten-Integritätsprinzip widersprechen würde.
-- Karten bekommen beim Hover ein leichtes Anheben (`transform`/
-  `box-shadow`), konsistent mit anderen Karten-Hover-Effekten im Rest der
-  Seite.
 
 Fragen, Gewichte und die vier zugrunde liegenden `data/*.json`-Dateien
 sind unverändert — daher kein `npm run sync-data`-Datendrift (geprüft:
 `mobile/data/` blieb nach dem Sync identisch).
+
+### Ergebnis-Ansicht: Vergleichstabelle statt Kartenraster (2026-10-24)
+
+Direkt im Anschluss an den Polish-Pass wurde die Ergebnis-Ansicht noch
+einmal neu gebaut, auf Basis eines Nutzer-Reviews mehrerer Mockups
+(Story Reveal, Dashboard, Report Card, Vergleichstabelle) — gewählt wurde
+die **Vergleichstabelle**:
+- Das bisherige 2×2-Kartenraster (`.fc-results-grid`/`.fc-result-card`)
+  ist einer einzeiligen Tabelle pro Kategorie gewichen
+  (`.fc-cmp-table`, neu in `assets/style.css`), eingebettet im
+  seitenweiten `<section class="table-scroll">`-Wrapper, den auch die
+  übrigen Vergleichstabellen der Seite (z. B. `kredite.html`) für
+  horizontales Scrollen auf schmalen Viewports nutzen
+  (`.fc-cmp-table { min-width: 640px; }`).
+- Spalten: Kategorie (Icon + Name, `.fc-cmp-cat`, akzentfarben wie zuvor
+  über `CATEGORY_ACCENT`), Anbieter (`.fc-cmp-name`), die drei
+  Kernfakten aus `factRows(cat, item)` (unverändert wiederverwendet) und
+  eine CTA-Spalte mit „Zum Anbieter"-Button plus Link zum
+  vollständigen Einzelvergleich.
+- Die „Warum diese Wahl?"-Begründungsliste aus dem Polish-Pass
+  (`reasonsFor(cat, itemId)`) wurde wieder entfernt — die Tabellenform
+  ist bewusst „effizient und informationsdicht statt dekorativ"; die
+  zugrunde liegende `.quiz-reasons`-CSS-Klasse bleibt unangetastet, da
+  sie weiterhin vom unabhängigen `assets/broker-quiz.js`-Feature genutzt
+  wird.
+- Die Ergebnis-Box bekommt beim Anzeigen der Tabelle die Modifier-Klasse
+  `.fc-quiz-box.is-result` (880 px statt der 560 px breiten Fragen-Box),
+  damit die Tabelle genug Platz hat, ohne die schmale, zentrierte
+  Frage-für-Frage-Ansicht zu verbreitern.
+- Entwickelt anhand eines Vorab-Mockups im Claude-Design-Canvas
+  (Artboard „09-ComparisonTable"), das zusammen mit den drei
+  nicht gewählten Alternativen zu Review-Zwecken erstellt wurde.
+- Fragen, Gewichte und Daten weiterhin unverändert — kein
+  `npm run sync-data`-Datendrift (geprüft).
 
 ## Bekannte offene Punkte (bewusste Entscheidungen, nicht vergessen)
 

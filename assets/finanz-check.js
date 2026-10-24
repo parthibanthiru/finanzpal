@@ -26,26 +26,26 @@
     of: function (n, total) { return 'Question ' + n + ' of ' + total; },
     back: '← Back',
     resultTitle: 'Your Finanz-Check result',
-    resultLede: 'Based on your answers — one pick per category. See the full comparison for every option and every detail.',
-    seeAll: 'See full comparison →',
+    resultLede: 'Based on your answers — one pick per category, side by side. See the full comparison for every option and every detail.',
+    seeAll: 'Full comparison →',
     restart: 'Restart Finanz-Check',
     categories: { girokonto: 'Checking account', depot: 'Custody account', kreditkarte: 'Credit card', tagesgeld: 'Instant savings account' },
     loading: 'Loading your result …',
     noDispo: 'No overdraft', noZins: '–',
     cta: 'View offer',
-    reasonTemplate: function (q, opt) { return 'For "' + q + '" you picked "' + opt + '".'; }
+    thCategory: 'Category', thProvider: 'Provider', thFact: function (n) { return 'Fact ' + n; }
   } : {
     of: function (n, total) { return 'Frage ' + n + ' von ' + total; },
     back: '← Zurück',
     resultTitle: 'Dein Finanz-Check-Ergebnis',
-    resultLede: 'Basierend auf deinen Antworten — eine Empfehlung pro Kategorie. Den vollständigen Vergleich mit allen Details findest du auf der jeweiligen Seite.',
-    seeAll: 'Zum vollständigen Vergleich →',
+    resultLede: 'Basierend auf deinen Antworten — eine Empfehlung pro Kategorie, nebeneinander. Den vollständigen Vergleich mit allen Details findest du auf der jeweiligen Seite.',
+    seeAll: 'Vollständiger Vergleich →',
     restart: 'Finanz-Check neu starten',
     categories: { girokonto: 'Girokonto', depot: 'Depot', kreditkarte: 'Kreditkarte', tagesgeld: 'Tagesgeld' },
     loading: 'Lade dein Ergebnis …',
     noDispo: 'Kein Dispo', noZins: '–',
     cta: 'Zum Anbieter',
-    reasonTemplate: function (q, opt) { return 'Du hast bei „' + q + '" „' + opt + '" gewählt.'; }
+    thCategory: 'Kategorie', thProvider: 'Anbieter', thFact: function (n) { return 'Kernfakt ' + n; }
   };
 
   // Small line-icon + accent color per category, purely decorative — makes
@@ -175,6 +175,7 @@
     }
 
     function renderQuestion() {
+      if (app) app.classList.remove('is-result');
       renderProgress();
       var q = QUESTIONS[step];
       var html = '<div class="quiz-step-label">' + STR.of(step + 1, QUESTIONS.length) + '</div>';
@@ -221,25 +222,6 @@
       return scores;
     }
 
-    // Same pattern as assets/broker-quiz.js's reasonsFor(): walk the
-    // answered questions and surface the ones that actually moved the
-    // needle for this winning item (weight >= 2), so the "why this pick"
-    // list is a real readout of the scoring that already ran, not a new,
-    // separately-asserted claim about the provider.
-    function reasonsFor(cat, itemId) {
-      var reasons = [];
-      QUESTIONS.forEach(function (q) {
-        var oid = answers[q.id];
-        if (!oid) return;
-        var pointMap = (WEIGHTS[cat][q.id] && WEIGHTS[cat][q.id][oid]) || {};
-        if (pointMap[itemId] && pointMap[itemId] >= 2) {
-          var opt = q.options.filter(function (o) { return o.id === oid; })[0];
-          reasons.push(STR.reasonTemplate(q.text[LANG], opt.label[LANG]));
-        }
-      });
-      return reasons.slice(0, 2);
-    }
-
     function factRows(cat, item) {
       if (cat === 'girokonto') {
         var dispoText = item.dispozins != null ? item.dispozins.toFixed(2).replace('.', LANG === 'de' ? ',' : '.') + ' %' : STR.noDispo;
@@ -270,36 +252,27 @@
       ];
     }
 
-    function resultCardHtml(cat, item, reasons) {
+    function tableRowHtml(cat, item) {
       var rows = factRows(cat, item);
-      var rowsHtml = rows.map(function (r) {
-        return '<div class="sf-row"><span class="k">' + escapeHtml(r[0]) + '</span><span class="v">' + escapeHtml(String(r[1])) + '</span></div>';
+      var factCells = rows.map(function (r) {
+        return '<td class="fc-cmp-details">' + escapeHtml(String(r[1])) + '</td>';
       }).join('');
       var anchor = (cat === 'tagesgeld') ? PAGE_URL[cat] : PAGE_URL[cat] + '#' + item.id;
-      var reasonsHtml = reasons && reasons.length
-        ? '<ul class="quiz-reasons fc-why">' + reasons.map(function (r) { return '<li>' + escapeHtml(r) + '</li>'; }).join('') + '</ul>'
-        : '';
       return (
-        '<div class="result-card fc-result-card" style="--fc-accent:' + CATEGORY_ACCENT[cat] + ';">' +
-        '<div class="fc-cat-head">' +
-        '<span class="fc-cat-icon">' + CATEGORY_ICON[cat] + '</span>' +
-        '<div class="fc-cat-label">' + escapeHtml(STR.categories[cat]) + '</div>' +
-        '</div>' +
-        '<div class="quiz-result-head">' +
-        '<div class="broker-mark" style="background:' + (item.color || '#163A66') + ';">' + escapeHtml(item.initials) + '</div>' +
-        '<div class="broker-name">' + escapeHtml(item.name) + '</div>' +
-        '</div>' +
-        '<div class="side-facts" style="margin:14px 0;">' + rowsHtml + '</div>' +
-        reasonsHtml +
-        '<div class="quiz-result-actions">' +
-        '<a href="' + escapeHtml(item.affiliateUrl) + '" class="cta-btn2" rel="sponsored nofollow">' + STR.cta + '</a>' +
-        '<a href="' + anchor + '" class="quiz-see-all">' + STR.seeAll + '</a>' +
-        '</div>' +
-        '</div>'
+        '<tr>' +
+        '<td><span class="fc-cmp-cat" style="--fc-accent:' + CATEGORY_ACCENT[cat] + ';">' +
+        '<span class="ic">' + CATEGORY_ICON[cat] + '</span>' + escapeHtml(STR.categories[cat]) +
+        '</span></td>' +
+        '<td class="fc-cmp-name">' + escapeHtml(item.name) + '</td>' +
+        factCells +
+        '<td><a href="' + escapeHtml(item.affiliateUrl) + '" class="cta-btn2" rel="sponsored nofollow">' + STR.cta + '</a>' +
+        '<a href="' + anchor + '" class="quiz-see-all" style="display:block;margin-top:6px;font-size:12px;">' + STR.seeAll + '</a></td>' +
+        '</tr>'
       );
     }
 
     function renderResult() {
+      if (app) app.classList.add('is-result');
       progressBar.style.width = '100%';
       if (stepDotsEl) {
         stepDotsEl.innerHTML = QUESTIONS.map(function () { return '<span class="fc-step-dot is-done"></span>'; }).join('');
@@ -311,7 +284,14 @@
       })).then(function (datasets) {
         var html = '<h3 class="quiz-question">' + STR.resultTitle + '</h3>';
         html += '<p class="lede" style="margin-bottom:20px;">' + STR.resultLede + '</p>';
-        html += '<div class="fc-results-grid">';
+        html += '<section class="table-scroll"><table class="fc-cmp-table"><thead><tr>' +
+          '<th>' + escapeHtml(STR.thCategory) + '</th>' +
+          '<th>' + escapeHtml(STR.thProvider) + '</th>' +
+          '<th>' + escapeHtml(STR.thFact(1)) + '</th>' +
+          '<th>' + escapeHtml(STR.thFact(2)) + '</th>' +
+          '<th>' + escapeHtml(STR.thFact(3)) + '</th>' +
+          '<th></th>' +
+          '</tr></thead><tbody>';
         CATEGORY_KEYS.forEach(function (cat, i) {
           var byId = {};
           datasets[i].items.forEach(function (it) { byId[it.id] = it; });
@@ -319,10 +299,10 @@
           var ranked = Object.keys(scores).sort(function (a, b) { return scores[b] - scores[a]; });
           if (!ranked.length) ranked = datasets[i].items.map(function (it) { return it.id; });
           var top = byId[ranked[0]];
-          if (top) html += resultCardHtml(cat, top, reasonsFor(cat, ranked[0]));
+          if (top) html += tableRowHtml(cat, top);
         });
-        html += '</div>';
-        html += '<button type="button" class="cta-btn2 secondary" id="fc-restart">' + STR.restart + '</button>';
+        html += '</tbody></table></section>';
+        html += '<button type="button" class="cta-btn2 secondary" id="fc-restart" style="margin-top:20px;">' + STR.restart + '</button>';
         area.innerHTML = html;
         animateIn();
 
