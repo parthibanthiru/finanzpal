@@ -116,6 +116,7 @@ finanzpal/
 │                                     data/*.json + Disclosure-Texte dieser Website, siehe
 │                                     Abschnitt „Mobile App" und mobile/README.md
 ├── .github/workflows/mobile-app.yml Automatische App-Prüfung (GitHub Actions)
+├── .github/workflows/push-notify.yml App-Mitteilungen bei neuen Anbietern/Ratgebern (mobile/data/)
 ├── netlify.toml                    Kein Deploy bei Commits nur in mobile/ oder .github/; /mobile/* nie ausliefern
 └── README.md                       Diese Datei
 ```
@@ -770,6 +771,13 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   portiert, gegen die Website getestet); Tipp auf den Finanzpal-Score zeigt die
   Faktoren mit den Labels der Website (`STR.scoreLabels` der Vergleichsskripte bzw.
   `SCORE_FACTOR_LABELS` in `compare.js`, per Sync nach `mobile/data/score-labels.json`).
+- **Mitteilungen (Push):** Opt-in unter Profil. Kommt durch ein Update ein neuer
+  Anbieter in `data/*.json` oder ein neuer Ratgeber in `ratgeber.html` dazu (und ist
+  per Sync in `mobile/data/` gelandet), schickt `.github/workflows/push-notify.yml`
+  eine kurze Mitteilung (nur Namen, keine Zahlen; geänderte Konditionen lösen nichts
+  aus). Braucht einmalig Supabase-Tabelle, EAS-Projekt und zwei GitHub-Secrets —
+  bis dahin Probelauf ohne Versand. **Offener Punkt:** noch nicht eingerichtet
+  (siehe `mobile/README.md`, Abschnitt 7).
 - **Farben/Logo:** `mobile/components/theme.ts` spiegelt die Tokens aus
   `assets/style.css`; App-Icon = FP5-Logo.
 

@@ -264,6 +264,15 @@ describe.each(LANGS)('interactions (%s)', (lang) => {
   });
 });
 
+it('Push messages use the same comparison names as the app', () => {
+  const map: Record<string, { id: string; de: string; en: string }> = require('../tools/push-categories.json');
+  for (const c of CATEGORIES) {
+    const entry = map[c.file];
+    expect(entry?.id).toBe(c.id);
+    for (const l of LANGS) expect(entry[l]).toBe(strings(l).categories[c.id].title);
+  }
+});
+
 it('Notification data maps to a screen, anything else is ignored', () => {
   expect(targetOf({ type: 'compare', id: 'tagesgeld', focus: 'openbank' })).toEqual({ kind: 'compare', id: 'tagesgeld', focus: 'openbank' });
   expect(targetOf({ type: 'site', page: 'ratgeber-etf-sparplan.html' })).toEqual({ kind: 'site', page: 'ratgeber-etf-sparplan.html' });

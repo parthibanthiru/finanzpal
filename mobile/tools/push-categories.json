@@ -1,0 +1,16 @@
+{
+  "_comment": "data file -> app comparison (route id) and its name in DE/EN, for tools/notify-new-data.mjs. Names = lib/strings categories[id].title (the screen tests check that they match).",
+  "girokonto": { "id": "girokonto", "de": "Girokonto", "en": "Checking account" },
+  "tagesgeld": { "id": "tagesgeld", "de": "Tagesgeld", "en": "Instant savings account" },
+  "kreditkarte": { "id": "kreditkarte", "de": "Kreditkarte", "en": "Credit cards" },
+  "broker": { "id": "broker", "de": "Broker & Depot", "en": "Broker & Custody" },
+  "kinderdepot": { "id": "kinderdepot", "de": "Kinderdepot", "en": "Children's custody account" },
+  "kredite": { "id": "kredite", "de": "Ratenkredit", "en": "Installment loan" },
+  "baufinanzierung": { "id": "baufinanzierung", "de": "Baufinanzierung", "en": "Mortgages" },
+  "versicherungen": { "id": "haftpflicht", "de": "Privathaftpflicht", "en": "Personal liability" },
+  "hausrat": { "id": "hausrat", "de": "Hausrat", "en": "Home contents" },
+  "bu": { "id": "bu", "de": "Berufsunfähigkeit", "en": "Disability (BU)" },
+  "rechtsschutz": { "id": "rechtsschutz", "de": "Rechtsschutz", "en": "Legal protection" },
+  "autoversicherung": { "id": "kfz", "de": "Kfz-Versicherung", "en": "Car insurance" },
+  "steuerprogramm": { "id": "steuerprogramm", "de": "Steuerprogramm", "en": "Tax software" }
+}

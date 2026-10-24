@@ -1,0 +1,56 @@
+# Push notifications for the app: when the app's synced data (mobile/data/) gains a provider
+# or a guide, every device that switched on "Neue Anbieter und Ratgeber" gets a message.
+# Logic: mobile/tools/notify-new-data.mjs. Without the secrets below it is a dry run that only
+# lists the messages in the run summary.
+#
+# Secrets (repo → Settings → Secrets and variables → Actions):
+#   SUPABASE_URL                 e.g. https://abcd.supabase.co
+#   SUPABASE_SERVICE_ROLE_KEY    Supabase → Project Settings → API → service_role (never in the app!)
+#   EXPO_ACCESS_TOKEN            optional, only if "enhanced push security" is on in Expo
+name: App push notifications
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'mobile/data/**'
+  workflow_dispatch:
+    inputs:
+      before:
+        description: 'Compare from this commit'
+        required: true
+      after:
+        description: 'Compare to this commit'
+        default: 'HEAD'
+      dry_run:
+        description: 'Only list the messages, send nothing'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: push-notify
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Send notifications for new providers and guides
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          EXPO_ACCESS_TOKEN: ${{ secrets.EXPO_ACCESS_TOKEN }}
+          BEFORE: ${{ github.event_name == 'push' && github.event.before || inputs.before }}
+          AFTER: ${{ github.event_name == 'push' && github.sha || inputs.after }}
+          DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '--dry-run' || '' }}
+        run: node mobile/tools/notify-new-data.mjs --before "$BEFORE" --after "$AFTER" $DRY

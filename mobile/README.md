@@ -4,7 +4,11 @@ The Finanzpal app, built with Expo SDK 57 / React Native 0.86 + TypeScript: one 
 It lives in `mobile/` inside the website repo and uses the **website as its single source of truth**:
 same comparison data, same disclosure texts, same calculator math and the same design tokens.
 
-**What's in it (v0.11)**
+**What's in it (v0.12)**
+- **Notifications** (Profil → Mitteilungen, opt-in): one short message when a comparison gets a new provider or
+  a new guide is published, in the language the app is set to; tapping it opens the comparison at that provider
+  or the guide. Changed rates or fees never trigger one, and messages carry names only. Needs one-time setup
+  (section 7); until then the switch explains that this app version can't receive notifications yet.
 - **Search** (top of the home tab): one box finds a provider in every comparison it appears in ("DKB" →
   Girokonto, Tagesgeld, Kreditkarte, Broker …), ETFs by name/ISIN/index, and the comparisons, calculators and
   guides by name; umlauts are folded ("fuhrung" finds "Kontoführung"). Tapping a provider opens its comparison
@@ -63,6 +67,7 @@ mobile/
   lib/finanzCheck.ts              Finanz-Check scoring (port of finanz-check.js) + saved answers
   lib/favorites.ts, context/FavoritesProvider.tsx   Merkliste (Supabase, optimistic updates)
   lib/disclosures.ts              disclosure/disclaimer texts from the website
+  lib/push.ts                     notifications: opt-in, token registration, tap targets
   lib/search.ts                   home search index (providers, ETFs, pages; DE/EN)
   lib/etf.ts                      ETF-Suche filters (port of assets/etf-search.js)
   lib/scoreLabels.ts, components/ScoreBreakdown.tsx   score breakdown sheet
@@ -185,5 +190,32 @@ eas build -p ios              # needs Apple Developer account, 99 USD/year
 ```
 Before store release you need: a privacy policy URL (Datenschutzerklärung), an Impressum, app icons in `assets/`, and – if you add Google/Apple sign-in – Apple requires "Sign in with Apple" whenever another social login is offered.
 
+## 7. Notifications (v0.12)
+How it works: the Profil switch asks for permission and stores the phone's Expo push token in Supabase
+(`push_tokens`, one row per phone, with the app language). After a push to `main` that changes `mobile/data/`,
+`.github/workflows/push-notify.yml` runs `tools/notify-new-data.mjs`: it compares the data before and after,
+and for new provider ids (per comparison) and new guide pages sends at most 3 messages per phone (more news →
+one summary) through Expo's push service. Phones Expo reports as gone are removed from the table. Sign-out
+removes the phone; deleting the account deletes its rows.
+
+One-time setup:
+1. Run `supabase/schema.sql` again (adds `push_tokens` and the `register_push_token` / `unregister_push_token`
+   functions).
+2. `npx eas init` in `mobile/` — creates the Expo project and writes `extra.eas.projectId` into `app.json`
+   (needed for push tokens). Commit that change.
+3. Push needs a real build: since SDK 53, Expo Go on Android can't receive remote notifications, so test with a
+   development build (`eas build --profile development -p android`) or a preview APK. On Android, also add the
+   FCM credentials once (`eas credentials` → Android → Push Notifications: upload the Firebase service account
+   key); iOS push keys are created by `eas build` automatically.
+4. GitHub → repo Settings → Secrets and variables → Actions: `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
+   (Supabase → Project Settings → API; the service-role key must never go into the app). Optional
+   `EXPO_ACCESS_TOKEN` if you switch on "enhanced push security" in Expo.
+
+Without the secrets the workflow is a dry run: the run summary lists the messages it would have sent. To try it,
+Actions → "App push notifications" → Run workflow with two commits (dry run is on by default).
+Message texts (DE/EN) live in `tools/notify-new-data.mjs`; comparison names in `tools/push-categories.json`
+(the screen tests check they match the app). Tests: `node --test tools/notify-new-data.test.mjs` (also in CI).
+Android notifications use the app icon; a white monochrome `notification-icon.png` can be added to the
+`expo-notifications` plugin in `app.json` later for a cleaner status-bar icon.
+
 ## Next ideas
-- Push notifications for new comparisons (expo-notifications)

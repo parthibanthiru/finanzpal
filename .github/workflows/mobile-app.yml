@@ -81,6 +81,11 @@ jobs:
           npx jest --ci --silent --json --outputFile="$RUNNER_TEMP/jest.json" || true
           tools/ci-step.sh "Screen tests" node tools/jest-summary.mjs "$RUNNER_TEMP/jest.json"
 
+      # Push sender (tools/notify-new-data.mjs): what counts as news, message texts, summary
+      - name: Push sender tests
+        if: ${{ !cancelled() }}
+        run: tools/ci-step.sh "Push sender tests" node --test tools/notify-new-data.test.mjs
+
       - name: Build Android bundle
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: tools/ci-step.sh "Android bundle" npx expo export --platform android --output-dir "$RUNNER_TEMP/export-android"
