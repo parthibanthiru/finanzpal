@@ -800,6 +800,11 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   aus). Braucht einmalig Supabase-Tabelle, EAS-Projekt und zwei GitHub-Secrets —
   bis dahin Probelauf ohne Versand. **Offener Punkt:** noch nicht eingerichtet
   (siehe `mobile/README.md`, Abschnitt 7).
+- **Überweisen (Demo):** Geld senden per Zahlungsauslösung, Stand Demo — simulierter
+  Anbieter, kein echtes Geld, Tab nur mit `EXPO_PUBLIC_FEATURE_TRANSFERS=1` sichtbar.
+  IBAN-Prüfung, Limits, Empfängerüberprüfung (Verification of Payee) und Warnungen sind
+  eingebaut. **Offener Punkt:** echter Anbieter erst nach Vertrag (Roadmap: finAPI,
+  Tink oder Yapily), Konto-Anbindung, Server-Endpunkt. Details: `mobile/README.md`, Abschnitt 8.
 - **Farben/Logo:** `mobile/components/theme.ts` spiegelt die Tokens aus
   `assets/style.css`; App-Icon = FP5-Logo.
 
