@@ -5,6 +5,7 @@ import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import { supabase } from '@/lib/supabase';
 import { deleteBuchungen } from '@/lib/haushaltsbuch';
+import { disablePush } from '@/lib/push';
 import { strings } from '@/lib/i18n';
 
 // Closes the login popup correctly when running as a web app.
@@ -138,6 +139,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     },
 
     async signOut() {
+      // stop this account's notifications on this device, but remember the choice for next sign-in
+      if (session?.user.id) await disablePush(session.user.id, { keepChoice: true });
       await supabase.auth.signOut();
     },
 

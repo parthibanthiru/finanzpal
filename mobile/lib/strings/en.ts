@@ -506,5 +506,16 @@ export const en: Strings = {
     deleteTitle: 'Delete account?',
     deleteText: "Your account and all related data will be permanently deleted. This can't be undone.",
     deleteConfirm: 'Delete permanently',
+    pushLabel: 'Notifications',
+    pushToggle: 'New providers and guides',
+    pushText: 'A short notification when a comparison gets new providers or a new guide is published. You can switch it off here at any time.',
+    pushDenied: 'Notifications for Finanzpal are turned off in your phone settings.',
+    pushOpenSettings: 'Open settings',
+    pushUnavailable: 'This version of the app can’t receive notifications yet (e.g. in Expo Go or the simulator).',
+    pushError: 'Notifications couldn’t be switched on right now. Please try again later.',
+  },
+
+  push: {
+    channel: 'New providers & guides',
   },
 };

@@ -15,6 +15,7 @@ import { CATEGORY_KEYS, CATEGORY_META, QUESTIONS, label, reasonsFor, topPick } f
 import { NO_FILTERS, etfs, filterEtfs, options } from '@/lib/etf';
 import { scoreRows } from '@/lib/scoreLabels';
 import { search } from '@/lib/search';
+import { targetOf } from '@/lib/push';
 
 import HomeScreen from '@/app/(app)/vergleiche/index';
 import CategoryScreen from '@/app/(app)/vergleiche/[id]';
@@ -217,6 +218,42 @@ describe.each(LANGS)('interactions (%s)', (lang) => {
     fireEvent.press(screen.getAllByLabelText(t.card.scoreClose)[0]);
   });
 
+  it('Profil: notifications switch registers the device, and switches off again', async () => {
+    const AsyncStorage = require('@react-native-async-storage/async-storage');
+    await AsyncStorage.clear();
+    const { supabase } = require('@/lib/supabase');
+    supabase.rpc.mockClear();
+    await renderScreen(ProfileScreen, { lang });
+    const sw = screen.getByLabelText(t.profile.pushToggle);
+    expect(sw.props.value).toBe(false);
+    fireEvent(sw, 'valueChange', true);
+    await settle(2);
+    expect(supabase.rpc).toHaveBeenCalledWith('register_push_token', {
+      p_token: 'ExponentPushToken[test]', p_lang: lang, p_platform: expect.any(String),
+    });
+    expect(screen.getByLabelText(t.profile.pushToggle).props.value).toBe(true);
+    fireEvent(screen.getByLabelText(t.profile.pushToggle), 'valueChange', false);
+    await settle(2);
+    expect(supabase.rpc).toHaveBeenCalledWith('unregister_push_token', { p_token: 'ExponentPushToken[test]' });
+    expect(screen.getByLabelText(t.profile.pushToggle).props.value).toBe(false);
+    expectCleanText();
+  });
+
+  it('Profil: without push support the switch explains why', async () => {
+    const Constants = require('expo-constants').default;
+    const saved = Constants.expoConfig;
+    Constants.expoConfig = {}; // no EAS project id yet
+    try {
+      await renderScreen(ProfileScreen, { lang });
+      fireEvent(screen.getByLabelText(t.profile.pushToggle), 'valueChange', true);
+      await settle(2);
+      expect(screen.getByText(t.profile.pushUnavailable)).toBeTruthy();
+      expect(screen.getByLabelText(t.profile.pushToggle).props.value).toBe(false);
+    } finally {
+      Constants.expoConfig = saved;
+    }
+  });
+
   it('Merkliste: the heart on a provider card toggles', async () => {
     await renderScreen(CategoryScreen, { lang, params: { id: 'tagesgeld' } });
     const before = screen.getAllByLabelText(t.card.favAdd).length;
@@ -225,6 +262,13 @@ describe.each(LANGS)('interactions (%s)', (lang) => {
     expect(screen.getAllByLabelText(t.card.favRemove)).toHaveLength(1);
     expect(screen.getAllByLabelText(t.card.favAdd)).toHaveLength(before - 1);
   });
+});
+
+it('Notification data maps to a screen, anything else is ignored', () => {
+  expect(targetOf({ type: 'compare', id: 'tagesgeld', focus: 'openbank' })).toEqual({ kind: 'compare', id: 'tagesgeld', focus: 'openbank' });
+  expect(targetOf({ type: 'site', page: 'ratgeber-etf-sparplan.html' })).toEqual({ kind: 'site', page: 'ratgeber-etf-sparplan.html' });
+  expect(targetOf({ type: 'site', page: 'https://evil.example/x.html' })).toBeNull();
+  expect(targetOf(undefined)).toBeNull();
 });
 
 it('Profil: switching the language changes the whole screen', async () => {

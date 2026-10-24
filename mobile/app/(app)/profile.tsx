@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Alert, Linking, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { useAuth } from '@/context/AuthProvider';
 import { supabase } from '@/lib/supabase';
 import { Button, ErrorText, InfoText, Input } from '@/components/ui';
@@ -8,6 +8,67 @@ import { ChoiceField } from '@/components/CalcUI';
 import { makeStyles, radius, spacing, ThemePreference, useTheme } from '@/components/theme';
 import { useI18n, type LangPreference } from '@/lib/i18n';
 import { formatDate } from '@/lib/format';
+import { PushState, disablePush, enablePush, isPushEnabled } from '@/lib/push';
+
+/** Opt-in for push notifications about new providers and guides. */
+function PushSetting() {
+  const styles = useStyles();
+  const { colors } = useTheme();
+  const { t, lang } = useI18n();
+  const L = t.profile;
+  const { user } = useAuth();
+  const userId = user?.id ?? 'anon';
+  const [state, setState] = useState<PushState>('off');
+  const [busy, setBusy] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    isPushEnabled(userId).then((on) => setState(on ? 'on' : 'off'));
+  }, [userId]);
+
+  async function toggle(on: boolean) {
+    setBusy(true);
+    setFailed(false);
+    try {
+      if (on) setState(await enablePush(userId, lang));
+      else {
+        await disablePush(userId);
+        setState('off');
+      }
+    } catch {
+      setFailed(true);
+      setState('off');
+    }
+    setBusy(false);
+  }
+
+  return (
+    <View style={styles.card}>
+      <Text style={styles.label}>{L.pushLabel}</Text>
+      <View style={styles.switchRow}>
+        <Text style={styles.switchLabel}>{L.pushToggle}</Text>
+        <Switch
+          value={state === 'on'}
+          onValueChange={toggle}
+          disabled={busy}
+          trackColor={{ true: colors.primary, false: colors.border }}
+          accessibilityLabel={L.pushToggle}
+        />
+      </View>
+      <Text style={styles.meta}>{L.pushText}</Text>
+      {state === 'denied' && (
+        <>
+          <Text style={styles.warn}>{L.pushDenied}</Text>
+          <Pressable onPress={() => Linking.openSettings()} accessibilityRole="button">
+            <Text style={styles.link}>{L.pushOpenSettings}</Text>
+          </Pressable>
+        </>
+      )}
+      {state === 'unavailable' && <Text style={styles.warn}>{L.pushUnavailable}</Text>}
+      {failed && <Text style={styles.warn}>{L.pushError}</Text>}
+    </View>
+  );
+}
 
 export default function ProfileScreen() {
   const styles = useStyles();
@@ -88,6 +149,7 @@ export default function ProfileScreen() {
       />
 
       <View style={{ height: spacing.lg }} />
+      <PushSetting />
       <Button title={L.signOut} variant="secondary" onPress={signOut} />
       <Button title={L.deleteAccount} variant="danger" onPress={confirmDelete} />
       <LegalLinks />
@@ -107,4 +169,8 @@ const useStyles = makeStyles((colors) => ({
   label: { color: colors.muted, fontSize: 13 },
   email: { fontSize: 17, fontWeight: '700', color: colors.text, marginTop: 2 },
   meta: { color: colors.muted, fontSize: 13, marginTop: spacing.sm },
+  switchRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.xs },
+  switchLabel: { flex: 1, fontSize: 16, fontWeight: '600', color: colors.text, paddingRight: spacing.md },
+  warn: { color: colors.text, fontSize: 13, marginTop: spacing.sm, lineHeight: 18 },
+  link: { color: colors.primary, fontWeight: '700', fontSize: 14, marginTop: spacing.xs },
 }));

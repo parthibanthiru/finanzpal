@@ -3,7 +3,7 @@
     "name": "Finanzpal",
     "slug": "finanzpal",
     "scheme": "finanzpal",
-    "version": "0.11.0",
+    "version": "0.12.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "ios": {
@@ -22,6 +22,12 @@
       "expo-router",
       "expo-web-browser",
       "expo-apple-authentication",
+      [
+        "expo-notifications",
+        {
+          "color": "#0F2A3D"
+        }
+      ],
       [
         "expo-splash-screen",
         {

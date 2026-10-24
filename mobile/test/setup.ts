@@ -69,6 +69,24 @@ jest.mock('expo-linking', () => ({
   openURL: jest.fn(),
 }));
 
+// Push notifications → permission granted, a fixed token; the EAS project id is set so the
+// "on" path runs (tests switch it off via require('expo-constants').default.expoConfig).
+jest.mock('expo-notifications', () => ({
+  setNotificationHandler: jest.fn(),
+  setNotificationChannelAsync: jest.fn(async () => null),
+  getPermissionsAsync: jest.fn(async () => ({ status: 'undetermined' })),
+  requestPermissionsAsync: jest.fn(async () => ({ status: 'granted' })),
+  getExpoPushTokenAsync: jest.fn(async () => ({ data: 'ExponentPushToken[test]' })),
+  useLastNotificationResponse: () => null,
+  clearLastNotificationResponseAsync: jest.fn(async () => {}),
+  DEFAULT_ACTION_IDENTIFIER: 'expo.modules.notifications.actions.DEFAULT',
+  AndroidImportance: { DEFAULT: 3 },
+}));
+jest.mock('expo-constants', () => ({
+  __esModule: true,
+  default: { expoConfig: { extra: { eas: { projectId: 'test-project' } } } },
+}));
+
 // Supabase → a signed-in test user; every table query returns an empty list.
 jest.mock('@/lib/supabase', () => {
   const session = {
@@ -102,7 +120,7 @@ jest.mock('@/lib/supabase', () => {
         stopAutoRefresh() {},
       },
       from: query,
-      rpc: async () => ({ error: null }),
+      rpc: jest.fn(async () => ({ error: null })),
     },
   };
 });

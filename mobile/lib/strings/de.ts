@@ -510,6 +510,18 @@ export const de = {
     deleteTitle: 'Konto löschen?',
     deleteText: 'Dein Konto und alle zugehörigen Daten werden dauerhaft gelöscht. Das kann nicht rückgängig gemacht werden.',
     deleteConfirm: 'Endgültig löschen',
+    pushLabel: 'Mitteilungen',
+    pushToggle: 'Neue Anbieter und Ratgeber',
+    pushText: 'Eine kurze Mitteilung, wenn ein Vergleich neue Anbieter bekommt oder ein neuer Ratgeber erscheint. Jederzeit hier abschaltbar.',
+    pushDenied: 'Mitteilungen sind für Finanzpal in den Einstellungen deines Handys ausgeschaltet.',
+    pushOpenSettings: 'Einstellungen öffnen',
+    pushUnavailable: 'In dieser App-Version gibt es noch keine Mitteilungen (z. B. in Expo Go oder im Simulator).',
+    pushError: 'Mitteilungen konnten gerade nicht eingeschaltet werden. Bitte versuch es später noch einmal.',
+  },
+
+  push: {
+    // Android notification channel name (shown in the phone's settings)
+    channel: 'Neue Anbieter & Ratgeber',
   },
 };
 

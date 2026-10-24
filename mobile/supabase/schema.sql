@@ -112,3 +112,55 @@ create policy "Users insert own favorites"
 drop policy if exists "Users delete own favorites" on public.favorites;
 create policy "Users delete own favorites"
   on public.favorites for delete using (auth.uid() = user_id);
+
+-- ─────────────────────────────────────────────────────────────
+-- v0.12: push notifications ("Neue Anbieter und Ratgeber", opt-in in Profil)
+-- Safe to run again on an existing project.
+-- One row per device. The app only goes through the two functions below (a shared phone
+-- simply moves to whoever switched notifications on last); the sender in
+-- .github/workflows/push-notify.yml reads the table with the service-role key.
+-- ─────────────────────────────────────────────────────────────
+create table if not exists public.push_tokens (
+  token       text primary key check (char_length(token) <= 200),
+  user_id     uuid not null references auth.users(id) on delete cascade,
+  lang        text not null default 'de' check (lang in ('de', 'en')),
+  platform    text not null default '' check (char_length(platform) <= 20),
+  updated_at  timestamptz not null default now()
+);
+
+alter table public.push_tokens enable row level security;
+
+drop policy if exists "Users read own push tokens" on public.push_tokens;
+create policy "Users read own push tokens"
+  on public.push_tokens for select using (auth.uid() = user_id);
+
+create or replace function public.register_push_token(p_token text, p_lang text, p_platform text)
+returns void
+language plpgsql
+security definer set search_path = public
+as $$
+begin
+  if auth.uid() is null then
+    raise exception 'not authenticated';
+  end if;
+  insert into public.push_tokens (token, user_id, lang, platform, updated_at)
+  values (p_token, auth.uid(), case when p_lang = 'en' then 'en' else 'de' end, coalesce(p_platform, ''), now())
+  on conflict (token) do update
+    set user_id = excluded.user_id, lang = excluded.lang, platform = excluded.platform, updated_at = now();
+end;
+$$;
+
+create or replace function public.unregister_push_token(p_token text)
+returns void
+language plpgsql
+security definer set search_path = public
+as $$
+begin
+  delete from public.push_tokens where token = p_token and user_id = auth.uid();
+end;
+$$;
+
+revoke all on function public.register_push_token(text, text, text) from public, anon;
+grant execute on function public.register_push_token(text, text, text) to authenticated;
+revoke all on function public.unregister_push_token(text) from public, anon;
+grant execute on function public.unregister_push_token(text) to authenticated;
