@@ -785,8 +785,8 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   zieht das Sync-Skript direkt aus `assets/finanz-check.js` (für alle 96
   Antwortkombinationen gegen die Website getestet, identisch). In der App
   oben auf der Startseite; nach dem Quiz zeigt sie „Deine Empfehlungen" und
-  springt im jeweiligen Vergleich direkt zum empfohlenen Anbieter. Die
-  „Warum diese Empfehlung"-Gründe (`reasonsFor()`) zeigt die App genauso an.
+  springt im jeweiligen Vergleich direkt zum empfohlenen Anbieter. Wie die
+  Website (seit der Tabellen-Ansicht) zeigt die App keine „Warum diese Empfehlung"-Gründe mehr.
 - **Suche, ETF-Suche, Score-Aufschlüsselung:** Suchfeld auf der Startseite
   (Anbieter in allen Vergleichen, ETFs per Name/ISIN, Rechner und Ratgeber);
   ETF-Suche mit den Filtern von `etf-suche.html` (Logik aus `assets/etf-search.js`
@@ -817,12 +817,12 @@ manuell testen zu müssen. Commits nur in `.github/` lösen ebenfalls keinen
 Netlify-Deploy aus.
 
 **Pflege:** Wer `data/*.json` / `*.en.json`, einen Disclosure-Text (DE oder EN),
-einen `calc-disclaimer`, die Finanz-Check-Fragen/-Gewichte/-Begründungstexte, die Score-Faktor-Labels
+einen `calc-disclaimer`, die Finanz-Check-Fragen/-Gewichte, die Score-Faktor-Labels
 (`*-compare.js` `STR.scoreLabels`, `compare.js` `SCORE_FACTOR_LABELS`), die Ratgeber-Artikelliste
 (`ratgeber.html` / `en/ratgeber.html`) oder die Rechner-Logik ändert, führt danach `cd mobile && npm run sync-data` aus
 und committet `mobile/data/` mit (bei Rechner-Änderungen zusätzlich
 `mobile/lib/calc.ts` angleichen, inkl. der 2026er Steuer-/SV-Werte im
-Brutto-Netto-Rechner; bei Änderungen an `assets/etf-search.js` bzw. `reasonsFor()` in
+Brutto-Netto-Rechner; bei Änderungen an `assets/etf-search.js` bzw. an der Bewertung in
 `finanz-check.js` die Ports `mobile/lib/etf.ts` bzw. `mobile/lib/finanzCheck.ts`). Commits, die nur `mobile/` ändern, lösen dank `netlify.toml`
 keinen Netlify-Deploy aus (spart Build-Minuten); `/mobile/*` wird nie als Teil
 der Website ausgeliefert. Details und App-Setup: `mobile/README.md`.

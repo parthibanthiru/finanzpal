@@ -277,9 +277,5 @@
     "depot",
     "kreditkarte",
     "tagesgeld"
-  ],
-  "reasonTemplate": {
-    "de": "Du hast bei „{q}\" „{o}\" gewählt.",
-    "en": "For \"{q}\" you picked \"{o}\"."
-  }
+  ]
 }

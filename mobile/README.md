@@ -23,8 +23,7 @@ same comparison data, same disclosure texts, same calculator math and the same d
   `assets/finanz-check.js`; results were checked against the website for all 96 answer combinations
   (identical). Answers are saved on the device per account, so the home screen then shows
   "Deine Empfehlungen"; tapping one opens the comparison scrolled to that provider, highlighted.
-  Each result card shows the website's "why this pick" lines (port of `reasonsFor()`: answers that gave the
-  pick ≥ 2 points, at most 2; the sentence is synced from `STR.reasonTemplate`).
+  Like the website (since its comparison-table redesign), result cards show no "why this pick" lines.
 - **Merkliste**: a heart on every provider card saves it to the user's account (Supabase table
   `favorites`), so the list is the same on every device; "Meine Merkliste" on the home tab, grouped by
   comparison, tap opens the provider in its comparison. Needs `supabase/schema.sql` run once more (v0.7 part).
@@ -92,7 +91,7 @@ mobile/
 **screen tests** → Android and iOS bundle builds (`expo export`) → `expo-doctor` (advice only).
 The screen tests (`npm test`, `__tests__/screens-test.tsx`) render every screen in German and English, light and
 dark, and fail on errors, `undefined`/`NaN` in visible text or a missing disclosure; they also click through the
-Finanz-Check (incl. its reasons), a calculator, the Haushaltsbuch, ETF filters, the home search, the score
+Finanz-Check (one top pick per category), a calculator, the Haushaltsbuch, ETF filters, the home search, the score
 breakdown, the Merkliste heart and the language switch. A failing step also posts its last 200 output lines
 as an annotation on the commit (`tools/ci-step.sh`). Results: the commit's ✓/✗ on GitHub, or the
 repo's **Actions** tab.
