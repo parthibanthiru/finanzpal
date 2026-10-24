@@ -762,6 +762,31 @@ python3 -m http.server 8000
 
 Dann im Browser: http://localhost:8000
 
+## Haushaltsbuch: Schnellerfassung fester Kosten (2026-10-24)
+
+`haushaltsbuch.html`/`en/` (`assets/haushaltsbuch.js`) bekam einen neuen
+Abschnitt **„Schnellerfassung: Feste Kosten"** oberhalb des bestehenden
+Buchungsformulars:
+- Eine Reihe von Chip-Buttons (`.chip`, bereits bestehende Komponente,
+  z. B. aus dem FAQ-Bereich bekannt) für die typischen wiederkehrenden
+  Fixkosten eines Haushalts: Miete, Strom, Heizung/Gas, Wasser,
+  Rundfunkbeitrag, Internet, Handy/SIM-Karte, Versicherung, Streaming-Abo,
+  Fitnessstudio, ÖPNV-Ticket (`FIXKOSTEN` in `assets/haushaltsbuch.js`).
+- Ein Klick trägt Typ (Ausgabe), Kategorie und Beschreibung automatisch ins
+  Formular ein und fokussiert das Betragsfeld — es muss nur noch der
+  konkrete Betrag ergänzt werden, statt jede Fixkosten-Buchung von Hand zu
+  betiteln.
+- Neue Kategorie **„Internet & Handy"** (`kommunikation`) in `KATEGORIEN`,
+  da Internet/Handy inhaltlich nicht zu „Wohnen" passen; rein additiv, alte
+  gespeicherte Buchungen mit den bisherigen Kategorie-Ids bleiben gültig.
+- Keine Beträge sind vorbelegt — passend zum Daten-Integritätsprinzip
+  trägt niemand außer der Nutzer selbst einen Euro-Betrag ein.
+- Gespiegelt in der Mobile-App: `mobile/lib/haushaltsbuch.ts` (neue
+  Kategorie + `FIXKOSTEN`/`fixkostenLabel`), `mobile/app/(app)/rechner/haushaltsbuch.tsx`
+  (gleiche Chip-Reihe oberhalb von „Neue Buchung") sowie
+  `mobile/lib/strings/de.ts`/`en.ts` (`calc.haushalt.categories.kommunikation`,
+  `calc.haushalt.fixkosten`).
+
 ## Mobile App (`mobile/`)
 
 Die Android-/iOS-App (Expo/React Native + Supabase-Login) liegt seit Oktober 2026

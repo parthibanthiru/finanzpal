@@ -10,6 +10,7 @@
     ],
     ausgabe: [
       { id: 'wohnen', label: 'Housing' },
+      { id: 'kommunikation', label: 'Internet & mobile' },
       { id: 'lebensmittel', label: 'Groceries' },
       { id: 'transport', label: 'Transport' },
       { id: 'versicherungen', label: 'Insurance' },
@@ -23,6 +24,7 @@
     ],
     ausgabe: [
       { id: 'wohnen', label: 'Wohnen' },
+      { id: 'kommunikation', label: 'Internet & Handy' },
       { id: 'lebensmittel', label: 'Lebensmittel' },
       { id: 'transport', label: 'Transport' },
       { id: 'versicherungen', label: 'Versicherungen' },
@@ -30,6 +32,38 @@
       { id: 'sonstiges', label: 'Sonstiges' }
     ]
   };
+
+  // Quick-add presets for common recurring/fixed costs (Miete, Strom, Internet,
+  // Handy/SIM-Karte, …) so the most repetitive bookings — the same basics
+  // almost every household has — take one click instead of typing the
+  // category and description by hand each month. Each preset maps to one of
+  // the existing KATEGORIEN.ausgabe ids above, so nothing new needs to be
+  // added to saved data: clicking a chip just pre-fills the form.
+  var FIXKOSTEN = LANG === 'en' ? [
+    { id: 'miete', label: 'Rent', kategorie: 'wohnen' },
+    { id: 'strom', label: 'Electricity', kategorie: 'wohnen' },
+    { id: 'heizung', label: 'Heating/gas', kategorie: 'wohnen' },
+    { id: 'wasser', label: 'Water', kategorie: 'wohnen' },
+    { id: 'rundfunk', label: 'Broadcast fee (Rundfunkbeitrag)', kategorie: 'wohnen' },
+    { id: 'internet', label: 'Internet', kategorie: 'kommunikation' },
+    { id: 'handy', label: 'Mobile/SIM card', kategorie: 'kommunikation' },
+    { id: 'versicherung', label: 'Insurance', kategorie: 'versicherungen' },
+    { id: 'streaming', label: 'Streaming subscription', kategorie: 'freizeit' },
+    { id: 'fitness', label: 'Gym membership', kategorie: 'freizeit' },
+    { id: 'oepnv', label: 'Public transport pass', kategorie: 'transport' }
+  ] : [
+    { id: 'miete', label: 'Miete', kategorie: 'wohnen' },
+    { id: 'strom', label: 'Strom', kategorie: 'wohnen' },
+    { id: 'heizung', label: 'Heizung/Gas', kategorie: 'wohnen' },
+    { id: 'wasser', label: 'Wasser', kategorie: 'wohnen' },
+    { id: 'rundfunk', label: 'Rundfunkbeitrag', kategorie: 'wohnen' },
+    { id: 'internet', label: 'Internet', kategorie: 'kommunikation' },
+    { id: 'handy', label: 'Handy/SIM-Karte', kategorie: 'kommunikation' },
+    { id: 'versicherung', label: 'Versicherung', kategorie: 'versicherungen' },
+    { id: 'streaming', label: 'Streaming-Abo', kategorie: 'freizeit' },
+    { id: 'fitness', label: 'Fitnessstudio', kategorie: 'freizeit' },
+    { id: 'oepnv', label: 'ÖPNV-Ticket', kategorie: 'transport' }
+  ];
 
   var STR = LANG === 'en' ? {
     empty: 'No entries yet — add your first income or expense above.',
@@ -99,6 +133,7 @@
     var formEl = document.getElementById('hb-form');
     var listEl = document.getElementById('hb-list');
     var resetBtn = document.getElementById('hb-reset');
+    var fixkostenEl = document.getElementById('hb-fixkosten');
 
     var resultEinnahmen = document.getElementById('hb-result-einnahmen');
     var resultAusgaben = document.getElementById('hb-result-ausgaben');
@@ -173,6 +208,27 @@
       renderSummary();
     }
 
+    function renderFixkosten() {
+      if (!fixkostenEl) return;
+      fixkostenEl.innerHTML = FIXKOSTEN.map(function (f) {
+        return '<button type="button" class="chip" data-fix="' + f.id + '">' + escapeHtml(f.label) + '</button>';
+      }).join('');
+    }
+
+    if (fixkostenEl) {
+      fixkostenEl.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-fix]');
+        if (!btn) return;
+        var preset = FIXKOSTEN.filter(function (f) { return f.id === btn.getAttribute('data-fix'); })[0];
+        if (!preset) return;
+        typEl.value = 'ausgabe';
+        populateKategorien();
+        kategorieEl.value = preset.kategorie;
+        beschreibungEl.value = preset.label;
+        betragEl.focus();
+      });
+    }
+
     typEl.addEventListener('change', populateKategorien);
 
     formEl.addEventListener('submit', function (e) {
@@ -214,6 +270,7 @@
     }
 
     populateKategorien();
+    renderFixkosten();
     renderAll();
   }
 

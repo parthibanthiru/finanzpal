@@ -718,6 +718,7 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .lohn-field-inline select { font-family: var(--font-body); font-size: 14px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-raised); color: var(--ink); width: 100%; max-width: 100%; }
 
 /* Haushaltsbuch (budget tracker) */
+.hb-fixkosten-grid { display: flex; flex-wrap: wrap; gap: 8px; }
 .hb-form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 8px; }
 .hb-form .hb-field-full { grid-column: 1 / -1; }
 .hb-form label { display: block; font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; }

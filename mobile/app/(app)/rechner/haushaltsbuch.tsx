@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useAuth } from '@/context/AuthProvider';
 import {
-  Buchung, KATEGORIEN, Typ, katLabel, loadBuchungen, newBuchung, saveBuchungen, summarize,
+  Buchung, FIXKOSTEN, KATEGORIEN, Typ, fixkostenLabel, katLabel, loadBuchungen, newBuchung, saveBuchungen, summarize,
 } from '@/lib/haushaltsbuch';
 import { formatDate, formatEURCents, formatPct, parseNumber } from '@/lib/format';
 import { useT } from '@/lib/i18n';
@@ -24,6 +24,7 @@ export default function HaushaltsbuchScreen() {
   const [beschreibung, setBeschreibung] = useState('');
   const [betrag, setBetrag] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const betragRef = useRef<TextInput>(null);
 
   useEffect(() => {
     loadBuchungen(userId).then(setItems);
@@ -51,6 +52,14 @@ export default function HaushaltsbuchScreen() {
     setBeschreibung('');
   }
 
+  function applyFixkosten(id: string, kategorie: string) {
+    setTyp('ausgabe');
+    setKategorie(kategorie);
+    setBeschreibung(fixkostenLabel(id, t));
+    setError(null);
+    betragRef.current?.focus();
+  }
+
   function reset() {
     if (!items?.length) return;
     Alert.alert(L.resetTitle, L.resetText, [
@@ -70,6 +79,16 @@ export default function HaushaltsbuchScreen() {
       </View>
       {sum.saldo < 0 && <Text style={styles.negative}>{L.negative}</Text>}
 
+      <Text style={calcStyles.section}>{L.fixkosten.title}</Text>
+      <Text style={styles.hint}>{L.fixkosten.hint}</Text>
+      <View style={styles.chips}>
+        {FIXKOSTEN.map((f) => (
+          <Pressable key={f.id} style={styles.chip} onPress={() => applyFixkosten(f.id, f.kategorie)}>
+            <Text style={styles.chipText}>{fixkostenLabel(f.id, t)}</Text>
+          </Pressable>
+        ))}
+      </View>
+
       <Text style={calcStyles.section}>{L.newEntry}</Text>
       <ChoiceField
         label={L.type}
@@ -86,6 +105,7 @@ export default function HaushaltsbuchScreen() {
       <Text style={styles.label}>{L.amount}</Text>
       <View style={styles.amountRow}>
         <TextInput
+          ref={betragRef}
           style={[styles.input, { flex: 1, marginBottom: 0 }]}
           value={betrag}
           onChangeText={setBetrag}
@@ -157,6 +177,13 @@ export default function HaushaltsbuchScreen() {
 
 const useStyles = makeStyles((colors) => ({
   negative: { color: colors.danger, fontSize: 13, marginTop: -spacing.sm, marginBottom: spacing.sm },
+  hint: { fontSize: 13, color: colors.muted, marginTop: -spacing.xs, marginBottom: spacing.sm },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, marginBottom: spacing.sm },
+  chip: {
+    borderWidth: 1, borderColor: colors.border, backgroundColor: colors.card,
+    borderRadius: 999, paddingVertical: 7, paddingHorizontal: 13,
+  },
+  chipText: { color: colors.text, fontSize: 13, fontWeight: '500' },
   label: { fontSize: 14, fontWeight: '600', color: colors.text, marginBottom: 6 },
   input: {
     backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border, borderRadius: radius.sm,

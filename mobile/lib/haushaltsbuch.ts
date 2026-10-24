@@ -17,11 +17,33 @@ export type Buchung = {
 // Category ids = KATEGORIEN in assets/haushaltsbuch.js; labels: strings().calc.haushalt.categories.
 export const KATEGORIEN: Record<Typ, string[]> = {
   einnahme: ['gehalt', 'sonstige-einnahme'],
-  ausgabe: ['wohnen', 'lebensmittel', 'transport', 'versicherungen', 'freizeit', 'sonstiges'],
+  ausgabe: ['wohnen', 'kommunikation', 'lebensmittel', 'transport', 'versicherungen', 'freizeit', 'sonstiges'],
 };
 
 export function katLabel(katId: string, t: Strings = strings()) {
   return t.calc.haushalt.categories[katId] ?? katId;
+}
+
+// Quick-add presets for common fixed/recurring costs (rent, electricity,
+// internet, mobile/SIM, …) = FIXKOSTEN in assets/haushaltsbuch.js. Labels
+// live in strings().calc.haushalt.fixkosten.items so they stay translated;
+// kategorie must be one of KATEGORIEN.ausgabe above.
+export const FIXKOSTEN: { id: string; kategorie: string }[] = [
+  { id: 'miete', kategorie: 'wohnen' },
+  { id: 'strom', kategorie: 'wohnen' },
+  { id: 'heizung', kategorie: 'wohnen' },
+  { id: 'wasser', kategorie: 'wohnen' },
+  { id: 'rundfunk', kategorie: 'wohnen' },
+  { id: 'internet', kategorie: 'kommunikation' },
+  { id: 'handy', kategorie: 'kommunikation' },
+  { id: 'versicherung', kategorie: 'versicherungen' },
+  { id: 'streaming', kategorie: 'freizeit' },
+  { id: 'fitness', kategorie: 'freizeit' },
+  { id: 'oepnv', kategorie: 'transport' },
+];
+
+export function fixkostenLabel(id: string, t: Strings = strings()) {
+  return t.calc.haushalt.fixkosten.items[id] ?? id;
 }
 
 // Same key as the website, scoped per account so two people sharing a phone don't see each other's entries.
