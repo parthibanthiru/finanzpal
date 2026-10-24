@@ -73,10 +73,18 @@ FILE_TO_KEY = {
     "ratgeber-ratenkredit-vergleichen.html": ("ratgeber", None),
     "ratgeber-steuerprogramm-guide.html": ("ratgeber", None),
     "ratgeber-tagesgeld-vs-festgeld.html": ("ratgeber", None),
-    # No active at all
+    # No active at all — includes the 2027-reform tracker pages
+    # (altersvorsorgedepot.html, fruehstart-rente.html): deliberately no
+    # top-nav slot since both launch in a "coming Jan 2027" pending state
+    # with no certified providers yet (see README "2027-Reform-Tracker"),
+    # same reasoning the Deals page used before it earned a nav slot.
+    # Reachable via the footer "Vergleiche" column, the Altersvorsorge-
+    # Rechner page, ratgeber-altersvorsorgedepot.html and site search.
     "index.html": (None, None),
     "impressum.html": (None, None),
     "datenschutz.html": (None, None),
+    "altersvorsorgedepot.html": (None, None),
+    "fruehstart-rente.html": (None, None),
 }
 
 DE_PANELS = {
@@ -123,6 +131,8 @@ FOOTER_TAGLINE_EN = "Independent comparisons and guides for your finances."
 
 FOOTER_COMPARE_DE = [
     ("deals.html", "Deals"),
+    ("altersvorsorgedepot.html", "Altersvorsorgedepot 2027"),
+    ("fruehstart-rente.html", "Frühstart-Rente"),
     ("finanz-check.html", "Finanz-Check"),
     ("broker.html", "Broker"),
     ("girokonto.html", "Girokonto"),
@@ -137,6 +147,8 @@ FOOTER_COMPARE_DE = [
 ]
 FOOTER_COMPARE_EN = [
     ("deals.html", "Deals"),
+    ("altersvorsorgedepot.html", "Altersvorsorgedepot 2027"),
+    ("fruehstart-rente.html", "Frühstart-Rente"),
     ("finanz-check.html", "Finanz-Check"),
     ("broker.html", "Broker"),
     ("girokonto.html", "Checking account"),

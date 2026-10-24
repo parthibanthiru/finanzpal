@@ -47,6 +47,42 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/deals.html" />
   </url>
   <url>
+    <loc>https://finanzpal.de/altersvorsorgedepot.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/altersvorsorgedepot.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/altersvorsorgedepot.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/altersvorsorgedepot.html" />
+  </url>
+  <url>
+    <loc>https://finanzpal.de/en/altersvorsorgedepot.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/altersvorsorgedepot.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/altersvorsorgedepot.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/altersvorsorgedepot.html" />
+  </url>
+  <url>
+    <loc>https://finanzpal.de/fruehstart-rente.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/fruehstart-rente.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/fruehstart-rente.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/fruehstart-rente.html" />
+  </url>
+  <url>
+    <loc>https://finanzpal.de/en/fruehstart-rente.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/fruehstart-rente.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/fruehstart-rente.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/fruehstart-rente.html" />
+  </url>
+  <url>
     <loc>https://finanzpal.de/en/index.html</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>weekly</changefreq>

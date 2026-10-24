@@ -28,6 +28,7 @@ gibt es doppelt: einmal auf Deutsch im Projekt-Root, einmal auf Englisch unter
 | `steuerprogramm.html` | Steuererklärungs-Software-Vergleich |
 | `finanz-check.html` | Quiz/Empfehlungstool über Girokonto, Broker/Depot, Kreditkarte, Tagesgeld |
 | `deals.html` | Liste geprüfter Partner-Angebote/Aktionen (`data/deals.json`), siehe „Deals" unten — startet bewusst leer |
+| `altersvorsorgedepot.html`, `fruehstart-rente.html` | 2027-Reform-Tracker, siehe „Altersvorsorgedepot & Frühstart-Rente" unten — bewusst ohne Anbieter-Vergleichstabelle, da noch kein Anbieter zertifiziert/final |
 
 **Rechner**
 | Seite | Inhalt |
@@ -880,6 +881,55 @@ aufklappbaren Bedingungen inkl. Prüfdatum.
   Nav: Mehr-Dropdown vom 2026-10-24, siehe Abschnitt „Navigation" oben,
   sitzt Deals im Header unter `Mehr ▾` statt als eigener Link — die
   Footer-„Vergleiche"-Spalte war davon nicht betroffen.)
+
+## Altersvorsorgedepot & Frühstart-Rente (2026-10-24)
+
+Zwei neue Tracker-Seiten für die 2027er Rentenreform:
+`altersvorsorgedepot.html`/`en/` und `fruehstart-rente.html`/`en/`. Beide
+folgen bewusst nicht dem normalen Vergleichsseiten-Muster (Karten +
+`data/*.json`), weil es für keines der beiden Produkte am Stand 2026-10-24
+eine vergleichbare Anbieter-Tabelle geben kann:
+
+- **Altersvorsorgedepot:** Anbieter können erst ab 1. Januar 2027 starten;
+  das Bundeszentralamt für Steuern (BZSt) hatte zum 6. Oktober 2026 noch
+  kein einziges Depot zertifiziert. Statt einer Vergleichstabelle mit
+  Zahlen, die wir nicht verifizieren können, zeigt die Seite Status
+  (0 zertifizierte Anbieter), die Förderung laut Koalitionsvereinbarung
+  (bis 540 €/Jahr Grundzulage + 300 €/Jahr Kinderzulage) und eine Liste,
+  welche Anbieter laut eigenen Angaben bereits unverbindliche
+  Vormerkungen annehmen (`.deal-list`/`.deal-card`-Muster wie auf
+  `deals.html`, aber hier direkt im HTML statt aus einem JSON, da es sich
+  um Status-Text statt Vergleichszahlen handelt).
+- **Frühstart-Rente:** Gesetz vom Bundestag am 16. Oktober 2026
+  beschlossen, Bundesrat-Zustimmung laut Berichterstattung noch offen —
+  10 €/Monat pro Kind (Geburtsjahrgang ab 2020) vom Staat, zusätzlich
+  freiwillige Einzahlungen bis 6.840 €/Jahr möglich. Die Seite erklärt den
+  Unterschied zwischen eigenem Vertrag („Standarddepot", ca. 1 %/Jahr
+  Kostendeckel) und der automatischen Auffanglösung (Sondervermögen des
+  Bundes ab 1. Januar 2028, Bundesbank-verwaltet) und verlinkt auf
+  `altersvorsorgedepot.html`, statt eine eigene Anbieter-Tabelle für ein
+  noch nicht existierendes Produkt zu erfinden.
+- Beide Seiten haben bewusst **keinen eigenen Top-Level-Nav-Eintrag**
+  (Entscheidung analog zu Deals vor dessen Mehr-Dropdown-Zeit) —
+  erreichbar über `tools/build_nav.py`s `FOOTER_COMPARE_DE`/`_EN`
+  (Footer-Spalte „Vergleiche", direkt nach „Deals"), den Site-Suchindex
+  (`assets/nav.js`), `sitemap.xml` sowie Verlinkungen von
+  `altersvorsorge-rechner.html` und dem bestehenden Ratgeber-Artikel
+  `ratgeber-altersvorsorgedepot.html` aus.
+- `ratgeber-altersvorsorgedepot.html`/`en/` war veraltet (alte, vor der
+  finalen Gesetzgebung geschätzte Förderbeträge) und wurde im selben Zug
+  auf die seit 30. Mai 2026 geltenden Zahlen (Altersvorsorgereformgesetz,
+  BGBl. 2026 I Nr. 156) korrigiert, inkl. Riester-Bestandsschutz/
+  freiwilliger-Wechsel-Hinweis und Verlinkung auf beide neuen Tracker-Seiten.
+- Keine `data/*.json`-Dateien und kein Mobile-Sync nötig — beide Seiten
+  sind handgeschriebener Status-Text ohne tabellarische Vergleichsdaten,
+  fallen also nicht unter einen der Mobile-Sync-Trigger in den
+  Arbeitsregeln oben.
+- `tools/build_nav.py`: `FILE_TO_KEY["altersvorsorgedepot.html"]` und
+  `["fruehstart-rente.html"]` jeweils `(None, None)` (kein aktiver
+  Nav-Highlight), mit Kommentar zur Begründung; nach jeder künftigen
+  Nav-Änderung läuft `python3 tools/build_nav.py` wie gewohnt über alle
+  (jetzt 80) Seiten.
 
 ## Mobile App (`mobile/`)
 
