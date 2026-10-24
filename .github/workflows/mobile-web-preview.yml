@@ -1,5 +1,6 @@
 # Builds the app as a web page in preview mode (no account, see mobile/lib/preview.ts) and keeps it
-# as a downloadable artifact "web-preview" (Actions → this workflow → run → Artifacts).
+# on the branch `web-preview` (only the built files, replaced on every run) and as a downloadable
+# artifact "web-preview" (Actions → this workflow → run → Artifacts).
 # Used to look at the app in a browser without a phone or a Supabase project.
 name: App web preview
 
@@ -12,7 +13,7 @@ on:
       - '.github/workflows/mobile-web-preview.yml'
 
 permissions:
-  contents: read
+  contents: write   # to update the web-preview branch
 
 concurrency:
   group: web-preview
@@ -40,3 +41,11 @@ jobs:
           name: web-preview
           path: mobile/dist-web
           retention-days: 14
+      - name: Publish build to the web-preview branch
+        working-directory: mobile/dist-web
+        run: |
+          git init -q -b web-preview
+          git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Web preview of ${GITHUB_SHA::7}"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" web-preview
