@@ -9,6 +9,7 @@ import { makeStyles, radius, spacing, ThemePreference, useTheme } from '@/compon
 import { useI18n, type LangPreference } from '@/lib/i18n';
 import { formatDate } from '@/lib/format';
 import { PushState, disablePush, enablePush, isPushEnabled } from '@/lib/push';
+import { PREVIEW } from '@/lib/preview';
 
 /** Opt-in for push notifications about new providers and guides. */
 function PushSetting() {
@@ -84,6 +85,10 @@ export default function ProfileScreen() {
   async function saveName() {
     setError(null);
     setInfo(null);
+    if (PREVIEW) {
+      setInfo(t.preview.account);
+      return;
+    }
     setSaving(true);
     const { error: e1 } = await supabase.auth.updateUser({ data: { full_name: name.trim() } });
     // Keep the public profiles table in sync (see supabase/schema.sql).
@@ -113,11 +118,18 @@ export default function ProfileScreen() {
 
   return (
     <ScrollView style={{ backgroundColor: colors.bg }} contentContainerStyle={{ padding: spacing.lg }}>
-      <View style={styles.card}>
-        <Text style={styles.label}>{L.signedInAs}</Text>
-        <Text style={styles.email}>{user?.email}</Text>
-        <Text style={styles.meta}>{L.memberSince(user?.created_at ? formatDate(user.created_at) : '–')}</Text>
-      </View>
+      {PREVIEW ? (
+        <View style={styles.card}>
+          <Text style={styles.label}>{t.preview.badge}</Text>
+          <Text style={styles.meta}>{t.preview.profile}</Text>
+        </View>
+      ) : (
+        <View style={styles.card}>
+          <Text style={styles.label}>{L.signedInAs}</Text>
+          <Text style={styles.email}>{user?.email}</Text>
+          <Text style={styles.meta}>{L.memberSince(user?.created_at ? formatDate(user.created_at) : '–')}</Text>
+        </View>
+      )}
 
       <ErrorText message={error} />
       <InfoText message={info} />
@@ -150,8 +162,12 @@ export default function ProfileScreen() {
 
       <View style={{ height: spacing.lg }} />
       <PushSetting />
-      <Button title={L.signOut} variant="secondary" onPress={signOut} />
-      <Button title={L.deleteAccount} variant="danger" onPress={confirmDelete} />
+      {!PREVIEW && (
+        <>
+          <Button title={L.signOut} variant="secondary" onPress={signOut} />
+          <Button title={L.deleteAccount} variant="danger" onPress={confirmDelete} />
+        </>
+      )}
       <LegalLinks />
     </ScrollView>
   );

@@ -538,6 +538,15 @@ export const de = {
     pushError: 'Mitteilungen konnten gerade nicht eingeschaltet werden. Bitte versuch es später noch einmal.',
   },
 
+  // Vorschau ohne Konto (EXPO_PUBLIC_PREVIEW=1, lib/preview.ts)
+  preview: {
+    badge: 'Vorschau ohne Konto',
+    home: 'Du siehst eine Vorschau der App. Vergleiche, Rechner und Finanz-Check funktionieren wie in der App; Merkliste und Einstellungen bleiben nur in diesem Browser.',
+    profile: 'In der Vorschau gibt es kein Konto. Darstellung und Sprache kannst du trotzdem umstellen.',
+    account: 'Das geht in der Vorschau nicht – dafür brauchst du ein Konto in der App.',
+    chat: 'Der Chat ist in der Vorschau nicht verfügbar. In der App beantwortet er deine Finanzfragen.',
+  },
+
   push: {
     // Android notification channel name (shown in the phone's settings)
     channel: 'Neue Anbieter & Ratgeber',

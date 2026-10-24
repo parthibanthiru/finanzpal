@@ -533,6 +533,14 @@ export const en: Strings = {
     pushError: 'Notifications couldn’t be switched on right now. Please try again later.',
   },
 
+  preview: {
+    badge: 'Preview without an account',
+    home: 'This is a preview of the app. Comparisons, calculators and the Finanz-Check work as in the app; your saved list and settings stay in this browser only.',
+    profile: 'There is no account in the preview. You can still change the appearance and language.',
+    account: 'That isn’t available in the preview – it needs an account in the app.',
+    chat: 'The chat isn’t available in the preview. In the app it answers your money questions.',
+  },
+
   push: {
     channel: 'New providers & guides',
   },

@@ -9,6 +9,7 @@ import { getBundled } from '@/lib/data';
 import { Answers, CATEGORY_KEYS, CATEGORY_META, QUESTIONS, loadAnswers, topPick } from '@/lib/finanzCheck';
 import { Hit, search } from '@/lib/search';
 import { openSite } from '@/lib/site';
+import { PREVIEW } from '@/lib/preview';
 import { fonts, makeStyles, radius, spacing, useColors } from '@/components/theme';
 
 /** Finanz-Check entry point; shows the saved picks once the quiz is done. */
@@ -147,6 +148,12 @@ export default function VergleicheScreen() {
     <ScrollView contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }} keyboardShouldPersistTaps="handled">
       <Text style={styles.hero}>{t.home.hero}</Text>
       <Text style={styles.heroSub}>{t.home.heroSub}</Text>
+      {PREVIEW && (
+        <View style={styles.preview}>
+          <Text style={styles.previewTitle}>{t.preview.badge}</Text>
+          <Text style={styles.previewText}>{t.preview.home}</Text>
+        </View>
+      )}
 
       <View style={styles.searchRow}>
         <TextInput
@@ -254,6 +261,9 @@ const useStyles = makeStyles((colors) => ({
   pickChevron: { color: colors.inkMuted, fontSize: 20, marginLeft: spacing.sm },
   fcLinks: { flexDirection: 'row', gap: spacing.lg, marginTop: spacing.sm },
   fcLink: { color: colors.smile, fontWeight: '700', fontSize: 14 },
+  preview: { borderWidth: 1, borderColor: colors.border, backgroundColor: colors.rowAlt, borderRadius: radius.md, padding: spacing.md, marginBottom: spacing.lg },
+  previewTitle: { fontSize: 12, fontWeight: '800', color: colors.text, textTransform: 'uppercase', letterSpacing: 0.6 },
+  previewText: { fontSize: 13, color: colors.text, lineHeight: 18, marginTop: 4 },
   searchRow: { flexDirection: 'row', alignItems: 'center', marginBottom: spacing.lg },
   search: {
     flex: 1, backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border, borderRadius: radius.md,

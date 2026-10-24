@@ -3,10 +3,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
 import { AppState, Platform } from 'react-native';
 
-const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL ?? '';
-const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? '';
+import { PREVIEW } from './preview';
 
-if (!supabaseUrl || !supabaseAnonKey) {
+// In preview mode nothing calls Supabase; placeholder values only keep createClient() happy.
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL || (PREVIEW ? 'https://preview.invalid' : '');
+const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || (PREVIEW ? 'preview' : '');
+
+if (!PREVIEW && (!supabaseUrl || !supabaseAnonKey)) {
   console.warn(
     '[Finanzpal] EXPO_PUBLIC_SUPABASE_URL / EXPO_PUBLIC_SUPABASE_ANON_KEY missing – copy .env.example to .env'
   );

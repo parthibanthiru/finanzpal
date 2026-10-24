@@ -1,9 +1,11 @@
 import { supabase } from '@/lib/supabase';
+import { PREVIEW } from '@/lib/preview';
 
 export type ChatMsg = { id: string; role: 'user' | 'bot'; text: string };
 
 /** Loads the newest `limit` messages of the logged-in user, oldest first. */
 export async function loadHistory(limit = 100): Promise<ChatMsg[]> {
+  if (PREVIEW) return [];
   const { data, error } = await supabase
     .from('messages')
     .select('id, role, content')
@@ -17,6 +19,7 @@ export async function loadHistory(limit = 100): Promise<ChatMsg[]> {
 
 /** Saves a question + answer pair. Failures are logged, never shown – the chat keeps working. */
 export async function saveExchange(userId: string, question: string, answer: string) {
+  if (PREVIEW) return;
   const { error } = await supabase.from('messages').insert([
     { user_id: userId, role: 'user', content: question.slice(0, 8000) },
     { user_id: userId, role: 'bot', content: answer.slice(0, 8000) },
@@ -25,6 +28,7 @@ export async function saveExchange(userId: string, question: string, answer: str
 }
 
 export async function clearHistory(userId: string) {
+  if (PREVIEW) return;
   const { error } = await supabase.from('messages').delete().eq('user_id', userId);
   if (error) throw error;
 }

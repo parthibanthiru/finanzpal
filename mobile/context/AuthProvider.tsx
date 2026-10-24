@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabase';
 import { deleteBuchungen } from '@/lib/haushaltsbuch';
 import { disablePush } from '@/lib/push';
 import { strings } from '@/lib/i18n';
+import { PREVIEW, PREVIEW_SESSION } from '@/lib/preview';
 
 // Closes the login popup correctly when running as a web app.
 WebBrowser.maybeCompleteAuthSession();
@@ -45,10 +46,11 @@ function friendlyError(message: string): string {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [session, setSession] = useState<Session | null>(PREVIEW ? PREVIEW_SESSION : null);
+  const [loading, setLoading] = useState(!PREVIEW);
 
   useEffect(() => {
+    if (PREVIEW) return; // demo user, no Supabase
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
       setLoading(false);
@@ -155,6 +157,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return null;
     },
   };
+
+  if (PREVIEW) {
+    // the demo user can't sign out or delete anything; the profile screen hides these buttons
+    value.signOut = async () => {};
+    value.deleteAccount = async () => strings().preview.account;
+  }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

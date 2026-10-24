@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as Notifications from 'expo-notifications';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, Platform, View } from 'react-native';
 import { Slot, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -13,8 +13,8 @@ import { useI18n } from '@/lib/i18n';
 import { refreshPush, targetOf } from '@/lib/push';
 import { openSite } from '@/lib/site';
 
-// Notifications that arrive while the app is open are shown as a banner too.
-Notifications.setNotificationHandler({
+// Notifications that arrive while the app is open are shown as a banner too (phones only).
+if (Platform.OS !== 'web') Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowBanner: true,
     shouldShowList: true,
@@ -83,7 +83,7 @@ function AuthGate() {
       {/* App screens have dark brand headers -> light status bar; login screens follow the theme. */}
       <StatusBar style={session || scheme === 'dark' ? 'light' : 'dark'} />
       <Slot />
-      <PushHandler />
+      {Platform.OS !== 'web' && <PushHandler />}
     </>
   );
 }

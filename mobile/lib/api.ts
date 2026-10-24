@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { getLang, strings } from '@/lib/i18n';
+import { PREVIEW } from '@/lib/preview';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL ?? '';
 
@@ -32,6 +33,7 @@ export async function sendChatMessage(
   history: HistoryItem[] = []
 ): Promise<ChatReply> {
   const t = strings().chat;
+  if (PREVIEW) throw new Error(strings().preview.chat);
   if (!API_URL) throw new Error(t.noApiUrl);
 
   const { data } = await supabase.auth.getSession();

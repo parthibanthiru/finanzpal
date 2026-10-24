@@ -1,0 +1,42 @@
+# Builds the app as a web page in preview mode (no account, see mobile/lib/preview.ts) and keeps it
+# as a downloadable artifact "web-preview" (Actions → this workflow → run → Artifacts).
+# Used to look at the app in a browser without a phone or a Supabase project.
+name: App web preview
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/mobile-web-preview.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: web-preview
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - name: Export web preview
+        run: npm run web:preview
+      - name: Make paths relative (works in any folder)
+        run: node tools/relative-web-paths.mjs dist-web
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-preview
+          path: mobile/dist-web
+          retention-days: 14
