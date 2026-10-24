@@ -21,7 +21,15 @@ import re, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # active_key -> which top-level slot it belongs to
-# slot order: konten, broker, kredite, versicherungen, steuerprogramm, rechner, ratgeber, ueberuns
+# slot order: konten, broker, kredite, versicherungen, rechner, ratgeber, mehr
+#
+# "mehr" (2026-10-24): catch-all dropdown for the lower-traffic standalone
+# links (Steuerprogramm, Deals, Über uns) that used to each get their own
+# top-level slot. The bar was at 9 top-level items / 22 sub-items, which
+# felt crowded — folding these three into one "Mehr" dropdown brings it
+# down to 7 without burying anything more than one click deep. Ratgeber
+# stays a standalone plain link since it's a content hub, not a long tail
+# item. See README.md "Nav: Mehr-Dropdown" for the full rationale.
 FILE_TO_KEY = {
     # Broker group
     "broker.html": ("broker", "broker.html"),
@@ -31,8 +39,10 @@ FILE_TO_KEY = {
     "broker-trade-republic-vs-scalable-capital.html": ("broker", "broker.html"),
     "etf-suche.html": ("broker", "etf-suche.html"),
     "kinderdepot.html": ("broker", "kinderdepot.html"),
-    # Steuerprogramm (standalone, "Tax")
-    "steuerprogramm.html": ("steuerprogramm", None),
+    # Mehr group (Steuerprogramm, Deals, Über uns)
+    "steuerprogramm.html": ("mehr", "steuerprogramm.html"),
+    "deals.html": ("mehr", "deals.html"),
+    "ueber-uns.html": ("mehr", "ueber-uns.html"),
     # Konten & Depots group
     "finanz-check.html": ("konten", "finanz-check.html"),
     "girokonto.html": ("konten", "girokonto.html"),
@@ -51,8 +61,6 @@ FILE_TO_KEY = {
     "nettolohnrechner.html": ("rechner", "nettolohnrechner.html"),
     "haushaltsbuch.html": ("rechner", "haushaltsbuch.html"),
     "altersvorsorge-rechner.html": ("rechner", "altersvorsorge-rechner.html"),
-    # Deals (standalone)
-    "deals.html": ("deals", None),
     # Ratgeber (standalone)
     "ratgeber.html": ("ratgeber", None),
     "ratgeber-altersvorsorgedepot.html": ("ratgeber", None),
@@ -65,8 +73,6 @@ FILE_TO_KEY = {
     "ratgeber-ratenkredit-vergleichen.html": ("ratgeber", None),
     "ratgeber-steuerprogramm-guide.html": ("ratgeber", None),
     "ratgeber-tagesgeld-vs-festgeld.html": ("ratgeber", None),
-    # Ueber uns (standalone)
-    "ueber-uns.html": ("ueberuns", None),
     # No active at all
     "index.html": (None, None),
     "impressum.html": (None, None),
@@ -79,9 +85,10 @@ DE_PANELS = {
     "kredite": [("kredite.html", "Ratenkredit"), ("baufinanzierung.html", "Baufinanzierung")],
     "versicherungen": [("versicherungen.html", "Privathaftpflicht"), ("versicherungen.html#hausrat", "Hausrat"), ("versicherungen.html#berufsunfaehigkeit", "Berufsunfähigkeit"), ("versicherungen.html#rechtsschutz", "Rechtsschutz"), ("versicherungen.html#kfz", "Kfz")],
     "rechner": [("sparplanrechner.html", "Sparplanrechner"), ("zinseszinsrechner.html", "Zinseszinsrechner"), ("kreditrechner.html", "Kreditrechner"), ("baufinanzierungsrechner.html", "Baufinanzierungsrechner"), ("nettolohnrechner.html", "Nettolohnrechner"), ("haushaltsbuch.html", "Haushaltsbuch"), ("altersvorsorge-rechner.html", "Altersvorsorge-Rechner")],
+    "mehr": [("steuerprogramm.html", "Steuerprogramm"), ("deals.html", "Deals"), ("ueber-uns.html", "Über uns")],
 }
-DE_LABELS = {"broker": "Broker", "konten": "Konten", "kredite": "Kredite", "versicherungen": "Versicherungen", "rechner": "Rechner"}
-DE_PLAIN = {"steuerprogramm": ("steuerprogramm.html", "Steuerprogramm"), "deals": ("deals.html", "Deals"), "ratgeber": ("ratgeber.html", "Ratgeber"), "ueberuns": ("ueber-uns.html", "Über uns")}
+DE_LABELS = {"broker": "Broker", "konten": "Konten", "kredite": "Kredite", "versicherungen": "Versicherungen", "rechner": "Rechner", "mehr": "Mehr"}
+DE_PLAIN = {"ratgeber": ("ratgeber.html", "Ratgeber")}
 
 EN_PANELS = {
     "broker": [("broker.html", "Broker &amp; Custody"), ("kinderdepot.html", "Children&#39;s custody account"), ("etf-suche.html", "ETF search")],
@@ -89,12 +96,13 @@ EN_PANELS = {
     "kredite": [("kredite.html", "Installment loan"), ("baufinanzierung.html", "Mortgages")],
     "versicherungen": [("versicherungen.html", "Personal liability"), ("versicherungen.html#hausrat", "Home contents"), ("versicherungen.html#berufsunfaehigkeit", "Disability (BU)"), ("versicherungen.html#rechtsschutz", "Legal protection"), ("versicherungen.html#kfz", "Car insurance")],
     "rechner": [("sparplanrechner.html", "Savings Plan Calculator"), ("zinseszinsrechner.html", "Compound Interest Calculator"), ("kreditrechner.html", "Loan Calculator"), ("baufinanzierungsrechner.html", "Mortgage Calculator"), ("nettolohnrechner.html", "Net Salary Calculator"), ("haushaltsbuch.html", "Budget Tracker"), ("altersvorsorge-rechner.html", "Retirement savings calculator")],
+    "mehr": [("steuerprogramm.html", "Tax software"), ("deals.html", "Deals"), ("ueber-uns.html", "About us")],
 }
-EN_LABELS = {"broker": "Broker", "konten": "Accounts &amp; Custody", "kredite": "Loans", "versicherungen": "Insurance", "rechner": "Calculator"}
-EN_PLAIN = {"steuerprogramm": ("steuerprogramm.html", "Tax software"), "deals": ("deals.html", "Deals"), "ratgeber": ("ratgeber.html", "Guides"), "ueberuns": ("ueber-uns.html", "About us")}
+EN_LABELS = {"broker": "Broker", "konten": "Accounts &amp; Custody", "kredite": "Loans", "versicherungen": "Insurance", "rechner": "Calculator", "mehr": "More"}
+EN_PLAIN = {"ratgeber": ("ratgeber.html", "Guides")}
 
-SLOT_ORDER = ["konten", "broker", "kredite", "versicherungen", "steuerprogramm", "deals", "rechner", "ratgeber", "ueberuns"]
-DROPDOWN_SLOTS = {"broker", "konten", "kredite", "versicherungen", "rechner"}
+SLOT_ORDER = ["konten", "broker", "kredite", "versicherungen", "rechner", "ratgeber", "mehr"]
+DROPDOWN_SLOTS = {"broker", "konten", "kredite", "versicherungen", "rechner", "mehr"}
 
 # --- Footer ("<footer class="site">...</footer>") ---
 # Also hand-duplicated into every page (no templating layer), and until this

@@ -128,20 +128,38 @@ finanzpal/
 
 ## Navigation
 
-Die Top-Nav ist über alle Seiten identisch und gruppiert die ursprünglich
-8 Einzel-Links in Dropdowns, damit auch Seiten ohne eigenen Nav-Slot (z. B.
-Girokonto, Baufinanzierung, alle Rechner) von oben erreichbar sind:
+Die Top-Nav ist über alle Seiten identisch und gruppiert die Einzel-Links in
+Dropdowns, damit auch Seiten ohne eigenen Nav-Slot (z. B. Girokonto,
+Baufinanzierung, alle Rechner) von oben erreichbar sind:
 **Konten ▾** (Finanz-Check, Girokonto, Tagesgeld, Kreditkarte) ·
 **Broker ▾** (Broker & Depot, Kinderdepot, ETF-Suche) ·
 **Kredite ▾** (Ratenkredit, Baufinanzierung) ·
 **Versicherungen ▾** (Privathaftpflicht, Hausrat, Berufsunfähigkeit,
-Rechtsschutz, Kfz) · **Steuerprogramm** · **Rechner ▾** (alle 7 Rechner) ·
-**Ratgeber** · **Über uns**. Öffnet per Klick und (auf Geräten mit Maus) per Hover, klappt
-auf Mobile zu einer flachen, eingerückten Liste unter dem Hamburger-Menü auf.
-Neue Unterseite ergänzen = neuen `<a>`-Eintrag im passenden Dropdown-Panel in
-jeder betroffenen `.html`-Datei (es gibt kein serverseitiges Nav-Template) —
-dafür `tools/build_nav.py` ausführen statt von Hand zu editieren, siehe
+Rechtsschutz, Kfz) · **Rechner ▾** (alle 7 Rechner) · **Ratgeber** ·
+**Mehr ▾** (Steuerprogramm, Deals, Über uns). Öffnet per Klick und (auf
+Geräten mit Maus) per Hover, klappt auf Mobile zu einer flachen,
+eingerückten Liste unter dem Hamburger-Menü auf. Neue Unterseite ergänzen =
+neuen `<a>`-Eintrag im passenden Dropdown-Panel in jeder betroffenen
+`.html`-Datei (es gibt kein serverseitiges Nav-Template) — dafür
+`tools/build_nav.py` ausführen statt von Hand zu editieren, siehe
 `tools/README.md`.
+
+**Nav: Mehr-Dropdown (2026-10-24).** Die Bar war mit 9 Top-Level-Einträgen
+(5 davon Dropdowns, 22 Unterpunkte insgesamt) zu voll — `Rechner` allein
+trug 7 Links. Statt die fünf Vergleichs-Dropdowns anzutasten (sie sind der
+Haupt-Traffic-Treiber), wurden die drei Einzel-Links mit dem geringsten
+eigenständigen Gewicht — **Steuerprogramm**, **Deals** und **Über uns** —
+in ein neues `Mehr ▾`-Dropdown zusammengefasst. **Ratgeber** bleibt als
+eigener Link stehen (Content-Hub, kein Long-Tail-Eintrag). Ergebnis: 9 → 7
+Top-Level-Einträge, nichts sitzt mehr als einen Klick tief als vorher.
+Umgesetzt rein in `tools/build_nav.py` (`mehr` als neuer Dropdown-Slot in
+`SLOT_ORDER`/`DROPDOWN_SLOTS`, `DE_PANELS["mehr"]`/`EN_PANELS["mehr"]`,
+`FILE_TO_KEY`-Einträge der drei Seiten umgehängt) und per
+`python3 tools/build_nav.py` über alle 76 Seiten neu generiert — die
+Footer-Spalten („Vergleiche" etc.) sind davon nicht betroffen, nur der
+Header. Eine größere Restrukturierung (ein einziges „Vergleiche"-Mega-Menü
+für alle fünf Produkt-Dropdowns) wurde als nächster, größerer Schritt
+besprochen, aber bewusst zurückgestellt.
 
 Stand Oktober 2026: Die DE-Nav-Gruppe heißt jetzt **Konten** (vorher „Konten &
 Depots" — gekürzt, da „Depots" inhaltlich zu Broker/Kinderdepot gehört, nicht
@@ -822,11 +840,13 @@ aufklappbaren Bedingungen inkl. Prüfdatum.
 - Eigene `disclosure-note` wie auf den Vergleichsseiten plus eigener
   `FOOTER_LEGAL_OVERRIDES`-Eintrag in `tools/build_nav.py` (die generische
   „… ein Konto eröffnest"-Formulierung passt nicht für jeden Deal-Typ).
-- `tools/build_nav.py`: neuer Standalone-Slot `deals` in `SLOT_ORDER`
-  zwischen `steuerprogramm` und `rechner`, `DE_PLAIN`/`EN_PLAIN`-Eintrag,
-  `FILE_TO_KEY["deals.html"]`, `deals.html` als erste Zeile in
-  `FOOTER_COMPARE_DE`/`_EN` — nach jeder künftigen Nav-Änderung läuft
-  `python3 tools/build_nav.py` wie gewohnt über alle (jetzt 76) Seiten.
+- `tools/build_nav.py`: `FILE_TO_KEY["deals.html"]`, `deals.html` als erste
+  Zeile in `FOOTER_COMPARE_DE`/`_EN` — nach jeder künftigen Nav-Änderung
+  läuft `python3 tools/build_nav.py` wie gewohnt über alle (jetzt 76)
+  Seiten. (Ursprünglich als eigener Top-Level-Nav-Slot eingeführt; seit dem
+  Nav: Mehr-Dropdown vom 2026-10-24, siehe Abschnitt „Navigation" oben,
+  sitzt Deals im Header unter `Mehr ▾` statt als eigener Link — die
+  Footer-„Vergleiche"-Spalte war davon nicht betroffen.)
 
 ## Mobile App (`mobile/`)
 
