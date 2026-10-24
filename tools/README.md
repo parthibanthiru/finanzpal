@@ -1,6 +1,6 @@
 # tools/
 
-Maintenance scripts for working across all 74 HTML pages (37 DE + 37 EN
+Maintenance scripts for working across all 76 HTML pages (38 DE + 38 EN
 mirrors). The site has no templating layer — every page is an independent
 file with the nav, footer, and (for Ratgeber) card markup duplicated
 verbatim — so these scripts exist to apply a change consistently everywhere

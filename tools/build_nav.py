@@ -51,6 +51,8 @@ FILE_TO_KEY = {
     "nettolohnrechner.html": ("rechner", "nettolohnrechner.html"),
     "haushaltsbuch.html": ("rechner", "haushaltsbuch.html"),
     "altersvorsorge-rechner.html": ("rechner", "altersvorsorge-rechner.html"),
+    # Deals (standalone)
+    "deals.html": ("deals", None),
     # Ratgeber (standalone)
     "ratgeber.html": ("ratgeber", None),
     "ratgeber-altersvorsorgedepot.html": ("ratgeber", None),
@@ -79,7 +81,7 @@ DE_PANELS = {
     "rechner": [("sparplanrechner.html", "Sparplanrechner"), ("zinseszinsrechner.html", "Zinseszinsrechner"), ("kreditrechner.html", "Kreditrechner"), ("baufinanzierungsrechner.html", "Baufinanzierungsrechner"), ("nettolohnrechner.html", "Nettolohnrechner"), ("haushaltsbuch.html", "Haushaltsbuch"), ("altersvorsorge-rechner.html", "Altersvorsorge-Rechner")],
 }
 DE_LABELS = {"broker": "Broker", "konten": "Konten", "kredite": "Kredite", "versicherungen": "Versicherungen", "rechner": "Rechner"}
-DE_PLAIN = {"steuerprogramm": ("steuerprogramm.html", "Steuerprogramm"), "ratgeber": ("ratgeber.html", "Ratgeber"), "ueberuns": ("ueber-uns.html", "Über uns")}
+DE_PLAIN = {"steuerprogramm": ("steuerprogramm.html", "Steuerprogramm"), "deals": ("deals.html", "Deals"), "ratgeber": ("ratgeber.html", "Ratgeber"), "ueberuns": ("ueber-uns.html", "Über uns")}
 
 EN_PANELS = {
     "broker": [("broker.html", "Broker &amp; Custody"), ("kinderdepot.html", "Children&#39;s custody account"), ("etf-suche.html", "ETF search")],
@@ -89,9 +91,9 @@ EN_PANELS = {
     "rechner": [("sparplanrechner.html", "Savings Plan Calculator"), ("zinseszinsrechner.html", "Compound Interest Calculator"), ("kreditrechner.html", "Loan Calculator"), ("baufinanzierungsrechner.html", "Mortgage Calculator"), ("nettolohnrechner.html", "Net Salary Calculator"), ("haushaltsbuch.html", "Budget Tracker"), ("altersvorsorge-rechner.html", "Retirement savings calculator")],
 }
 EN_LABELS = {"broker": "Broker", "konten": "Accounts &amp; Custody", "kredite": "Loans", "versicherungen": "Insurance", "rechner": "Calculator"}
-EN_PLAIN = {"steuerprogramm": ("steuerprogramm.html", "Tax software"), "ratgeber": ("ratgeber.html", "Guides"), "ueberuns": ("ueber-uns.html", "About us")}
+EN_PLAIN = {"steuerprogramm": ("steuerprogramm.html", "Tax software"), "deals": ("deals.html", "Deals"), "ratgeber": ("ratgeber.html", "Guides"), "ueberuns": ("ueber-uns.html", "About us")}
 
-SLOT_ORDER = ["konten", "broker", "kredite", "versicherungen", "steuerprogramm", "rechner", "ratgeber", "ueberuns"]
+SLOT_ORDER = ["konten", "broker", "kredite", "versicherungen", "steuerprogramm", "deals", "rechner", "ratgeber", "ueberuns"]
 DROPDOWN_SLOTS = {"broker", "konten", "kredite", "versicherungen", "rechner"}
 
 # --- Footer ("<footer class="site">...</footer>") ---
@@ -112,6 +114,7 @@ FOOTER_TAGLINE_DE = "Unabhängige Vergleiche und Ratgeber für deine Finanzen."
 FOOTER_TAGLINE_EN = "Independent comparisons and guides for your finances."
 
 FOOTER_COMPARE_DE = [
+    ("deals.html", "Deals"),
     ("finanz-check.html", "Finanz-Check"),
     ("broker.html", "Broker"),
     ("girokonto.html", "Girokonto"),
@@ -125,6 +128,7 @@ FOOTER_COMPARE_DE = [
     ("steuerprogramm.html", "Steuerprogramm"),
 ]
 FOOTER_COMPARE_EN = [
+    ("deals.html", "Deals"),
     ("finanz-check.html", "Finanz-Check"),
     ("broker.html", "Broker"),
     ("girokonto.html", "Checking account"),
@@ -210,6 +214,14 @@ FOOTER_LEGAL_OVERRIDES = {
         "Bewertungen nicht. Alle Angaben ohne Gewähr. © 2026 Finanzpal",
         "Finanzpal may earn commission from partners. This does not affect our "
         "ratings. All figures without guarantee. © 2026 Finanzpal",
+    ),
+    "deals.html": (
+        "Finanzpal erhält teils Provisionen von Partnern, wenn du ein gelistetes "
+        "Angebot wahrnimmst. Das beeinflusst unsere Auswahl nicht. Alle Angaben "
+        "ohne Gewähr, Stand siehe jeweiliger Deal. © 2026 Finanzpal",
+        "Finanzpal may earn commission from partners when you take up a listed "
+        "offer. This does not affect our selection. All figures without "
+        "guarantee, see each deal for its as-of date. © 2026 Finanzpal",
     ),
     "nettolohnrechner.html": (
         "Finanzpal erhält teils Provisionen von Partnern. Das beeinflusst unsere "

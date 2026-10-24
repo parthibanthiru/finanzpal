@@ -27,6 +27,7 @@ gibt es doppelt: einmal auf Deutsch im Projekt-Root, einmal auf Englisch unter
 | `etf-suche.html` | ETF-Suche mit Filtern (Anlageklasse, TER, Replikation …) |
 | `steuerprogramm.html` | Steuererklärungs-Software-Vergleich |
 | `finanz-check.html` | Quiz/Empfehlungstool über Girokonto, Broker/Depot, Kreditkarte, Tagesgeld |
+| `deals.html` | Liste geprüfter Partner-Angebote/Aktionen (`data/deals.json`), siehe „Deals" unten — startet bewusst leer |
 
 **Rechner**
 | Seite | Inhalt |
@@ -57,7 +58,7 @@ Broker/Depot-Zusammenführung auf den gemeinsamen Broker- & Depot-Vergleich
 
 ```
 finanzpal/
-├── *.html                      36 Seiten auf Deutsch (siehe Seitenübersicht oben)
+├── *.html                      38 Seiten auf Deutsch (siehe Seitenübersicht oben)
 ├── en/                         Komplette englische Spiegelung aller Seiten
 ├── sitemap.xml / robots.txt
 ├── data/
@@ -76,7 +77,9 @@ finanzpal/
 │   ├── rechtsschutz.json / .en.json      Rechtsschutz-Vergleichsdaten
 │   ├── autoversicherung.json / .en.json  Kfz-Versicherung-Vergleichsdaten
 │   ├── etf.json / .en.json               ETF-Suche-Daten
-│   └── steuerprogramm.json / .en.json    Steuerprogramm-Vergleichsdaten
+│   ├── steuerprogramm.json / .en.json    Steuerprogramm-Vergleichsdaten
+│   └── deals.json / .en.json             Partner-Deals (`deals.html`); startet als `[]`,
+│                                           siehe „Deals" unten für das Schema
 ├── assets/
 │   ├── style.css                   Gemeinsames Stylesheet (ein Design-System für alle Seiten,
 │   │                                 inkl. Light/Dark-Theme über CSS-Variablen in :root)
@@ -103,9 +106,11 @@ finanzpal/
 │   ├── baufinanzierungsrechner.js  Annuitätendarlehen-Logik für Baufinanzierung
 │   ├── nettolohnrechner.js         SV-Beiträge + §32a-EStG-Tarif + Soli (Steuerklasse I)
 │   ├── haushaltsbuch.js            localStorage-Budget-Tracker
-│   └── altersvorsorge-rechner.js   Rentenlücken-Logik
+│   ├── altersvorsorge-rechner.js   Rentenlücken-Logik
+│   └── deals.js                    Rendert data/deals.json in #deals-app; zeigt ehrlichen
+│                                     Leerzustand statt erfundener Angebote
 ├── tools/                          Wartungsskripte für seitenweite Änderungen
-│   ├── build_nav.py                 Regeneriert die Top-Nav identisch in allen 74 Dateien
+│   ├── build_nav.py                 Regeneriert die Top-Nav identisch in allen 76 Dateien
 │   ├── add_article_icons.py         Setzt Icon + Akzentfarbe für Ratgeber-Artikel
 │   ├── compute_scores.py            Berechnet den Finanzpal-Score (0–100 + Note A–D) je
 │   │                                  Kategorie aus bereits vorhandenen JSON-Feldern,
@@ -786,6 +791,42 @@ Buchungsformulars:
   (gleiche Chip-Reihe oberhalb von „Neue Buchung") sowie
   `mobile/lib/strings/de.ts`/`en.ts` (`calc.haushalt.categories.kommunikation`,
   `calc.haushalt.fixkosten`).
+
+## Deals (2026-10-24)
+
+Neue Seite `deals.html`/`en/` (eigener Nav-Eintrag „Deals" zwischen
+Steuerprogramm und Rechner, eigene Zeile in der Footer-„Vergleiche"-Spalte,
+im Site-Suchindex, in `sitemap.xml`) — modelliert nach Finanztips
+`/deals/`-Seite: eine Liste geprüfter Kontoprämien, Zinsaktionen und
+Rabatte von Partnern, je Karte mit Kategorie-Label, Status-Badge,
+Anbieter-Avatar, Kurzangebot, Gültigkeitsdatum (falls bekannt) und
+aufklappbaren Bedingungen inkl. Prüfdatum.
+
+- **`data/deals.json` / `.en.json`** ist das einzige, was gepflegt werden
+  muss, um einen Deal zu ergänzen — `assets/deals.js` rendert daraus die
+  Karten, keine HTML-Änderung nötig. Schema (ein Objekt pro Deal, als
+  Kommentar am Kopf von `assets/deals.js` dokumentiert): `id`, `kategorie`,
+  `anbieter`, `initials`, `color`, `titel`, `angebot`, `bedingungen`,
+  `gueltigBis` (ISO-Datum oder `null`), `affiliateUrl`, `quelle`
+  (Prüfdatum/-ort, erscheint in den aufgeklappten Bedingungen).
+- **Bewusst mit `[]` gestartet, nicht mit Platzhalter-Deals.** Dem
+  Daten-Integritätsprinzip folgend wird hier keine Prämien-/Zins-Zahl
+  gezeigt, die wir nicht direkt beim Anbieter nachvollziehen können —
+  bis echte, geprüfte Deals vorliegen, zeigt die Seite einen ehrlichen
+  Leerzustand (`.deal-empty`) mit Links zu den bestehenden Vergleichen
+  statt erfundener Angebote.
+- Kein Zinssatz, keine Prämien-Zahl und keine Frist wird je ohne eigenes
+  Feld im JSON behauptet — ein neuer Deal-Eintrag muss alle Angaben, die
+  er zeigt, auch im JSON mitbringen (kein hartkodierter Text in
+  `deals.js`/`deals.html`).
+- Eigene `disclosure-note` wie auf den Vergleichsseiten plus eigener
+  `FOOTER_LEGAL_OVERRIDES`-Eintrag in `tools/build_nav.py` (die generische
+  „… ein Konto eröffnest"-Formulierung passt nicht für jeden Deal-Typ).
+- `tools/build_nav.py`: neuer Standalone-Slot `deals` in `SLOT_ORDER`
+  zwischen `steuerprogramm` und `rechner`, `DE_PLAIN`/`EN_PLAIN`-Eintrag,
+  `FILE_TO_KEY["deals.html"]`, `deals.html` als erste Zeile in
+  `FOOTER_COMPARE_DE`/`_EN` — nach jeder künftigen Nav-Änderung läuft
+  `python3 tools/build_nav.py` wie gewohnt über alle (jetzt 76) Seiten.
 
 ## Mobile App (`mobile/`)
 

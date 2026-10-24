@@ -29,6 +29,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/finanz-check.html" />
   </url>
   <url>
+    <loc>https://finanzpal.de/deals.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/deals.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/deals.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/deals.html" />
+  </url>
+  <url>
+    <loc>https://finanzpal.de/en/deals.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://finanzpal.de/deals.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://finanzpal.de/en/deals.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://finanzpal.de/deals.html" />
+  </url>
+  <url>
     <loc>https://finanzpal.de/en/index.html</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>weekly</changefreq>

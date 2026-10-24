@@ -741,3 +741,30 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .hb-cat-head { display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 6px; }
 .hb-cat-bar-track { height: 8px; border-radius: 100px; background: var(--line); overflow: hidden; }
 .hb-cat-bar-fill { height: 100%; background: var(--green-deep); border-radius: 100px; }
+
+/* Deals page (2026-10-24): one card per partner offer, rendered from
+   data/deals.json by assets/deals.js. Visual language matches the rest of
+   the site (chip/tag-bg for the category label, broker-mark for the
+   provider avatar, cta-btn2 for the action button) rather than inventing
+   new components. */
+.deal-list { display: flex; flex-direction: column; gap: 16px; margin: 28px 0 56px; }
+.deal-card { border: 1px solid var(--line); background: var(--bg-raised); border-radius: 14px; padding: 20px 22px; }
+.deal-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.deal-kat { font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); background: var(--tag-bg); padding: 4px 10px; border-radius: 100px; }
+.deal-status { font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--green-deep); display: inline-flex; align-items: center; gap: 5px; }
+.deal-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green-deep); display: inline-block; }
+.deal-body { display: flex; gap: 14px; align-items: flex-start; }
+.deal-main { flex: 1; min-width: 0; }
+.deal-title { font-family: var(--font-display); font-size: 17px; font-weight: 600; margin: 0 0 4px; }
+.deal-valid { font-size: 12.5px; color: var(--gold); margin: 0 0 6px; font-weight: 600; }
+.deal-offer { font-size: 14px; color: var(--ink-soft); margin: 0; }
+.deal-actions { margin-top: 16px; }
+.deal-terms { margin-top: 14px; font-size: 13.5px; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 12px; }
+.deal-terms summary { cursor: pointer; font-weight: 600; color: var(--ink); }
+.deal-terms summary:focus-visible { outline: 2px solid var(--green-deep); outline-offset: 3px; }
+.deal-terms p { margin: 10px 0 0; }
+.deal-terms .deal-quelle { font-size: 12.5px; color: var(--ink-soft); font-style: italic; }
+.deal-empty { border: 1px dashed var(--line); border-radius: 14px; padding: 40px 28px; text-align: center; margin: 28px 0 56px; }
+.deal-empty h3 { font-family: var(--font-display); font-weight: 500; font-size: 21px; margin: 0 0 10px; }
+.deal-empty p { color: var(--ink-soft); max-width: 60ch; margin: 0 auto 22px; }
+.deal-empty-links { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
