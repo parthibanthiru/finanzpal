@@ -59,10 +59,6 @@ mobile/
                                   etf (ETF-Suche), merkliste
   app/(app)/rechner/              calculator list + 7 calculators
   app/(app)/ratgeber.tsx, chat.tsx, profile.tsx
-  app/(app)/ueberweisen/          money transfer (demo, behind a feature flag): overview + 3-step new transfer
-  lib/iban.ts                     IBAN check digits (mod 97), SEPA lengths, formatting
-  lib/transfers/                  transfer provider interface, demo provider (simulated Verification of Payee),
-                                  local recipients/history, limits; components/TransferUI.tsx
   lib/categories.ts               which data fields each comparison shows
   lib/data.ts                     loads data/*.json (bundled; optional live from the website)
   lib/calc.ts                     calculator math (identical to the website's assets/*rechner.js)
@@ -221,24 +217,10 @@ Message texts (DE/EN) live in `tools/notify-new-data.mjs`; comparison names in `
 Android notifications use the app icon; a white monochrome `notification-icon.png` can be added to the
 `expo-notifications` plugin in `app.json` later for a cleaner status-bar icon.
 
-## 8. Money transfer (Überweisen, demo)
+## 8. Money transfer → separate app
 
-A first version of the transfer feature from the launch roadmap. It runs on a **demo provider**:
-no network calls, no real money, a fictitious source account and three example recipients.
-
-- **Off by default.** The tab only appears with `EXPO_PUBLIC_FEATURE_TRANSFERS=1` in `.env` (set in the
-  `preview` profile of `eas.json` for internal test builds); store builds keep it hidden until the provider contract, legal review and pen test are done.
-- **Flow:** recipient (saved or new, live IBAN check) → amount (limits 1.000 € per transfer,
-  2.000 € per day, reference up to 140 characters, Echtzeit or Standard) → review with the
-  payee check (match / close match with "use this name" / no match / not possible; a warning
-  needs an explicit confirmation) → done. First transfers to a new IBAN get an extra warning.
-- **Swapping in the real provider:** implement `TransferProvider` (`lib/transfers/types.ts`) and
-  return it from `getTransferProvider()` in `lib/transfers/index.ts`. The real `initiate()` goes
-  through our server (provider credentials never ship in the app) and returns the provider's
-  web-form URL where the user approves the transfer with their bank. The history then moves
-  from the phone (AsyncStorage) to Supabase.
-- **Open items:** real provider (finAPI / Tink / Yapily, after the contract); account
-  connection screen; server endpoint + `transfers` table; limits to be confirmed with the provider.
-- Tests: `__tests__/transfers-test.tsx`.
+The transfer feature (Überweisen) was moved out of this app on 24 Oct 2026 into its own app,
+**Money Transfer** (working title), in a separate GitHub repo with its own look and its own
+Supabase accounts. Nothing of it remains here.
 
 ## Next ideas
