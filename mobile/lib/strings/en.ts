@@ -100,7 +100,7 @@ export const en: Strings = {
     favTitle: 'My watchlist',
     favCount: (n: number) => `${n} ${n === 1 ? 'provider' : 'providers'} saved`,
     favEmpty: 'Save providers with the heart',
-    searchPlaceholder: 'Search providers, ETFs, calculators or guides',
+    searchPlaceholder: 'Search providers, ETFs or topics',
     searchCount: (n: number) => (n === 1 ? '1 result' : `${n} results`),
     searchNone: 'Nothing found. Try another name or an ISIN.',
     searchKinds: { provider: 'Providers', etf: 'ETFs', page: 'Comparisons, calculators & guides' },

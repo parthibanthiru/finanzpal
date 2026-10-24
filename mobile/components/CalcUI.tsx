@@ -174,7 +174,8 @@ const useStyles = makeStyles((colors) => ({
     flex: 1, flexDirection: 'row', alignItems: 'center', marginHorizontal: spacing.sm,
     backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border, borderRadius: radius.sm, paddingHorizontal: spacing.md,
   },
-  input: { flex: 1, fontSize: 17, paddingVertical: 10, color: colors.text, fontWeight: '600' },
+  // minWidth 0: on the web a text field otherwise keeps its default width and pushes the unit out
+  input: { flex: 1, minWidth: 0, fontSize: 17, paddingVertical: 10, color: colors.text, fontWeight: '600' },
   suffix: { color: colors.muted, fontSize: 15 },
   tile: { flexGrow: 1, flexBasis: '45%', backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border, borderRadius: radius.md, padding: spacing.md },
   tileLabel: { fontSize: 12, color: colors.muted },

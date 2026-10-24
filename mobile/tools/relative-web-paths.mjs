@@ -14,7 +14,8 @@ function walk(d) {
       const src = readFileSync(p, 'utf8');
       const out = src
         .replace(/(["'(=]\s*)\/(_expo|assets)\//g, '$1./$2/')
-        .replace(/(httpServerLocation:\s*")\/assets/g, '$1./assets');
+        .replace(/(httpServerLocation:\s*")\/assets/g, '$1./assets')
+        .replace(/href="\/favicon\.ico"/g, 'href="./favicon.ico"');
       if (out !== src) {
         writeFileSync(p, out);
         changed++;

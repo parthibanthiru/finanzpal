@@ -2,7 +2,7 @@
   "name": "finanzpal-app",
   "version": "0.12.0",
   "private": true,
-  "main": "expo-router/entry",
+  "main": "index.js",
   "scripts": {
     "sync-data": "node tools/sync-data.mjs",
     "prestart": "node tools/sync-data.mjs",

@@ -85,10 +85,6 @@ export default function ProfileScreen() {
   async function saveName() {
     setError(null);
     setInfo(null);
-    if (PREVIEW) {
-      setInfo(t.preview.account);
-      return;
-    }
     setSaving(true);
     const { error: e1 } = await supabase.auth.updateUser({ data: { full_name: name.trim() } });
     // Keep the public profiles table in sync (see supabase/schema.sql).
@@ -134,8 +130,12 @@ export default function ProfileScreen() {
       <ErrorText message={error} />
       <InfoText message={info} />
 
-      <Input label={L.name} value={name} onChangeText={setName} />
-      <Button title={L.save} onPress={saveName} loading={saving} />
+      {!PREVIEW && (
+        <>
+          <Input label={L.name} value={name} onChangeText={setName} />
+          <Button title={L.save} onPress={saveName} loading={saving} />
+        </>
+      )}
 
       <View style={{ height: spacing.lg }} />
       <ChoiceField<ThemePreference>
@@ -161,7 +161,7 @@ export default function ProfileScreen() {
       />
 
       <View style={{ height: spacing.lg }} />
-      <PushSetting />
+      {!PREVIEW && <PushSetting />}
       {!PREVIEW && (
         <>
           <Button title={L.signOut} variant="secondary" onPress={signOut} />
