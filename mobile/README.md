@@ -66,6 +66,7 @@ mobile/
   lib/finanzCheck.ts              Finanz-Check scoring (port of finanz-check.js) + saved answers
   lib/favorites.ts, context/FavoritesProvider.tsx   Merkliste (Supabase, optimistic updates)
   lib/disclosures.ts              disclosure/disclaimer texts from the website
+  lib/preview.ts, index.js        preview mode without account (web preview)
   lib/push.ts                     notifications: opt-in, token registration, tap targets
   lib/search.ts                   home search index (providers, ETFs, pages; DE/EN)
   lib/etf.ts                      ETF-Suche filters (port of assets/etf-search.js)
@@ -188,6 +189,18 @@ eas build -p android          # .aab for Google Play (one-time 25 USD account)
 eas build -p ios              # needs Apple Developer account, 99 USD/year
 ```
 Before store release you need: a privacy policy URL (Datenschutzerklärung), an Impressum, app icons in `assets/`, and – if you add Google/Apple sign-in – Apple requires "Sign in with Apple" whenever another social login is offered.
+
+## Web preview (no phone, no account)
+`.github/workflows/mobile-web-preview.yml` builds the app as a web page on every push to `mobile/` (and on
+demand): `npm run web:preview` = `expo export --platform web` with `EXPO_PUBLIC_PREVIEW=1` (preview mode,
+`lib/preview.ts`): the app opens straight into the comparisons with a demo user and never talks to Supabase.
+Merkliste, theme and language stay in the browser; chat, name, sign-out/delete and notifications are hidden or
+say they need the app. `tools/relative-web-paths.mjs` makes all file paths relative and `index.js` keeps the
+router working when the page sits in a subfolder, so the build can be hosted anywhere as static files. The
+result goes to the `web-preview` branch (only the built files) and to the run's artifacts. Locally:
+`npm run web:preview && node tools/relative-web-paths.mjs dist-web`, then serve `dist-web/`.
+A copy is published as a private claude.ai page ("Finanzpal App-Vorschau"); it is updated by hand from the
+`web-preview` branch.
 
 ## 7. Notifications (v0.12)
 How it works: the Profil switch asks for permission and stores the phone's Expo push token in Supabase

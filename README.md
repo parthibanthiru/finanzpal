@@ -123,6 +123,7 @@ finanzpal/
 │                                     Abschnitt „Mobile App" und mobile/README.md
 ├── .github/workflows/mobile-app.yml Automatische App-Prüfung (GitHub Actions)
 ├── .github/workflows/push-notify.yml App-Mitteilungen bei neuen Anbietern/Ratgebern (mobile/data/)
+├── .github/workflows/mobile-web-preview.yml App als Web-Vorschau (ohne Konto) → Branch `web-preview`
 ├── netlify.toml                    Kein Deploy bei Commits nur in mobile/ oder .github/; /mobile/* nie ausliefern
 └── README.md                       Diese Datei
 ```
@@ -972,6 +973,10 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
 - **Überweisen:** am 24.10.2026 in eine eigene App ausgelagert („Money Transfer",
   Arbeitstitel; eigenes GitHub-Repo, eigenes Design, eigene Supabase-Konten). Nicht mehr
   Teil dieser App.
+- **Web-Vorschau:** Die App lässt sich ohne Handy und ohne Konto im Browser ansehen
+  (Vorschau-Modus, `EXPO_PUBLIC_PREVIEW=1`). Der Build landet bei jedem Push in
+  `mobile/` auf dem Branch `web-preview` (nur gebaute Dateien, statisch hostbar);
+  eine private claude.ai-Seite „Finanzpal App-Vorschau" zeigt eine Kopie.
 - **Farben/Logo:** `mobile/components/theme.ts` spiegelt die Tokens aus
   `assets/style.css`; App-Icon = FP5-Logo.
 
