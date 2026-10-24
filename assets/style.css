@@ -26,7 +26,7 @@
 }
 * { box-sizing: border-box; }
 html { scroll-padding-top: 76px; }
-body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; -webkit-hyphens: auto; -ms-hyphens: auto; hyphens: auto; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; -webkit-hyphens: none; -ms-hyphens: none; hyphens: none; }
 h1, h2, h3 { overflow-wrap: break-word; -webkit-hyphens: none; -ms-hyphens: none; hyphens: none; }
 img { max-width: 100%; }
 a { color: inherit; }
