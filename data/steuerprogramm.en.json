@@ -11,12 +11,33 @@
       "preis": "from €35.99 (annual subscription) / €45.99 (single license)",
       "preisSort": 35.99,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": true, "app": true, "desktop": true },
-      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": true, "rente": true },
+      "plattform": {
+        "web": true,
+        "app": true,
+        "desktop": true
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": true,
+        "vermietung": true,
+        "kapitalertraege": true,
+        "rente": true
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": true,
       "elsterZertifikat": "Filing possible with or without your own certificate",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 64.0,
+        "band": "B",
+        "breakdown": {
+          "preis": 10.0,
+          "zielgruppenabdeckung": 100.0,
+          "plattformabdeckung": 100.0,
+          "elsterKlarheit": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "smartsteuer",
@@ -28,12 +49,33 @@
       "preis": "€39.99 per tax year (up to 5 filings)",
       "preisSort": 39.99,
       "zahlungErstBeiAbgabe": true,
-      "plattform": { "web": true, "app": false, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": true, "rente": true },
+      "plattform": {
+        "web": true,
+        "app": false,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": true,
+        "vermietung": true,
+        "kapitalertraege": true,
+        "rente": true
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": true,
       "elsterZertifikat": "Not required for filing; retrieving the pre-filled return without your own certificate takes 5–14 days",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 46.7,
+        "band": "C",
+        "breakdown": {
+          "preis": 0.0,
+          "zielgruppenabdeckung": 100.0,
+          "plattformabdeckung": 33.3,
+          "elsterKlarheit": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "taxfix",
@@ -45,12 +87,33 @@
       "preis": "from €39.99 (Basic, subscription), expert service from €99.99",
       "preisSort": 39.99,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": true, "app": true, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": false, "rente": true },
+      "plattform": {
+        "web": true,
+        "app": true,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": true,
+        "vermietung": true,
+        "kapitalertraege": false,
+        "rente": true
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": true,
       "elsterZertifikat": "Filed via the official ELSTER interface; whether your own certificate is needed is unclear",
-      "belegerfassung": true
+      "belegerfassung": true,
+      "score": {
+        "value": 41.3,
+        "band": "C",
+        "breakdown": {
+          "preis": 0.0,
+          "zielgruppenabdeckung": 80.0,
+          "plattformabdeckung": 66.7,
+          "elsterKlarheit": 40.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "steuergo",
@@ -62,12 +125,35 @@
       "preis": "approx. €29.95–34.95 (price varies by promotion)",
       "preisSort": 29.95,
       "zahlungErstBeiAbgabe": true,
-      "plattform": { "web": true, "app": false, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": false, "kapitalertraege": false, "rente": false },
-      "zielgruppenAusschluss": ["Trade-tax (Gewerbesteuer) returns are not supported"],
+      "plattform": {
+        "web": true,
+        "app": false,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": true,
+        "vermietung": false,
+        "kapitalertraege": false,
+        "rente": false
+      },
+      "zielgruppenAusschluss": [
+        "Trade-tax (Gewerbesteuer) returns are not supported"
+      ],
       "vorjahresImport": true,
       "elsterZertifikat": "Unclear; filing goes directly through the ELSTER interface",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 32.7,
+        "band": "C",
+        "breakdown": {
+          "preis": 25.1,
+          "zielgruppenabdeckung": 40.0,
+          "plattformabdeckung": 33.3,
+          "elsterKlarheit": 40.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "wundertax",
@@ -79,12 +165,33 @@
       "preis": "from €34.95 per filing",
       "preisSort": 34.95,
       "zahlungErstBeiAbgabe": true,
-      "plattform": { "web": true, "app": true, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": null, "vermietung": null, "kapitalertraege": null, "rente": null },
+      "plattform": {
+        "web": true,
+        "app": true,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": null,
+        "vermietung": null,
+        "kapitalertraege": null,
+        "rente": null
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": true,
       "elsterZertifikat": null,
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 28.4,
+        "band": "C",
+        "breakdown": {
+          "preis": 12.6,
+          "zielgruppenabdeckung": 20.0,
+          "plattformabdeckung": 66.7,
+          "elsterKlarheit": 40.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "steuerbot",
@@ -96,12 +203,36 @@
       "preis": "Free if your refund is under €100, otherwise a flat €29.95",
       "preisSort": 29.95,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": true, "app": true, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": false, "vermietung": false, "kapitalertraege": null, "rente": true },
-      "zielgruppenAusschluss": ["Self-employed (referred to partner app smartsteuer)", "Rental property income excludes you"],
+      "plattform": {
+        "web": true,
+        "app": true,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": false,
+        "vermietung": false,
+        "kapitalertraege": null,
+        "rente": true
+      },
+      "zielgruppenAusschluss": [
+        "Self-employed (referred to partner app smartsteuer)",
+        "Rental property income excludes you"
+      ],
       "vorjahresImport": null,
       "elsterZertifikat": "Not required",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 45.4,
+        "band": "C",
+        "breakdown": {
+          "preis": 25.1,
+          "zielgruppenabdeckung": 40.0,
+          "plattformabdeckung": 66.7,
+          "elsterKlarheit": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "lohnsteuer-kompakt",
@@ -113,12 +244,35 @@
       "preis": "€34.95 per filing (bundles: 3× €89.95, 4× €114.95)",
       "preisSort": 34.95,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": true, "app": null, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": null, "vermietung": true, "kapitalertraege": true, "rente": true },
-      "zielgruppenAusschluss": ["Trade income and VAT returns are not supported"],
+      "plattform": {
+        "web": true,
+        "app": null,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": null,
+        "vermietung": true,
+        "kapitalertraege": true,
+        "rente": true
+      },
+      "zielgruppenAusschluss": [
+        "Trade income and VAT returns are not supported"
+      ],
       "vorjahresImport": true,
       "elsterZertifikat": "Not required",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 45.7,
+        "band": "C",
+        "breakdown": {
+          "preis": 12.6,
+          "zielgruppenabdeckung": 80.0,
+          "plattformabdeckung": 33.3,
+          "elsterKlarheit": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "check24-steuer",
@@ -130,12 +284,33 @@
       "preis": "Free, including filing with the tax office (per provider)",
       "preisSort": 0,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": true, "app": true, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": true, "rente": true },
+      "plattform": {
+        "web": true,
+        "app": true,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": true,
+        "vermietung": true,
+        "kapitalertraege": true,
+        "rente": true
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": null,
       "elsterZertifikat": "Not clearly stated by the provider whether your own certificate is needed",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 87.3,
+        "band": "A",
+        "breakdown": {
+          "preis": 100.0,
+          "zielgruppenabdeckung": 100.0,
+          "plattformabdeckung": 66.7,
+          "elsterKlarheit": 40.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "taxman",
@@ -147,12 +322,32 @@
       "preis": "License covers up to 5 tax returns, exact price not stated by the provider (Windows only)",
       "preisSort": null,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": false, "app": false, "desktop": true },
-      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": null, "rente": null },
+      "plattform": {
+        "web": false,
+        "app": false,
+        "desktop": true
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": true,
+        "vermietung": true,
+        "kapitalertraege": null,
+        "rente": null
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": null,
       "elsterZertifikat": "Your own ELSTER certificate is required for filing",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 57.8,
+        "band": "B",
+        "breakdown": {
+          "zielgruppenabdeckung": 60.0,
+          "plattformabdeckung": 33.3,
+          "elsterKlarheit": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "steuer-sparerklaerung",
@@ -164,12 +359,33 @@
       "preis": "€34.95 (per comparison site finanzfluss.de)",
       "preisSort": 34.95,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": true, "app": false, "desktop": true },
-      "zielgruppen": { "angestellte": null, "selbststaendige": null, "vermietung": null, "kapitalertraege": null, "rente": null },
+      "plattform": {
+        "web": true,
+        "app": false,
+        "desktop": true
+      },
+      "zielgruppen": {
+        "angestellte": null,
+        "selbststaendige": null,
+        "vermietung": null,
+        "kapitalertraege": null,
+        "rente": null
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": null,
       "elsterZertifikat": "Unclear whether your own certificate is needed",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 22.4,
+        "band": "D",
+        "breakdown": {
+          "preis": 12.6,
+          "zielgruppenabdeckung": 0.0,
+          "plattformabdeckung": 66.7,
+          "elsterKlarheit": 40.0
+        },
+        "computedFrom": "2026-10"
+      }
     }
   ]
 }

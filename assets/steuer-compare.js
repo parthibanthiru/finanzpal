@@ -28,7 +28,10 @@
       filterZahlung: 'Zahlung',
       filterZahlungCheck: 'Nur Zahlung bei Abgabe',
       filterPreis: 'Max. Preis',
-      anbieter: 'Anbieter'
+      anbieter: 'Anbieter',
+      scoreTooltipPrefix: 'Finanzpal-Score: ',
+      scoreTooltipSuffix: ' (je von 100; fehlt ein Faktor — z. B. ein nicht bezifferter Preis —, wird er ausgelassen und die übrigen neu gewichtet). Methodik: ueber-uns.html#finanzpal-score',
+      scoreLabels: { preis: 'Preis', zielgruppenabdeckung: 'Zielgruppenabdeckung', plattformabdeckung: 'Plattformabdeckung', elsterKlarheit: 'Klarheit zum ELSTER-Zertifikat' }
     },
     en: {
       loading: 'Loading comparison data …',
@@ -52,7 +55,10 @@
       filterZahlung: 'Payment',
       filterZahlungCheck: 'Payment only on submission',
       filterPreis: 'Max. price',
-      anbieter: 'Provider'
+      anbieter: 'Provider',
+      scoreTooltipPrefix: 'Finanzpal Score: ',
+      scoreTooltipSuffix: ' (each out of 100; a missing factor — e.g. an unstated price — is dropped and the rest reweighted). Methodology: ueber-uns.html#finanzpal-score',
+      scoreLabels: { preis: 'Price', zielgruppenabdeckung: 'Target-group coverage', plattformabdeckung: 'Platform coverage', elsterKlarheit: 'ELSTER-certificate clarity' }
     }
   }[LANG];
 
@@ -63,6 +69,47 @@
     return String(str).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
+  }
+
+  function scoreBreakdownRows(breakdown) {
+    var rows = [];
+    for (var key in breakdown) {
+      if (!Object.prototype.hasOwnProperty.call(breakdown, key)) continue;
+      rows.push({ label: (STR.scoreLabels || {})[key] || key, value: breakdown[key] });
+    }
+    return rows;
+  }
+
+  function scoreTooltip(breakdown) {
+    var parts = [];
+    for (var key in breakdown) {
+      if (!Object.prototype.hasOwnProperty.call(breakdown, key)) continue;
+      parts.push(((STR.scoreLabels || {})[key] || key) + ' ' + breakdown[key]);
+    }
+    return STR.scoreTooltipPrefix + parts.join(' · ') + STR.scoreTooltipSuffix;
+  }
+
+  var SCORE_RING_R = 8;
+  var SCORE_RING_C = 2 * Math.PI * SCORE_RING_R;
+
+  function scoreBadgeHtml(item) {
+    if (!item.score) return '';
+    var band = (item.score.band || '').toLowerCase();
+    var value = item.score.value;
+    var title = scoreTooltip(item.score.breakdown || {});
+    var rowsJson = escapeHtml(JSON.stringify(scoreBreakdownRows(item.score.breakdown || {})));
+    var ariaLabel = LANG === 'en'
+      ? 'Finanzpal Score ' + value + ', grade ' + item.score.band
+      : 'Finanzpal-Score ' + value + ', Note ' + item.score.band;
+    var offset = (SCORE_RING_C * (1 - Math.max(0, Math.min(100, value)) / 100)).toFixed(2);
+    return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '" aria-label="' + escapeHtml(ariaLabel) + '" data-score-value="' + value + '" data-score-band="' + escapeHtml(item.score.band) + '" data-score-rows=\'' + rowsJson + '\' aria-haspopup="dialog" aria-expanded="false">' +
+      '<svg class="fp-score-ring" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">' +
+        '<circle class="fp-score-track" cx="11" cy="11" r="' + SCORE_RING_R + '"></circle>' +
+        '<circle class="fp-score-fill" cx="11" cy="11" r="' + SCORE_RING_R + '" stroke-dasharray="' + SCORE_RING_C.toFixed(2) + '" stroke-dashoffset="' + offset + '" transform="rotate(-90 11 11)"></circle>' +
+        '<text x="11" y="11" class="fp-score-letter" text-anchor="middle" dominant-baseline="middle">' + escapeHtml(item.score.band) + '</text>' +
+      '</svg>' +
+      '<span class="fp-score-value">' + value + '</span>' +
+    '</a>';
   }
 
   function bulletsFor(item) {
@@ -133,7 +180,7 @@
         '<div class="cc-badges"><span class="cc-badge">' + escapeHtml(item.anbieter) + '</span></div>' +
         '<div class="cc-body">' +
           cardArtHtml(item) +
-          '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + '</div><ul class="cc-bullets">' + bullets + '</ul></div>' +
+          '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div><ul class="cc-bullets">' + bullets + '</ul></div>' +
           '<div class="cc-facts">' +
             '<div class="cc-fact"><span class="k">' + STR.price + '</span><span class="v">' + escapeHtml(item.preis) + '</span></div>' +
             '<div class="cc-fact"><span class="k">' + STR.plattform + '</span><span class="v">' + plattformText(item) + '</span></div>' +

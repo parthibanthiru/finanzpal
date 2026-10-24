@@ -11,12 +11,33 @@
       "preis": "ab 35,99 € (Jahresabo) / 45,99 € (Einzellizenz)",
       "preisSort": 35.99,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": true, "app": true, "desktop": true },
-      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": true, "rente": true },
+      "plattform": {
+        "web": true,
+        "app": true,
+        "desktop": true
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": true,
+        "vermietung": true,
+        "kapitalertraege": true,
+        "rente": true
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": true,
       "elsterZertifikat": "Einreichung mit oder ohne eigenes Zertifikat möglich",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 64.0,
+        "band": "B",
+        "breakdown": {
+          "preis": 10.0,
+          "zielgruppenabdeckung": 100.0,
+          "plattformabdeckung": 100.0,
+          "elsterKlarheit": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "smartsteuer",
@@ -28,12 +49,33 @@
       "preis": "39,99 € pro Steuerjahr (bis zu 5 Abgaben)",
       "preisSort": 39.99,
       "zahlungErstBeiAbgabe": true,
-      "plattform": { "web": true, "app": false, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": true, "rente": true },
+      "plattform": {
+        "web": true,
+        "app": false,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": true,
+        "vermietung": true,
+        "kapitalertraege": true,
+        "rente": true
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": true,
       "elsterZertifikat": "Für die Einreichung nicht nötig; Abruf der vorausgefüllten Steuererklärung ohne eigenes Zertifikat dauert 5–14 Tage",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 46.7,
+        "band": "C",
+        "breakdown": {
+          "preis": 0.0,
+          "zielgruppenabdeckung": 100.0,
+          "plattformabdeckung": 33.3,
+          "elsterKlarheit": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "taxfix",
@@ -45,12 +87,33 @@
       "preis": "ab 39,99 € (Basic, Abo), Experten-Service ab 99,99 €",
       "preisSort": 39.99,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": true, "app": true, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": false, "rente": true },
+      "plattform": {
+        "web": true,
+        "app": true,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": true,
+        "vermietung": true,
+        "kapitalertraege": false,
+        "rente": true
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": true,
       "elsterZertifikat": "Übermittlung über offizielle ELSTER-Schnittstelle; ob ein eigenes Zertifikat nötig ist, ist unklar",
-      "belegerfassung": true
+      "belegerfassung": true,
+      "score": {
+        "value": 41.3,
+        "band": "C",
+        "breakdown": {
+          "preis": 0.0,
+          "zielgruppenabdeckung": 80.0,
+          "plattformabdeckung": 66.7,
+          "elsterKlarheit": 40.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "steuergo",
@@ -62,12 +125,35 @@
       "preis": "ca. 29,95–34,95 € (Preis je nach Aktion unterschiedlich angegeben)",
       "preisSort": 29.95,
       "zahlungErstBeiAbgabe": true,
-      "plattform": { "web": true, "app": false, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": false, "kapitalertraege": false, "rente": false },
-      "zielgruppenAusschluss": ["Gewerbesteuererklärung wird nicht unterstützt"],
+      "plattform": {
+        "web": true,
+        "app": false,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": true,
+        "vermietung": false,
+        "kapitalertraege": false,
+        "rente": false
+      },
+      "zielgruppenAusschluss": [
+        "Gewerbesteuererklärung wird nicht unterstützt"
+      ],
       "vorjahresImport": true,
       "elsterZertifikat": "Unklar; Übermittlung läuft direkt über die ELSTER-Schnittstelle",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 32.7,
+        "band": "C",
+        "breakdown": {
+          "preis": 25.1,
+          "zielgruppenabdeckung": 40.0,
+          "plattformabdeckung": 33.3,
+          "elsterKlarheit": 40.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "wundertax",
@@ -79,12 +165,33 @@
       "preis": "ab 34,95 € pro Abgabe",
       "preisSort": 34.95,
       "zahlungErstBeiAbgabe": true,
-      "plattform": { "web": true, "app": true, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": null, "vermietung": null, "kapitalertraege": null, "rente": null },
+      "plattform": {
+        "web": true,
+        "app": true,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": null,
+        "vermietung": null,
+        "kapitalertraege": null,
+        "rente": null
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": true,
       "elsterZertifikat": null,
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 28.4,
+        "band": "C",
+        "breakdown": {
+          "preis": 12.6,
+          "zielgruppenabdeckung": 20.0,
+          "plattformabdeckung": 66.7,
+          "elsterKlarheit": 40.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "steuerbot",
@@ -96,12 +203,36 @@
       "preis": "Kostenlos bei Erstattung unter 100 €, sonst 29,95 € Pauschale",
       "preisSort": 29.95,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": true, "app": true, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": false, "vermietung": false, "kapitalertraege": null, "rente": true },
-      "zielgruppenAusschluss": ["Selbstständige (Verweis auf Partner-App smartsteuer)", "Vermietete Immobilien führen zum Ausschluss"],
+      "plattform": {
+        "web": true,
+        "app": true,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": false,
+        "vermietung": false,
+        "kapitalertraege": null,
+        "rente": true
+      },
+      "zielgruppenAusschluss": [
+        "Selbstständige (Verweis auf Partner-App smartsteuer)",
+        "Vermietete Immobilien führen zum Ausschluss"
+      ],
       "vorjahresImport": null,
       "elsterZertifikat": "Nicht nötig",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 45.4,
+        "band": "C",
+        "breakdown": {
+          "preis": 25.1,
+          "zielgruppenabdeckung": 40.0,
+          "plattformabdeckung": 66.7,
+          "elsterKlarheit": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "lohnsteuer-kompakt",
@@ -113,12 +244,35 @@
       "preis": "34,95 € pro Abgabe (Pakete: 3× 89,95 €, 4× 114,95 €)",
       "preisSort": 34.95,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": true, "app": null, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": null, "vermietung": true, "kapitalertraege": true, "rente": true },
-      "zielgruppenAusschluss": ["Gewerbe und Umsatzsteuer werden nicht unterstützt"],
+      "plattform": {
+        "web": true,
+        "app": null,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": null,
+        "vermietung": true,
+        "kapitalertraege": true,
+        "rente": true
+      },
+      "zielgruppenAusschluss": [
+        "Gewerbe und Umsatzsteuer werden nicht unterstützt"
+      ],
       "vorjahresImport": true,
       "elsterZertifikat": "Nicht nötig",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 45.7,
+        "band": "C",
+        "breakdown": {
+          "preis": 12.6,
+          "zielgruppenabdeckung": 80.0,
+          "plattformabdeckung": 33.3,
+          "elsterKlarheit": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "check24-steuer",
@@ -130,12 +284,33 @@
       "preis": "Kostenlos, inkl. Abgabe ans Finanzamt (laut Anbieter)",
       "preisSort": 0,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": true, "app": true, "desktop": false },
-      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": true, "rente": true },
+      "plattform": {
+        "web": true,
+        "app": true,
+        "desktop": false
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": true,
+        "vermietung": true,
+        "kapitalertraege": true,
+        "rente": true
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": null,
       "elsterZertifikat": "Vom Anbieter nicht eindeutig angegeben, ob ein eigenes Zertifikat nötig ist",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 87.3,
+        "band": "A",
+        "breakdown": {
+          "preis": 100.0,
+          "zielgruppenabdeckung": 100.0,
+          "plattformabdeckung": 66.7,
+          "elsterKlarheit": 40.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "taxman",
@@ -147,12 +322,32 @@
       "preis": "Lizenz für bis zu 5 Steuererklärungen, genauer Preis vom Anbieter nicht beziffert (nur für Windows)",
       "preisSort": null,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": false, "app": false, "desktop": true },
-      "zielgruppen": { "angestellte": true, "selbststaendige": true, "vermietung": true, "kapitalertraege": null, "rente": null },
+      "plattform": {
+        "web": false,
+        "app": false,
+        "desktop": true
+      },
+      "zielgruppen": {
+        "angestellte": true,
+        "selbststaendige": true,
+        "vermietung": true,
+        "kapitalertraege": null,
+        "rente": null
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": null,
       "elsterZertifikat": "Eigenes ELSTER-Zertifikat für die Abgabe erforderlich",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 57.8,
+        "band": "B",
+        "breakdown": {
+          "zielgruppenabdeckung": 60.0,
+          "plattformabdeckung": 33.3,
+          "elsterKlarheit": 100.0
+        },
+        "computedFrom": "2026-10"
+      }
     },
     {
       "id": "steuer-sparerklaerung",
@@ -164,12 +359,33 @@
       "preis": "34,95 € (laut Vergleichsportal finanzfluss.de)",
       "preisSort": 34.95,
       "zahlungErstBeiAbgabe": null,
-      "plattform": { "web": true, "app": false, "desktop": true },
-      "zielgruppen": { "angestellte": null, "selbststaendige": null, "vermietung": null, "kapitalertraege": null, "rente": null },
+      "plattform": {
+        "web": true,
+        "app": false,
+        "desktop": true
+      },
+      "zielgruppen": {
+        "angestellte": null,
+        "selbststaendige": null,
+        "vermietung": null,
+        "kapitalertraege": null,
+        "rente": null
+      },
       "zielgruppenAusschluss": [],
       "vorjahresImport": null,
       "elsterZertifikat": "Unklar, ob ein eigenes Zertifikat nötig ist",
-      "belegerfassung": null
+      "belegerfassung": null,
+      "score": {
+        "value": 22.4,
+        "band": "D",
+        "breakdown": {
+          "preis": 12.6,
+          "zielgruppenabdeckung": 0.0,
+          "plattformabdeckung": 66.7,
+          "elsterKlarheit": 40.0
+        },
+        "computedFrom": "2026-10"
+      }
     }
   ]
 }

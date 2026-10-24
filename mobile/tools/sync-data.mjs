@@ -165,6 +165,7 @@ const SCORE_LABEL_SCRIPTS = {
   broker: 'broker-compare.js',
   kinderdepot: 'kinderdepot-compare.js',
   kreditkarte: 'kreditkarte-compare.js',
+  steuerprogramm: 'steuer-compare.js',
 };
 const scoreLabels = { de: {}, en: {} };
 for (const [file, script] of Object.entries(SCORE_LABEL_SCRIPTS)) {

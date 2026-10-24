@@ -483,8 +483,86 @@ PRIVATHAFTPFLICHT_RUBRIC = [
 
 
 # ---------------------------------------------------------------------------
+# Steuerprogramm rubric
+# Preis 40% · Zielgruppenabdeckung 30% · Plattformabdeckung 20% ·
+# Klarheit zum ELSTER-Zertifikat 10%
+#
+# Diverges from the design doc's first-pass weights (35/30/20/10, which only
+# summed to 95%) by moving Preis to 40% so the four weights sum to 100%
+# exactly — no other change to the doc's intent.
+#
+# Every field read here is already shown on the Steuerprogramm cards
+# (assets/steuer-compare.js): `preisSort`, `zielgruppen`, `plattform`,
+# `elsterZertifikat`. `zielgruppen`/`plattform` flags use three states in
+# the data — true (confirmed supported), false (confirmed not supported),
+# null (not researched) — and null is treated the same as false for this
+# count-based factor: conservative under-crediting of unconfirmed breadth,
+# never guessed-in as support. Taxman's `preisSort` is null (its own
+# provider page doesn't state a figure) — rather than guess a price, that
+# one factor is dropped for Taxman only and the other three are rescaled to
+# still sum to 100% (see compute_item_score()).
+# ---------------------------------------------------------------------------
+
+_STEUER_ZIELGRUPPEN_FIELDS = 5  # angestellte, selbststaendige, vermietung, kapitalertraege, rente
+_STEUER_PLATTFORM_FIELDS = 3  # web, app, desktop
+
+
+def _steuer_preis(item):
+    preis = item.get("preisSort")
+    if preis is None:
+        return None
+    # Fixed anchor: €0/Jahr = 100 points, each €1 costs 2.5 points (so a
+    # €40 price lands at 0 — above the most expensive item in the category).
+    return clamp(100.0 - preis * 2.5)
+
+
+def _steuer_zielgruppenabdeckung(item):
+    zg = item.get("zielgruppen") or {}
+    true_count = sum(1 for v in zg.values() if v is True)
+    return clamp((true_count / _STEUER_ZIELGRUPPEN_FIELDS) * 100.0)
+
+
+def _steuer_plattformabdeckung(item):
+    pf = item.get("plattform") or {}
+    true_count = sum(1 for v in pf.values() if v is True)
+    return clamp((true_count / _STEUER_PLATTFORM_FIELDS) * 100.0)
+
+
+def _steuer_elster_klarheit(item):
+    text = (item.get("elsterZertifikat") or "").lower()
+    if not text:
+        # No statement on the page at all (Wundertax) — same uncertainty as
+        # an explicit "unklar", not a neutral/best-case assumption.
+        return 40.0
+    if "unklar" in text or "nicht eindeutig" in text:
+        return 40.0
+    return 100.0
+
+
+STEUERPROGRAMM_RUBRIC = [
+    ("preis", 0.40, _steuer_preis),
+    ("zielgruppenabdeckung", 0.30, _steuer_zielgruppenabdeckung),
+    ("plattformabdeckung", 0.20, _steuer_plattformabdeckung),
+    ("elsterKlarheit", 0.10, _steuer_elster_klarheit),
+]
+
+
+# ---------------------------------------------------------------------------
 # Registry: category -> rubric. Add new categories here once their rubric
 # is agreed (see the design doc's open questions before adding one).
+#
+# Baufinanzierung is deliberately NOT registered here, despite the design
+# doc describing a "no-price, Reichweite + Beratungstiefe" rubric for it as
+# buildable: on inspecting data/baufinanzierung.json directly (2026-10-24),
+# 5 of 10 providers' `partnerbankenText` literally says the bank-count
+# "auf der Anbieter-Website nicht beziffert" (no figure stated at all), and
+# several `standorteText` values describe online-only portals with no
+# branch network by design (not a worse value than a branch-based
+# competitor, just a different model) alongside others giving contradictory
+# ranges. A Reichweite/Beratungstiefe score built on that data would mean
+# either guessing a number for half the category or silently treating
+# "online-only" as "fewer locations" — both exactly what the data-integrity
+# rule above exists to prevent. Revisit if the underlying data improves.
 # ---------------------------------------------------------------------------
 
 RUBRICS = {
@@ -495,6 +573,7 @@ RUBRICS = {
     "kinderdepot": KINDERDEPOT_RUBRIC,
     "broker": BROKER_RUBRIC,
     "versicherungen": PRIVATHAFTPFLICHT_RUBRIC,
+    "steuerprogramm": STEUERPROGRAMM_RUBRIC,
 }
 
 
@@ -509,13 +588,28 @@ def band_for(value):
 
 
 def compute_item_score(item, rubric):
+    # A factor function may return None instead of a number to mean "this
+    # item has no verifiable input for this factor at all" (e.g. Taxman's
+    # Steuerprogramm price isn't stated anywhere) — not the same as a
+    # worst-case 0, which some factor functions above use deliberately for
+    # a genuinely bad-but-known value. A None factor is dropped entirely and
+    # the remaining weights are rescaled to still sum to 100%, per the
+    # module docstring's rule: never guess a missing input, drop and
+    # reweight instead. For every existing rubric (whose functions never
+    # return None) this is a no-op, since weight_sum is always 1.0 already.
     breakdown = {}
     total = 0.0
+    weight_sum = 0.0
     for key, weight, fn in rubric:
         factor_score = fn(item)
+        if factor_score is None:
+            continue
         breakdown[key] = round(factor_score, 1)
         total += factor_score * weight
-    total = round(clamp(total), 1)
+        weight_sum += weight
+    if weight_sum <= 0:
+        return None
+    total = round(clamp(total / weight_sum), 1)
     return {
         "value": total,
         "band": band_for(total),
@@ -549,7 +643,12 @@ def process_category(category):
             scores_by_id[item["id"]] = None
             continue
         score = compute_item_score(item, rubric)
-        item["score"] = score
+        if score is None:
+            # Every factor returned None (no verifiable input at all) —
+            # omit the key entirely rather than writing "score": null.
+            item.pop("score", None)
+        else:
+            item["score"] = score
         scores_by_id[item["id"]] = score
 
     with open(de_path, "w", encoding="utf-8") as f:

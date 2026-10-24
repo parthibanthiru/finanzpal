@@ -333,7 +333,8 @@ bestätigt sind, und das Skript erneut laufen lassen. Aktuell: die
 Consorsbank-Kreditkarte (siehe offene Punkte).
 
 **Stand Oktober 2026 — Kategorien Girokonto, Kredite, Kreditkarte, Tagesgeld,
-Kinderdepot, Broker/Depot & Versicherungen (nur Privathaftpflicht).**
+Kinderdepot, Broker/Depot, Versicherungen (nur Privathaftpflicht) &
+Steuerprogramm.**
 Zusätzlich zu den Rohdaten zeigen `girokonto.html`/
 `en/girokonto.html`, `kreditkarte.html`/`en/kreditkarte.html` und
 `kinderdepot.html`/`en/kinderdepot.html` (alle drei Karten-Layout, jeweils
@@ -416,6 +417,33 @@ ohnehin schon stehen:
     `assets/score-popover.js`; ihr Methodik-Link bleibt bei "Wie wir
     vergleichen"/`#methodik`, weil die Seite nur zu einem Fünftel bewertet
     ist, nicht auf "Wie wir bewerten"/`#finanzpal-score` umgestellt.
+  - **Steuerprogramm (neu, 2026-10-24):** Preis 40 % ·
+    Zielgruppenabdeckung 30 % · Plattformabdeckung 20 % · Klarheit zum
+    ELSTER-Zertifikat 10 % — eigene Gewichtung, weicht vom ersten Entwurf im
+    Projektdokument ab (dort 35/30/20/10 = nur 95 %, hier auf 100 % korrigiert
+    durch Preis 40 %). Zielgruppenabdeckung/Plattformabdeckung zählen nur
+    Felder, die der Anbieter ausdrücklich mit `true` bestätigt — `null`
+    (nicht recherchiert) zählt wie `false`, nie wie bestätigt. Bei Taxman ist
+    `preisSort` `null` (Anbieter nennt keinen bezifferten Preis); dafür fällt
+    der Preis-Faktor für diesen einen Eintrag weg und die übrigen drei werden
+    auf 100 % neu gewichtet — dafür wurde `compute_item_score()` in
+    `compute_scores.py` generisch erweitert (eine Faktorfunktion darf jetzt
+    `None` statt einer Zahl zurückgeben; wirkt sich auf die bestehenden sechs
+    Kategorien nicht aus, deren Funktionen nie `None` liefern).
+    `assets/steuer-compare.js` bekam dieselben `scoreBadgeHtml()`/
+    `scoreTooltip()`/`scoreBreakdownRows()`-Bausteine wie die anderen
+    Karten-Layouts; `steuerprogramm.html`/`en/` laden jetzt zusätzlich
+    `assets/score-popover.js`.
+  - **Bewusst (noch) nicht bewertet: Baufinanzierung.** Das Projektdokument
+    skizziert dafür einen Reichweite/Beratungstiefe-Rubrik ohne Preisfaktor —
+    beim Blick in `data/baufinanzierung.json` selbst (2026-10-24) zeigt sich
+    aber, dass 5 von 10 Vermittlern ihre Partnerbanken-Anzahl auf der eigenen
+    Seite gar nicht beziffern, und mehrere `standorteText`-Werte reine
+    Online-Portale ohne eigenes Filialnetz beschreiben — das ließe sich nicht
+    fair gegen filialbasierte Vermittler in eine "Standorte"-Kennzahl
+    pressen, ohne ein anderes Geschäftsmodell fälschlich als schlechter
+    darzustellen. `baufinanzierung` ist deshalb (noch) nicht in `RUBRICS`
+    registriert — siehe Kommentar dort.
 
 Design-Hintergrund und die vollständigen Bewertungskriterien für alle
 Kategorien (inkl. der bewusst noch nicht bewerteten: Baufinanzierung, BU,
@@ -433,8 +461,8 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   lieferte — seither wird nur noch einmal, aus der DE-Datei, gerechnet).
 - Ausführen nach jeder Datenänderung an einer bewerteten Kategorie:
   `python3 tools/compute_scores.py girokonto kredite kreditkarte tagesgeld
-  kinderdepot broker versicherungen` (oder ohne Argument für alle
-  registrierten Kategorien). Danach, weil `data/*.json` sich ändert:
+  kinderdepot broker versicherungen steuerprogramm` (oder ohne Argument für
+  alle registrierten Kategorien). Danach, weil `data/*.json` sich ändert:
   `cd mobile && npm run sync-data` nicht vergessen (siehe „Mobile App"
   unten).
 - Jedes `score`-Objekt enthält `value`, `band`, ein `breakdown` je Teilkriterium
@@ -452,7 +480,10 @@ Kfz, Rechtsschutz) stehen im Projektdokument
   für die Tooltip-Labels einer neuen Tabellen-Kategorie).
 - Neue Kategorie bewerten = Rubrik in `compute_scores.py` ergänzen (siehe
   `GIROKONTO_RUBRIC`/`KREDITE_RUBRIC`/`KREDITKARTE_RUBRIC`/`TAGESGELD_RUBRIC`/
-  `KINDERDEPOT_RUBRIC`/`PRIVATHAFTPFLICHT_RUBRIC` als Vorlage), Badge-Rendering an der richtigen Stelle
+  `KINDERDEPOT_RUBRIC`/`PRIVATHAFTPFLICHT_RUBRIC`/`STEUERPROGRAMM_RUBRIC` als
+  Vorlage — Letztere auch als Beispiel für eine Faktorfunktion, die bei
+  fehlendem Eingangswert `None` statt eines geschätzten Werts zurückgibt),
+  Badge-Rendering an der richtigen Stelle
   anschließen (jeweiliges Karten-Skript oder `SCORE_FACTOR_LABELS` in
   `compare.js`) **und** Methodik-Text auf `ueber-uns.html`/
   `en/ueber-uns.html` (`#finanzpal-score`) erweitern — nie eine Kategorie
@@ -527,12 +558,14 @@ in der Sidebar der Broker-Detailseiten):
 
 ## "Wie wir bewerten"-Links (Methodik-Transparenz)
 
-**Seit 2026-10-23, auf allen 7 Vergleichsseiten (DE+EN = 14 Seiten).** Ein
+**Seit 2026-10-23, auf allen 8 Vergleichsseiten (DE+EN = 16 Seiten;
+Steuerprogramm kam am 2026-10-24 mit seinem eigenen Score dazu).** Ein
 kleiner, immer sichtbarer Link direkt über der Ergebnisliste — nicht erst
 im Footer oder hinter einem Klick auf den Score-Badge versteckt, sondern
 genau da, wo jemand kurz vor dem Klick auf eine CTA steht:
 - Kartenlayout-Seiten (`girokonto.html`, `kreditkarte.html`,
-  `kinderdepot.html`, `broker.html`, je DE/EN): in der `.kk-toolbar`-Zeile,
+  `kinderdepot.html`, `broker.html`, `steuerprogramm.html`, je DE/EN): in
+  der `.kk-toolbar`-Zeile,
   direkt neben der Ergebnis-Anzahl (`<span class="kk-toolbar-left">…</span>`
   gruppiert beide, damit das bestehende `justify-content: space-between`
   der Toolbar nicht durch ein drittes Flex-Kind verzerrt wird).

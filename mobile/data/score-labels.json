@@ -24,6 +24,12 @@
       "ohneBedingungen": "Ohne Bedingungen",
       "zinsfreieTage": "Zinsfreie Tage"
     },
+    "steuerprogramm": {
+      "preis": "Preis",
+      "zielgruppenabdeckung": "Zielgruppenabdeckung",
+      "plattformabdeckung": "Plattformabdeckung",
+      "elsterKlarheit": "Klarheit zum ELSTER-Zertifikat"
+    },
     "kredite": {
       "zinssatz": "Zinssatz",
       "sondertilgung": "Sondertilgung",
@@ -64,6 +70,12 @@
       "abhebung": "Worldwide withdrawal",
       "ohneBedingungen": "No conditions",
       "zinsfreieTage": "Interest-free days"
+    },
+    "steuerprogramm": {
+      "preis": "Price",
+      "zielgruppenabdeckung": "Target-group coverage",
+      "plattformabdeckung": "Platform coverage",
+      "elsterKlarheit": "ELSTER-certificate clarity"
     },
     "kredite": {
       "zinssatz": "Interest rate",
