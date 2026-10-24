@@ -111,7 +111,7 @@ finanzpal/
 │   └── deals.js                    Rendert data/deals.json in #deals-app; zeigt ehrlichen
 │                                     Leerzustand statt erfundener Angebote
 ├── tools/                          Wartungsskripte für seitenweite Änderungen
-│   ├── build_nav.py                 Regeneriert die Top-Nav identisch in allen 76 Dateien
+│   ├── build_nav.py                 Regeneriert die Top-Nav identisch in allen 80 Dateien
 │   ├── add_article_icons.py         Setzt Icon + Akzentfarbe für Ratgeber-Artikel
 │   ├── compute_scores.py            Berechnet den Finanzpal-Score (0–100 + Note A–D) je
 │   │                                  Kategorie aus bereits vorhandenen JSON-Feldern,
@@ -1025,8 +1025,6 @@ der Website ausgeliefert. Details und App-Setup: `mobile/README.md`.
 ## Weitere Ausbaustufen (optional, nicht mehr blockierend für den Launch)
 
 - Echtes Cookie-Consent-Tool statt Platzhalter.
-- Funktionale Suche (aktuell nur ein nicht-funktionales Lupe-Icon im Header).
-- Funktionale Filter-Chips auf `ratgeber.html` (aktuell statisch, nur Optik).
 - Robo-Advisor-Vergleich (im ursprünglichen Launch-Plan als Investing-
   Kategorie vorgesehen, bisher nicht gebaut).
 - Eigener Festgeld-Vergleich (bisher nur Tagesgeld; Festgeld kommt nur im
@@ -1036,5 +1034,8 @@ der Website ausgeliefert. Details und App-Setup: `mobile/README.md`.
 - Checklisten-Artikel (z. B. "Broker wechseln", "Depotübertrag").
 - Mehr Ratgeber-Artikel; neue Artikel brauchen zusätzlich zur `.guide-card`
   im `.rat-grid` auch einen Eintrag in der Icon/Farb-Zuordnung (siehe oben).
-- Neues Scoring-System für die Produktbewertungen (in Brainstorming-Phase,
-  noch nicht entworfen).
+- Finanzpal-Score auf die verbleibenden Kategorien ausweiten, sobald deren
+  Rohdaten die Mindestqualität erfüllen (Baufinanzierung, Hausrat/BU/
+  Rechtsschutz/Kfz — siehe „Bekannte offene Punkte" oben und „Finanzpal-
+  Score" für den aktuellen Stand; das System selbst ist seit 2026-10-24
+  gebaut und dokumentiert, nicht mehr nur Konzept).

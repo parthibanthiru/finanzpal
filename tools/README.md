@@ -1,12 +1,12 @@
 # tools/
 
-Maintenance scripts for working across all 76 HTML pages (38 DE + 38 EN
+Maintenance scripts for working across all 80 HTML pages (40 DE + 40 EN
 mirrors). The site has no templating layer — every page is an independent
 file with the nav, footer, and (for Ratgeber) card markup duplicated
 verbatim — so these scripts exist to apply a change consistently everywhere
-instead of hand-editing file by file. See the "Technische Schulden" note in
-the main `README.md` for the longer-term plan (migrating to a static-site
-generator) if this duplication grows further.
+instead of hand-editing file by file. Migrating to a static-site generator
+would remove the need for this entirely; worth revisiting if the
+duplication keeps growing.
 
 All scripts derive their root path from their own location, so they can be
 run from anywhere as long as they stay inside `tools/` in the repo:
