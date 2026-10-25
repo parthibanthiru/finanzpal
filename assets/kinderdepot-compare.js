@@ -14,6 +14,9 @@
     feeLabel: 'Account fee',
     rateLabel: 'Min. savings rate',
     etfLabel: 'ETF savings plans',
+    parentLabel: 'Parent account',
+    parentRequired: 'Required',
+    parentNotRequired: 'Not required',
     ageLabel: 'Age / conditions',
     detailsMore: 'More details',
     detailsLess: 'Fewer details',
@@ -38,6 +41,9 @@
     feeLabel: 'Depotgebühr',
     rateLabel: 'Mind. Sparrate',
     etfLabel: 'ETF-Sparpläne',
+    parentLabel: 'Elterndepot',
+    parentRequired: 'Nötig',
+    parentNotRequired: 'Nicht nötig',
     ageLabel: 'Alter / Voraussetzungen',
     detailsMore: 'Mehr Details',
     detailsLess: 'Weniger Details',
@@ -127,6 +133,7 @@
       '<div class="cc-stat"><span class="k">' + STR.feeLabel + '</span><span class="v">' + escapeHtml(item.depotgebuehrText) + '</span></div>' +
       '<div class="cc-stat"><span class="k">' + STR.rateLabel + '</span><span class="v">' + item.mindestsparrate + ' €</span></div>' +
       (item.etfSparplaeneAnzahl ? '<div class="cc-stat"><span class="k">' + STR.etfLabel + '</span><span class="v">' + item.etfSparplaeneAnzahl.toLocaleString(LANG === 'en' ? 'en-US' : 'de-DE') + '</span></div>' : '') +
+      '<div class="cc-stat"><span class="k">' + STR.parentLabel + '</span><span class="v">' + (item.parentDepotRequired ? STR.parentRequired : STR.parentNotRequired) + '</span></div>' +
       '</div>' +
       '<ul class="cc-bullets">' + bulletsHtml + '</ul>' +
       '<div class="cc-cta-col"><a href="' + escapeHtml(item.affiliateUrl) + '" class="cta-btn" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a></div>' +

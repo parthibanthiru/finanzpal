@@ -20,6 +20,7 @@
       keinDispo: 'Kein Dispo (reines Guthabenkonto)',
       abhebung: 'Bargeldabhebung',
       fremdwaehrung: 'Fremdwährung',
+      notAvailable: '—',
       guthabenzinsText: function (z) { return z.toFixed(2).replace('.', ',') + ' % Guthabenzins'; },
       einlagensicherungPrefix: 'Einlagensicherung: ',
       anbieter: 'Anbieter',
@@ -42,6 +43,7 @@
       keinDispo: 'No overdraft (pure cash account)',
       abhebung: 'Cash withdrawal',
       fremdwaehrung: 'Foreign transaction fee',
+      notAvailable: '—',
       guthabenzinsText: function (z) { return z.toFixed(2) + '% interest on balance'; },
       einlagensicherungPrefix: 'Deposit protection: ',
       anbieter: 'Provider',
@@ -93,8 +95,6 @@
   function bulletsFor(item) {
     var bullets = [];
     bullets.push({ ok: false, text: item.karteText });
-    bullets.push({ ok: true, text: item.abhebung });
-    if (item.fremdwaehrung) bullets.push({ ok: /^0/.test(item.fremdwaehrung) ? true : false, text: STR.fremdwaehrung + ': ' + item.fremdwaehrung });
     if (item.guthabenzins) bullets.push({ ok: true, text: STR.guthabenzinsText(item.guthabenzins) });
     bullets.push({ ok: false, text: STR.einlagensicherungPrefix + item.einlagensicherung });
     return bullets;
@@ -164,6 +164,8 @@
         '<div class="cc-stats">' +
           '<div class="cc-stat"><span class="k">' + STR.kontofuehrung + '</span><span class="v">' + escapeHtml(item.kontofuehrung) + '</span></div>' +
           '<div class="cc-stat"><span class="k">' + STR.dispozins + '</span><span class="v">' + dispoText + '</span></div>' +
+          '<div class="cc-stat"><span class="k">' + STR.abhebung + '</span><span class="v">' + escapeHtml(item.abhebung) + '</span></div>' +
+          '<div class="cc-stat"><span class="k">' + STR.fremdwaehrung + '</span><span class="v">' + escapeHtml(item.fremdwaehrung || STR.notAvailable) + '</span></div>' +
         '</div>' +
         '<ul class="cc-bullets">' + bullets + '</ul>' + crossLinkHtml +
         '<div class="cc-cta-col">' +

@@ -335,16 +335,31 @@ Kennzahl genau einmal erscheint:
   `text-overflow` bei einem `<span>` nicht — führte in einer Zwischenversion
   zu horizontalem Overflow auf dem 390px-Mobile-Viewport, von
   `audit_quick.py` korrekt erkannt und seitdem gefixt).
+- **Einheitlich 4 Zellen pro Karte, über alle vier Seiten:**
+  - Broker: Depotgebühr, Ordergebühr, Mind. Sparrate, ETF-Sparpläne
+  - Girokonto: Kontoführung, Dispozins, Bargeldabhebung, Fremdwährung
+    (fehlt `fremdwaehrung` bei einem Anbieter: Zelle zeigt „—")
+  - Kreditkarte: Jahresgebühr, Zahlung, Bargeldabhebung, Netzwerk — die
+    vorher separate große `.cc-price`-Preisanzeige im CTA-Bereich wurde
+    entfernt (Klasse jetzt ungenutzt, aus `style.css` entfernt) und die
+    Jahresgebühr stattdessen als Stat-Zelle geführt, analog zu Broker; die
+    „Netzwerk"-Zeile im aufklappbaren Detail-Panel wurde entfernt, da jetzt
+    bereits in der Stat-Zelle sichtbar
+  - Kinderdepot: Depotgebühr, Mind. Sparrate, ETF-Sparpläne, Elterndepot
+    (nötig/nicht nötig — `item.parentDepotRequired`); `ageLimitText` blieb
+    bewusst NUR Bullet/Detail-Panel-Feld, da die Werte oft ganze Sätze sind
+    („Konto geht mit dem 18. Geburtstag automatisch über …") und als
+    einzeilige Badge nicht lesbar wären
 - **Bullets entschlackt:** Bullet-Punkte, die exakt denselben Wert wie eine
   Stat-Zelle wiederholt haben, wurden aus `bulletsFor()` entfernt bzw.
   umformuliert (z. B. `STR.mindestsparrate(...)` bei Broker/Kinderdepot
-  entfernt; der ETF-Bullet nennt die Zahl nicht mehr, da sie jetzt in der
-  Stat-Zelle steht — übrig bleibt nur der Hinweis „kostenlos besparbar" +
-  Caveat). Übrig bleiben nur Bullets mit echtem Zusatznutzen (Caveats,
-  Intervalle, Verwahrentgelt, Besonderheiten).
+  entfernt; der ETF-Bullet nennt die Zahl nicht mehr; bei Girokonto wurden
+  die Abhebung-/Fremdwährung-Bullets entfernt, da jetzt Stat-Zellen).
+  Übrig bleiben nur Bullets mit echtem Zusatznutzen (Caveats, Intervalle,
+  Verwahrentgelt, Besonderheiten).
 - **`.cc-cta-col`** ist ein eigenständiger, volle-Breite-Block statt eines
-  Flex-Items in `.cc-body` — bei Kreditkarte weiterhin inkl. `.cc-price`
-  (Jahresgebühr groß) + Sternebewertung über dem CTA-Button.
+  Flex-Items in `.cc-body` — bei Kreditkarte jetzt nur noch Sternebewertung
+  + CTA-Button (kein separates Preisfeld mehr, s. o.).
 - `steuer-compare.js` (Steuersoftware-Vergleich) nutzt bewusst weiterhin das
   alte `.cc-facts`/`.cc-fact`-Layout — andere Produktkategorie, nicht Teil
   dieses Umbaus; die zugehörigen CSS-Regeln in `assets/style.css` blieben

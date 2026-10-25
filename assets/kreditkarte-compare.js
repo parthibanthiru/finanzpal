@@ -242,12 +242,13 @@
           '</div>' +
         '</div>' +
         '<div class="cc-stats">' +
+          '<div class="cc-stat"><span class="k">' + STR.priceLabel + '</span><span class="v">' + escapeHtml(item.jahresgebuehr) + '</span></div>' +
           '<div class="cc-stat"><span class="k">' + STR.payment + '</span><span class="v">' + escapeHtml(paymentVal) + '</span></div>' +
           '<div class="cc-stat"><span class="k">' + STR.withdrawal + '</span><span class="v">' + escapeHtml(item.abhebung) + '</span></div>' +
+          '<div class="cc-stat"><span class="k">' + STR.network + '</span><span class="v">' + escapeHtml(item.netzwerk) + '</span></div>' +
         '</div>' +
         '<ul class="cc-bullets">' + bullets + '</ul>' + crossLinkHtml +
         '<div class="cc-cta-col">' +
-          '<div class="cc-price"><div class="amount">' + item.jahresgebuehr + '</div><div class="label">' + STR.priceLabel + '</div></div>' +
           ratingHtml(item) +
           '<a href="' + item.affiliateUrl + '" class="cta-btn" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a>' +
         '</div>' +
@@ -255,7 +256,6 @@
         '<button type="button" class="kk-toggle" data-toggle-id="' + item.id + '">' + (isOpen ? STR.lessDetails : STR.moreDetails) + ' <span class="kk-chevron">' + (isOpen ? '▴' : '▾') + '</span></button>' +
         (isOpen ? '<div class="kk-card-details side-facts">' +
           '<div class="sf-row"><span class="k">' + STR.condition + '</span><span class="v">' + escapeHtml(item.bedingung || '—') + '</span></div>' +
-          '<div class="sf-row"><span class="k">' + STR.network + '</span><span class="v">' + escapeHtml(item.netzwerk) + '</span></div>' +
           '<div class="sf-row"><span class="k">' + STR.mobilePayment + '</span><span class="v">' + (mobileIconsHtml(item) || '—') + '</span></div>' +
         '</div>' : '') +
       '</div>';
