@@ -116,7 +116,6 @@
   function bulletsFor(item) {
     var bullets = [];
     bullets.push({ ok: true, text: STR.etfText(item) + (item.etfSparplaeneCaveat ? ' — ' + item.etfSparplaeneCaveat : '') });
-    bullets.push({ ok: true, text: STR.mindestsparrate(item.mindestsparrate) });
     if (item.intervalleText) bullets.push({ ok: true, text: item.intervalleText });
     if (item.guthabenzins) {
       bullets.push({ ok: true, text: STR.zinsText(item) + (item.guthabenzinsCaveat ? ' — ' + item.guthabenzinsCaveat : '') });
@@ -132,6 +131,14 @@
       return '<div class="cc-art logo-chip"><img src="' + PREFIX + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + ' Logo" loading="lazy"></div>';
     }
     return '<div class="cc-art" style="background:' + (item.color || '#163A66') + ';">' + escapeHtml(item.initials) + '</div>';
+  }
+
+  function claimsHtml(item) {
+    var claims = [item.brokerDepotfee, (LANG === 'en' ? 'from €' + item.mindestsparrate + '/plan' : 'ab ' + item.mindestsparrate + ' €/Sparplan')];
+    if (item.etfSparplaeneAnzahl) {
+      claims.push(item.etfSparplaeneAnzahl.toLocaleString(LANG === 'en' ? 'en-US' : 'de-DE') + (LANG === 'en' ? ' ETF plans' : ' ETF-Sparpläne'));
+    }
+    return '<div class="cc-claims">' + claims.map(function (c) { return '<span class="cc-claim">' + escapeHtml(c) + '</span>'; }).join('') + '</div>';
   }
 
   function cardHtml(item) {
@@ -153,15 +160,16 @@
       cardArtHtml(item) +
       '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) +
       (item.ratingStars ? ' <span class="cc-stars" title="' + item.rating + '/5">' + escapeHtml(item.ratingStars) + '</span>' : '') +
+      '</div></div>' +
       '</div>' +
-      '<ul class="cc-bullets">' + bulletsHtml + '</ul>' + crossLinkHtml + reviewLinkHtml + '</div>' +
-      '<div class="cc-facts">' +
-      '<div class="cc-fact"><span class="k">' + STR.depotLabel + '</span><span class="v">' + escapeHtml(item.brokerDepotfee) + '</span></div>' +
-      '<div class="cc-fact"><span class="k">' + STR.orderLabel + '</span><span class="v">' + escapeHtml(item.orderfee) + '</span></div>' +
-      '<div class="cc-fact"><span class="k">' + STR.rateLabel + '</span><span class="v">' + escapeHtml(item.sparplanAb) + '</span></div>' +
+      claimsHtml(item) +
+      '<div class="cc-stats">' +
+      '<div class="cc-stat"><span class="k">' + STR.depotLabel + '</span><span class="v">' + escapeHtml(item.brokerDepotfee) + '</span></div>' +
+      '<div class="cc-stat"><span class="k">' + STR.orderLabel + '</span><span class="v">' + escapeHtml(item.orderfee) + '</span></div>' +
+      '<div class="cc-stat"><span class="k">' + STR.rateLabel + '</span><span class="v">' + escapeHtml(item.sparplanAb) + '</span></div>' +
       '</div>' +
+      '<ul class="cc-bullets">' + bulletsHtml + '</ul>' + crossLinkHtml + reviewLinkHtml +
       '<div class="cc-cta-col"><a href="' + escapeHtml(item.affiliateUrl) + '" class="cta-btn" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a></div>' +
-      '</div>' +
       '<hr class="cc-divider">' +
       '<button type="button" class="kk-toggle" data-toggle>' + STR.detailsMore + ' ▾</button>' +
       '<div class="kk-card-details side-facts" hidden>' +

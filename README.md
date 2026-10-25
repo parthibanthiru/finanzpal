@@ -311,6 +311,40 @@ fehlt, sodass nicht-logoisierte Anbieter unverändert weiter funktionieren.
   alle Kategorien zeigen weiterhin das Initialen-Badge, bis echte
   Logo-Dateien nachgereicht werden.
 
+### Vergleichskarten-Layout: Claims-Badges + Stat-Strip (`.cc-claims`/`.cc-stats`)
+
+`broker-compare.js`, `girokonto-compare.js`, `kreditkarte-compare.js` und
+`kinderdepot-compare.js` rendern alle dieselbe Karten-Struktur
+(`.kk-card` → `.cc-badges` → `.cc-body` → … → `.cc-cta-col`). Um die
+wiederholte Nennung derselben Kennzahl (einmal als Fließtext-Bullet, einmal
+im Stat-Panel) aufzulösen, wurde das Layout wie folgt umgebaut:
+
+- **`.cc-claims`/`.cc-claim`** — eine neue Badge-Reihe direkt unter
+  `.cc-body`, die die 2–3 wichtigsten Kennzahlen als auffällige Pills zeigt
+  (z. B. Depotgebühr + Mindestsparrate bei Broker/Kinderdepot, Kontoführung +
+  Dispozins bei Girokonto, Jahresgebühr + Fremdwährungsgebühr bei
+  Kreditkarte). Erzeugt von einer `claimsHtml(item, …)`-Funktion in jeder
+  Datei.
+- **`.cc-stats`/`.cc-stat`** — ersetzt das alte schmale `.cc-facts`-Panel
+  (rechte Spalte) durch einen horizontalen, umrandeten Streifen mit
+  `grid-template-columns: repeat(auto-fit, minmax(120px, 1fr))` — responsiv,
+  volle Kartenbreite statt fixer 170px-Spalte.
+- **Bullets entschlackt:** Bullet-Punkte, die exakt denselben Wert wie ein
+  Claim/Stat wiederholt haben (z. B. `STR.mindestsparrate(...)` in
+  Broker/Kinderdepot), wurden aus `bulletsFor()` entfernt — übrig bleiben
+  nur Bullets mit echtem Zusatznutzen (Caveats, Intervalle, Besonderheiten).
+- **`.cc-cta-col`** ist jetzt ein eigenständiger, volle-Breite-Block statt
+  eines Flex-Items in `.cc-body` — bei Kreditkarte weiterhin inkl.
+  `.cc-price` (Jahresgebühr groß) + Sternebewertung über dem CTA-Button.
+- `steuer-compare.js` (Steuersoftware-Vergleich) nutzt bewusst weiterhin das
+  alte `.cc-facts`/`.cc-fact`-Layout — andere Produktkategorie, nicht Teil
+  dieses Umbaus; die zugehörigen CSS-Regeln in `assets/style.css` blieben
+  deshalb unverändert erhalten.
+- `compare-bar.js` (injiziert die „Vergleichen"-Checkbox in `.cc-cta-col`)
+  und der Vergleichs-Modal (liest `.cc-name`/`.cc-bullets` aus) funktionieren
+  unverändert weiter, da beide Klassen nur per `querySelector` gesucht
+  werden, unabhängig von ihrer Position im DOM.
+
 ### Versicherungen: 5 Tabs statt einer Tabelle
 
 `versicherungen.html` zeigt fünf Tabs (Privathaftpflicht / Hausrat /

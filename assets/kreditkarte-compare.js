@@ -219,6 +219,11 @@
         escapeHtml(item.initials) + '<span class="cc-network">' + escapeHtml(item.netzwerk) + '</span></div>';
     }
 
+    function claimsHtml(item, paymentVal) {
+      var claims = [item.jahresgebuehr + ' ' + STR.priceLabel, paymentVal];
+      return '<div class="cc-claims">' + claims.map(function (c) { return '<span class="cc-claim">' + escapeHtml(c) + '</span>'; }).join('') + '</div>';
+    }
+
     function cardHtml(item, rank) {
       var isOpen = !!expanded[item.id];
       var isDebit = item.kartentyp === STR.typeDebit;
@@ -239,17 +244,18 @@
           cardArtHtml(item) +
           '<div class="cc-main">' +
             '<div class="cc-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div>' +
-            '<ul class="cc-bullets">' + bullets + '</ul>' + crossLinkHtml +
           '</div>' +
-          '<div class="cc-facts">' +
-            '<div class="cc-fact"><span class="k">' + STR.payment + '</span><span class="v">' + escapeHtml(paymentVal) + '</span></div>' +
-            '<div class="cc-fact"><span class="k">' + STR.withdrawal + '</span><span class="v">' + escapeHtml(item.abhebung) + '</span></div>' +
-          '</div>' +
-          '<div class="cc-cta-col">' +
-            '<div class="cc-price"><div class="amount">' + item.jahresgebuehr + '</div><div class="label">' + STR.priceLabel + '</div></div>' +
-            ratingHtml(item) +
-            '<a href="' + item.affiliateUrl + '" class="cta-btn" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a>' +
-          '</div>' +
+        '</div>' +
+        claimsHtml(item, paymentVal) +
+        '<div class="cc-stats">' +
+          '<div class="cc-stat"><span class="k">' + STR.payment + '</span><span class="v">' + escapeHtml(paymentVal) + '</span></div>' +
+          '<div class="cc-stat"><span class="k">' + STR.withdrawal + '</span><span class="v">' + escapeHtml(item.abhebung) + '</span></div>' +
+        '</div>' +
+        '<ul class="cc-bullets">' + bullets + '</ul>' + crossLinkHtml +
+        '<div class="cc-cta-col">' +
+          '<div class="cc-price"><div class="amount">' + item.jahresgebuehr + '</div><div class="label">' + STR.priceLabel + '</div></div>' +
+          ratingHtml(item) +
+          '<a href="' + item.affiliateUrl + '" class="cta-btn" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a>' +
         '</div>' +
         '<hr class="cc-divider">' +
         '<button type="button" class="kk-toggle" data-toggle-id="' + item.id + '">' + (isOpen ? STR.lessDetails : STR.moreDetails) + ' <span class="kk-chevron">' + (isOpen ? '▴' : '▾') + '</span></button>' +

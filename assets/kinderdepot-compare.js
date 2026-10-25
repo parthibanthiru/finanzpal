@@ -67,7 +67,6 @@
   function bulletsFor(item) {
     var bullets = [];
     bullets.push({ ok: true, text: STR.etfText(item) + (item.etfSparplaeneCaveat ? ' — ' + item.etfSparplaeneCaveat : '') });
-    bullets.push({ ok: true, text: STR.mindestsparrate(item.mindestsparrate) });
     if (item.guthabenzins) {
       bullets.push({ ok: true, text: STR.zinsText(item) + (item.guthabenzinsCaveat ? ' — ' + item.guthabenzinsCaveat : '') });
     } else if (item.guthabenzinsCaveat) {
@@ -83,6 +82,11 @@
       return '<div class="cc-art logo-chip"><img src="' + PREFIX + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + ' Logo" loading="lazy"></div>';
     }
     return '<div class="cc-art" style="background:' + (item.color || '#163A66') + ';">' + escapeHtml(item.initials) + '</div>';
+  }
+
+  function claimsHtml(item) {
+    var claims = [escapeHtml(item.depotgebuehrText), escapeHtml(STR.mindestsparrate(item.mindestsparrate))];
+    return '<div class="cc-claims">' + claims.map(function (c) { return '<span class="cc-claim">' + c + '</span>'; }).join('') + '</div>';
   }
 
   var SCORE_RING_R = 8;
@@ -120,14 +124,15 @@
       '</div>' +
       '<div class="cc-body">' +
       cardArtHtml(item) +
-      '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div>' +
-      '<ul class="cc-bullets">' + bulletsHtml + '</ul></div>' +
-      '<div class="cc-facts">' +
-      '<div class="cc-fact"><span class="k">' + STR.feeLabel + '</span><span class="v">' + escapeHtml(item.depotgebuehrText) + '</span></div>' +
-      '<div class="cc-fact"><span class="k">' + STR.rateLabel + '</span><span class="v">' + item.mindestsparrate + ' €</span></div>' +
+      '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div></div>' +
       '</div>' +
+      claimsHtml(item) +
+      '<div class="cc-stats">' +
+      '<div class="cc-stat"><span class="k">' + STR.feeLabel + '</span><span class="v">' + escapeHtml(item.depotgebuehrText) + '</span></div>' +
+      '<div class="cc-stat"><span class="k">' + STR.rateLabel + '</span><span class="v">' + item.mindestsparrate + ' €</span></div>' +
+      '</div>' +
+      '<ul class="cc-bullets">' + bulletsHtml + '</ul>' +
       '<div class="cc-cta-col"><a href="' + escapeHtml(item.affiliateUrl) + '" class="cta-btn" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a></div>' +
-      '</div>' +
       '<hr class="cc-divider">' +
       '<button type="button" class="kk-toggle" data-toggle>' + STR.detailsMore + ' ▾</button>' +
       '<div class="kk-card-details side-facts" hidden>' +
