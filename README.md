@@ -1186,7 +1186,12 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
 - **Suche, ETF-Suche, Score-Aufschlüsselung:** Suchfeld auf der Startseite
   (Anbieter in allen Vergleichen, ETFs per Name/ISIN, Rechner und Ratgeber);
   ETF-Suche mit den Filtern von `etf-suche.html` (Logik aus `assets/etf-search.js`
-  portiert, gegen die Website getestet); Tipp auf den Finanzpal-Score zeigt die
+  portiert, gegen die Website getestet) — die App nutzt für die Sortierung
+  weiterhin eigene Chips (ter/name/groesse), **nicht** die seit 2026-10-25
+  klickbaren, sortierbaren Tabellenspalten-Header der Website (ersetzen dort das
+  alte `<select id="etf-sort-select">`); bewusste Nicht-Synchronisation, da
+  Sortier-UI nicht unter die Mobile-Sync-Trigger in den Arbeitsregeln fällt;
+  Tipp auf den Finanzpal-Score zeigt die
   Faktoren mit den Labels der Website (`STR.scoreLabels` der Vergleichsskripte bzw.
   `SCORE_FACTOR_LABELS` in `compare.js`, per Sync nach `mobile/data/score-labels.json`).
 - **Mitteilungen (Push):** Opt-in unter Profil. Kommt durch ein Update ein neuer

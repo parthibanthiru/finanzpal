@@ -17,6 +17,9 @@
       auflagejahr: 'Auflagejahr',
       anbieter: 'Anbieter',
       table: { name: 'ETF', klasse: 'Anlageklasse / Region', ter: 'TER p. a.', replikation: 'Replikation', ausschuettung: 'Ertragsverwendung', groesse: 'Fondsgröße' },
+      sortedAsc: function (col) { return 'Sortiert nach ' + col + ', aufsteigend. Klicken für absteigend.'; },
+      sortedDesc: function (col) { return 'Sortiert nach ' + col + ', absteigend. Klicken für aufsteigend.'; },
+      sortBy: function (col) { return 'Sortieren nach ' + col; },
       groesseLabel: { klein: 'klein (< 1 Mrd. €)', mittel: 'mittel (1–10 Mrd. €)', gross: 'groß (10–50 Mrd. €)', sehrgross: 'sehr groß (> 50 Mrd. €)' },
       alterLabel: { lt5: 'jünger als 5 Jahre', '5bis10': '5–10 Jahre', gt10: 'älter als 10 Jahre' }
     },
@@ -35,6 +38,9 @@
       auflagejahr: 'Inception year',
       anbieter: 'Provider',
       table: { name: 'ETF', klasse: 'Asset class / Region', ter: 'TER p.a.', replikation: 'Replication', ausschuettung: 'Distribution', groesse: 'Fund size' },
+      sortedAsc: function (col) { return 'Sorted by ' + col + ', ascending. Click for descending.'; },
+      sortedDesc: function (col) { return 'Sorted by ' + col + ', descending. Click for ascending.'; },
+      sortBy: function (col) { return 'Sort by ' + col; },
       groesseLabel: { klein: 'small (< €1bn)', mittel: 'medium (€1–10bn)', gross: 'large (€10–50bn)', sehrgross: 'very large (> €50bn)' },
       alterLabel: { lt5: 'under 5 years', '5bis10': '5–10 years', gt10: 'over 10 years' }
     }
@@ -63,11 +69,22 @@
     var terSelect = document.getElementById('etf-ter-select');
     var groesseSelect = document.getElementById('etf-groesse-select');
     var alterSelect = document.getElementById('etf-alter-select');
-    var sortSelect = document.getElementById('etf-sort-select');
 
     var allItems = [];
     var expanded = {};
     var activeKlasse = 'Alle';
+
+    var SORT_ACCESSORS = {
+      name: function (it) { return it.name.toLowerCase(); },
+      klasse: function (it) { return (it.anlageklasse + ' ' + it.region).toLowerCase(); },
+      ter: function (it) { return it.ter; },
+      replikation: function (it) { return (it.replikationDetail || it.replikation || '').toLowerCase(); },
+      ausschuettung: function (it) { return (it.ausschuettung || '').toLowerCase(); },
+      groesse: function (it) { return GROESSE_ORDER[it.fondsgroesse]; }
+    };
+    var SORT_DEFAULT_DIR = { name: 'asc', klasse: 'asc', ter: 'asc', replikation: 'asc', ausschuettung: 'asc', groesse: 'desc' };
+    var sortKey = 'ter';
+    var sortDir = 'asc';
 
     function klasseOf(item) { return item.anlageklasse; }
 
@@ -92,11 +109,13 @@
     }
 
     function sortItems(items) {
-      var mode = sortSelect ? sortSelect.value : 'ter';
+      var accessor = SORT_ACCESSORS[sortKey] || SORT_ACCESSORS.ter;
       var copy = items.slice();
-      if (mode === 'ter') copy.sort(function (a, b) { return a.ter - b.ter; });
-      else if (mode === 'name') copy.sort(function (a, b) { return a.name.localeCompare(b.name); });
-      else if (mode === 'groesse') copy.sort(function (a, b) { return GROESSE_ORDER[b.fondsgroesse] - GROESSE_ORDER[a.fondsgroesse]; });
+      copy.sort(function (a, b) {
+        var av = accessor(a), bv = accessor(b);
+        var cmp = typeof av === 'number' ? av - bv : String(av).localeCompare(String(bv));
+        return sortDir === 'asc' ? cmp : -cmp;
+      });
       return copy;
     }
 
@@ -136,8 +155,9 @@
         return;
       }
 
-      var html = '<div class="table-scroll"><table class="compare">' +
-        '<thead><tr><th>' + STR.table.name + '</th><th>' + STR.table.klasse + '</th><th>' + STR.table.ter + '</th><th>' + STR.table.replikation + '</th><th>' + STR.table.ausschuettung + '</th><th>' + STR.table.groesse + '</th><th></th></tr></thead><tbody>';
+      var html = '<div class="table-scroll"><table class="compare"><thead><tr>' +
+        ['name', 'klasse', 'ter', 'replikation', 'ausschuettung', 'groesse'].map(sortThHtml).join('') +
+        '<th></th></tr></thead><tbody>';
       filtered.forEach(function (item) { html += rowHtml(item); });
       html += '</tbody></table></div>';
       resultsEl.innerHTML = html;
@@ -149,6 +169,31 @@
           render();
         });
       });
+
+      Array.prototype.forEach.call(resultsEl.querySelectorAll('[data-sort]'), function (th) {
+        var activateSort = function () {
+          var key = th.getAttribute('data-sort');
+          if (sortKey === key) {
+            sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+          } else {
+            sortKey = key;
+            sortDir = SORT_DEFAULT_DIR[key] || 'asc';
+          }
+          render();
+        };
+        th.addEventListener('click', activateSort);
+        th.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateSort(); }
+        });
+      });
+    }
+
+    function sortThHtml(key) {
+      var label = STR.table[key];
+      var active = sortKey === key;
+      var arrow = active ? (sortDir === 'asc' ? ' ▲' : ' ▼') : '';
+      var ariaLabel = active ? (sortDir === 'asc' ? STR.sortedAsc(label) : STR.sortedDesc(label)) : STR.sortBy(label);
+      return '<th class="etf-sort-th' + (active ? ' active' : '') + '" data-sort="' + key + '" tabindex="0" role="button" aria-label="' + escapeHtml(ariaLabel) + '">' + escapeHtml(label) + '<span class="etf-sort-arrow">' + arrow + '</span></th>';
     }
 
     Array.prototype.forEach.call(klasseChips, function (chip) {
@@ -165,7 +210,7 @@
       Array.prototype.slice.call(ausschuettungChecks)
     ).forEach(function (el) { el.addEventListener('change', render); });
 
-    [terSelect, groesseSelect, alterSelect, sortSelect].forEach(function (el) {
+    [terSelect, groesseSelect, alterSelect].forEach(function (el) {
       if (el) el.addEventListener('change', render);
     });
 
@@ -176,7 +221,8 @@
       terSelect.value = 'alle';
       groesseSelect.value = 'alle';
       alterSelect.value = 'alle';
-      if (sortSelect) sortSelect.value = 'ter';
+      sortKey = 'ter';
+      sortDir = 'asc';
       activeKlasse = 'Alle';
       Array.prototype.forEach.call(klasseChips, function (c) { c.classList.toggle('active', c.getAttribute('data-value') === 'Alle'); });
       render();
