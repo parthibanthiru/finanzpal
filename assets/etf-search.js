@@ -193,7 +193,7 @@
       var active = sortKey === key;
       var arrow = active ? (sortDir === 'asc' ? ' ▲' : ' ▼') : '';
       var ariaLabel = active ? (sortDir === 'asc' ? STR.sortedAsc(label) : STR.sortedDesc(label)) : STR.sortBy(label);
-      return '<th class="etf-sort-th' + (active ? ' active' : '') + '" data-sort="' + key + '" tabindex="0" role="button" aria-label="' + escapeHtml(ariaLabel) + '">' + escapeHtml(label) + '<span class="etf-sort-arrow">' + arrow + '</span></th>';
+      return '<th class="cmp-sort-th' + (active ? ' active' : '') + '" data-sort="' + key + '" tabindex="0" role="button" aria-label="' + escapeHtml(ariaLabel) + '">' + escapeHtml(label) + '<span class="cmp-sort-arrow">' + arrow + '</span></th>';
     }
 
     Array.prototype.forEach.call(klasseChips, function (chip) {

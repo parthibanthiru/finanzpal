@@ -5,9 +5,15 @@
   var PREFIX = LANG === 'en' ? '../' : '';
   var STR = {
     de: { pick: 'Unsere Empfehlung', cta: 'Zum Anbieter', ctaAria: function (name) { return 'Zum Anbieter: ' + name; }, loading: 'Lade Vergleichsdaten …', notRated: 'noch nicht bewertet',
-      error: function (msg) { return 'Daten konnten nicht geladen werden (' + msg + '). Lokal? Bitte über einen lokalen Server öffnen, z. B. <code>python3 -m http.server</code> — direktes Öffnen der Datei (file://) blockiert den Datenabruf im Browser.'; } },
+      error: function (msg) { return 'Daten konnten nicht geladen werden (' + msg + '). Lokal? Bitte über einen lokalen Server öffnen, z. B. <code>python3 -m http.server</code> — direktes Öffnen der Datei (file://) blockiert den Datenabruf im Browser.'; },
+      sortedAsc: function (col) { return 'Sortiert nach ' + col + ', aufsteigend. Klicken für absteigend.'; },
+      sortedDesc: function (col) { return 'Sortiert nach ' + col + ', absteigend. Klicken für aufsteigend.'; },
+      sortBy: function (col) { return 'Sortieren nach ' + col; } },
     en: { pick: 'Our pick', cta: 'View provider', ctaAria: function (name) { return 'View provider: ' + name; }, loading: 'Loading comparison data …', notRated: 'not yet rated',
-      error: function (msg) { return 'Could not load data (' + msg + '). Running locally? Please serve the files via a local server, e.g. <code>python3 -m http.server</code> — opening the file directly (file://) blocks the request in the browser.'; } }
+      error: function (msg) { return 'Could not load data (' + msg + '). Running locally? Please serve the files via a local server, e.g. <code>python3 -m http.server</code> — opening the file directly (file://) blocks the request in the browser.'; },
+      sortedAsc: function (col) { return 'Sorted by ' + col + ', ascending. Click for descending.'; },
+      sortedDesc: function (col) { return 'Sorted by ' + col + ', descending. Click for ascending.'; },
+      sortBy: function (col) { return 'Sort by ' + col; } }
   };
 
   // Human-readable labels for each rubric factor key that can show up in a
@@ -115,6 +121,43 @@
     return { min: toInt(nums[0]), max: toInt(nums[1]) };
   }
 
+  // Finds the first number in a locale-formatted string and applies a
+  // trailing magnitude-unit multiplier if present — DE: "." thousands / ","
+  // decimal, unit "Mio."/"Mrd." (e.g. "ab 2,99 %" -> 2.99, "100 Mio. €" ->
+  // 1e8); EN: "," thousands / "." decimal, unit "m"/"bn" (e.g. "from 2.99%"
+  // -> 2.99, "€100m" -> 1e8) — matches how data/*.en.json already writes
+  // these fields. Returns null when no leading number can be found (e.g.
+  // "individuell, altersabhängig"), so a column of mixed real values and
+  // free-text placeholders sorts the real values and pushes the
+  // unparseable ones to the end rather than guessing — see sortByKey()'s
+  // null-last handling below.
+  function parseLeadingNumber(str) {
+    if (str === null || str === undefined) return null;
+    var s = String(str);
+    var m = LANG === 'en'
+      ? s.match(/(\d{1,3}(?:,\d{3})*(?:\.\d+)?|\d+(?:\.\d+)?)\s*(bn|m)?/i)
+      : s.match(/(\d{1,3}(?:\.\d{3})*(?:,\d+)?|\d+(?:,\d+)?)\s*(Mio\.?|Mrd\.?)?/i);
+    if (!m) return null;
+    var n = LANG === 'en' ? parseFloat(m[1].replace(/,/g, '')) : parseFloat(m[1].replace(/\./g, '').replace(',', '.'));
+    if (isNaN(n)) return null;
+    var unit = (m[2] || '').toLowerCase();
+    if (LANG === 'en') {
+      if (unit === 'bn') n *= 1e9;
+      else if (unit === 'm') n *= 1e6;
+    } else {
+      if (unit.indexOf('mrd') === 0) n *= 1e9;
+      else if (unit.indexOf('mio') === 0) n *= 1e6;
+    }
+    return n;
+  }
+
+  // Lower bound of a range string ("1.000 – 75.000 €" -> 1000), used as the
+  // sort value for Kreditsumme/Laufzeit ("starts from" reading).
+  function rangeMin(str) {
+    var r = parseRangeNumbers(str);
+    return r ? r.min : null;
+  }
+
   function brokerCell(item, type) {
     var nameHtml = item.recommended
       ? '<div class="broker-name linked">' + escapeHtml(item.name) + scoreBadgeHtml(type, item) + '</div><span class="broker-tag">' + STR[LANG].pick + '</span>'
@@ -194,6 +237,116 @@
   renderers.rechtsschutz = renderers.versicherungen;
   renderers.autoversicherung = renderers.versicherungen;
 
+  // Sortable columns per data-type. Only columns backed by a genuinely
+  // comparable value are listed here — e.g. Kredite's "Sondertilgung" and
+  // Versicherungen's "Leistungsumfang" are free text describing conditions,
+  // not a rankable quantity, so they're left out rather than sorted
+  // alphabetically in a way that would look meaningful but isn't (matches
+  // the site's data-integrity principle: no implied precision/ranking the
+  // underlying data can't support).
+  var SORT_ACCESSORS = {
+    tagesgeld: {
+      name: function (it) { return it.name.toLowerCase(); },
+      rate: function (it) { return parseLeadingNumber(it.rate); }
+    },
+    kredite: {
+      name: function (it) { return it.name.toLowerCase(); },
+      rate: function (it) { return parseLeadingNumber(it.rate); },
+      amount: function (it) { return rangeMin(it.amount); },
+      term: function (it) { return rangeMin(it.term); }
+    },
+    versicherungen: {
+      name: function (it) { return it.name.toLowerCase(); },
+      beitrag: function (it) { return parseLeadingNumber(it.beitrag); },
+      deckung: function (it) { return parseLeadingNumber(it.deckung); },
+      rating: function (it) { return (it.rating === null || it.rating === undefined) ? null : it.rating; }
+    }
+  };
+  // Hausrat/BU/Rechtsschutz/Autoversicherung reuse versicherungen's accessors
+  // (same field names). Many of their beitrag/deckung values are identical
+  // free text across providers (e.g. BU's "individuell, altersabhängig") —
+  // parseLeadingNumber returns null for those, so sorting that column is a
+  // harmless no-op there rather than a misleading reorder.
+  SORT_ACCESSORS.hausrat = SORT_ACCESSORS.bu = SORT_ACCESSORS.rechtsschutz = SORT_ACCESSORS.autoversicherung = SORT_ACCESSORS.versicherungen;
+
+  // Stable sort with unparseable/missing values always pushed to the end,
+  // regardless of direction (so clicking a column never silently reshuffles
+  // "no data" rows to the top under descending order).
+  function sortByKey(items, type, key, dir) {
+    var accessor = key && (SORT_ACCESSORS[type] || {})[key];
+    if (!accessor) return items;
+    var copy = items.slice();
+    copy.sort(function (a, b) {
+      var av = accessor(a), bv = accessor(b);
+      var an = av === null || av === undefined || (typeof av === 'number' && isNaN(av));
+      var bn = bv === null || bv === undefined || (typeof bv === 'number' && isNaN(bv));
+      if (an && bn) return 0;
+      if (an) return 1;
+      if (bn) return -1;
+      var cmp = typeof av === 'number' ? av - bv : String(av).localeCompare(String(bv));
+      return dir === 'asc' ? cmp : -cmp;
+    });
+    return copy;
+  }
+
+  function sortThLabel(th) {
+    var labelEl = th.querySelector('.cmp-th-label');
+    return (labelEl ? labelEl.textContent : th.textContent).trim();
+  }
+
+  function updateSortHeaderUI(table) {
+    var state = table._fpSort || { key: null, dir: 'asc' };
+    Array.prototype.forEach.call(table.querySelectorAll('thead [data-sort]'), function (th) {
+      var key = th.getAttribute('data-sort');
+      var active = state.key === key;
+      th.classList.toggle('active', active);
+      var arrowEl = th.querySelector('.cmp-sort-arrow');
+      if (arrowEl) arrowEl.textContent = active ? (state.dir === 'asc' ? ' ▲' : ' ▼') : '';
+      var label = sortThLabel(th);
+      th.setAttribute('aria-label', active ? (state.dir === 'asc' ? STR[LANG].sortedAsc(label) : STR[LANG].sortedDesc(label)) : STR[LANG].sortBy(label));
+    });
+  }
+
+  // Click/keyboard handlers are bound once per <th> and persist across
+  // insurance-tabs.js's tab switches (same <table>/<th> DOM nodes are
+  // reused, only data-type/data-source/labels change), so sort preference
+  // carries over between Versicherungen's 5 tabs.
+  function initSortHeaders(table) {
+    Array.prototype.forEach.call(table.querySelectorAll('thead [data-sort]'), function (th) {
+      if (th._fpSortBound) return;
+      th._fpSortBound = true;
+      var activate = function () {
+        var key = th.getAttribute('data-sort');
+        var state = table._fpSort || (table._fpSort = { key: null, dir: 'asc' });
+        if (state.key === key) {
+          state.dir = state.dir === 'asc' ? 'desc' : 'asc';
+        } else {
+          state.key = key;
+          state.dir = 'asc';
+        }
+        updateSortHeaderUI(table);
+        if (table._fpItems) renderBody(table, table.getAttribute('data-type'), table._fpItems);
+      };
+      th.addEventListener('click', activate);
+      th.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+      });
+    });
+    updateSortHeaderUI(table);
+  }
+
+  function renderBody(table, type, items) {
+    var tbody = table.querySelector('tbody');
+    var renderRow = renderers[type];
+    if (!tbody || !renderRow) return;
+    var state = table._fpSort || { key: null, dir: 'asc' };
+    var sorted = sortByKey(items, type, state.key, state.dir);
+    tbody.innerHTML = sorted.map(renderRow).join('');
+    // Lets a page-specific script (e.g. assets/kredite-filter.js) act on
+    // the freshly rendered rows without re-fetching the data itself.
+    table.dispatchEvent(new CustomEvent('fpcompare:rendered', { detail: { type: type, items: sorted } }));
+  }
+
   function renderTable(table) {
     var src = table.getAttribute('data-source');
     if (LANG === 'en') src = src.replace(/\.json$/, '.en.json');
@@ -203,6 +356,7 @@
     if (!tbody || !renderRow) return;
 
     tbody.innerHTML = '<tr class="loading-row"><td colspan="6">' + STR[LANG].loading + '</td></tr>';
+    table._fpItems = null;
 
     fetch(src)
       .then(function (res) {
@@ -210,12 +364,10 @@
         return res.json();
       })
       .then(function (data) {
-        tbody.innerHTML = data.items.map(renderRow).join('');
+        table._fpItems = data.items;
         var updatedEl = document.getElementById('last-updated');
         if (updatedEl && data.updated) updatedEl.textContent = formatUpdated(data.updated);
-        // Lets a page-specific script (e.g. assets/kredite-filter.js) act on
-        // the freshly rendered rows without re-fetching the data itself.
-        table.dispatchEvent(new CustomEvent('fpcompare:rendered', { detail: { type: type, items: data.items } }));
+        renderBody(table, type, data.items);
       })
       .catch(function (err) {
         tbody.innerHTML = '<tr class="loading-row"><td colspan="6">' + STR[LANG].error(escapeHtml(err.message)) + '</td></tr>';
@@ -228,6 +380,9 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     var tables = document.querySelectorAll('table.compare[data-source]');
-    tables.forEach(renderTable);
+    tables.forEach(function (table) {
+      initSortHeaders(table);
+      renderTable(table);
+    });
   });
 })();

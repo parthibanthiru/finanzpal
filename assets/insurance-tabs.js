@@ -91,9 +91,14 @@
       table.setAttribute('data-source', cfg.source);
       table.setAttribute('data-type', cfg.key);
 
+      // Each sortable <th> wraps its text in a .cmp-th-label span (sibling to
+      // the .cmp-sort-arrow span compare.js owns) so relabeling per tab here
+      // never clobbers the sort arrow compare.js renders into the same <th>.
       var ths = table.querySelectorAll('thead th');
-      if (ths[1]) ths[1].textContent = cfg.header.beitrag[LANG];
-      if (ths[2]) ths[2].textContent = cfg.header.deckung[LANG];
+      var beitragLabel = ths[1] && ths[1].querySelector('.cmp-th-label');
+      var deckungLabel = ths[2] && ths[2].querySelector('.cmp-th-label');
+      if (beitragLabel) beitragLabel.textContent = cfg.header.beitrag[LANG];
+      if (deckungLabel) deckungLabel.textContent = cfg.header.deckung[LANG];
 
       if (disclosureEl) disclosureEl.innerHTML = cfg.disclosure[LANG];
       setBanner(cfg);

@@ -418,6 +418,59 @@ gezeigt, sondern über verifizierbare Fakten (Partnerbanken, Standorte,
 Auszeichnungen) verglichen — mit dem Hinweis „Angaben des Anbieters, nicht
 unabhängig geprüft".
 
+### Sortierbare Tabellenspalten-Header (`.cmp-sort-th`/`.cmp-sort-arrow`)
+
+Seit 2026-10-25 sind die Spaltenüberschriften auf vier Tabellen-Seiten
+klickbar und sortieren direkt nach dieser Spalte (erneutes Klicken kehrt die
+Richtung um, ein Pfeil zeigt aktive Spalte + Richtung, Tastatur-bedienbar
+über Tab + Enter/Space): **ETF-Suche** (`assets/etf-search.js`, eigene
+Sortier-Engine, da eigenes JS-Modul) sowie **Tagesgeld, Kredite und
+Versicherungen** (inkl. aller 5 Tabs Privathaftpflicht/Hausrat/BU/
+Rechtsschutz/Kfz — alle über `assets/compare.js`, das `<thead>` bleibt
+statisches HTML, nur `<tbody>` wird neu gerendert). Girokonto, Broker,
+Kinderdepot, Kreditkarte, Steuerprogramm und Baufinanzierung haben **keine**
+sortierbaren Header, weil sie die kartenbasierte `.cc-stats`-Ansicht nutzen
+(siehe „Vergleichskarten-Layout" oben) — dort gibt es keine Tabellenspalten,
+die man anklicken könnte.
+
+- **Nur echte Zahlen sind sortierbar** (Data-Integrity-Prinzip): z. B. bei
+  Kredite ist „Sondertilgung" bewusst **nicht** sortierbar (Freitext zu
+  Bedingungen, keine Rangfolge), bei Versicherungen ist „Leistungsumfang"
+  bewusst **nicht** sortierbar (lange Freitext-Liste). Wo eine Spalte echte
+  Zahlen *und* Freitext-Platzhalter mischt (z. B. Jahresbeitrag bei BU:
+  „individuell, altersabhängig" bei allen Anbietern — siehe Hinweis zu den
+  Preisen oben), parst `assets/compare.js`s `parseLeadingNumber()` nur die
+  echten Zahlen und sortiert nicht-parsbare Werte **immer ans Ende**,
+  unabhängig von auf-/absteigend — kein Rätselraten, kein stillschweigendes
+  Umsortieren von „keine Angabe" nach oben.
+- `parseLeadingNumber()` ist Locale-abhängig (DE: „." Tausender/„," Dezimal,
+  Einheit „Mio."/„Mrd."; EN: „," Tausender/„." Dezimal, Einheit „m"/„bn" —
+  entspricht exakt dem Format in `data/*.en.json`). Kreditsumme/Laufzeit
+  nutzen stattdessen die bereits vorhandene `parseRangeNumbers()` (untere
+  Grenze einer Spanne wie „1.000 – 75.000 €").
+- Bei Versicherungen bleibt der Sortier-Zustand (Spalte + Richtung) beim
+  Tab-Wechsel erhalten, weil `<table>`/`<th>` dieselben DOM-Knoten bleiben
+  (nur `data-source`/`data-type` und die Spalten-Labels in
+  `assets/insurance-tabs.js` ändern sich) — die Klick-Handler werden einmalig
+  pro `<th>` gebunden, nicht bei jedem Tab-Wechsel neu.
+- **Konflikt mit `insurance-tabs.js` vermieden:** Jedes sortierbare `<th>`
+  enthält ein separates `<span class="cmp-th-label">`-Element für den
+  Spaltentext; `insurance-tabs.js` schreibt die Tab-spezifischen Labels
+  („Jahresbeitrag" vs. „Beitrag" bei BU) nur noch in diesen Span statt den
+  ganzen `<th>`-Inhalt zu überschreiben — sonst hätte das den vom
+  Sortier-Code gerenderten Pfeil-Span bei jedem Tab-Wechsel gelöscht.
+- Bestehende Filter (Kredite-Chips/Quick-Rechner über `assets/kredite-filter.js`,
+  Empfehlung/Bewertung-Chips über `assets/versicherungen-filter.js`) bleiben
+  nach dem Sortieren erhalten — beide hören auf das von `compare.js`
+  gefeuerte `fpcompare:rendered`-Event, das jetzt auch nach jedem
+  Sortier-Klick (nicht nur nach dem initialen Fetch) ausgelöst wird.
+- Mobile App: unverändert, siehe „Mobile App" unten — die ETF-Suche der App
+  nutzt weiterhin ihre eigenen Sortier-Chips statt der Website-Header;
+  Tagesgeld/Kredite/Versicherungen laufen in der App über den generischen
+  `app/(app)/vergleiche/[id].tsx`-Screen mit einem simplen
+  Standard/Score-Umschalter (kein Spalten-Sortieren) — unverändert, da
+  Sortier-UI nicht unter die Mobile-Sync-Trigger fällt.
+
 ### Ratgeber: eigenes Icon + Akzentfarbe pro Artikel
 
 Jeder Artikel hat ein eigenes Icon (Inline-SVG, `assets/style.css` →
