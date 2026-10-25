@@ -238,6 +238,7 @@ button.chip:focus-visible { outline: 2px solid var(--green); outline-offset: 2px
 .calc-field label { font-size: 12px; color: var(--ink-soft); }
 .calc-field .field-input, .calc-field input { border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; font-size: 14px; background: var(--bg); color: var(--ink); font-family: var(--font-body); width: 100%; }
 .calc-panel .cta-btn { font-size: 13.5px; padding: 11px 20px; }
+.calc-result { margin: 14px 0 0; font-size: 13.5px; color: var(--green-deep); font-weight: 600; }
 
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table.compare { width: 100%; border-collapse: collapse; min-width: 780px; background: var(--bg-raised); border: 1px solid var(--line); }
@@ -245,6 +246,7 @@ table.compare thead th { text-align: left; font-weight: 600; font-size: 13px; co
 table.compare tbody tr { border-bottom: 1px solid var(--line); }
 table.compare tbody tr:nth-child(even) { background: var(--row-alt); }
 table.compare tbody tr.pick { background: var(--tag-bg); }
+table.compare tbody tr.calc-match { box-shadow: inset 3px 0 0 var(--green-deep); }
 table.compare td { padding: 16px; font-size: 14.5px; vertical-align: middle; }
 table.compare .loading-row td { padding: 32px 16px; text-align: center; color: var(--ink-soft); font-size: 14px; }
 .broker-cell { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }

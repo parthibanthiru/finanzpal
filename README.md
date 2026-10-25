@@ -100,6 +100,8 @@ finanzpal/
 │   │                                Seite eigene Filter-/Ansichtslogik braucht)
 │   ├── etf-search.js               Filterlogik für etf-suche.html
 │   ├── ratgeber-filter.js          Themen-Filter (Chips) auf ratgeber.html, Filter im URL-Hash (#investieren)
+│   ├── kredite-filter.js           Filter-Chips + Schnellrechner auf kredite.html (hört auf das
+│   │                                "fpcompare:rendered"-Event von compare.js)
 │   ├── kk-skeleton.js              Lade-Skeleton für Kreditkarten-/Depot-Karten
 │   ├── compare-bar.js              Fixierte „Vergleichen"-Leiste (Mehrfachauswahl → Vergleich)
 │   ├── sparplanrechner.js          Logik für Sparplanrechner & Zinseszinsrechner
@@ -844,7 +846,51 @@ die **Vergleichstabelle**:
    Sterne-Bewertung selbst steht aber weiterhin unverändert daneben — ob
    sie ganz entfernt, dokumentiert oder dauerhaft parallel zum Score
    gezeigt wird, ist noch offen.
-4. **Versicherungen-Reiter: Finanzpal-Score nur für Privathaftpflicht.**
+4. **Kredite-Schnellrechner und Filter-Chips waren rein dekorativ (behoben
+   2026-10-25).** `kredite.html`/`en/` zeigte eine statische Vorschau des
+   Schnellrechners (Werte als `<div>`, kein Klick-Handler) und die drei
+   Filter-Chips waren `<span>`-Elemente ohne Funktion. Jetzt:
+   - **Schnellrechner:** echte `<select>`-Felder (Betrag 1.000–100.000 €,
+     Laufzeit 12–120 Monate, Zweck nur informativ) + echter Button
+     („Zinsen anzeigen"/„Show rates"). `assets/compare.js` berechnet beim
+     Rendern pro Zeile `data-amount-min/-max`/`data-term-min/-max` aus den
+     bereits veröffentlichten Bereichsangaben (Regex-Parsing von z. B.
+     „1.000 – 75.000 €"/„€1,000 – 75,000" — keine neuen/erfundenen Zahlen)
+     und feuert danach ein `fpcompare:rendered`-Event auf die `<table>`.
+     Das neue `assets/kredite-filter.js` hört darauf, markiert beim Klick
+     passende Zeilen (`tr.calc-match`, `box-shadow: inset 3px 0 0 …` statt
+     `border-left`, um die Spaltenbreite nicht zu beeinflussen — siehe die
+     Overflow-Lehre im Abschnitt „Vergleichskarten-Layout" oben) und zeigt
+     eine Ergebniszeile unter dem Rechner.
+   - **Filter-Chips:** wurden zu echten `<button data-filter>` (gleiches
+     Muster wie `ratgeber.html`/`assets/ratgeber-filter.js`). Zwei der drei
+     ursprünglichen Chips sind jetzt funktional:
+     „Ohne Bearbeitungsgebühr" (`data-bearbeitungsgebuehr-frei="1"`,
+     einheitlich für alle 10 Anbieter gesetzt — gestützt auf das
+     BGH-Urteil vom 13.05.2014, Az. XI ZR 405/12 und XI ZR 170/13, das
+     Bearbeitungsentgelte in Verbraucherdarlehen für unzulässig erklärt
+     hat; Zitat im Disclosure-Text unter der Tabelle) und „Sondertilgung
+     kostenlos" (`data-sondertilgung-frei`, per Keyword-Match `/kostenlos/i`
+     bzw. `/free/i` aus dem bereits veröffentlichten `sondertilgung`-Text
+     abgeleitet — keine neue Datenquelle).
+   - **Bewusst nicht übernommen:** der dritte ursprüngliche Chip
+     „Sofortzusage möglich" wurde entfernt statt funktional nachgebaut.
+     Eine Recherche je Anbieter ergab nur für die ING eine verifizierbare
+     Aussage („Kreditzusage sofort"); für die übrigen neun Anbieter ließ
+     sich das weder bestätigen noch verneinen. Eine erfundene oder geratene
+     Pro-Anbieter-Markierung hätte dem Data-Integrity-Prinzip widersprochen,
+     daher ist der Chip ersatzlos entfernt statt mit ungesicherten Daten
+     wieder "funktionsfähig" gemacht zu werden.
+   - **Bewusst nicht mitbehoben:** `tagesgeld.html` und
+     `versicherungen.html`/`en/` haben denselben nicht-funktionalen
+     `.filters .chip`-Markup-Pattern wie `kredite.html` vor diesem Fix, sind
+     aber vom Nutzer nicht als defekt gemeldet worden und wurden daher
+     absichtlich nicht angefasst (kein Scope-Creep auf ungemeldete Seiten).
+     Betroffen bei Bedarf: gleiches Muster wie oben, neues
+     `assets/tagesgeld-filter.js`/`versicherungen-filter.js` nötig, da
+     `kredite-filter.js` fest an `table.compare[data-type="kredite"]` und
+     dessen Kredite-spezifische `data-*`-Attribute gebunden ist.
+5. **Versicherungen-Reiter: Finanzpal-Score nur für Privathaftpflicht.**
    `versicherungen.html`/`en/` zeigt fünf Reiter über ein gemeinsames
    Tabellen-Layout; seit 2026-10-24 hat nur der erste (Privathaftpflicht)
    einen Finanzpal-Score. Hausrat, BU, Rechtsschutz und Kfz bleiben bewusst

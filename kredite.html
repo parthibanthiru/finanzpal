@@ -105,20 +105,59 @@
     <div class="calc-panel">
       <div class="cp-label">SCHNELLRECHNER</div>
       <div class="calc-row">
-        <div class="calc-field"><label>Kreditsumme</label><div class="field-input">10.000 €</div></div>
-        <div class="calc-field"><label>Laufzeit</label><div class="field-input">48 Monate</div></div>
-        <div class="calc-field"><label>Verwendungszweck</label><div class="field-input">Frei verwendbar</div></div>
-        <a href="#" class="cta-btn">Zinsen anzeigen</a>
+        <div class="calc-field"><label for="kredit-calc-amount">Kreditsumme</label>
+          <select id="kredit-calc-amount" class="field-input">
+            <option value="1000">1.000 €</option>
+            <option value="2500">2.500 €</option>
+            <option value="5000">5.000 €</option>
+            <option value="10000" selected>10.000 €</option>
+            <option value="15000">15.000 €</option>
+            <option value="20000">20.000 €</option>
+            <option value="30000">30.000 €</option>
+            <option value="50000">50.000 €</option>
+            <option value="75000">75.000 €</option>
+            <option value="100000">100.000 €</option>
+          </select>
+        </div>
+        <div class="calc-field"><label for="kredit-calc-term">Laufzeit</label>
+          <select id="kredit-calc-term" class="field-input">
+            <option value="12">12 Monate</option>
+            <option value="24">24 Monate</option>
+            <option value="36">36 Monate</option>
+            <option value="48" selected>48 Monate</option>
+            <option value="60">60 Monate</option>
+            <option value="72">72 Monate</option>
+            <option value="84">84 Monate</option>
+            <option value="96">96 Monate</option>
+            <option value="108">108 Monate</option>
+            <option value="120">120 Monate</option>
+          </select>
+        </div>
+        <div class="calc-field"><label for="kredit-calc-purpose">Verwendungszweck</label>
+          <select id="kredit-calc-purpose" class="field-input">
+            <option value="frei">Frei verwendbar</option>
+            <option value="auto">Autokauf</option>
+            <option value="umschuldung">Umschuldung</option>
+            <option value="modernisierung">Modernisierung</option>
+          </select>
+        </div>
+        <button type="button" id="kredit-calc-btn" class="cta-btn">Zinsen anzeigen</button>
       </div>
+      <p id="kredit-calc-result" class="calc-result" hidden></p>
     </div>
   </section>
-  <section class="filters"><span class="chip active">Alle</span><span class="chip">Ohne Bearbeitungsgebühr</span><span class="chip">Sondertilgung kostenlos</span><span class="chip">Sofortzusage möglich</span><a href="ueber-uns.html#finanzpal-score" class="method-link"><span class="mi">ⓘ</span>Wie wir bewerten →</a></section>
+  <section class="filters">
+    <button type="button" class="chip active" data-filter="" aria-pressed="true">Alle</button>
+    <button type="button" class="chip" data-filter="bearbeitungsgebuehr" aria-pressed="false">Ohne Bearbeitungsgebühr</button>
+    <button type="button" class="chip" data-filter="sondertilgung" aria-pressed="false">Sondertilgung kostenlos</button>
+    <a href="ueber-uns.html#finanzpal-score" class="method-link"><span class="mi">ⓘ</span>Wie wir bewerten →</a>
+  </section>
   <section class="table-scroll">
     <table class="compare" data-source="data/kredite.json" data-type="kredite">
       <thead><tr><th>Anbieter</th><th>Eff. Jahreszins ab</th><th>Kreditsumme</th><th>Laufzeit</th><th>Sondertilgung</th><th></th></tr></thead>
       <tbody><tr class="loading-row"><td colspan="6">Lade Vergleichsdaten …</td></tr></tbody>
     </table>
-    <p class="disclosure-note"><strong>Werbung:</strong> Finanzpal erhält ggf. eine Provision, wenn du über einen Link einen Kredit abschließt. Das beeinflusst unsere Bewertung nicht — Details siehe <a href="ueber-uns.html#finanzpal-score" style="text-decoration:underline;">Methodik</a>. Der tatsächliche Zinssatz hängt von deiner Bonität ab (Beispiel für einen repräsentativen Kunden). Konditionen Stand Oktober 2026, Quelle: Anbieter-Websites, biallo.de und capitalo.de — bitte vor Antragstellung aktuelle Konditionen beim Anbieter prüfen.</p>
+    <p class="disclosure-note"><strong>Werbung:</strong> Finanzpal erhält ggf. eine Provision, wenn du über einen Link einen Kredit abschließt. Das beeinflusst unsere Bewertung nicht — Details siehe <a href="ueber-uns.html#finanzpal-score" style="text-decoration:underline;">Methodik</a>. Der tatsächliche Zinssatz hängt von deiner Bonität ab (Beispiel für einen repräsentativen Kunden). Konditionen Stand Oktober 2026, Quelle: Anbieter-Websites, biallo.de und capitalo.de — bitte vor Antragstellung aktuelle Konditionen beim Anbieter prüfen. „Ohne Bearbeitungsgebühr" gilt für alle hier gelisteten Ratenkredite: Bearbeitungsentgelte für Verbraucherdarlehen sind seit dem BGH-Urteil vom 13.05.2014 (Az. XI ZR 405/12, XI ZR 170/13) unzulässig.</p>
   </section>
   <section class="method">
     <div><h2>Wie wir vergleichen</h2><p>Kreditzinsen hängen stark von der individuellen Bonität ab — wir vergleichen deshalb den effektiven Jahreszins für einen repräsentativen Beispielkunden sowie die Bedingungen, die für alle Kreditnehmer gleich gelten.</p></div>
@@ -179,6 +218,7 @@
 
 <script src="assets/nav.js"></script>
 <script src="assets/compare.js"></script>
+<script src="assets/kredite-filter.js"></script>
 <script src="assets/score-popover.js"></script>
 </body>
 </html>

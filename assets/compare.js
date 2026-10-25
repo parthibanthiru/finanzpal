@@ -104,6 +104,17 @@
     });
   }
 
+  // Parses a published range string (e.g. "1.000 – 75.000 €" or
+  // "€1,000 – 75,000") into {min, max} integers. Used to drive the Kredite
+  // page's quick-calculator highlight and range checks — it only parses
+  // numbers the site already publishes, it never invents new figures.
+  function parseRangeNumbers(str) {
+    var nums = String(str || '').match(/\d[\d.,]*/g);
+    if (!nums || nums.length < 2) return null;
+    function toInt(n) { return parseInt(n.replace(/[.,]/g, ''), 10); }
+    return { min: toInt(nums[0]), max: toInt(nums[1]) };
+  }
+
   function brokerCell(item, type) {
     var nameHtml = item.recommended
       ? '<div class="broker-name linked">' + escapeHtml(item.name) + scoreBadgeHtml(type, item) + '</div><span class="broker-tag">' + STR[LANG].pick + '</span>'
@@ -143,7 +154,18 @@
         '</tr>';
     },
     kredite: function (item) {
-      return '<tr class="' + (item.recommended ? 'pick' : '') + '">' +
+      var amountRange = parseRangeNumbers(item.amount);
+      var termRange = parseRangeNumbers(item.term);
+      // "Kostenlos besparbar" claim is only set when the provider's own
+      // Sondertilgung text says so explicitly — not inferred for providers
+      // whose text only cites the general statutory rule (§ 502 BGB) without
+      // specifying their own terms.
+      var sondertilgungFrei = (LANG === 'en' ? /free/i : /kostenlos/i).test(item.sondertilgung || '');
+      return '<tr class="' + (item.recommended ? 'pick' : '') +
+        '" data-amount-min="' + (amountRange ? amountRange.min : '') + '" data-amount-max="' + (amountRange ? amountRange.max : '') + '"' +
+        ' data-term-min="' + (termRange ? termRange.min : '') + '" data-term-max="' + (termRange ? termRange.max : '') + '"' +
+        ' data-sondertilgung-frei="' + (sondertilgungFrei ? '1' : '0') + '"' +
+        ' data-bearbeitungsgebuehr-frei="1">' +
         '<td>' + brokerCell(item, 'kredite') + '</td>' +
         '<td><span class="rate-val">' + item.rate + '</span></td>' +
         '<td class="num-cell">' + item.amount + '</td>' +
@@ -188,6 +210,9 @@
         tbody.innerHTML = data.items.map(renderRow).join('');
         var updatedEl = document.getElementById('last-updated');
         if (updatedEl && data.updated) updatedEl.textContent = formatUpdated(data.updated);
+        // Lets a page-specific script (e.g. assets/kredite-filter.js) act on
+        // the freshly rendered rows without re-fetching the data itself.
+        table.dispatchEvent(new CustomEvent('fpcompare:rendered', { detail: { type: type, items: data.items } }));
       })
       .catch(function (err) {
         tbody.innerHTML = '<tr class="loading-row"><td colspan="6">' + STR[LANG].error(escapeHtml(err.message)) + '</td></tr>';

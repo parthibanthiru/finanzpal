@@ -105,20 +105,59 @@
     <div class="calc-panel">
       <div class="cp-label">QUICK CALCULATOR</div>
       <div class="calc-row">
-        <div class="calc-field"><label>Loan amount</label><div class="field-input">€10,000</div></div>
-        <div class="calc-field"><label>Term</label><div class="field-input">48 months</div></div>
-        <div class="calc-field"><label>Purpose</label><div class="field-input">Freely usable</div></div>
-        <a href="#" class="cta-btn">Show rates</a>
+        <div class="calc-field"><label for="kredit-calc-amount">Loan amount</label>
+          <select id="kredit-calc-amount" class="field-input">
+            <option value="1000">€1,000</option>
+            <option value="2500">€2,500</option>
+            <option value="5000">€5,000</option>
+            <option value="7500">€7,500</option>
+            <option value="10000" selected>€10,000</option>
+            <option value="15000">€15,000</option>
+            <option value="20000">€20,000</option>
+            <option value="30000">€30,000</option>
+            <option value="50000">€50,000</option>
+            <option value="100000">€100,000</option>
+          </select>
+        </div>
+        <div class="calc-field"><label for="kredit-calc-term">Term</label>
+          <select id="kredit-calc-term" class="field-input">
+            <option value="12">12 months</option>
+            <option value="24">24 months</option>
+            <option value="36">36 months</option>
+            <option value="48" selected>48 months</option>
+            <option value="60">60 months</option>
+            <option value="72">72 months</option>
+            <option value="84">84 months</option>
+            <option value="96">96 months</option>
+            <option value="108">108 months</option>
+            <option value="120">120 months</option>
+          </select>
+        </div>
+        <div class="calc-field"><label for="kredit-calc-purpose">Purpose</label>
+          <select id="kredit-calc-purpose" class="field-input">
+            <option value="free">Freely usable</option>
+            <option value="car">Car purchase</option>
+            <option value="refinance">Debt refinancing</option>
+            <option value="home">Home improvement</option>
+          </select>
+        </div>
+        <button type="button" id="kredit-calc-btn" class="cta-btn">Show rates</button>
       </div>
+      <p id="kredit-calc-result" class="calc-result" hidden></p>
     </div>
   </section>
-  <section class="filters"><span class="chip active">All</span><span class="chip">No processing fee</span><span class="chip">Free overpayment</span><span class="chip">Instant approval possible</span><a href="ueber-uns.html#finanzpal-score" class="method-link"><span class="mi">ⓘ</span>How we rate →</a></section>
+  <section class="filters">
+    <button type="button" class="chip active" data-filter="" aria-pressed="true">All</button>
+    <button type="button" class="chip" data-filter="bearbeitungsgebuehr" aria-pressed="false">No processing fee</button>
+    <button type="button" class="chip" data-filter="sondertilgung" aria-pressed="false">Free overpayment</button>
+    <a href="ueber-uns.html#finanzpal-score" class="method-link"><span class="mi">ⓘ</span>How we rate →</a>
+  </section>
   <section class="table-scroll">
     <table class="compare" data-source="../data/kredite.json" data-type="kredite">
       <thead><tr><th>Provider</th><th>Eff. annual rate from</th><th>Loan amount</th><th>Term</th><th>Overpayment</th><th></th></tr></thead>
       <tbody><tr class="loading-row"><td colspan="6">Loading comparison data …</td></tr></tbody>
     </table>
-    <p class="disclosure-note"><strong>Advertisement:</strong> Finanzpal may receive a commission if you take out a loan via a link. This does not affect our rating — see <a href="ueber-uns.html#finanzpal-score" style="text-decoration:underline;">Methodology</a> for details. The actual rate depends on your creditworthiness (example for a representative customer). Terms as of October 2026, sourced from provider websites, biallo.de and capitalo.de — please check current terms with the provider before applying.</p>
+    <p class="disclosure-note"><strong>Advertisement:</strong> Finanzpal may receive a commission if you take out a loan via a link. This does not affect our rating — see <a href="ueber-uns.html#finanzpal-score" style="text-decoration:underline;">Methodology</a> for details. The actual rate depends on your creditworthiness (example for a representative customer). Terms as of October 2026, sourced from provider websites, biallo.de and capitalo.de — please check current terms with the provider before applying. "No processing fee" applies to all installment loans listed here: processing fees for consumer loans have been unlawful in Germany since the Federal Court of Justice (BGH) ruling of 13 May 2014 (case nos. XI ZR 405/12, XI ZR 170/13).</p>
   </section>
   <section class="method">
     <div><h2>How we compare</h2><p>Loan rates depend heavily on individual creditworthiness — we therefore compare the effective annual rate for a representative example customer, as well as the terms that apply equally to all borrowers.</p></div>
@@ -180,6 +219,7 @@
 
 <script src="../assets/nav.js"></script>
 <script src="../assets/compare.js"></script>
+<script src="../assets/kredite-filter.js"></script>
 <script src="../assets/score-popover.js"></script>
 </body>
 </html>
