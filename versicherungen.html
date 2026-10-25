@@ -103,7 +103,12 @@
     </div>
   </section>
   <nav class="type-tabs"><span class="type-tab active">Privathaftpflicht</span><span class="type-tab">Hausrat</span><span class="type-tab">Berufsunfähigkeit</span><span class="type-tab">Rechtsschutz</span><span class="type-tab">Kfz</span></nav>
-  <section class="filters"><span class="chip active">Alle</span><span class="chip">Ohne Selbstbeteiligung</span><span class="chip">Weltweiter Schutz</span><span class="chip">Online abschließbar</span><a href="ueber-uns.html#methodik" class="method-link"><span class="mi">ⓘ</span>Wie wir vergleichen →</a></section>
+  <section class="filters">
+    <button type="button" class="chip active" data-filter="" aria-pressed="true">Alle</button>
+    <button type="button" class="chip" data-filter="recommended" aria-pressed="false">Empfehlung</button>
+    <button type="button" class="chip" data-filter="rated" aria-pressed="false">Mit Bewertung</button>
+    <a href="ueber-uns.html#methodik" class="method-link"><span class="mi">ⓘ</span>Wie wir vergleichen →</a>
+  </section>
   <section class="table-scroll">
     <table class="compare" data-source="data/versicherungen.json" data-type="versicherungen">
       <thead><tr><th>Anbieter</th><th>Jahresbeitrag</th><th>Deckungssumme</th><th>Leistungsumfang</th><th>Bewertung</th><th></th></tr></thead>
@@ -171,6 +176,7 @@
 <script src="assets/nav.js"></script>
 <script src="assets/compare.js"></script>
 <script src="assets/insurance-tabs.js"></script>
+<script src="assets/versicherungen-filter.js"></script>
 <script src="assets/score-popover.js"></script>
 </body>
 </html>

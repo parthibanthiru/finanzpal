@@ -102,6 +102,8 @@ finanzpal/
 │   ├── ratgeber-filter.js          Themen-Filter (Chips) auf ratgeber.html, Filter im URL-Hash (#investieren)
 │   ├── kredite-filter.js           Filter-Chips + Schnellrechner auf kredite.html (hört auf das
 │   │                                "fpcompare:rendered"-Event von compare.js)
+│   ├── versicherungen-filter.js    Filter-Chips auf versicherungen.html, über alle 5 Reiter hinweg
+│   │                                (gleiches "fpcompare:rendered"-Event, auch bei Reiter-Wechsel)
 │   ├── kk-skeleton.js              Lade-Skeleton für Kreditkarten-/Depot-Karten
 │   ├── compare-bar.js              Fixierte „Vergleichen"-Leiste (Mehrfachauswahl → Vergleich)
 │   ├── sparplanrechner.js          Logik für Sparplanrechner & Zinseszinsrechner
@@ -893,15 +895,35 @@ die **Vergleichstabelle**:
      Pro-Anbieter-Markierung hätte dem Data-Integrity-Prinzip widersprochen,
      daher ist der Chip ersatzlos entfernt statt mit ungesicherten Daten
      wieder "funktionsfähig" gemacht zu werden.
-   - **Bewusst nicht mitbehoben:** `tagesgeld.html` und
-     `versicherungen.html`/`en/` haben denselben nicht-funktionalen
-     `.filters .chip`-Markup-Pattern wie `kredite.html` vor diesem Fix, sind
-     aber vom Nutzer nicht als defekt gemeldet worden und wurden daher
-     absichtlich nicht angefasst (kein Scope-Creep auf ungemeldete Seiten).
-     Betroffen bei Bedarf: gleiches Muster wie oben, neues
-     `assets/tagesgeld-filter.js`/`versicherungen-filter.js` nötig, da
-     `kredite-filter.js` fest an `table.compare[data-type="kredite"]` und
-     dessen Kredite-spezifische `data-*`-Attribute gebunden ist.
+   - **Bewusst nicht mitbehoben:** `tagesgeld.html` hat denselben
+     nicht-funktionalen `.filters .chip`-Markup-Pattern wie `kredite.html`
+     vor diesem Fix, ist aber vom Nutzer nicht als defekt gemeldet worden
+     und wurde daher absichtlich nicht angefasst (kein Scope-Creep auf
+     ungemeldete Seiten). Betroffen bei Bedarf: gleiches Muster wie oben,
+     neues `assets/tagesgeld-filter.js` nötig, da `kredite-filter.js` fest
+     an `table.compare[data-type="kredite"]` und dessen Kredite-spezifische
+     `data-*`-Attribute gebunden ist.
+   - **`versicherungen.html`/`en/` am 2026-10-25 behoben, aber mit
+     geänderten Filter-Kriterien statt den ursprünglichen drei:** Die
+     Original-Chips „Ohne Selbstbeteiligung"/„Weltweiter Schutz"/„Online
+     abschließbar" ließen sich in keiner der 5 Kategorien
+     (`versicherungen`/`hausrat`/`bu`/`rechtsschutz`/`autoversicherung`)
+     durch echte Daten belegen — keines der JSON-Files hat ein
+     entsprechendes Feld, und das Freitextfeld `leistungen` erwähnt
+     „weltweit" nur bei 2 von 10 PHV-Anbietern (fehlende Erwähnung heißt
+     nicht „nicht vorhanden", sondern „nicht recherchiert"). Statt die
+     Chips wie bei Kredite ersatzlos zu streichen, wurden sie (Nutzerwahl)
+     durch zwei Kriterien ersetzt, die in allen 5 Kategorien echt vorhanden
+     sind: „Empfehlung" (`item.recommended`) und „Mit Bewertung"
+     (`item.rating !== null` — bei BU/Rechtsschutz/Kfz ist `rating` für
+     viele/alle Anbieter `null`, daher dort oft wenige oder keine Treffer,
+     was korrekt den fehlenden unabhängigen Ratings entspricht statt sie zu
+     verschweigen). `assets/compare.js`s gemeinsamer `versicherungen`-Row-
+     Renderer (geteilt von allen 5 Reitern) setzt dafür
+     `data-recommended`/`data-rated` auf jede `<tr>`; `versicherungen-
+     filter.js` hört auf das vorhandene `fpcompare:rendered`-Event, damit
+     der aktive Filter auch nach einem Reiter-Wechsel (eigener
+     `renderTable()`-Aufruf aus `insurance-tabs.js`) erhalten bleibt.
 5. **Versicherungen-Reiter: Finanzpal-Score nur für Privathaftpflicht.**
    `versicherungen.html`/`en/` zeigt fünf Reiter über ein gemeinsames
    Tabellen-Layout; seit 2026-10-24 hat nur der erste (Privathaftpflicht)

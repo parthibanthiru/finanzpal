@@ -175,7 +175,10 @@
         '</tr>';
     },
     versicherungen: function (item) {
-      return '<tr class="' + (item.recommended ? 'pick' : '') + '">' +
+      var isRated = item.rating !== null && item.rating !== undefined;
+      return '<tr class="' + (item.recommended ? 'pick' : '') + '"' +
+        ' data-recommended="' + (item.recommended ? '1' : '0') + '"' +
+        ' data-rated="' + (isRated ? '1' : '0') + '">' +
         '<td>' + brokerCell(item, 'versicherungen') + '</td>' +
         '<td class="num-cell">' + item.beitrag + '</td>' +
         '<td class="num-cell">' + item.deckung + '</td>' +
