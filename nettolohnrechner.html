@@ -4,8 +4,9 @@
 <script>(function(){try{var t=localStorage.getItem("fp-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nettolohnrechner: Brutto-Netto-Rechner für Steuerklasse I — Finanzpal</title>
-<meta name="description" content="Kostenloser Nettolohnrechner für Steuerklasse I: Berechne aus deinem Bruttogehalt die Sozialabgaben, Lohnsteuer und dein Nettogehalt — mit allen Zwischenschritten.">
+<title>Nettolohnrechner: Brutto-Netto-Rechner für alle Steuerklassen — Finanzpal</title>
+<meta name="description" content="Kostenloser Nettolohnrechner für die Steuerklassen I–IV (inkl. Faktorverfahren): Berechne aus deinem Bruttogehalt Sozialabgaben, Lohnsteuer und dein Nettogehalt — mit Kinderfreibetrag, Bundesland und privater oder gesetzlicher Krankenversicherung.">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600;700&family=Sora:wght@600&display=swap" rel="stylesheet">
@@ -91,62 +92,124 @@
   <p class="breadcrumb"><a href="index.html">Start</a> &nbsp;/&nbsp; Rechner &nbsp;/&nbsp; Nettolohnrechner</p>
   <section class="hero" style="padding-bottom:8px;">
     <h1>Nettolohnrechner</h1>
-    <p class="lede">Berechne aus deinem Bruttogehalt Sozialabgaben, Lohnsteuer und dein Nettogehalt — mit allen Zwischenschritten einzeln aufgeschlüsselt.</p>
+    <p class="lede">Berechne aus deinem Bruttogehalt Sozialabgaben, Lohnsteuer und dein Nettogehalt — für alle Steuerklassen (I–IV, inkl. Faktorverfahren), mit Kinderfreibetrag, Bundesland und gesetzlicher oder privater Krankenversicherung.</p>
   </section>
 
   <div class="calc-page-layout">
     <div class="calc-inputs">
       <h2>DEINE EINGABEN</h2>
-      <div class="calc-field-group">
-        <label>Bruttogehalt pro Monat <span class="live-val" id="nl-brutto-val">4.000 €</span></label>
-        <input type="range" id="nl-brutto" min="1000" max="15000" step="50" value="4000">
+      <div class="lohn-field-inline">
+        <label for="nl-zeitraum">Abrechnungszeitraum</label>
+        <select id="nl-zeitraum">
+          <option value="monat" selected>Monat</option>
+          <option value="jahr">Jahr</option>
+        </select>
       </div>
       <div class="calc-field-group">
+        <label>Bruttogehalt <span class="live-val" id="nl-brutto-val">4.000 €</span></label>
+        <input type="range" id="nl-brutto" min="1000" max="15000" step="50" value="4000">
+      </div>
+      <div class="lohn-field-inline">
+        <label for="nl-steuerklasse">Steuerklasse</label>
+        <select id="nl-steuerklasse">
+          <option value="1" selected>I — ledig</option>
+          <option value="2">II — alleinerziehend</option>
+          <option value="3">III — verheiratet, höheres Einkommen</option>
+          <option value="4">IV — verheiratet, ähnliches Einkommen</option>
+          <option value="4f">IV mit Faktor</option>
+          <option value="5">V — verheiratet, niedrigeres Einkommen</option>
+          <option value="6">VI — Zweitjob</option>
+        </select>
+      </div>
+      <div class="lohn-field-inline" id="nl-faktor-group" hidden>
+        <label for="nl-faktor">Faktor auf der Lohnsteuerkarte</label>
+        <input type="number" id="nl-faktor" min="0.001" max="0.999" step="0.001" value="0.890">
+      </div>
+      <div class="calc-field-group">
+        <label>Kinderfreibeträge <span class="live-val" id="nl-kinderfreibetrag-val">0,0</span></label>
+        <input type="range" id="nl-kinderfreibetrag" min="0" max="6" step="0.5" value="0">
+      </div>
+      <div class="lohn-field-inline">
+        <label for="nl-bundesland">Bundesland</label>
+        <select id="nl-bundesland">
+          <option value="bw">Baden-Württemberg</option>
+          <option value="by">Bayern</option>
+          <option value="be" selected>Berlin</option>
+          <option value="bb">Brandenburg</option>
+          <option value="hb">Bremen</option>
+          <option value="hh">Hamburg</option>
+          <option value="he">Hessen</option>
+          <option value="mv">Mecklenburg-Vorpommern</option>
+          <option value="ni">Niedersachsen</option>
+          <option value="nw">Nordrhein-Westfalen</option>
+          <option value="rp">Rheinland-Pfalz</option>
+          <option value="sl">Saarland</option>
+          <option value="sn">Sachsen</option>
+          <option value="st">Sachsen-Anhalt</option>
+          <option value="sh">Schleswig-Holstein</option>
+          <option value="th">Thüringen</option>
+        </select>
+      </div>
+      <label class="kk-check"><input type="checkbox" id="nl-kirchensteuerpflichtig"> Kirchensteuerpflichtig</label>
+      <div class="lohn-field-inline">
+        <label for="nl-kvtyp">Krankenversicherung</label>
+        <select id="nl-kvtyp">
+          <option value="gesetzlich" selected>Gesetzlich versichert</option>
+          <option value="privat">Privat versichert</option>
+        </select>
+      </div>
+      <div class="calc-field-group" id="nl-zusatzbeitrag-group">
         <label>Zusatzbeitrag Krankenkasse <span class="live-val" id="nl-zusatzbeitrag-val">2,90 %</span></label>
         <input type="range" id="nl-zusatzbeitrag" min="0" max="3.5" step="0.05" value="2.9">
       </div>
-      <div class="lohn-field-inline">
-        <label for="nl-kirchensteuer">Kirchensteuer</label>
-        <select id="nl-kirchensteuer">
-          <option value="0" selected>Keine</option>
-          <option value="9">9 % (die meisten Bundesländer)</option>
-          <option value="8">8 % (Bayern, Baden-Württemberg)</option>
-        </select>
+      <div class="calc-field-group" id="nl-pkv-group" hidden>
+        <label for="nl-pkv-praemie">Monatliche PKV-Prämie (Gesamtbeitrag)</label>
+        <input type="number" id="nl-pkv-praemie" min="0" step="10" value="550">
       </div>
-      <label class="kk-check"><input type="checkbox" id="nl-kinderlos"> Kinderlos und 23 Jahre oder älter (Pflegeversicherungs-Zuschlag)</label>
-      <p class="calc-disclaimer" style="margin-top:16px;">Dieser Rechner bildet <strong>Steuerklasse I</strong> ab (ledig, keine Kinder, keine weiteren Frei- oder Pauschbeträge) — für verheiratete Personen (Steuerklasse III/IV/V) oder mit Kindern weicht das Ergebnis ab. Die Lohnsteuer wird vereinfacht über eine Jahresrechnung ermittelt: Statt der amtlichen Vorsorgepauschale-Formel setzen wir die tatsächlich gezahlten Sozialabgaben an — das amtliche Lohnsteuerprogramm kann daher leicht abweichende Ergebnisse liefern. Für eine verbindliche Berechnung nutze eine Lohnabrechnung oder einen amtlichen Lohn- und Einkommensteuerrechner.</p>
+      <label class="kk-check" id="nl-kinderlos-row"><input type="checkbox" id="nl-kinderlos"> Kinderlos und 23 Jahre oder älter (Pflegeversicherungs-Zuschlag)</label>
+      <p class="calc-disclaimer" style="margin-top:16px;">Die Lohnsteuer wird vereinfacht über eine Jahresrechnung ermittelt: Statt der amtlichen Vorsorgepauschale-Formel setzen wir die tatsächlich gezahlten Sozial-/Krankenversicherungsbeiträge an — das amtliche Lohnsteuerprogramm kann daher leicht abweichende Ergebnisse liefern. Kinderfreibeträge mindern (wie im echten Lohnsteuerabzug) nur Solidaritätszuschlag und Kirchensteuer, nicht die Lohnsteuer selbst — deren volle Entlastung gibt es erst über die Steuererklärung. Für eine verbindliche Berechnung nutze eine Lohnabrechnung oder einen amtlichen Lohn- und Einkommensteuerrechner.</p>
     </div>
 
     <div class="calc-results">
-      <div class="result-cards">
-        <div class="result-card highlight"><div class="rc-label">Netto pro Monat</div><div class="rc-val" id="nl-result-netto">0 €</div></div>
-        <div class="result-card"><div class="rc-label">Sozialabgaben gesamt</div><div class="rc-val" id="nl-result-sv">0 €</div></div>
-        <div class="result-card"><div class="rc-label">Steuern gesamt</div><div class="rc-val" id="nl-result-steuer">0 €</div></div>
+      <div id="nl-result-normal">
+        <div class="result-cards">
+          <div class="result-card highlight"><div class="rc-label" id="nl-netto-label">Netto pro Monat</div><div class="rc-val" id="nl-result-netto">0 €</div></div>
+          <div class="result-card"><div class="rc-label">Sozialabgaben gesamt</div><div class="rc-val" id="nl-result-sv">0 €</div></div>
+          <div class="result-card"><div class="rc-label">Steuern gesamt</div><div class="rc-val" id="nl-result-steuer">0 €</div></div>
+        </div>
+
+        <div class="lohn-breakdown">
+          <div class="lohn-row"><span class="lbl">Rentenversicherung</span><span id="nl-row-rv">0 €</span></div>
+          <div class="lohn-row"><span class="lbl">Arbeitslosenversicherung</span><span id="nl-row-alv">0 €</span></div>
+          <div class="lohn-row" id="nl-row-kv-wrap"><span class="lbl" id="nl-row-kv-label">Krankenversicherung</span><span id="nl-row-kv">0 €</span></div>
+          <div class="lohn-row" id="nl-row-pv-wrap"><span class="lbl">Pflegeversicherung</span><span id="nl-row-pv">0 €</span></div>
+          <div class="lohn-row"><span class="lbl">Lohnsteuer</span><span id="nl-row-est">0 €</span></div>
+          <div class="lohn-row"><span class="lbl">Solidaritätszuschlag</span><span id="nl-row-soli">0 €</span></div>
+          <div class="lohn-row"><span class="lbl">Kirchensteuer</span><span id="nl-row-kist">0 €</span></div>
+          <div class="lohn-row total"><span class="lbl">Netto</span><span id="nl-row-netto">0 €</span></div>
+        </div>
       </div>
 
-      <div class="lohn-breakdown">
-        <div class="lohn-row"><span class="lbl">Rentenversicherung</span><span id="nl-row-rv">0 €</span></div>
-        <div class="lohn-row"><span class="lbl">Arbeitslosenversicherung</span><span id="nl-row-alv">0 €</span></div>
-        <div class="lohn-row"><span class="lbl">Krankenversicherung</span><span id="nl-row-kv">0 €</span></div>
-        <div class="lohn-row"><span class="lbl">Pflegeversicherung</span><span id="nl-row-pv">0 €</span></div>
-        <div class="lohn-row"><span class="lbl">Lohnsteuer</span><span id="nl-row-est">0 €</span></div>
-        <div class="lohn-row"><span class="lbl">Solidaritätszuschlag</span><span id="nl-row-soli">0 €</span></div>
-        <div class="lohn-row"><span class="lbl">Kirchensteuer</span><span id="nl-row-kist">0 €</span></div>
-        <div class="lohn-row total"><span class="lbl">Netto</span><span id="nl-row-netto">0 €</span></div>
+      <div id="nl-result-56" class="result-card" style="padding:28px;" hidden>
+        <div class="rc-label" style="margin-bottom:10px;">Steuerklasse V/VI</div>
+        <p style="max-width:60ch;margin:0 0 12px;">Die Lohnsteuer für die Steuerklassen V und VI folgt einem eigenen, mehrstufigen Berechnungsverfahren (§ 39b Abs. 2 Satz 7 EStG) mit Vergleichs- und Mindeststeuerberechnung. Wir konnten die genaue amtliche Formel nicht mit ausreichender Sicherheit nachbilden und zeigen hier deshalb bewusst keine eigene Zahl, statt ein falsches Ergebnis zu riskieren.</p>
+        <p style="max-width:60ch;margin:0;">Für Steuerklasse V/VI nutze bitte den offiziellen <a href="https://www.bmf-steuerrechner.de" style="text-decoration:underline;" rel="nofollow noopener" target="_blank">BMF-Lohnsteuerrechner</a>.</p>
       </div>
 
       <section class="method" style="padding:0 0 8px;grid-template-columns:1fr;">
         <div>
           <h2 style="font-size:20px;">Wie wird gerechnet?</h2>
-          <p style="max-width:70ch;">Die Sozialabgaben (Renten-, Arbeitslosen-, Kranken- und Pflegeversicherung) werden mit den Beitragssätzen und Beitragsbemessungsgrenzen für 2026 berechnet. Das zu versteuernde Einkommen ergibt sich vereinfacht aus Bruttojahreslohn abzüglich Sozialabgaben, Werbungskostenpauschale (1.230 €) und Sonderausgabenpauschbetrag (36 €). Darauf wird der Einkommensteuertarif nach § 32a EStG (Grundtabelle) angewendet, anschließend Solidaritätszuschlag (mit Freigrenze und Milderungszone) und optional Kirchensteuer.</p>
+          <p style="max-width:70ch;">Die Sozialabgaben (Renten-, Arbeitslosen-, Kranken- und Pflegeversicherung) werden mit den Beitragssätzen und Beitragsbemessungsgrenzen für 2026 berechnet — die Pflegeversicherung mit dem höheren Arbeitnehmeranteil in Sachsen. Bei privater Krankenversicherung setzen wir deinen Arbeitnehmeranteil nach Abzug des gesetzlichen Arbeitgeberzuschusses an (max. die Hälfte deiner Prämie, gedeckelt auf die Hälfte des GKV-Höchstbeitrags). Das zu versteuernde Einkommen ergibt sich vereinfacht aus Bruttojahreslohn abzüglich dieser Beiträge, Werbungskostenpauschale (1.230 €), Sonderausgabenpauschbetrag (36 €) und bei Steuerklasse II zusätzlich dem Entlastungsbetrag für Alleinerziehende. Darauf wird der Einkommensteuertarif nach § 32a EStG angewendet — bei Steuerklasse III verdoppelt (Splittingverfahren), bei IV mit Faktor anschließend mit deinem Faktor multipliziert. Kinderfreibeträge mindern erst danach, nur für Solidaritätszuschlag und Kirchensteuer, die Bemessungsgrundlage. Steuerklasse V und VI werden nicht berechnet (siehe oben).</p>
         </div>
       </section>
 
       <section class="faq" style="margin-top:0;padding-top:32px;">
         <h2>Häufige Fragen</h2>
-        <div class="faq-item"><h3>Warum weicht das Ergebnis von meiner echten Gehaltsabrechnung ab?</h3><p>Deine Lohnabrechnung berücksichtigt zusätzlich deine Steuerklasse, eingetragene Freibeträge, Kinderfreibeträge und die amtliche Vorsorgepauschale-Formel — dieser Rechner bildet bewusst nur den häufigsten Fall (Steuerklasse I, keine Kinder) vereinfacht ab.</p></div>
-        <div class="faq-item"><h3>Warum zahle ich trotz hohem Einkommen wenig oder keinen Soli?</h3><p>Seit der Reform 2021 entfällt der Solidaritätszuschlag für die meisten Steuerzahlenden fast vollständig — er greift erst ab einer Jahreslohnsteuer von rund 20.350 € (Steuerklasse I) und wird direkt oberhalb der Grenze zusätzlich in einer "Milderungszone" gedeckelt.</p></div>
+        <div class="faq-item"><h3>Warum weicht das Ergebnis von meiner echten Gehaltsabrechnung ab?</h3><p>Deine Lohnabrechnung nutzt die amtliche Vorsorgepauschale-Formel statt deiner tatsächlichen Beiträge und berücksichtigt ggf. weitere eingetragene Freibeträge — dieser Rechner bildet den häufigsten Fall vereinfacht ab.</p></div>
+        <div class="faq-item"><h3>Warum mindern Kinderfreibeträge nicht meine Lohnsteuer?</h3><p>Das ist im echten Lohnsteuerabzug genauso: Kinderfreibeträge wirken sich monatlich nur auf Solidaritätszuschlag und Kirchensteuer aus. Die eigentliche steuerliche Entlastung durch Kinderfreibeträge gibt es erst nach Prüfung durch das Finanzamt im Rahmen deiner Einkommensteuererklärung (Günstigerprüfung gegen das Kindergeld).</p></div>
+        <div class="faq-item"><h3>Warum zahle ich trotz hohem Einkommen wenig oder keinen Soli?</h3><p>Seit der Reform 2021 entfällt der Solidaritätszuschlag für die meisten Steuerzahlenden fast vollständig — er greift erst ab einer Jahreslohnsteuer von rund 20.350 € (bzw. 40.700 € bei Steuerklasse III) und wird direkt oberhalb der Grenze zusätzlich in einer "Milderungszone" gedeckelt.</p></div>
         <div class="faq-item"><h3>Was ist der Zusatzbeitrag der Krankenkasse?</h3><p>Jede gesetzliche Krankenkasse legt zusätzlich zum bundesweiten Grundsatz von 14,6 % einen eigenen Zusatzbeitrag fest, der je zur Hälfte von dir und deinem Arbeitgeber getragen wird. Der Durchschnittswert für 2026 liegt bei 2,9 % — schau in deiner Krankenkassen-Mitgliedsbescheinigung nach dem genauen Wert.</p></div>
+        <div class="faq-item"><h3>Wie wird der Arbeitgeberzuschuss bei privater Krankenversicherung berechnet?</h3><p>Dein Arbeitgeber übernimmt die Hälfte deiner PKV-Prämie, maximal aber die Hälfte des Betrags, den er bei einem gesetzlich versicherten Arbeitnehmer mit demselben Gehalt an Kranken- und Pflegeversicherung zahlen würde (gedeckelt auf die Beitragsbemessungsgrenze).</p></div>
       </section>
     </div>
   </div>

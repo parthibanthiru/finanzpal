@@ -569,6 +569,7 @@ h3.quiz-question { font-family: var(--font-display); font-weight: 500; font-size
 .kk-filter-group:last-child { margin-bottom: 0; }
 .kk-filter-group h3 { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.03em; }
 .kk-check { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--ink); margin-bottom: 10px; cursor: pointer; }
+.kk-check[hidden] { display: none; }
 .kk-check:last-child { margin-bottom: 0; }
 .kk-check input { accent-color: var(--green-deep); width: 15px; height: 15px; }
 .kk-select { width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: 13.5px; background: var(--bg); color: var(--ink); }
@@ -695,6 +696,7 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 /* Nettolohnrechner breakdown table */
 .lohn-breakdown { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px; padding: 8px 20px; margin: 20px 0; }
 .lohn-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; }
+.lohn-row[hidden] { display: none; }
 .lohn-row:last-child { border-bottom: none; }
 .lohn-row.total { font-weight: 600; font-size: 16px; color: var(--green-deep); }
 .lohn-row .lbl { color: var(--ink-soft); }

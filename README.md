@@ -37,7 +37,7 @@ gibt es doppelt: einmal auf Deutsch im Projekt-Root, einmal auf Englisch unter
 | `zinseszinsrechner.html` | Zinseszinsrechner (gleiche Engine wie oben) |
 | `kreditrechner.html` | Kreditrechner (Annuitätendarlehen) |
 | `baufinanzierungsrechner.html` | Baufinanzierungsrechner (Monatsrate, Restschuld, Zinskosten) |
-| `nettolohnrechner.html` | Brutto-Netto-Rechner, nur Steuerklasse I, mit voller Abgaben-Aufschlüsselung |
+| `nettolohnrechner.html` | Brutto-Netto-Rechner, Steuerklassen I–IV (inkl. IV mit Faktor), Kinderfreibetrag, Bundesland/Kirchensteuer, gesetzliche/private KV, Jahr/Monat-Umschaltung, mit voller Abgaben-Aufschlüsselung — siehe „Nettolohnrechner" unten für den Funktionsumfang und die bewusste Steuerklasse-V/VI-Lücke |
 | `haushaltsbuch.html` | Budget-Tracker, Daten nur im Browser (localStorage), kein Backend |
 | `altersvorsorge-rechner.html` | Altersvorsorge-/Rentenlücken-Rechner |
 
@@ -109,7 +109,7 @@ finanzpal/
 │   ├── sparplanrechner.js          Logik für Sparplanrechner & Zinseszinsrechner
 │   ├── kreditrechner.js            Annuitätenformel für den Kreditrechner
 │   ├── baufinanzierungsrechner.js  Annuitätendarlehen-Logik für Baufinanzierung
-│   ├── nettolohnrechner.js         SV-Beiträge + §32a-EStG-Tarif + Soli (Steuerklasse I)
+│   ├── nettolohnrechner.js         SV-Beiträge + §32a-EStG-Tarif + Soli/KiSt, Steuerklasse I–IV (siehe „Nettolohnrechner" unten)
 │   ├── haushaltsbuch.js            localStorage-Budget-Tracker
 │   ├── altersvorsorge-rechner.js   Rentenlücken-Logik
 │   └── deals.js                    Rendert data/deals.json in #deals-app; zeigt ehrlichen
@@ -1106,6 +1106,57 @@ eine vergleichbare Anbieter-Tabelle geben kann:
   Nav-Highlight), mit Kommentar zur Begründung; nach jeder künftigen
   Nav-Änderung läuft `python3 tools/build_nav.py` wie gewohnt über alle
   (jetzt 80) Seiten.
+
+## Nettolohnrechner: Erweiterung auf Steuerklassen I–IV (2026-10-25)
+
+`nettolohnrechner.html`/`en/` ging von einem reinen Steuerklasse-I-Rechner
+auf einen deutlich breiteren Funktionsumfang (angelehnt an nettolohn.de,
+bewusst ohne dessen Arbeitgeber-Vergleichs-/Lead-Gen-Felder wie PLZ, Beruf,
+Branche, Geschlecht — auf Wunsch explizit ausgeschlossen):
+
+- **Steuerklassen I–IV inkl. IV mit Faktorverfahren** (Faktor 0,001–0,999,
+  multipliziert die Steuerklasse-IV-Lohnsteuer). Steuerklasse III nutzt das
+  Splittingverfahren (`zvE/2`, Tarif, `×2`, inkl. verdoppelter
+  Soli-Freigrenze). Steuerklasse II addiert den Entlastungsbetrag für
+  Alleinerziehende (4.260 €/Jahr + 240 €/Jahr je weiterem Kind) direkt zur
+  Lohnsteuer-Bemessungsgrundlage.
+- **Kinderfreibetrag (in 0,5er-Schritten):** mindert — wie im echten
+  Lohnsteuerabzug nach §39b EStG — **nur** die Bemessungsgrundlage für
+  Soli und Kirchensteuer, **nicht** die Lohnsteuer selbst (die volle
+  Entlastung gibt's erst über die Steuererklärung/Günstigerprüfung). Dafür
+  wird intern ein zweiter, nur für Soli/KiSt verwendeter Tarif-Wert auf
+  `zvE − Kinderfreibetrag` berechnet; beim Faktorverfahren entfällt dieser
+  zweite Wert (dient sonst doppelte Anrechnung des Familienvorteils), dort
+  ist die bereits faktorisierte Lohnsteuer selbst die Bemessungsgrundlage.
+- **Bundesland-Auswahl** (alle 16) steuert den Kirchensteuersatz (8 % in
+  Bayern/Baden-Württemberg, sonst 9 %) und den Pflegeversicherung-Satz
+  (2,3 % in Sachsen statt 1,8 %, da dort kein gesetzlicher Feiertagsausgleich
+  gilt) + 0,6 % Kinderlosenzuschlag ab 23.
+- **Gesetzliche vs. private Krankenversicherung:** bei PKV wird der
+  Arbeitgeberzuschuss nach der amtlichen Formel berechnet
+  (`min(50 % der Prämie, 50 % × (14,6 % + Ø-Zusatzbeitrag 2,9 % + 3,6 % PV) ×
+  Beitragsbemessungsgrenze)`) statt der tatsächlichen Kassen-Zusatzbeitrag,
+  da bei PKV kein individueller Zusatzbeitrag existiert.
+- **Jahr/Monat-Umschaltung** für Eingabe und Ergebnis.
+- **Steuerklasse V/VI bewusst NICHT berechnet** — Data-Integrity-Entscheidung:
+  Das amtliche §39b-EStG-Verfahren für V/VI (mehrstufiger ZX-Vergleich/
+  Mindeststeuer-Mechanismus laut BMF-Programmablaufplan) ließ sich trotz
+  zweier gezielter Recherchen in den offiziellen BMF-PAP-PDFs nicht mit
+  ausreichender Sicherheit rekonstruieren (die Dokumente selbst waren an der
+  entscheidenden Stelle nur teilweise maschinenlesbar). Statt eine falsche
+  Zahl zu riskieren, zeigt die Seite für V/VI einen Hinweistext mit Link zum
+  offiziellen `bmf-steuerrechner.de` — gleiches Prinzip wie die BU-/Kfz-/
+  Baufinanzierungs-Tabs (siehe Data-Integrity-Prinzip oben).
+- **Logik-Datei:** `assets/nettolohnrechner.js` (SV-Beiträge, §32a-EStG-Tarif,
+  Soli, Kirchensteuer — jetzt für alle oben genannten Fälle, nicht mehr nur
+  Steuerklasse I).
+- **Mobile-Sync:** `mobile/lib/calc.ts`s `calcNetto()` wurde 1:1 mitgezogen
+  (inkl. `Steuerklasse`/`KvTyp`-Typen, `BUNDESLAENDER`-Konstante, gibt `null`
+  für V/VI zurück), `mobile/app/(app)/rechner/nettolohn.tsx` um die neuen
+  Eingabefelder erweitert, `mobile/lib/strings/de.ts`/`en.ts` um ~25 neue
+  Keys je Sprache ergänzt. Die alten `church`/`churchNone`/`church9`/`church8`-
+  Keys sind jetzt ungenutzt, aber absichtlich noch nicht entfernt (kleines
+  offenes Aufräum-Item, keine funktionale Auswirkung).
 
 ## Mobile App (`mobile/`)
 

@@ -4,8 +4,8 @@
 <script>(function(){try{var t=localStorage.getItem("fp-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Net Salary Calculator: Gross-to-Net for German Tax Class I — Finanzpal</title>
-<meta name="description" content="Free German net salary calculator for tax class I (Steuerklasse I): work out social contributions, income tax, and your net pay from your gross salary — with every step broken out.">
+<title>Net Salary Calculator: Gross-to-Net for All German Tax Classes — Finanzpal</title>
+<meta name="description" content="Free German net salary calculator for tax classes I–IV (incl. factor method): work out social contributions, income tax and your net pay — with child allowance, state and statutory or private health insurance.">
 <link rel="alternate" hreflang="de" href="/nettolohnrechner.html">
 <link rel="alternate" hreflang="en" href="/en/nettolohnrechner.html">
 <link rel="alternate" hreflang="x-default" href="/nettolohnrechner.html">
@@ -91,62 +91,124 @@
   <p class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Calculator &nbsp;/&nbsp; Net Salary Calculator</p>
   <section class="hero" style="padding-bottom:8px;">
     <h1>Net salary calculator</h1>
-    <p class="lede">Work out your social contributions, income tax, and net pay from your gross salary — with every step broken out individually.</p>
+    <p class="lede">Work out your social contributions, income tax, and net pay from your gross salary — for all tax classes (I–IV, incl. the factor method), with child allowance, state and statutory or private health insurance.</p>
   </section>
 
   <div class="calc-page-layout">
     <div class="calc-inputs">
       <h2>YOUR INPUTS</h2>
-      <div class="calc-field-group">
-        <label>Gross salary per month <span class="live-val" id="nl-brutto-val">€4,000</span></label>
-        <input type="range" id="nl-brutto" min="1000" max="15000" step="50" value="4000">
+      <div class="lohn-field-inline">
+        <label for="nl-zeitraum">Pay period</label>
+        <select id="nl-zeitraum">
+          <option value="monat" selected>Monthly</option>
+          <option value="jahr">Yearly</option>
+        </select>
       </div>
       <div class="calc-field-group">
+        <label>Gross salary <span class="live-val" id="nl-brutto-val">€4,000</span></label>
+        <input type="range" id="nl-brutto" min="1000" max="15000" step="50" value="4000">
+      </div>
+      <div class="lohn-field-inline">
+        <label for="nl-steuerklasse">Tax class</label>
+        <select id="nl-steuerklasse">
+          <option value="1" selected>I — single</option>
+          <option value="2">II — single parent</option>
+          <option value="3">III — married, higher earner</option>
+          <option value="4">IV — married, similar income</option>
+          <option value="4f">IV with factor</option>
+          <option value="5">V — married, lower earner</option>
+          <option value="6">VI — second job</option>
+        </select>
+      </div>
+      <div class="lohn-field-inline" id="nl-faktor-group" hidden>
+        <label for="nl-faktor">Factor on your tax card</label>
+        <input type="number" id="nl-faktor" min="0.001" max="0.999" step="0.001" value="0.890">
+      </div>
+      <div class="calc-field-group">
+        <label>Child allowances (Kinderfreibeträge) <span class="live-val" id="nl-kinderfreibetrag-val">0.0</span></label>
+        <input type="range" id="nl-kinderfreibetrag" min="0" max="6" step="0.5" value="0">
+      </div>
+      <div class="lohn-field-inline">
+        <label for="nl-bundesland">State (Bundesland)</label>
+        <select id="nl-bundesland">
+          <option value="bw">Baden-Württemberg</option>
+          <option value="by">Bavaria</option>
+          <option value="be" selected>Berlin</option>
+          <option value="bb">Brandenburg</option>
+          <option value="hb">Bremen</option>
+          <option value="hh">Hamburg</option>
+          <option value="he">Hesse</option>
+          <option value="mv">Mecklenburg-Vorpommern</option>
+          <option value="ni">Lower Saxony</option>
+          <option value="nw">North Rhine-Westphalia</option>
+          <option value="rp">Rhineland-Palatinate</option>
+          <option value="sl">Saarland</option>
+          <option value="sn">Saxony</option>
+          <option value="st">Saxony-Anhalt</option>
+          <option value="sh">Schleswig-Holstein</option>
+          <option value="th">Thuringia</option>
+        </select>
+      </div>
+      <label class="kk-check"><input type="checkbox" id="nl-kirchensteuerpflichtig"> Liable for church tax</label>
+      <div class="lohn-field-inline">
+        <label for="nl-kvtyp">Health insurance</label>
+        <select id="nl-kvtyp">
+          <option value="gesetzlich" selected>Statutory (GKV)</option>
+          <option value="privat">Private (PKV)</option>
+        </select>
+      </div>
+      <div class="calc-field-group" id="nl-zusatzbeitrag-group">
         <label>Health insurance surcharge (Zusatzbeitrag) <span class="live-val" id="nl-zusatzbeitrag-val">2.90 %</span></label>
         <input type="range" id="nl-zusatzbeitrag" min="0" max="3.5" step="0.05" value="2.9">
       </div>
-      <div class="lohn-field-inline">
-        <label for="nl-kirchensteuer">Church tax</label>
-        <select id="nl-kirchensteuer">
-          <option value="0" selected>None</option>
-          <option value="9">9% (most states)</option>
-          <option value="8">8% (Bavaria, Baden-Württemberg)</option>
-        </select>
+      <div class="calc-field-group" id="nl-pkv-group" hidden>
+        <label for="nl-pkv-praemie">Monthly PKV premium (your full premium)</label>
+        <input type="number" id="nl-pkv-praemie" min="0" step="10" value="550">
       </div>
-      <label class="kk-check"><input type="checkbox" id="nl-kinderlos"> Childless and 23 or older (long-term care insurance surcharge)</label>
-      <p class="calc-disclaimer" style="margin-top:16px;">This calculator models <strong>tax class I</strong> (single, no children, no further allowances) — for married people (tax class III/IV/V) or with children, the result will differ. Income tax is derived via a simplified annual calculation: instead of the official Vorsorgepauschale formula, we use the actual social contributions paid — the official payroll tax program may give a slightly different result. For a binding calculation, use a payslip or an official German wage/income tax calculator.</p>
+      <label class="kk-check" id="nl-kinderlos-row"><input type="checkbox" id="nl-kinderlos"> Childless and 23 or older (long-term care insurance surcharge)</label>
+      <p class="calc-disclaimer" style="margin-top:16px;">Income tax is derived via a simplified annual calculation: instead of the official Vorsorgepauschale formula, we use the actual social/health insurance contributions paid — the official payroll tax program may give a slightly different result. Child allowances reduce (as in real payroll withholding) only the solidarity surcharge and church tax, not income tax itself — the full tax benefit only applies via your annual tax return. For a binding calculation, use a payslip or an official German wage/income tax calculator.</p>
     </div>
 
     <div class="calc-results">
-      <div class="result-cards">
-        <div class="result-card highlight"><div class="rc-label">Net per month</div><div class="rc-val" id="nl-result-netto">€0</div></div>
-        <div class="result-card"><div class="rc-label">Total social contributions</div><div class="rc-val" id="nl-result-sv">€0</div></div>
-        <div class="result-card"><div class="rc-label">Total tax</div><div class="rc-val" id="nl-result-steuer">€0</div></div>
+      <div id="nl-result-normal">
+        <div class="result-cards">
+          <div class="result-card highlight"><div class="rc-label" id="nl-netto-label">Net per month</div><div class="rc-val" id="nl-result-netto">€0</div></div>
+          <div class="result-card"><div class="rc-label">Total social contributions</div><div class="rc-val" id="nl-result-sv">€0</div></div>
+          <div class="result-card"><div class="rc-label">Total tax</div><div class="rc-val" id="nl-result-steuer">€0</div></div>
+        </div>
+
+        <div class="lohn-breakdown">
+          <div class="lohn-row"><span class="lbl">Pension insurance</span><span id="nl-row-rv">€0</span></div>
+          <div class="lohn-row"><span class="lbl">Unemployment insurance</span><span id="nl-row-alv">€0</span></div>
+          <div class="lohn-row" id="nl-row-kv-wrap"><span class="lbl" id="nl-row-kv-label">Health insurance</span><span id="nl-row-kv">€0</span></div>
+          <div class="lohn-row" id="nl-row-pv-wrap"><span class="lbl">Long-term care insurance</span><span id="nl-row-pv">€0</span></div>
+          <div class="lohn-row"><span class="lbl">Income tax (Lohnsteuer)</span><span id="nl-row-est">€0</span></div>
+          <div class="lohn-row"><span class="lbl">Solidarity surcharge</span><span id="nl-row-soli">€0</span></div>
+          <div class="lohn-row"><span class="lbl">Church tax</span><span id="nl-row-kist">€0</span></div>
+          <div class="lohn-row total"><span class="lbl">Net</span><span id="nl-row-netto">€0</span></div>
+        </div>
       </div>
 
-      <div class="lohn-breakdown">
-        <div class="lohn-row"><span class="lbl">Pension insurance</span><span id="nl-row-rv">€0</span></div>
-        <div class="lohn-row"><span class="lbl">Unemployment insurance</span><span id="nl-row-alv">€0</span></div>
-        <div class="lohn-row"><span class="lbl">Health insurance</span><span id="nl-row-kv">€0</span></div>
-        <div class="lohn-row"><span class="lbl">Long-term care insurance</span><span id="nl-row-pv">€0</span></div>
-        <div class="lohn-row"><span class="lbl">Income tax (Lohnsteuer)</span><span id="nl-row-est">€0</span></div>
-        <div class="lohn-row"><span class="lbl">Solidarity surcharge</span><span id="nl-row-soli">€0</span></div>
-        <div class="lohn-row"><span class="lbl">Church tax</span><span id="nl-row-kist">€0</span></div>
-        <div class="lohn-row total"><span class="lbl">Net</span><span id="nl-row-netto">€0</span></div>
+      <div id="nl-result-56" class="result-card" style="padding:28px;" hidden>
+        <div class="rc-label" style="margin-bottom:10px;">Tax class V/VI</div>
+        <p style="max-width:60ch;margin:0 0 12px;">Income tax for tax classes V and VI follows its own, multi-step calculation procedure (§39b(2) sentence 7 EStG) with a comparison calculation and a minimum-tax rule. We couldn't reconstruct the exact official formula with enough confidence, so we deliberately show no figure of our own here rather than risk a wrong result.</p>
+        <p style="max-width:60ch;margin:0;">For tax class V/VI, please use the official <a href="https://www.bmf-steuerrechner.de" style="text-decoration:underline;" rel="nofollow noopener" target="_blank">BMF wage tax calculator</a>.</p>
       </div>
 
       <section class="method" style="padding:0 0 8px;grid-template-columns:1fr;">
         <div>
           <h2 style="font-size:20px;">How is this calculated?</h2>
-          <p style="max-width:70ch;">Social contributions (pension, unemployment, health and long-term care insurance) are calculated using the 2026 contribution rates and contribution ceilings. Taxable income is derived, simplified, as annual gross salary minus social contributions, the standard employee allowance (€1,230) and the standard special-expenses allowance (€36). The income tax tariff under §32a EStG (basic table) is then applied, followed by the solidarity surcharge (with its exemption threshold and phase-in zone) and, optionally, church tax.</p>
+          <p style="max-width:70ch;">Social contributions (pension, unemployment, health and long-term care insurance) are calculated using the 2026 contribution rates and contribution ceilings — long-term care insurance uses the higher employee share that applies in Saxony. With private health insurance, we use your own share after the statutory employer subsidy (at most half your premium, capped at half the statutory maximum contribution). Taxable income is derived, simplified, as annual gross salary minus these contributions, the standard employee allowance (€1,230), the standard special-expenses allowance (€36), and — for tax class II — the relief amount for single parents. The income tax tariff under §32a EStG is then applied — doubled for tax class III (splitting method), and for IV with factor multiplied by your factor afterwards. Child allowances only then reduce the assessment basis for the solidarity surcharge and church tax. Tax classes V and VI are not calculated (see above).</p>
         </div>
       </section>
 
       <section class="faq" style="margin-top:0;padding-top:32px;">
         <h2>Frequently asked questions</h2>
-        <div class="faq-item"><h3>Why does this differ from my real payslip?</h3><p>Your payslip also accounts for your exact tax class, any registered allowances, child allowances, and the official Vorsorgepauschale formula — this calculator deliberately models only the most common case (tax class I, no children), simplified.</p></div>
-        <div class="faq-item"><h3>Why do I pay little or no solidarity surcharge despite a high income?</h3><p>Since the 2021 reform, the solidarity surcharge no longer applies to most taxpayers — it only kicks in above an annual income tax of around €20,350 (tax class I), and is further capped in a "phase-in zone" just above that threshold.</p></div>
+        <div class="faq-item"><h3>Why does this differ from my real payslip?</h3><p>Your payslip uses the official Vorsorgepauschale formula instead of your actual contributions, and may account for further registered allowances — this calculator models the most common case, simplified.</p></div>
+        <div class="faq-item"><h3>Why don't child allowances reduce my income tax?</h3><p>That's how real payroll withholding works too: child allowances only affect the solidarity surcharge and church tax each month. The actual tax benefit from child allowances only applies once the tax office checks it as part of your annual tax return (a comparison against child benefit already received).</p></div>
+        <div class="faq-item"><h3>Why do I pay little or no solidarity surcharge despite a high income?</h3><p>Since the 2021 reform, the solidarity surcharge no longer applies to most taxpayers — it only kicks in above an annual income tax of around €20,350 (or €40,700 for tax class III), and is further capped in a "phase-in zone" just above that threshold.</p></div>
         <div class="faq-item"><h3>What is the health insurance Zusatzbeitrag?</h3><p>Every statutory health insurer sets its own additional contribution on top of the nationwide base rate of 14.6%, split evenly between you and your employer. The 2026 average is 2.9% — check your health insurer's membership certificate for the exact figure.</p></div>
+        <div class="faq-item"><h3>How is the employer subsidy for private health insurance calculated?</h3><p>Your employer covers half your PKV premium, but at most half of what they'd pay for a statutorily insured employee on the same salary (capped at the contribution ceiling).</p></div>
       </section>
     </div>
   </div>

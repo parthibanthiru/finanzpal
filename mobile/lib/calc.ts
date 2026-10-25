@@ -87,71 +87,155 @@ export function estimateFullPayoffYears(darlehen: number, zinsPct: number, tilgu
   return months / 12;
 }
 
-// ── Brutto-Netto-Rechner (assets/nettolohnrechner.js), Steuerklasse I, 2026 ──
+// ── Brutto-Netto-Rechner (assets/nettolohnrechner.js), Steuerklassen I–IV
+// (inkl. Faktorverfahren), 2026. Steuerklasse V/VI bewusst nicht berechnet —
+// siehe die Begründung im Website-Rechner (das offizielle §39b-Verfahren für
+// V/VI ließ sich nicht mit ausreichender Sicherheit rekonstruieren). ──
 
 const RV_SATZ = 0.093;
 const ALV_SATZ = 0.013;
 const KV_GRUNDSATZ = 0.073;
 const PV_SATZ = 0.018;
+const PV_SATZ_SACHSEN = 0.023;
 const PV_ZUSCHLAG_KINDERLOS = 0.006;
 const BBG_RV_ALV_MONAT = 8450;
 const BBG_KV_PV_MONAT = 5812.5;
+const DURCHSCHNITTL_ZUSATZBEITRAG = 2.9;
 const GRUNDFREIBETRAG = 12348;
 const WERBUNGSKOSTENPAUSCHALE = 1230;
 const SONDERAUSGABENPAUSCHALE = 36;
+const EFA_ALLEINERZIEHEND = 4260;
+const EFA_ALLEINERZIEHEND_WEITERES_KIND = 240;
+const KINDERFREIBETRAG_PRO_KIND = 9756;
 const SOLI_FREIGRENZE = 20350;
 
-/** §32a EStG Grundtabelle 2026 — identical to estTariff() on the website. */
-export function estTariff(zvE: number): number {
-  const x = Math.floor(Math.max(0, zvE));
-  if (x <= GRUNDFREIBETRAG) return 0;
-  if (x <= 17799) {
+export type Steuerklasse = '1' | '2' | '3' | '4' | '4f' | '5' | '6';
+export type KvTyp = 'gesetzlich' | 'privat';
+
+export const BUNDESLAENDER: Record<string, { kist: number; pvSachsen?: boolean }> = {
+  bw: { kist: 8 }, by: { kist: 8 }, be: { kist: 9 }, bb: { kist: 9 },
+  hb: { kist: 9 }, hh: { kist: 9 }, he: { kist: 9 }, mv: { kist: 9 },
+  ni: { kist: 9 }, nw: { kist: 9 }, rp: { kist: 9 }, sl: { kist: 9 },
+  sn: { kist: 9, pvSachsen: true }, st: { kist: 9 }, sh: { kist: 9 }, th: { kist: 9 },
+};
+
+/** §32a EStG Grundtarif 2026 — identical to estTariff() on the website. kztab=2 doubles (Splitting, Steuerklasse III). */
+export function estTariff(zvE: number, kztab: number = 1): number {
+  const x = Math.max(0, zvE) / kztab;
+  let st: number;
+  if (x <= GRUNDFREIBETRAG) {
+    st = 0;
+  } else if (x <= 17799) {
     const y = (x - GRUNDFREIBETRAG) / 10000;
-    return (914.51 * y + 1400) * y;
-  }
-  if (x <= 69878) {
+    st = (914.51 * y + 1400) * y;
+  } else if (x <= 69878) {
     const z = (x - 17799) / 10000;
-    return (173.1 * z + 2397) * z + 1034.87;
+    st = (173.1 * z + 2397) * z + 1034.87;
+  } else if (x <= 277825) {
+    st = 0.42 * x - 11135.63;
+  } else {
+    st = 0.45 * x - 19470.38;
   }
-  if (x <= 277825) return 0.42 * x - 11135.63;
-  return 0.45 * x - 19470.38;
+  return Math.floor(st * kztab);
 }
 
-function soliTarif(est: number): number {
-  if (est <= SOLI_FREIGRENZE) return 0;
-  return Math.min(est * 0.055, (est - SOLI_FREIGRENZE) * 0.119);
+function soliTarif(bemessung: number, kztab: number = 1): number {
+  const freigrenze = SOLI_FREIGRENZE * kztab;
+  if (bemessung <= freigrenze) return 0;
+  return Math.min(bemessung * 0.055, (bemessung - freigrenze) * 0.119);
 }
 
 export type NettoResult = {
   bruttoMonat: number;
   rv: number; alv: number; kv: number; pv: number; svMonat: number;
+  agZuschussPkv: number;
   estMonat: number; soliMonat: number; kistMonat: number;
   nettoMonat: number;
   zvEJahr: number;
 };
 
-/** Identical to calc() in assets/nettolohnrechner.js. */
-export function calcNetto(bruttoMonat: number, zusatzbeitragPct: number, kinderlos: boolean, kirchensteuerSatz: number): NettoResult {
+export type NettoParams = {
+  bruttoMonat: number;
+  steuerklasse: Steuerklasse;
+  faktor: number;
+  zkf: number; // Kinderfreibeträge, 0.5er-Schritte
+  bundesland: string;
+  kirchensteuerpflichtig: boolean;
+  kvTyp: KvTyp;
+  zusatzbeitragPct: number;
+  pkvPraemieMonat: number;
+  kinderlos: boolean;
+};
+
+/** Identical to calc() in assets/nettolohnrechner.js. Returns null for Steuerklasse V/VI (not computed). */
+export function calcNetto(p: NettoParams): NettoResult | null {
+  if (p.steuerklasse === '5' || p.steuerklasse === '6') return null;
+
+  const bl = BUNDESLAENDER[p.bundesland] ?? BUNDESLAENDER.be;
+  const kirchensteuerSatz = p.kirchensteuerpflichtig ? bl.kist : 0;
+
+  const bruttoMonat = p.bruttoMonat;
   const bruttoJahr = bruttoMonat * 12;
+
   const svBasisRvAlv = Math.min(bruttoMonat, BBG_RV_ALV_MONAT);
   const svBasisKvPv = Math.min(bruttoMonat, BBG_KV_PV_MONAT);
+
   const rv = svBasisRvAlv * RV_SATZ;
   const alv = svBasisRvAlv * ALV_SATZ;
-  const kv = svBasisKvPv * (KV_GRUNDSATZ + zusatzbeitragPct / 100 / 2);
-  const pv = svBasisKvPv * (PV_SATZ + (kinderlos ? PV_ZUSCHLAG_KINDERLOS : 0));
+
+  let kv: number, pv: number, agZuschussPkv = 0;
+  if (p.kvTyp === 'privat') {
+    const praemie = Math.max(0, p.pkvPraemieMonat || 0);
+    const hoechstzuschuss = 0.5 * (0.146 + DURCHSCHNITTL_ZUSATZBEITRAG / 100 + 0.036) * BBG_KV_PV_MONAT;
+    agZuschussPkv = Math.min(0.5 * praemie, hoechstzuschuss);
+    kv = Math.max(0, praemie - agZuschussPkv);
+    pv = 0;
+  } else {
+    kv = svBasisKvPv * (KV_GRUNDSATZ + p.zusatzbeitragPct / 100 / 2);
+    const pvSatz = (bl.pvSachsen ? PV_SATZ_SACHSEN : PV_SATZ) + (p.kinderlos ? PV_ZUSCHLAG_KINDERLOS : 0);
+    pv = svBasisKvPv * pvSatz;
+  }
+
   const svMonat = rv + alv + kv + pv;
-  let zvE = bruttoJahr - svMonat * 12 - WERBUNGSKOSTENPAUSCHALE - SONDERAUSGABENPAUSCHALE;
-  if (zvE < 0) zvE = 0;
-  const estJahr = estTariff(zvE);
-  const soliJahr = soliTarif(estJahr);
-  const kistJahr = estJahr * (kirchensteuerSatz / 100);
+  const svJahr = svMonat * 12;
+
+  const stkl = p.steuerklasse;
+  const kztab = stkl === '3' ? 2 : 1;
+  let efa = 0;
+  if (stkl === '2') {
+    const anzahlKinder = Math.max(1, Math.round(p.zkf || 0));
+    efa = EFA_ALLEINERZIEHEND + (anzahlKinder - 1) * EFA_ALLEINERZIEHEND_WEITERES_KIND;
+  }
+  const ztabfb = WERBUNGSKOSTENPAUSCHALE + SONDERAUSGABENPAUSCHALE + efa;
+
+  const zvELst = Math.max(0, bruttoJahr - svJahr - ztabfb);
+
+  const estJahrUnfaktoriert = estTariff(zvELst, kztab);
+  const estJahr = stkl === '4f' ? Math.floor(estJahrUnfaktoriert * (p.faktor || 1)) : estJahrUnfaktoriert;
+
+  // Kinderfreibeträge mindern im echten Lohnsteuerabzug nur Soli/Kirchensteuer,
+  // nicht die Lohnsteuer selbst. Beim Faktorverfahren dient die bereits
+  // faktorisierte Lohnsteuer direkt als Bemessungsgrundlage.
+  const kfbJahr = (p.zkf || 0) * KINDERFREIBETRAG_PRO_KIND;
+  let jbmg: number;
+  if (stkl === '4f') {
+    jbmg = estJahr;
+  } else {
+    const zvESoli = Math.max(0, zvELst - kfbJahr);
+    jbmg = estTariff(zvESoli, kztab);
+  }
+
+  const soliJahr = soliTarif(jbmg, kztab);
+  const kistJahr = jbmg * (kirchensteuerSatz / 100);
+
   const estMonat = estJahr / 12;
   const soliMonat = soliJahr / 12;
   const kistMonat = kistJahr / 12;
+
   return {
-    bruttoMonat, rv, alv, kv, pv, svMonat, estMonat, soliMonat, kistMonat,
+    bruttoMonat, rv, alv, kv, pv, svMonat, agZuschussPkv, estMonat, soliMonat, kistMonat,
     nettoMonat: bruttoMonat - svMonat - estMonat - soliMonat - kistMonat,
-    zvEJahr: zvE,
+    zvEJahr: zvELst,
   };
 }
 
