@@ -7,12 +7,13 @@
     sortRate: 'Sort: Savings rate ascending',
     sortName: 'Sort: Name A–Z',
     empty: 'No account matches these filters. Try removing one.',
-    etfText: function (item) { return item.etfSparplaeneAnzahl.toLocaleString('en-US') + ' fee-free ETF savings plans'; },
+    etfFreeNote: 'Fee-free ETF savings plans',
     mindestsparrate: function (n) { return 'Minimum savings rate: from €' + n + '/plan'; },
     noParentDepot: 'No parent account needed',
     zinsText: function (item) { return item.guthabenzins + '% p.a. cash interest'; },
     feeLabel: 'Account fee',
     rateLabel: 'Min. savings rate',
+    etfLabel: 'ETF savings plans',
     ageLabel: 'Age / conditions',
     detailsMore: 'More details',
     detailsLess: 'Fewer details',
@@ -30,12 +31,13 @@
     sortRate: 'Sortieren: Mindestsparrate aufsteigend',
     sortName: 'Sortieren: Name A–Z',
     empty: 'Kein Kinderdepot passt zu diesen Filtern. Entferne einen Filter.',
-    etfText: function (item) { return item.etfSparplaeneAnzahl.toLocaleString('de-DE') + ' kostenlose ETF-Sparpläne'; },
+    etfFreeNote: 'Kostenlos besparbare ETF-Sparpläne',
     mindestsparrate: function (n) { return 'Mindestsparrate: ab ' + n + ' €/Sparplan'; },
     noParentDepot: 'Kein eigenes Depot der Eltern nötig',
     zinsText: function (item) { return item.guthabenzins + ' % p. a. Guthabenzins'; },
     feeLabel: 'Depotgebühr',
     rateLabel: 'Mind. Sparrate',
+    etfLabel: 'ETF-Sparpläne',
     ageLabel: 'Alter / Voraussetzungen',
     detailsMore: 'Mehr Details',
     detailsLess: 'Weniger Details',
@@ -66,7 +68,7 @@
 
   function bulletsFor(item) {
     var bullets = [];
-    bullets.push({ ok: true, text: STR.etfText(item) + (item.etfSparplaeneCaveat ? ' — ' + item.etfSparplaeneCaveat : '') });
+    bullets.push({ ok: true, text: STR.etfFreeNote + (item.etfSparplaeneCaveat ? ' — ' + item.etfSparplaeneCaveat : '') });
     if (item.guthabenzins) {
       bullets.push({ ok: true, text: STR.zinsText(item) + (item.guthabenzinsCaveat ? ' — ' + item.guthabenzinsCaveat : '') });
     } else if (item.guthabenzinsCaveat) {
@@ -82,11 +84,6 @@
       return '<div class="cc-art logo-chip"><img src="' + PREFIX + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + ' Logo" loading="lazy"></div>';
     }
     return '<div class="cc-art" style="background:' + (item.color || '#163A66') + ';">' + escapeHtml(item.initials) + '</div>';
-  }
-
-  function claimsHtml(item) {
-    var claims = [escapeHtml(item.depotgebuehrText), escapeHtml(STR.mindestsparrate(item.mindestsparrate))];
-    return '<div class="cc-claims">' + claims.map(function (c) { return '<span class="cc-claim">' + c + '</span>'; }).join('') + '</div>';
   }
 
   var SCORE_RING_R = 8;
@@ -126,10 +123,10 @@
       cardArtHtml(item) +
       '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div></div>' +
       '</div>' +
-      claimsHtml(item) +
       '<div class="cc-stats">' +
       '<div class="cc-stat"><span class="k">' + STR.feeLabel + '</span><span class="v">' + escapeHtml(item.depotgebuehrText) + '</span></div>' +
       '<div class="cc-stat"><span class="k">' + STR.rateLabel + '</span><span class="v">' + item.mindestsparrate + ' €</span></div>' +
+      (item.etfSparplaeneAnzahl ? '<div class="cc-stat"><span class="k">' + STR.etfLabel + '</span><span class="v">' + item.etfSparplaeneAnzahl.toLocaleString(LANG === 'en' ? 'en-US' : 'de-DE') + '</span></div>' : '') +
       '</div>' +
       '<ul class="cc-bullets">' + bulletsHtml + '</ul>' +
       '<div class="cc-cta-col"><a href="' + escapeHtml(item.affiliateUrl) + '" class="cta-btn" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a></div>' +

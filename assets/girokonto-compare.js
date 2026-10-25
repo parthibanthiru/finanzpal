@@ -107,12 +107,6 @@
     return '<div class="cc-art" style="background:' + (item.color || '#163A66') + ';">' + escapeHtml(item.initials) + '<span class="cc-network">' + escapeHtml(item.karteNetzwerk) + '</span></div>';
   }
 
-  function claimsHtml(item, dispoText) {
-    var claims = [item.kontofuehrung];
-    claims.push(item.dispozins != null ? dispoText + (LANG === 'en' ? ' overdraft' : ' Dispozins') : STR.keinDispo);
-    return '<div class="cc-claims">' + claims.map(function (c) { return '<span class="cc-claim">' + escapeHtml(c) + '</span>'; }).join('') + '</div>';
-  }
-
   function init() {
     var app = document.getElementById('giro-app');
     if (!app) return;
@@ -167,7 +161,6 @@
           cardArtHtml(item) +
           '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div></div>' +
         '</div>' +
-        claimsHtml(item, dispoText) +
         '<div class="cc-stats">' +
           '<div class="cc-stat"><span class="k">' + STR.kontofuehrung + '</span><span class="v">' + escapeHtml(item.kontofuehrung) + '</span></div>' +
           '<div class="cc-stat"><span class="k">' + STR.dispozins + '</span><span class="v">' + dispoText + '</span></div>' +

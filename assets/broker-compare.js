@@ -9,9 +9,6 @@
     sortZins: 'Sort: Cash interest descending',
     sortRating: 'Sort: Rating descending',
     empty: 'No broker matches these filters. Try removing one.',
-    etfText: function (item) {
-      return item.etfSparplaeneAnzahl.toLocaleString('en-US') + ' ETF savings plans' + (item.etfSparplaeneKostenlos ? ', fee-free' : '');
-    },
     mindestsparrate: function (n) { return 'Minimum savings rate: from €' + n + '/plan'; },
     depotfree: 'Account maintenance free of charge, no conditions',
     recommended: 'Our recommendation',
@@ -23,6 +20,9 @@
     depotLabel: 'Account fee',
     orderLabel: 'Order fee (share)',
     rateLabel: 'Min. savings rate',
+    etfLabel: 'ETF savings plans',
+    etfFreeNote: 'Fee-free ETF savings plans',
+    etfNote: 'ETF savings plans available',
     zinsLabel: 'Cash interest',
     ratingLabel: 'Rating',
     verwahrLabel: 'Custody fee',
@@ -45,9 +45,6 @@
     sortZins: 'Sortieren: Guthabenzins absteigend',
     sortRating: 'Sortieren: Bewertung absteigend',
     empty: 'Kein Broker passt zu diesen Filtern. Entferne einen Filter.',
-    etfText: function (item) {
-      return item.etfSparplaeneAnzahl.toLocaleString('de-DE') + ' ETF-Sparpläne' + (item.etfSparplaeneKostenlos ? ', kostenlos besparbar' : '');
-    },
     mindestsparrate: function (n) { return 'Mindestsparrate: ab ' + n + ' €/Sparplan'; },
     depotfree: 'Depotführung kostenlos, ohne Bedingungen',
     recommended: 'Unsere Empfehlung',
@@ -59,6 +56,9 @@
     depotLabel: 'Depotgebühr',
     orderLabel: 'Ordergebühr (Aktie)',
     rateLabel: 'Mind. Sparrate',
+    etfLabel: 'ETF-Sparpläne',
+    etfFreeNote: 'Kostenlos besparbare ETF-Sparpläne',
+    etfNote: 'ETF-Sparpläne verfügbar',
     zinsLabel: 'Guthabenzins',
     ratingLabel: 'Bewertung',
     verwahrLabel: 'Verwahrentgelt',
@@ -115,7 +115,7 @@
 
   function bulletsFor(item) {
     var bullets = [];
-    bullets.push({ ok: true, text: STR.etfText(item) + (item.etfSparplaeneCaveat ? ' — ' + item.etfSparplaeneCaveat : '') });
+    bullets.push({ ok: true, text: (item.etfSparplaeneKostenlos ? STR.etfFreeNote : STR.etfNote) + (item.etfSparplaeneCaveat ? ' — ' + item.etfSparplaeneCaveat : '') });
     if (item.intervalleText) bullets.push({ ok: true, text: item.intervalleText });
     if (item.guthabenzins) {
       bullets.push({ ok: true, text: STR.zinsText(item) + (item.guthabenzinsCaveat ? ' — ' + item.guthabenzinsCaveat : '') });
@@ -131,14 +131,6 @@
       return '<div class="cc-art logo-chip"><img src="' + PREFIX + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + ' Logo" loading="lazy"></div>';
     }
     return '<div class="cc-art" style="background:' + (item.color || '#163A66') + ';">' + escapeHtml(item.initials) + '</div>';
-  }
-
-  function claimsHtml(item) {
-    var claims = [item.brokerDepotfee, (LANG === 'en' ? 'from €' + item.mindestsparrate + '/plan' : 'ab ' + item.mindestsparrate + ' €/Sparplan')];
-    if (item.etfSparplaeneAnzahl) {
-      claims.push(item.etfSparplaeneAnzahl.toLocaleString(LANG === 'en' ? 'en-US' : 'de-DE') + (LANG === 'en' ? ' ETF plans' : ' ETF-Sparpläne'));
-    }
-    return '<div class="cc-claims">' + claims.map(function (c) { return '<span class="cc-claim">' + escapeHtml(c) + '</span>'; }).join('') + '</div>';
   }
 
   function cardHtml(item) {
@@ -162,11 +154,11 @@
       (item.ratingStars ? ' <span class="cc-stars" title="' + item.rating + '/5">' + escapeHtml(item.ratingStars) + '</span>' : '') +
       '</div></div>' +
       '</div>' +
-      claimsHtml(item) +
       '<div class="cc-stats">' +
       '<div class="cc-stat"><span class="k">' + STR.depotLabel + '</span><span class="v">' + escapeHtml(item.brokerDepotfee) + '</span></div>' +
       '<div class="cc-stat"><span class="k">' + STR.orderLabel + '</span><span class="v">' + escapeHtml(item.orderfee) + '</span></div>' +
       '<div class="cc-stat"><span class="k">' + STR.rateLabel + '</span><span class="v">' + escapeHtml(item.sparplanAb) + '</span></div>' +
+      (item.etfSparplaeneAnzahl ? '<div class="cc-stat"><span class="k">' + STR.etfLabel + '</span><span class="v">' + item.etfSparplaeneAnzahl.toLocaleString(LANG === 'en' ? 'en-US' : 'de-DE') + '</span></div>' : '') +
       '</div>' +
       '<ul class="cc-bullets">' + bulletsHtml + '</ul>' + crossLinkHtml + reviewLinkHtml +
       '<div class="cc-cta-col"><a href="' + escapeHtml(item.affiliateUrl) + '" class="cta-btn" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a></div>' +

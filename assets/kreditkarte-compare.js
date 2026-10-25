@@ -219,11 +219,6 @@
         escapeHtml(item.initials) + '<span class="cc-network">' + escapeHtml(item.netzwerk) + '</span></div>';
     }
 
-    function claimsHtml(item, paymentVal) {
-      var claims = [item.jahresgebuehr + ' ' + STR.priceLabel, paymentVal];
-      return '<div class="cc-claims">' + claims.map(function (c) { return '<span class="cc-claim">' + escapeHtml(c) + '</span>'; }).join('') + '</div>';
-    }
-
     function cardHtml(item, rank) {
       var isOpen = !!expanded[item.id];
       var isDebit = item.kartentyp === STR.typeDebit;
@@ -246,7 +241,6 @@
             '<div class="cc-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div>' +
           '</div>' +
         '</div>' +
-        claimsHtml(item, paymentVal) +
         '<div class="cc-stats">' +
           '<div class="cc-stat"><span class="k">' + STR.payment + '</span><span class="v">' + escapeHtml(paymentVal) + '</span></div>' +
           '<div class="cc-stat"><span class="k">' + STR.withdrawal + '</span><span class="v">' + escapeHtml(item.abhebung) + '</span></div>' +
