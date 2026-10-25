@@ -114,7 +114,7 @@
       ? 'Finanzpal Score ' + value + ', grade ' + item.score.band
       : 'Finanzpal-Score ' + value + ', Note ' + item.score.band;
     return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '" aria-label="' + escapeHtml(ariaLabel) + '" data-score-value="' + value + '" data-score-band="' + escapeHtml(item.score.band) + '" data-score-rows=\'' + rowsJson + '\' aria-haspopup="dialog" aria-expanded="false">' +
-      '<span class="fp-score-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#2FBF7F" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>' +
+      '<span class="fp-score-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#2FBF7F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>' +
       '<span class="fp-score-grade">' + escapeHtml(item.score.band) + '</span>' +
       '<span class="fp-score-value">' + value + '</span>' +
     '</a>';
