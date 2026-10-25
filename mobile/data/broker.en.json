@@ -112,7 +112,8 @@
           "mindestsparrate": 64.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/consorsbank.svg"
     },
     {
       "id": "comdirect",
@@ -149,7 +150,8 @@
           "mindestsparrate": 100.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/comdirect.svg"
     },
     {
       "id": "flatex",
@@ -186,7 +188,8 @@
           "mindestsparrate": 4.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/flatex.svg"
     },
     {
       "id": "dkb-broker",
@@ -223,7 +226,8 @@
           "mindestsparrate": 4.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/dkb.svg"
     },
     {
       "id": "smartbroker-plus",
@@ -260,7 +264,8 @@
           "mindestsparrate": 100.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/smartbroker.svg"
     },
     {
       "id": "finanzen-net-zero",
@@ -297,7 +302,8 @@
           "mindestsparrate": 100.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/finanzen-net-zero.svg"
     },
     {
       "id": "justtrade",
@@ -334,7 +340,8 @@
           "mindestsparrate": 4.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/justtrade.svg"
     },
     {
       "id": "ing",
@@ -371,7 +378,8 @@
           "mindestsparrate": 100.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/ing.svg"
     }
   ]
 }

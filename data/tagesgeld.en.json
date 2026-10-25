@@ -21,7 +21,8 @@
           "einlagensicherung": 100.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/openbank.svg"
     },
     {
       "id": "consorsbank-tagesgeld",
@@ -43,7 +44,8 @@
           "einlagensicherung": 100.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/consorsbank.svg"
     },
     {
       "id": "suresse-direkt",
@@ -87,7 +89,8 @@
           "einlagensicherung": 100.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/ing.svg"
     },
     {
       "id": "dkb-tagesgeld",
@@ -109,7 +112,8 @@
           "einlagensicherung": 100.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/dkb.svg"
     },
     {
       "id": "1822direkt-tagesgeld",
@@ -131,7 +135,8 @@
           "einlagensicherung": 100.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/1822direkt.svg"
     },
     {
       "id": "renault-bank-direkt-tagesgeld",

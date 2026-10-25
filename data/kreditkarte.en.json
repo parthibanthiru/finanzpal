@@ -64,7 +64,8 @@
       "ratenzahlung": false,
       "ratenzahlungDetail": null,
       "rechnungsausgleich": "Automatic direct debit on the 15th or last business day of the month",
-      "hotelMietwagen": "geeignet"
+      "hotelMietwagen": "geeignet",
+      "logo": "assets/logos/consorsbank.svg"
     },
     {
       "id": "barclays-visa",
@@ -175,7 +176,8 @@
           "zinsfreieTage": 50.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/c24.svg"
     },
     {
       "id": "dkb-visa-debitkarte",
@@ -212,7 +214,8 @@
           "zinsfreieTage": 50.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/dkb.svg"
     },
     {
       "id": "norisbank-mastercard",
@@ -249,7 +252,8 @@
           "zinsfreieTage": 50.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/norisbank.svg"
     },
     {
       "id": "bank-norwegian-visa",

@@ -21,7 +21,8 @@
           "kreditrahmen": 75.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/openbank.svg"
     },
     {
       "id": "consorsbank-kredit",
@@ -43,7 +44,8 @@
           "kreditrahmen": 80.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/consorsbank.svg"
     },
     {
       "id": "ing-kredit",
@@ -65,7 +67,8 @@
           "kreditrahmen": 75.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/ing.svg"
     },
     {
       "id": "swk-bank",
@@ -153,7 +156,8 @@
           "kreditrahmen": 65.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/norisbank.svg"
     },
     {
       "id": "deutsche-skatbank-kredit",
@@ -219,7 +223,8 @@
           "kreditrahmen": 100.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/dkb.svg"
     }
   ]
 }

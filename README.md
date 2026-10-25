@@ -297,10 +297,19 @@ fehlt, sodass nicht-logoisierte Anbieter unverändert weiter funktionieren.
   Badge zurück.
 - EN-Seiten lösen den Pfad über das vorhandene `PREFIX`-Muster auf
   (`../` vor dem `logo`-Pfad), analog zu den anderen Asset-Pfaden im Projekt.
-- Aktuell hinterlegt: Trade Republic (Girokonto, Broker, Kreditkarte,
-  Kinderdepot, Tagesgeld) und Scalable Capital (Broker, Kinderdepot). Die
-  übrigen ~86 Anbieter über alle Kategorien zeigen weiterhin das
-  Initialen-Badge, bis echte Logo-Dateien nachgereicht werden.
+- Aktuell hinterlegt (15 Anbieter): Trade Republic, Scalable Capital,
+  Consorsbank, comdirect, flatex, DKB, Smartbroker+, finanzen.net Zero,
+  justTRADE, ING, C24, N26, Openbank, 1822direkt und norisbank — jeweils in
+  allen Kategorien, in denen der Anbieter vorkommt (Girokonto, Broker,
+  Kreditkarte, Kinderdepot, Tagesgeld, Kredite). Zwei Logo-Dateien mussten
+  angepasst werden, da sie nicht wie geliefert auf einem weißen `.logo-chip`
+  funktioniert hätten: `c24.svg` bekam ein passendes Hintergrund-Rechteck
+  (Original war komplett weiß, also auf Weiß unsichtbar) und
+  `comdirect.svg`s `fill="currentColor"` wurde durch eine feste Hex-Farbe
+  ersetzt (ein per `<img>` eingebundenes SVG hat keinen CSS-Kontext, aus dem
+  `currentColor` einen Wert ziehen könnte). Die übrigen ~73 Anbieter über
+  alle Kategorien zeigen weiterhin das Initialen-Badge, bis echte
+  Logo-Dateien nachgereicht werden.
 
 ### Versicherungen: 5 Tabs statt einer Tabelle
 
