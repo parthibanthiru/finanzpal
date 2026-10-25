@@ -23,6 +23,10 @@
       vorjahresImportText: 'Datenübernahme aus dem Vorjahr möglich',
       belegerfassungText: 'Fotoerfassung von Belegen möglich',
       zahlungText: 'Zahlung erst bei Abgabe fällig',
+      vorjahresLabel: 'Datenübernahme',
+      zahlungLabel: 'Zahlung bei Abgabe',
+      ja: 'Ja',
+      notAvailable: '—',
       filterZielgruppe: 'Zielgruppe',
       filterPlattform: 'Plattform',
       filterZahlung: 'Zahlung',
@@ -50,6 +54,10 @@
       vorjahresImportText: 'Prior-year data import available',
       belegerfassungText: 'Photo capture of receipts available',
       zahlungText: 'Payment only due when you file',
+      vorjahresLabel: 'Prior-year import',
+      zahlungLabel: 'Payment on filing',
+      ja: 'Yes',
+      notAvailable: '—',
       filterZielgruppe: 'Target group',
       filterPlattform: 'Platform',
       filterZahlung: 'Payment',
@@ -118,9 +126,7 @@
       .map(function (z) { return STR.zielgruppeLabel[z]; });
     if (supported.length) bullets.push({ ok: true, text: STR.geeignetFuer + supported.join(', ') });
     (item.zielgruppenAusschluss || []).forEach(function (note) { bullets.push({ ok: false, text: note }); });
-    if (item.vorjahresImport === true) bullets.push({ ok: true, text: STR.vorjahresImportText });
     if (item.belegerfassung === true) bullets.push({ ok: true, text: STR.belegerfassungText });
-    if (item.zahlungErstBeiAbgabe === true) bullets.push({ ok: true, text: STR.zahlungText });
     if (item.elsterZertifikat) bullets.push({ ok: false, text: item.elsterZertifikat });
     return bullets;
   }
@@ -180,14 +186,17 @@
         '<div class="cc-badges"><span class="cc-badge">' + escapeHtml(item.anbieter) + '</span></div>' +
         '<div class="cc-body">' +
           cardArtHtml(item) +
-          '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div><ul class="cc-bullets">' + bullets + '</ul></div>' +
-          '<div class="cc-facts">' +
-            '<div class="cc-fact"><span class="k">' + STR.price + '</span><span class="v">' + escapeHtml(item.preis) + '</span></div>' +
-            '<div class="cc-fact"><span class="k">' + STR.plattform + '</span><span class="v">' + plattformText(item) + '</span></div>' +
-          '</div>' +
-          '<div class="cc-cta-col">' +
-            '<a href="' + item.affiliateUrl + '" class="cta-btn" rel="sponsored nofollow">' + STR.cta + '</a>' +
-          '</div>' +
+          '<div class="cc-main"><div class="cc-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div></div>' +
+        '</div>' +
+        '<div class="cc-stats">' +
+          '<div class="cc-stat"><span class="k">' + STR.price + '</span><span class="v">' + escapeHtml(item.preis) + '</span></div>' +
+          '<div class="cc-stat"><span class="k">' + STR.plattform + '</span><span class="v">' + plattformText(item) + '</span></div>' +
+          '<div class="cc-stat"><span class="k">' + STR.vorjahresLabel + '</span><span class="v">' + (item.vorjahresImport === true ? STR.ja : STR.notAvailable) + '</span></div>' +
+          '<div class="cc-stat"><span class="k">' + STR.zahlungLabel + '</span><span class="v">' + (item.zahlungErstBeiAbgabe === true ? STR.ja : STR.notAvailable) + '</span></div>' +
+        '</div>' +
+        '<ul class="cc-bullets">' + bullets + '</ul>' +
+        '<div class="cc-cta-col">' +
+          '<a href="' + item.affiliateUrl + '" class="cta-btn" rel="sponsored nofollow">' + STR.cta + '</a>' +
         '</div>' +
         '<hr class="cc-divider">' +
         '<button type="button" class="kk-toggle" data-toggle-id="' + item.id + '">' + (isOpen ? STR.lessDetails : STR.moreDetails) + ' <span class="kk-chevron">' + (isOpen ? '▴' : '▾') + '</span></button>' +

@@ -352,6 +352,8 @@ Kennzahl genau einmal erscheint:
     bewusst NUR Bullet/Detail-Panel-Feld, da die Werte oft ganze Sätze sind
     („Konto geht mit dem 18. Geburtstag automatisch über …") und als
     einzeilige Badge nicht lesbar wären
+  - Steuerprogramm (seit 2026-10-25, siehe unten): Preis, Plattform,
+    Datenübernahme, Zahlung bei Abgabe
 - **Bullets entschlackt:** Bullet-Punkte, die exakt denselben Wert wie eine
   Stat-Zelle wiederholt haben, wurden aus `bulletsFor()` entfernt bzw.
   umformuliert (z. B. `STR.mindestsparrate(...)` bei Broker/Kinderdepot
@@ -362,10 +364,24 @@ Kennzahl genau einmal erscheint:
 - **`.cc-cta-col`** ist ein eigenständiger, volle-Breite-Block statt eines
   Flex-Items in `.cc-body` — bei Kreditkarte jetzt nur noch Sternebewertung
   + CTA-Button (kein separates Preisfeld mehr, s. o.).
-- `steuer-compare.js` (Steuersoftware-Vergleich) nutzt bewusst weiterhin das
-  alte `.cc-facts`/`.cc-fact`-Layout — andere Produktkategorie, nicht Teil
-  dieses Umbaus; die zugehörigen CSS-Regeln in `assets/style.css` blieben
-  deshalb unverändert erhalten.
+- **`steuer-compare.js` (Steuersoftware-Vergleich) seit 2026-10-25
+  unified:** nutzte bis dahin bewusst das ältere, schmale
+  `.cc-facts`/`.cc-fact`-Spaltenlayout (nur Preis + Plattform, rechts neben
+  den Bullets). Jetzt auf denselben 4-Zellen-`.cc-stats`-Streifen wie die
+  anderen vier Kategorien umgestellt: Preis, Plattform, Datenübernahme
+  (`item.vorjahresImport`) und Zahlung bei Abgabe
+  (`item.zahlungErstBeiAbgabe`) — beide zuvor NUR Bullets
+  (`vorjahresImportText`/`zahlungText`), jetzt aus `bulletsFor()` entfernt,
+  um die aus den anderen Kategorien bekannte Badge/Bullet-Duplikation zu
+  vermeiden. Beide Felder sind in den Rohdaten oft `null` statt `false`
+  (Datenübernahme: 6/10 `true`, 4/10 `null`; Zahlung bei Abgabe: 3/10
+  `true`, 7/10 `null`) — die Zelle zeigt bei `null` bewusst „—" statt
+  „Nein", um keine ungeprüfte Negativ-Aussage zu behaupten (gleiches
+  Muster wie Girokontos Fremdwährungs-Zelle). `item.belegerfassung` wurde
+  NICHT zur Stat-Zelle, da bei 9 von 10 Anbietern `null` — als Badge fast
+  durchgängig „—" und damit kaum informativ; bleibt Bullet (nur gezeigt,
+  wenn `true`). Die dadurch ungenutzten `.cc-facts`/`.cc-fact`-CSS-Regeln
+  wurden aus `style.css` entfernt (keine andere Seite nutzt sie).
 - `compare-bar.js` (injiziert die „Vergleichen"-Checkbox in `.cc-cta-col`)
   und der Vergleichs-Modal (liest `.cc-name`/`.cc-bullets` aus) funktionieren
   unverändert weiter, da beide Klassen nur per `querySelector` gesucht
