@@ -274,6 +274,34 @@ Jede Zeile wird beim Laden der Seite per JS aus dem JSON gerendert. Das
 funktioniert nur über `http://`/`https://` — direktes Öffnen der HTML-Datei
 per Doppelklick (`file://`) blockiert den JSON-Abruf im Browser.
 
+### Anbieter-Logos (`assets/logos/`, `"logo"`-Feld)
+
+Anbieter in den Vergleichskarten/-tabellen zeigen standardmäßig ein farbiges
+Initialen-Badge (`item.color` + `item.initials`). Für Anbieter, bei denen ein
+echtes Logo vorliegt, überschreibt ein optionales `"logo"`-Feld im JSON-Eintrag
+(z. B. `"logo": "assets/logos/trade-republic.svg"`) dieses Badge durch das
+echte Logo — Fallback auf das Initialen-Badge bleibt erhalten, wenn `"logo"`
+fehlt, sodass nicht-logoisierte Anbieter unverändert weiter funktionieren.
+
+- Logo-Dateien liegen als SVG unter `assets/logos/<anbieter-slug>.svg`
+  (bevorzugt aus offiziellen Presse-/Brand-Kits, Dateiname = Anbieter-Slug).
+- Gerendert wird das Logo in einem `.logo-chip` (weißer Hintergrund,
+  `object-fit: contain`, `assets/style.css`), damit auch Logos ohne eigenen
+  Hintergrund (z. B. schwarzes Wordmark auf transparent) in Light **und**
+  Dark Theme lesbar bleiben.
+- Implementiert in den Kartenseiten (`assets/girokonto-compare.js`,
+  `assets/broker-compare.js`, `assets/kreditkarte-compare.js`,
+  `assets/kinderdepot-compare.js`) sowie in der gemeinsamen Tabellen-Renderer
+  `brokerCell()` in `assets/compare.js` (Tagesgeld/Kredite/Versicherungen).
+  Jede Stelle prüft `item.logo` zuerst und fällt sonst auf das bestehende
+  Badge zurück.
+- EN-Seiten lösen den Pfad über das vorhandene `PREFIX`-Muster auf
+  (`../` vor dem `logo`-Pfad), analog zu den anderen Asset-Pfaden im Projekt.
+- Aktuell hinterlegt: Trade Republic (Girokonto, Broker, Kreditkarte,
+  Kinderdepot, Tagesgeld) und Scalable Capital (Broker, Kinderdepot). Die
+  übrigen ~86 Anbieter über alle Kategorien zeigen weiterhin das
+  Initialen-Badge, bis echte Logo-Dateien nachgereicht werden.
+
 ### Versicherungen: 5 Tabs statt einer Tabelle
 
 `versicherungen.html` zeigt fünf Tabs (Privathaftpflicht / Hausrat /

@@ -3,6 +3,7 @@
 // reusing the kk-/cc- card and filter primitives shared across the site.
 (function () {
   var LANG = (document.documentElement.lang || 'de').toLowerCase().indexOf('en') === 0 ? 'en' : 'de';
+  var PREFIX = LANG === 'en' ? '../' : '';
 
   var STR = {
     de: {
@@ -100,6 +101,9 @@
   }
 
   function cardArtHtml(item) {
+    if (item.logo) {
+      return '<div class="cc-art logo-chip"><img src="' + PREFIX + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + ' Logo" loading="lazy"></div>';
+    }
     return '<div class="cc-art" style="background:' + (item.color || '#163A66') + ';">' + escapeHtml(item.initials) + '<span class="cc-network">' + escapeHtml(item.karteNetzwerk) + '</span></div>';
   }
 

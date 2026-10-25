@@ -219,7 +219,8 @@
           "einlagensicherung": 40.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/trade-republic.svg"
     }
   ]
 }

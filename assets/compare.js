@@ -2,6 +2,7 @@
 // Usage: <table class="compare" data-source="data/broker.json" data-type="broker">
 (function () {
   var LANG = (document.documentElement.lang || 'de').toLowerCase().indexOf('en') === 0 ? 'en' : 'de';
+  var PREFIX = LANG === 'en' ? '../' : '';
   var STR = {
     de: { pick: 'Unsere Empfehlung', cta: 'Zum Anbieter', ctaAria: function (name) { return 'Zum Anbieter: ' + name; }, loading: 'Lade Vergleichsdaten …', notRated: 'noch nicht bewertet',
       error: function (msg) { return 'Daten konnten nicht geladen werden (' + msg + '). Lokal? Bitte über einen lokalen Server öffnen, z. B. <code>python3 -m http.server</code> — direktes Öffnen der Datei (file://) blockiert den Datenabruf im Browser.'; } },
@@ -108,10 +109,13 @@
       ? '<div class="broker-name linked">' + escapeHtml(item.name) + scoreBadgeHtml(type, item) + '</div><span class="broker-tag">' + STR[LANG].pick + '</span>'
       : '<div class="broker-name">' + escapeHtml(item.name) + scoreBadgeHtml(type, item) + '</div>';
     var markStyle = item.color ? ' style="background:' + item.color + ';"' : '';
+    var markHtml = item.logo
+      ? '<div class="broker-mark logo-chip"><img src="' + PREFIX + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + ' Logo" loading="lazy"></div>'
+      : '<div class="broker-mark"' + markStyle + '>' + item.initials + '</div>';
     if (item.detailUrl) {
-      return '<a href="' + item.detailUrl + '" class="broker-cell"><div class="broker-mark"' + markStyle + '>' + item.initials + '</div><div>' + nameHtml + '</div></a>';
+      return '<a href="' + item.detailUrl + '" class="broker-cell">' + markHtml + '<div>' + nameHtml + '</div></a>';
     }
-    return '<div class="broker-cell"><div class="broker-mark"' + markStyle + '>' + item.initials + '</div><div>' + nameHtml + '</div></div>';
+    return '<div class="broker-cell">' + markHtml + '<div>' + nameHtml + '</div></div>';
   }
 
   function ratingHtml(stars, score) {

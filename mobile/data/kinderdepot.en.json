@@ -27,7 +27,8 @@
           "elternAufwand": 30.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/trade-republic.svg"
     },
     {
       "id": "scalable-capital-kinderdepot",
@@ -55,7 +56,8 @@
           "elternAufwand": 30.0
         },
         "computedFrom": "2026-10"
-      }
+      },
+      "logo": "assets/logos/scalable-capital.svg"
     },
     {
       "id": "consorsbank-junior-depot",

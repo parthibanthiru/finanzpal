@@ -1,5 +1,6 @@
 (function () {
   var LANG = document.documentElement.lang === 'en' ? 'en' : 'de';
+  var PREFIX = LANG === 'en' ? '../' : '';
   var STR = LANG === 'en' ? {
     count: function (n, total) { return n + ' of ' + total + ' children\'s accounts'; },
     reset: 'Reset filters',
@@ -78,6 +79,9 @@
   }
 
   function cardArtHtml(item) {
+    if (item.logo) {
+      return '<div class="cc-art logo-chip"><img src="' + PREFIX + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + ' Logo" loading="lazy"></div>';
+    }
     return '<div class="cc-art" style="background:' + (item.color || '#163A66') + ';">' + escapeHtml(item.initials) + '</div>';
   }
 
