@@ -509,14 +509,24 @@ eigenes Vergleichs-JS) sowie `kredite.html`/`en/kredite.html`,
 `versicherungen.html`/`en/versicherungen.html` (Tabellen-Layout,
 `assets/compare.js`) einen Finanzpal-Score-Badge pro Zeile
 (`.fp-score-badge`):
-ein kleiner Fortschritts-Ring (SVG, `stroke-dasharray`/`-dashoffset`) mit der
-Note (A–D) in der Mitte und der Zahl (0–100) daneben, in den vier bestehenden
-Band-Farben grün/petrol/gold/schiefergrau. Der Ring füllt sich proportional
-zum Score, statt nur eine flache Farbfläche zu zeigen — bewusst kein
-Siegel-/Zertifikats-Look, um keine Drittprüfung vorzutäuschen, die es nicht
-gibt (Tooltip + `aria-label` nennen das trotzdem explizit „Finanzpal-Score",
-nicht „Zertifiziert" o. ä.). Berechnet aus Feldern, die auf derselben Seite
-ohnehin schon stehen:
+seit Ende Oktober 2026 ein großes, premium wirkendes Pill-Badge —
+dunkelblauer Verlauf (Navy → Band-Farbe grün/petrol/gold/schiefergrau als
+`--fp-badge-accent`), weißer Haken-Icon-Kreis, Note (A–D) und Zahl (0–100) in
+Weiß — statt des früheren winzigen 22px-Fortschritts-Rings. Markup ist in
+allen sechs Renderern (`assets/compare.js`,
+`assets/{girokonto,broker,kinderdepot,kreditkarte,steuer}-compare.js`)
+identisch; Gradient/Icon/Größe kommen zentral aus den
+`.fp-score-badge`/`.fp-score-icon`/`.fp-score-grade`-Regeln in
+`assets/style.css`, sodass eine künftige Stiländerung nur dort passiert.
+Der Haken-Icon-Look nähert sich bewusster einem Siegel/Zertifikat an als der
+alte Ring — das ist hier Absicht (auf Nutzerwunsch „Premium"-Design), bleibt
+aber auf die eigene Methodik begrenzt: Tooltip + `aria-label` nennen
+weiterhin ausdrücklich „Finanzpal-Score" und verlinken auf
+`ueber-uns.html#finanzpal-score`, nie „Zertifiziert" oder eine
+Drittprüfung. `assets/score-popover.js` (Klick-Popover mit der
+Faktor-Aufschlüsselung) ist unverändert, da es nur auf `.fp-score-badge`
+sowie die `data-score-*`-Attribute reagiert, nicht auf die innere Markup.
+Berechnet aus Feldern, die auf derselben Seite ohnehin schon stehen:
   - Girokonto: Kontoführungsgebühr 35 % · Dispozins 25 % · Guthabenzins 20 %
     · Karte & Bargeld-Flexibilität 20 %.
   - Kredite: Zinssatz 55 % · Sondertilgungsrecht 30 % · Kreditrahmen 15 %.

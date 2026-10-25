@@ -68,9 +68,11 @@
     return rows;
   }
 
-  var SCORE_RING_R = 8;
-  var SCORE_RING_C = 2 * Math.PI * SCORE_RING_R;
-
+  // Premium-gradient score badge (dark navy -> band accent colour, white
+  // text, small check icon) — replaces the earlier tiny ring badge with a
+  // much larger, visually distinct chip. Markup is identical across every
+  // *-compare.js renderer; the gradient/accent mapping lives once in
+  // style.css's .fp-score-badge.band-* rules.
   function scoreBadgeHtml(type, item) {
     if (!item.score) return '';
     var band = (item.score.band || '').toLowerCase();
@@ -80,13 +82,9 @@
     var ariaLabel = LANG === 'en'
       ? 'Finanzpal Score ' + value + ', grade ' + item.score.band
       : 'Finanzpal-Score ' + value + ', Note ' + item.score.band;
-    var offset = (SCORE_RING_C * (1 - Math.max(0, Math.min(100, value)) / 100)).toFixed(2);
     return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '" aria-label="' + escapeHtml(ariaLabel) + '" data-score-value="' + value + '" data-score-band="' + escapeHtml(item.score.band) + '" data-score-rows=\'' + rowsJson + '\' aria-haspopup="dialog" aria-expanded="false">' +
-      '<svg class="fp-score-ring" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">' +
-        '<circle class="fp-score-track" cx="11" cy="11" r="' + SCORE_RING_R + '"></circle>' +
-        '<circle class="fp-score-fill" cx="11" cy="11" r="' + SCORE_RING_R + '" stroke-dasharray="' + SCORE_RING_C.toFixed(2) + '" stroke-dashoffset="' + offset + '" transform="rotate(-90 11 11)"></circle>' +
-        '<text x="11" y="11" class="fp-score-letter" text-anchor="middle" dominant-baseline="middle">' + escapeHtml(item.score.band) + '</text>' +
-      '</svg>' +
+      '<span class="fp-score-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#2FBF7F" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>' +
+      '<span class="fp-score-grade">' + escapeHtml(item.score.band) + '</span>' +
       '<span class="fp-score-value">' + value + '</span>' +
     '</a>';
   }
