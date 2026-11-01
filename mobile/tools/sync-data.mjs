@@ -239,6 +239,7 @@ function cleanSvg(src, prefix) {
     .replace(/<sodipodi:namedview[\s\S]*?(\/>|<\/sodipodi:namedview>)/g, '')
     .replace(/\s(sodipodi|inkscape):[\w-]+="[^"]*"/g, '')
     .replace(/>\s+</g, '><')
+    .replace(/[\r\n\t]+/g, ' ') // line breaks inside path data break react-native-svg
     .trim();
   s = s.replace(/<svg\b[^>]*>/, (root) => {
     const num = (a) => {
