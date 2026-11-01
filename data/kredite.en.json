@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10",
+  "updated": "2026-11",
   "items": [
     {
       "id": "openbank-kredit",
@@ -20,7 +20,7 @@
           "sondertilgung": 65.0,
           "kreditrahmen": 75.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       },
       "logo": "assets/logos/openbank.svg"
     },
@@ -43,7 +43,7 @@
           "sondertilgung": 100.0,
           "kreditrahmen": 80.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       },
       "logo": "assets/logos/consorsbank.svg"
     },
@@ -66,7 +66,7 @@
           "sondertilgung": 100.0,
           "kreditrahmen": 75.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       },
       "logo": "assets/logos/ing.svg"
     },
@@ -89,7 +89,7 @@
           "sondertilgung": 65.0,
           "kreditrahmen": 100.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       }
     },
     {
@@ -111,7 +111,7 @@
           "sondertilgung": 35.0,
           "kreditrahmen": 100.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       }
     },
     {
@@ -133,7 +133,7 @@
           "sondertilgung": 35.0,
           "kreditrahmen": 80.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       }
     },
     {
@@ -155,7 +155,7 @@
           "sondertilgung": 35.0,
           "kreditrahmen": 65.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       },
       "logo": "assets/logos/norisbank.svg"
     },
@@ -166,19 +166,19 @@
       "color": "#1F6F54",
       "recommended": false,
       "affiliateUrl": "#",
-      "rate": "from 4.48%",
+      "rate": "from 4.79%",
       "amount": "€3,000 – 50,000",
       "term": "12 – 84 months",
       "sondertilgung": "statutory prepayment fee may apply (§ 502 BGB) — provider-specific details not stated by the comparison portal",
       "score": {
-        "value": 51.2,
-        "band": "B",
+        "value": 47.8,
+        "band": "C",
         "breakdown": {
-          "zinssatz": 60.4,
+          "zinssatz": 54.2,
           "sondertilgung": 35.0,
           "kreditrahmen": 50.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       }
     },
     {
@@ -200,7 +200,7 @@
           "sondertilgung": 35.0,
           "kreditrahmen": 100.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       }
     },
     {
@@ -210,19 +210,19 @@
       "color": "#0C4A6E",
       "recommended": false,
       "affiliateUrl": "#",
-      "rate": "from 7.19%",
+      "rate": "from 6.99%",
       "amount": "€2,500 – 100,000",
       "term": "12 – 120 months",
       "sondertilgung": "statutory prepayment fee may apply (§ 502 BGB) — provider-specific details not stated by the comparison portal",
       "score": {
-        "value": 28.9,
+        "value": 31.1,
         "band": "C",
         "breakdown": {
-          "zinssatz": 6.2,
+          "zinssatz": 10.2,
           "sondertilgung": 35.0,
           "kreditrahmen": 100.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       },
       "logo": "assets/logos/dkb.svg"
     }

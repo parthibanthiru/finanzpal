@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10",
+  "updated": "2026-11",
   "items": [
     {
       "id": "openbank",
@@ -20,7 +20,7 @@
           "garantiedauer": 66.7,
           "einlagensicherung": 100.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       },
       "logo": "assets/logos/openbank.svg"
     },
@@ -43,7 +43,7 @@
           "garantiedauer": 83.3,
           "einlagensicherung": 100.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       },
       "logo": "assets/logos/consorsbank.svg"
     },
@@ -54,19 +54,19 @@
       "color": "#0057A0",
       "recommended": false,
       "affiliateUrl": "#",
-      "rate": "3.70%",
-      "guarantee": "6 months",
+      "rate": "3.80%",
+      "guarantee": "6 months, then 2.25% base rate",
       "minDeposit": "€1",
       "protection": "€100,000 (ES, EU-wide)",
       "score": {
-        "value": 95.9,
+        "value": 97.2,
         "band": "A",
         "breakdown": {
-          "zins": 92.5,
+          "zins": 95.0,
           "garantiedauer": 100.0,
           "einlagensicherung": 100.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       }
     },
     {
@@ -76,19 +76,19 @@
       "color": "#FF6200",
       "recommended": false,
       "affiliateUrl": "#",
-      "rate": "3.20%",
+      "rate": "3.50%",
       "guarantee": "4 months (up to €250,000)",
       "minDeposit": "none",
       "protection": "€100,000 (DE)",
       "score": {
-        "value": 82.3,
+        "value": 86.5,
         "band": "A",
         "breakdown": {
-          "zins": 80.0,
+          "zins": 87.5,
           "garantiedauer": 66.7,
           "einlagensicherung": 100.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       },
       "logo": "assets/logos/ing.svg"
     },
@@ -111,7 +111,7 @@
           "garantiedauer": 0.0,
           "einlagensicherung": 100.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       },
       "logo": "assets/logos/dkb.svg"
     },
@@ -134,7 +134,7 @@
           "garantiedauer": 100.0,
           "einlagensicherung": 100.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       },
       "logo": "assets/logos/1822direkt.svg"
     },
@@ -157,7 +157,7 @@
           "garantiedauer": 50.0,
           "einlagensicherung": 100.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       }
     },
     {
@@ -179,7 +179,7 @@
           "garantiedauer": 0.0,
           "einlagensicherung": 60.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       }
     },
     {
@@ -201,7 +201,7 @@
           "garantiedauer": 0.0,
           "einlagensicherung": 100.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       }
     },
     {
@@ -223,7 +223,7 @@
           "garantiedauer": 0.0,
           "einlagensicherung": 40.0
         },
-        "computedFrom": "2026-10"
+        "computedFrom": "2026-11"
       },
       "logo": "assets/logos/trade-republic.svg"
     }
