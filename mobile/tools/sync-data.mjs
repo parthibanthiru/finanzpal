@@ -239,7 +239,8 @@ function cleanSvg(src, prefix) {
     .replace(/<sodipodi:namedview[\s\S]*?(\/>|<\/sodipodi:namedview>)/g, '')
     .replace(/\s(sodipodi|inkscape):[\w-]+="[^"]*"/g, '')
     .replace(/>\s+</g, '><')
-    .replace(/[\r\n\t]+/g, ' ') // line breaks inside path data break react-native-svg
+    // line breaks inside path data (raw or as &#xA; / &#x9; entities) break react-native-svg
+    .replace(/(?:[\r\n\t]|&#x[9aAdD];|&#(?:9|10|13);)+/g, ' ')
     .trim();
   s = s.replace(/<svg\b[^>]*>/, (root) => {
     const num = (a) => {
