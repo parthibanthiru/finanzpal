@@ -13,7 +13,7 @@
       "minDeposit": "none",
       "protection": "€100,000 (DE)",
       "score": {
-        "value": 93.3,
+        "value": 98.3,
         "band": "A",
         "breakdown": {
           "zins": 100.0,
@@ -36,7 +36,7 @@
       "minDeposit": "none",
       "protection": "€100,000 (FR, FGDR)",
       "score": {
-        "value": 93.9,
+        "value": 95.7,
         "band": "A",
         "breakdown": {
           "zins": 95.0,
@@ -59,7 +59,7 @@
       "minDeposit": "€1",
       "protection": "€100,000 (ES, EU-wide)",
       "score": {
-        "value": 97.2,
+        "value": 96.5,
         "band": "A",
         "breakdown": {
           "zins": 95.0,
@@ -81,7 +81,7 @@
       "minDeposit": "none",
       "protection": "€100,000 (DE)",
       "score": {
-        "value": 86.5,
+        "value": 89.6,
         "band": "A",
         "breakdown": {
           "zins": 87.5,
@@ -104,7 +104,7 @@
       "minDeposit": "none",
       "protection": "€100,000 (DE)",
       "score": {
-        "value": 38.8,
+        "value": 42.5,
         "band": "C",
         "breakdown": {
           "zins": 25.0,
@@ -127,7 +127,7 @@
       "minDeposit": "none stated in source",
       "protection": "€100,000 (DE, Sparkassen group)",
       "score": {
-        "value": 93.1,
+        "value": 91.2,
         "band": "A",
         "breakdown": {
           "zins": 87.5,
@@ -150,7 +150,7 @@
       "minDeposit": "not stated in source",
       "protection": "€100,000 (FR guarantee fund, per a 2026 source — terms may since have changed)",
       "score": {
-        "value": 83.1,
+        "value": 88.8,
         "band": "A",
         "breakdown": {
           "zins": 87.5,
@@ -172,8 +172,8 @@
       "minDeposit": "none (from €0.01, provider page is slightly inconsistent)",
       "protection": "Sweden (statutory deposit insurance, roughly €100,000-equivalent — exact conversion stated inconsistently across sources)",
       "score": {
-        "value": 45.3,
-        "band": "C",
+        "value": 53.5,
+        "band": "B",
         "breakdown": {
           "zins": 55.0,
           "garantiedauer": 0.0,
@@ -194,7 +194,7 @@
       "minDeposit": "not stated in source",
       "protection": "Czech Republic (statutory guarantee scheme, typical EU-wide €100,000 threshold)",
       "score": {
-        "value": 55.9,
+        "value": 64.4,
         "band": "B",
         "breakdown": {
           "zins": 56.2,
@@ -216,8 +216,8 @@
       "minDeposit": "none (no maximum)",
       "protection": "€100,000 via partner banks (Germany: Deutsche Bank/J.P. Morgan; further partners in FR/SE — source is inconsistent on the exact number of partner banks; some funds may be held in money-market funds without deposit protection)",
       "score": {
-        "value": 44.4,
-        "band": "C",
+        "value": 53.8,
+        "band": "B",
         "breakdown": {
           "zins": 62.5,
           "garantiedauer": 0.0,

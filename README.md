@@ -537,12 +537,25 @@ Berechnet aus Feldern, die auf derselben Seite ohnehin schon stehen:
     Bedingungsfreiheit 20 % · zinsfreie Tage 20 %. Fehlt die Anzahl
     zinsfreier Tage (Debit-/Charge-Karten rechnen anders ab), wird das
     neutral statt als Nachteil gewertet.
-  - Tagesgeld: Zins 55 % · Zins-Garantiedauer 20 % · Einlagensicherung 25 %.
-    Eine vom Anbieter selbst als unklar markierte Währungsumrechnung zählt
-    nur als Teilerfüllung; ein ausdrücklicher Hinweis, dass ein Teil des
-    Guthabens ohne Einlagensicherung gehalten werden kann, schlägt
-    entsprechend stärker zu Buche — keins von beiden wird wie eine
-    uneingeschränkte Garantie gewertet.
+  - Tagesgeld: Zins 70 % · Zins-Garantiedauer 5 % · Einlagensicherung 25 %.
+    **Umgewichtet 2026-11** (vorher: Zins 55 % · Garantiedauer 20 % ·
+    Einlagensicherung 25 %): Nach dem monatlichen Zins-Update rückte Suresse
+    Direkt Bank (3,80 %, 6 Monate Garantie) mit 97,2 Punkten rechnerisch vor
+    Openbank (4,00 %, 4 Monate Garantie, 93,3 Punkte) — allein weil die
+    längere Garantiedauer unter der alten 20-%-Gewichtung schwerer wog als
+    der kleinere Zinsvorsprung, obwohl Openbank weiterhin den höchsten
+    Zinssatz der Kategorie bietet. Garantiedauer auf 5 % reduziert (bleibt
+    als Tie-Breaker zwischen sehr ähnlichen Zinssätzen relevant, kann aber
+    einen klaren Zinsvorsprung nicht mehr überstimmen), Zins von 55 % auf
+    70 % erhöht — entspricht der Methodik-Vorgabe, dass der Zins der
+    „dominante Faktor" dieser Kategorie ist. `recommended: true` blieb die
+    ganze Zeit auf Openbank; diese Umgewichtung sorgt nur dafür, dass der
+    angezeigte Score das nicht mehr widerspricht. Eine vom Anbieter selbst
+    als unklar markierte Währungsumrechnung zählt nur als Teilerfüllung; ein
+    ausdrücklicher Hinweis, dass ein Teil des Guthabens ohne
+    Einlagensicherung gehalten werden kann, schlägt entsprechend stärker zu
+    Buche — keins von beiden wird wie eine uneingeschränkte Garantie
+    gewertet.
   - Kinderdepot: Depotgebühr 20 % · Mindestsparrate 15 % · Guthabenzins 30 %
     · Eltern-Aufwand 35 %. Das höchste Gewicht liegt bewusst darauf, ob ein
     Elternteil dafür selbst schon ein eigenes Depot beim Anbieter braucht —

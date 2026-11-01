@@ -213,7 +213,21 @@ KREDITKARTE_RUBRIC = [
 
 # ---------------------------------------------------------------------------
 # Tagesgeld rubric
-# Zins 55% · Zins-Garantiedauer 20% · Einlagensicherung 25%
+# Zins 70% · Zins-Garantiedauer 5% · Einlagensicherung 25%
+#
+# Reweighted 2026-11 (was Zins 55% / Garantiedauer 20% / Einlagensicherung
+# 25%). The November rate refresh updated Suresse Direkt Bank to 3,80% /
+# 6 months and left Openbank at 4,00% / 4 months — under the old weights
+# that flipped the ranking (Suresse 97.2 vs. Openbank 93.3) purely because
+# a full 6-month guarantee was worth more (20% weight) than a 0.20-point
+# rate edge, even though Openbank still carries the highest headline rate
+# in the category. Zins is the methodology's stated "dominant factor" for
+# this category; Garantiedauer dropping from 20% to 5% means it can still
+# break a near-tie between two very close rates, but can no longer by
+# itself outrank a provider with a clearly higher rate. Einlagensicherung
+# is unchanged. Recommended flag was deliberately left on Openbank even
+# before this change (see commit history) — this reweighting is the
+# follow-up fix so the displayed score stops contradicting it.
 # ---------------------------------------------------------------------------
 
 def _tg_zins(item):
@@ -233,7 +247,9 @@ def _tg_garantiedauer(item):
     # Fixed anchor: 6 months of guaranteed rate = 100 points. A rate with no
     # guarantee period at all (e.g. Trade Republic: "kann jederzeit angepasst
     # werden") scores 0 here — that's a real, stated difference in how long
-    # the advertised rate can be relied on, not a missing data point.
+    # the advertised rate can be relied on, not a missing data point. Kept
+    # at the same 6-month anchor after the 2026-11 reweighting below — only
+    # this factor's WEIGHT changed, not its scoring curve.
     return clamp((months / 6.0) * 100.0)
 
 
@@ -254,8 +270,8 @@ def _tg_einlagensicherung(item):
 
 
 TAGESGELD_RUBRIC = [
-    ("zins", 0.55, _tg_zins),
-    ("garantiedauer", 0.20, _tg_garantiedauer),
+    ("zins", 0.70, _tg_zins),
+    ("garantiedauer", 0.05, _tg_garantiedauer),
     ("einlagensicherung", 0.25, _tg_einlagensicherung),
 ]
 

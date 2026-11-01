@@ -13,7 +13,7 @@
       "minDeposit": "keine",
       "protection": "100.000 € (DE)",
       "score": {
-        "value": 93.3,
+        "value": 98.3,
         "band": "A",
         "breakdown": {
           "zins": 100.0,
@@ -36,7 +36,7 @@
       "minDeposit": "keine",
       "protection": "100.000 € (FR, FGDR)",
       "score": {
-        "value": 93.9,
+        "value": 95.7,
         "band": "A",
         "breakdown": {
           "zins": 95.0,
@@ -59,7 +59,7 @@
       "minDeposit": "1 €",
       "protection": "100.000 € (ES, EU-weit)",
       "score": {
-        "value": 97.2,
+        "value": 96.5,
         "band": "A",
         "breakdown": {
           "zins": 95.0,
@@ -81,7 +81,7 @@
       "minDeposit": "keine",
       "protection": "100.000 € (DE)",
       "score": {
-        "value": 86.5,
+        "value": 89.6,
         "band": "A",
         "breakdown": {
           "zins": 87.5,
@@ -104,7 +104,7 @@
       "minDeposit": "keine",
       "protection": "100.000 € (DE)",
       "score": {
-        "value": 38.8,
+        "value": 42.5,
         "band": "C",
         "breakdown": {
           "zins": 25.0,
@@ -127,7 +127,7 @@
       "minDeposit": "keine (laut Quelle nicht beziffert)",
       "protection": "100.000 € (DE, Sparkassen-Finanzgruppe)",
       "score": {
-        "value": 93.1,
+        "value": 91.2,
         "band": "A",
         "breakdown": {
           "zins": 87.5,
@@ -150,7 +150,7 @@
       "minDeposit": "keine Angabe gefunden",
       "protection": "100.000 € (FR, Garantiefonds, laut Quelle 2026 ggf. inzwischen geändert)",
       "score": {
-        "value": 83.1,
+        "value": 88.8,
         "band": "A",
         "breakdown": {
           "zins": 87.5,
@@ -172,8 +172,8 @@
       "minDeposit": "keine (ab 0,01 €, Angaben auf Anbieterseite leicht widersprüchlich)",
       "protection": "Schweden (gesetzliche Einlagensicherung, ca. 100.000 €-Äquivalent — genaue Umrechnung je nach Quelle unterschiedlich angegeben)",
       "score": {
-        "value": 45.3,
-        "band": "C",
+        "value": 53.5,
+        "band": "B",
         "breakdown": {
           "zins": 55.0,
           "garantiedauer": 0.0,
@@ -194,7 +194,7 @@
       "minDeposit": "keine Angabe gefunden",
       "protection": "Tschechien (gesetzliches Garantiesystem, EU-weit üblich bis 100.000 €)",
       "score": {
-        "value": 55.9,
+        "value": 64.4,
         "band": "B",
         "breakdown": {
           "zins": 56.2,
@@ -216,8 +216,8 @@
       "minDeposit": "keine (kein Maximum)",
       "protection": "100.000 € über Partnerbanken (DE: Deutsche Bank/J.P. Morgan; weitere Partner in FR/SE — Angaben zur genauen Partnerbankenzahl auf Quellseite widersprüchlich; ein Teil der Gelder kann in Geldmarktfonds ohne Einlagensicherung gehalten werden)",
       "score": {
-        "value": 44.4,
-        "band": "C",
+        "value": 53.8,
+        "band": "B",
         "breakdown": {
           "zins": 62.5,
           "garantiedauer": 0.0,
