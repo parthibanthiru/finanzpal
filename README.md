@@ -1283,6 +1283,9 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
 - **Überweisen:** am 24.10.2026 in eine eigene App ausgelagert („Money Transfer",
   Arbeitstitel; eigenes GitHub-Repo, eigenes Design, eigene Supabase-Konten). Nicht mehr
   Teil dieser App.
+- **Fahrplan:** `mobile/ROADMAP.md` — was bis zur fertigen App fehlt; ein täglicher
+  Agent arbeitet die Liste ab. Supabase-Projekt „Finanzpal" (Frankfurt) ist angelegt,
+  **offener Punkt:** `mobile/supabase/schema.sql` dort einmal im SQL Editor ausführen.
 - **Anbieter-Logos:** Die App zeigt dieselben Logos wie die Website
   (`assets/logos/*.svg`, per Sync nach `mobile/data/logos.json`). Neues Logo oder
   geändertes `logo`-Feld → `cd mobile && npm run sync-data`.

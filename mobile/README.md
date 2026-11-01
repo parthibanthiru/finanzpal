@@ -86,6 +86,11 @@ mobile/
   supabase/schema.sql, backend-auth/
 ```
 
+## Roadmap
+`ROADMAP.md` lists what's left until the app is finished, in order. A daily scheduled agent ("Finanzpal app
+builder") works through it one item at a time and ticks items off; the steps only Parthiban can do are listed
+there too.
+
 ## Automatic checks (GitHub Actions)
 `.github/workflows/mobile-app.yml` runs on every push that touches the app or the website data it uses:
 `npm install` → `npx expo install --check` (versions match the Expo SDK) → website-data sync check → `tsc --noEmit` →
