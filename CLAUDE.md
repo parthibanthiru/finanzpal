@@ -43,7 +43,7 @@
   After changing `data/*.json` or `*.en.json`, a disclosure text (DE or EN), a
   `calc-disclaimer`, the Finanz-Check questions/weights in `assets/finanz-check.js`,
   Finanzpal-Score factor labels (`STR.scoreLabels` in `girokonto-`/`broker-`/`kinderdepot-`/`kreditkarte-compare.js`,
-  `SCORE_FACTOR_LABELS` in `compare.js`),
+  `SCORE_FACTOR_LABELS` in `compare.js`), a provider logo (`assets/logos/*.svg` or an item's `logo` field),
   the guide list in `ratgeber.html` / `en/ratgeber.html`, or calculator logic (any `assets/*rechner.js` or `haushaltsbuch.js`, incl. the
   yearly tax/SV values in `nettolohnrechner.js`), run
   `cd mobile && npm run sync-data` (and mirror calculator changes in

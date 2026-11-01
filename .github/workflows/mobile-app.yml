@@ -18,6 +18,7 @@ on:
       - 'assets/*-compare.js'
       - 'assets/compare.js'
       - 'assets/etf-search.js'
+      - 'assets/logos/**'
       - '*.html'
       - 'en/*.html'
       - '.github/workflows/mobile-app.yml'

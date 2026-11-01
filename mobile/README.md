@@ -5,6 +5,10 @@ It lives in `mobile/` inside the website repo and uses the **website as its sing
 same comparison data, same disclosure texts, same calculator math and the same design tokens.
 
 **What's in it (v0.12)**
+- **Provider logos**: the same logos as the website (`assets/logos/*.svg`, wherever a data item has `logo`) on a
+  white chip, otherwise the coloured initials box as before: comparisons, Finanz-Check, Merkliste, search. The sync
+  copies them into `data/logos.json`, cleaned for phone SVG renderers (no editor metadata, viewBox set, path line
+  breaks flattened, ids prefixed per logo); `components/ProviderMark.tsx` draws them with `react-native-svg`.
 - **Notifications** (Profil → Mitteilungen, opt-in): one short message when a comparison gets a new provider or
   a new guide is published, in the language the app is set to; tapping it opens the comparison at that provider
   or the guide. Changed rates or fees never trigger one, and messages carry names only. Needs one-time setup
@@ -98,7 +102,7 @@ The app ships a copy of the website's `data/*.json` and `data/*.en.json` and ext
 (root pages and `en/` pages), the disclosure texts (comparison pages, insurance tabs, and the
 `calc-disclaimer` of all 7 calculator pages), the Finanz-Check questions and weights
 and "why this pick" sentence (`assets/finanz-check.js`), the Ratgeber guide list (`ratgeber.html` + `en/ratgeber.html`)
-and the Finanzpal-Score factor labels (`STR.scoreLabels` in `girokonto-`, `broker-`, `kinderdepot-` and
+the provider logos (`assets/logos/*.svg` → `data/logos.json`) and the Finanzpal-Score factor labels (`STR.scoreLabels` in `girokonto-`, `broker-`, `kinderdepot-` and
 `kreditkarte-compare.js`, `SCORE_FACTOR_LABELS` in `compare.js`; the sync fails if a score factor in the data has no
 label). The ETF-Suche uses `data/etf.json`; its filter logic mirrors `assets/etf-search.js` (`lib/etf.ts`).
 **New interface text** (buttons, labels, messages) goes into both `lib/strings/de.ts` and `lib/strings/en.ts`.
