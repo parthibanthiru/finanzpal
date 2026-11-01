@@ -13,8 +13,16 @@
 (function () {
   var isEn = (document.documentElement.lang || 'de').toLowerCase().indexOf('en') === 0;
   var STR = isEn
-    ? { close: 'Close', methodology: 'Full methodology →', of100: '/ 100' }
-    : { close: 'Schließen', methodology: 'Zur Methodik →', of100: '/ 100' };
+    ? { close: 'Close', methodology: 'Full methodology →', of100: '/ 5' }
+    : { close: 'Schließen', methodology: 'Zur Methodik →', of100: '/ 5' };
+
+  // Scores are stored 0-100; the UI shows them out of 5 (see compare.js toFive()).
+  function toFive(n) {
+    var v = Math.round(Number(n) / 20 * 10) / 10;
+    if (Number(n) < 100 && v > 4.9) v = 4.9; // never show a perfect 5,0 for a non-perfect score
+    v = v.toFixed(1);
+    return isEn ? v : v.replace('.', ',');
+  }
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -55,7 +63,7 @@
       return '<div class="fp-score-pop-row">' +
         '<span class="fp-score-pop-label">' + escapeHtml(r.label) + '</span>' +
         '<span class="fp-score-pop-bar"><span class="fp-score-pop-fill" style="width:' + pct + '%"></span></span>' +
-        '<span class="fp-score-pop-val">' + escapeHtml(String(r.value)) + '</span>' +
+        '<span class="fp-score-pop-val">' + escapeHtml(toFive(r.value)) + '</span>' +
       '</div>';
     }).join('');
   }
@@ -71,7 +79,7 @@
     var value = trigger.getAttribute('data-score-value') || '';
     var band = trigger.getAttribute('data-score-band') || '';
     p.querySelector('.fp-score-pop-head').innerHTML =
-      '<span class="fp-score-pop-value band-' + band.toLowerCase() + '">' + escapeHtml(value) + '</span>' +
+      '<span class="fp-score-pop-value band-' + band.toLowerCase() + '">' + escapeHtml(toFive(value)) + '</span>' +
       '<span class="fp-score-pop-of100">' + escapeHtml(STR.of100) + '</span>';
     p.querySelector('.fp-score-pop-link').href = trigger.getAttribute('href') || 'ueber-uns.html#finanzpal-score';
     p.querySelector('.fp-score-pop-rows').innerHTML = rowsHtml(rows);

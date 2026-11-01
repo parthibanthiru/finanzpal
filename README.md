@@ -509,26 +509,27 @@ eigenes Vergleichs-JS) sowie `kredite.html`/`en/kredite.html`,
 `versicherungen.html`/`en/versicherungen.html` (Tabellen-Layout,
 `assets/compare.js`) einen Finanzpal-Score-Badge pro Zeile
 (`.fp-score-badge`):
-seit Ende Oktober 2026 ein großes, premium wirkendes Pill-Badge —
-dunkelblauer Verlauf (Navy → Band-Farbe grün/petrol/gold/schiefergrau als
-`--fp-badge-accent`), weißer Haken-Icon-Kreis, Note (A–D) und Zahl (0–100) in
-Weiß — statt des früheren winzigen 22px-Fortschritts-Rings. Markup ist in
-allen sechs Renderern (`assets/compare.js`,
+seit November 2026 ein **Medaillon** („Option 10"): runde Scheibe mit
+dunkelblauem Verlauf (Navy → Band-Farbe grün/petrol/gold/schiefergrau als
+`--fp-badge-accent`), weißem Fortschrittsring (Füllung = Score/100), dem Score
+**von 5** in der Mitte (Score ÷ 20, eine Nachkommastelle, DE „4,6" / EN „4.6";
+nie „5,0" unter 100 Punkten), „Note A–D" darunter und der Beschriftung
+„Finanzpal-Score" unter der Scheibe. Gespeichert/berechnet wird weiterhin
+0–100 (`data/*.json`, `tools/compute_scores.py`); nur die Anzeige rechnet um
+(`toFive()` in den sechs Renderern und in `assets/score-popover.js`; Tooltip
+und Popover-Faktorwerte ebenfalls /5). Platzierung rechts: in den Karten oben
+rechts in der Karte (`.kk-card` ist `position: relative`; linke Inhalte
+bekommen rechts einen Abstand), in den Tabellen in der letzten Spalte über dem
+Button (`.cta-score-cell`), unter 640px in den Karten unter dem Namen. Markup
+ist in allen sechs Renderern (`assets/compare.js`,
 `assets/{girokonto,broker,kinderdepot,kreditkarte,steuer}-compare.js`)
-identisch; Gradient/Icon/Größe kommen zentral aus den
-`.fp-score-badge`/`.fp-score-icon`/`.fp-score-grade`-Regeln in
-`assets/style.css`, sodass eine künftige Stiländerung nur dort passiert.
-Platzierung: das Badge steht immer in einer eigenen Zeile unter dem Anbieternamen
-(Tabellen wie Karten; `display: flex; width: fit-content`), und wird unter 480px
-Breite eine Stufe kleiner dargestellt.
-Der Haken-Icon-Look nähert sich bewusster einem Siegel/Zertifikat an als der
-alte Ring — das ist hier Absicht (auf Nutzerwunsch „Premium"-Design), bleibt
-aber auf die eigene Methodik begrenzt: Tooltip + `aria-label` nennen
-weiterhin ausdrücklich „Finanzpal-Score" und verlinken auf
-`ueber-uns.html#finanzpal-score`, nie „Zertifiziert" oder eine
-Drittprüfung. `assets/score-popover.js` (Klick-Popover mit der
-Faktor-Aufschlüsselung) ist unverändert, da es nur auf `.fp-score-badge`
-sowie die `data-score-*`-Attribute reagiert, nicht auf die innere Markup.
+identisch; Optik kommt zentral aus `.fp-score-*` in `assets/style.css`.
+Bewusst keine Wörter wie „Hervorragend" — die Methodik definiert nur die
+Bänder A–D. **Die App (`mobile/`) zeigt den Score noch als 0–100-Chip (offen).**
+Tooltip + `aria-label` nennen weiterhin ausdrücklich „Finanzpal-Score" und
+verlinken auf `ueber-uns.html#finanzpal-score`, nie „Zertifiziert";
+`assets/score-popover.js` reagiert nur auf `.fp-score-badge` und die
+`data-score-*`-Attribute (Rohwerte 0–100).
 Berechnet aus Feldern, die auf derselben Seite ohnehin schon stehen:
   - Girokonto: Kontoführungsgebühr 35 % · Dispozins 25 % · Guthabenzins 20 %
     · Karte & Bargeld-Flexibilität 20 %.

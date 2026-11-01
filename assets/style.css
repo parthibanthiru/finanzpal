@@ -643,40 +643,47 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .cc-stars { font-size: 12px; color: var(--gold); margin-left: 6px; vertical-align: 1px; }
 .cc-review-link { display: block; margin-top: 10px; font-size: 12.5px; color: var(--green-deep); font-weight: 600; text-decoration: underline; }
 
-/* Premium-gradient score badge: dark navy -> band-accent gradient chip with
-   a small check icon, grade letter and numeric value. Deliberately much
-   larger and more distinct than a plain inline label — the badge is meant
-   to read as a standalone "seal of approval", not a footnote next to the
-   provider name. --fp-badge-accent carries the band colour into the
-   gradient end-stop and into the hover/focus glow; .band-* sets only that
-   one variable so every other rule here stays shared. */
+/* Finanzpal-Score medallion (design "Option 10"): a dark navy -> band-accent
+   gradient disc with a white progress ring (fill = score/100), the score out
+   of 5 in the centre and the letter band underneath, "Finanzpal-Score" as a
+   caption below the disc. Placement is on the right: in the card layouts it
+   is pinned to the card's top-right corner (.kk-card is the positioning
+   context; the left content gets a right gutter so nothing runs under it),
+   in the table layouts it stacks above the CTA button in the last column
+   (.cta-score-cell). Below 640px the cards drop it back into the flow under
+   the provider name. --fp-badge-accent carries the band colour (set once in
+   the .band-* rules); --fp-disc sizes the disc. */
 .fp-score-badge {
-  display: flex; width: fit-content; max-width: 100%; box-sizing: border-box; align-items: center; gap: 10px; margin: 8px 0 2px;
-  text-decoration: none; cursor: pointer; border-radius: 14px; padding: 10px 20px 10px 12px;
-  background: linear-gradient(135deg, #0F2A3D 0%, var(--fp-badge-accent) 100%);
-  box-shadow: 0 4px 14px rgba(15, 42, 61, 0.3);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  --fp-disc: 104px;
+  position: absolute; top: 16px; right: 18px; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  text-decoration: none; cursor: pointer; border-radius: 14px; margin: 0;
+  transition: transform 0.15s ease;
 }
-.fp-score-badge:hover { transform: translateY(-1px); box-shadow: 0 7px 18px rgba(15, 42, 61, 0.36); }
-.fp-score-badge:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
-.fp-score-icon { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.16); flex-shrink: 0; }
-.fp-score-icon svg { display: block; }
-.fp-score-grade { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: #fff; line-height: 1; }
-.fp-score-badge .fp-score-value { font-family: var(--font-body); font-weight: 700; font-size: 19.5px; color: #fff; line-height: 1; opacity: 0.92; }
-/* Layout: the badge always sits on its own line under the provider name
-   (tables and cards alike) so it never wraps unpredictably beside it; on
-   phone widths it scales down a step so it doesn't dominate the card. */
-@media (max-width: 480px) {
-  .fp-score-badge { gap: 8px; padding: 8px 16px 8px 10px; border-radius: 12px; }
-  .fp-score-icon { width: 24px; height: 24px; }
-  .fp-score-icon svg { width: 14px; height: 14px; }
-  .fp-score-grade { font-size: 16px; }
-  .fp-score-badge .fp-score-value { font-size: 16.5px; }
-}
+.fp-score-badge:hover { transform: translateY(-1px); }
+.fp-score-badge:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+.fp-score-disc { position: relative; display: block; width: var(--fp-disc); height: var(--fp-disc); border-radius: 50%; background: linear-gradient(135deg, #0F2A3D 0%, var(--fp-badge-accent) 100%); box-shadow: 0 5px 14px rgba(15, 42, 61, 0.3); }
+.fp-score-ringsvg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.fp-score-ringsvg circle { fill: none; stroke-width: 6; }
+.fp-score-ringsvg .fp-score-track { stroke: rgba(255,255,255,0.2); }
+.fp-score-ringsvg .fp-score-fill { stroke: #fff; stroke-linecap: round; }
+.fp-score-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; }
+.fp-score-badge .fp-score-value { font-family: var(--font-display); font-weight: 700; font-size: calc(var(--fp-disc) * 0.3); line-height: 1; color: #fff; }
+.fp-score-grade { font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.78; margin-top: 4px; }
+.fp-score-cap { font-size: 11px; font-weight: 600; color: var(--ink-soft); white-space: nowrap; }
 .fp-score-badge.band-a { --fp-badge-accent: var(--green-deep); }
 .fp-score-badge.band-b { --fp-badge-accent: var(--teal); }
 .fp-score-badge.band-c { --fp-badge-accent: var(--gold); }
 .fp-score-badge.band-d { --fp-badge-accent: var(--slate); }
+.kk-card { position: relative; }
+.kk-card:has(.fp-score-badge) .cc-badges, .kk-card:has(.fp-score-badge) .cc-body { padding-right: 132px; }
+.kk-card:has(.fp-score-badge) .cc-body { min-height: 86px; }
+.cta-score-cell { text-align: center; }
+.cta-score-cell .fp-score-badge { --fp-disc: 84px; position: static; margin: 0 auto 10px; }
+@media (max-width: 640px) {
+  .kk-card .fp-score-badge { --fp-disc: 88px; position: static; align-items: flex-start; margin-top: 12px; }
+  .kk-card:has(.fp-score-badge) .cc-badges, .kk-card:has(.fp-score-badge) .cc-body { padding-right: 0; min-height: 0; }
+}
 
 /* Score breakdown popover (assets/score-popover.js) — click/tap target so
    the breakdown is reachable on touch devices, not just via the badge's

@@ -45,7 +45,7 @@
       hotelYes: 'Geeignet für Hotel- und Mietwagenbuchungen (Kreditrahmen als Kaution)',
       hotelNo: 'Als Debitkarte ohne Kreditrahmen meist nicht für Hotel-/Mietwagen-Kautionen geeignet',
       scoreTooltip: function (b) {
-        return 'Finanzpal-Score: Jahresgebühr ' + b.jahresgebuehr + ' · Abhebung weltweit ' + b.abhebung + ' · Ohne Bedingungen ' + b.ohneBedingungen + ' · Zinsfreie Tage ' + b.zinsfreieTage + ' (je von 100). Methodik: ueber-uns.html#finanzpal-score';
+        return 'Finanzpal-Score: Jahresgebühr ' + b.jahresgebuehr + ' · Abhebung weltweit ' + b.abhebung + ' · Ohne Bedingungen ' + b.ohneBedingungen + ' · Zinsfreie Tage ' + b.zinsfreieTage + ' (je von 5). Methodik: ueber-uns.html#finanzpal-score';
       },
       scoreLabels: { jahresgebuehr: 'Jahresgebühr', abhebung: 'Abhebung weltweit', ohneBedingungen: 'Ohne Bedingungen', zinsfreieTage: 'Zinsfreie Tage' }
     },
@@ -87,7 +87,7 @@
       hotelYes: 'Suitable for hotel and rental car deposits (credit line used as collateral)',
       hotelNo: 'As a debit card with no credit line, usually not suitable for hotel/rental car deposits',
       scoreTooltip: function (b) {
-        return 'Finanzpal Score: Annual fee ' + b.jahresgebuehr + ' · Worldwide withdrawal ' + b.abhebung + ' · No conditions ' + b.ohneBedingungen + ' · Interest-free days ' + b.zinsfreieTage + ' (each out of 100). Methodology: ueber-uns.html#finanzpal-score';
+        return 'Finanzpal Score: Annual fee ' + b.jahresgebuehr + ' · Worldwide withdrawal ' + b.abhebung + ' · No conditions ' + b.ohneBedingungen + ' · Interest-free days ' + b.zinsfreieTage + ' (each out of 5). Methodology: ueber-uns.html#finanzpal-score';
       },
       scoreLabels: { jahresgebuehr: 'Annual fee', abhebung: 'Worldwide withdrawal', ohneBedingungen: 'No conditions', zinsfreieTage: 'Interest-free days' }
     }
@@ -102,21 +102,43 @@
     return rows;
   }
 
+  // Finanzpal-Score is computed 0-100 (data/*.json); the UI shows it out of 5
+  // (value / 20, one decimal, locale decimal separator). Raw 0-100 values stay
+  // in data-score-rows / data-score-value — assets/score-popover.js converts
+  // them the same way for its panel.
+  function toFive(n) {
+    var v = Math.round(Number(n) / 20 * 10) / 10;
+    if (Number(n) < 100 && v > 4.9) v = 4.9; // never show a perfect 5,0 for a non-perfect score
+    var s = v.toFixed(1);
+    return LANG === 'en' ? s : s.replace('.', ',');
+  }
+  function breakdownToFive(b) {
+    var o = {};
+    for (var k in b) { if (Object.prototype.hasOwnProperty.call(b, k)) o[k] = toFive(b[k]); }
+    return o;
+  }
+
   // Premium-gradient score badge — see assets/compare.js for the shared
   // rationale/markup this mirrors.
   function scoreBadgeHtml(item) {
     if (!item.score) return '';
     var band = (item.score.band || '').toLowerCase();
     var value = item.score.value;
-    var title = STR.scoreTooltip(item.score.breakdown || {});
+    var title = STR.scoreTooltip(breakdownToFive(item.score.breakdown || {}));
     var rowsJson = escapeHtml(JSON.stringify(scoreBreakdownRows(item.score.breakdown || {})));
+    var five = toFive(value);
     var ariaLabel = LANG === 'en'
-      ? 'Finanzpal Score ' + value + ', grade ' + item.score.band
-      : 'Finanzpal-Score ' + value + ', Note ' + item.score.band;
+      ? 'Finanzpal Score ' + five + ' out of 5, grade ' + item.score.band
+      : 'Finanzpal-Score ' + five + ' von 5, Note ' + item.score.band;
     return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '" aria-label="' + escapeHtml(ariaLabel) + '" data-score-value="' + value + '" data-score-band="' + escapeHtml(item.score.band) + '" data-score-rows=\'' + rowsJson + '\' aria-haspopup="dialog" aria-expanded="false">' +
-      '<span class="fp-score-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#2FBF7F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>' +
-      '<span class="fp-score-grade">' + escapeHtml(item.score.band) + '</span>' +
-      '<span class="fp-score-value">' + value + '</span>' +
+      '<span class="fp-score-disc">' +
+        '<svg class="fp-score-ringsvg" viewBox="0 0 116 116" aria-hidden="true">' +
+          '<circle class="fp-score-track" cx="58" cy="58" r="46" pathLength="100"></circle>' +
+          '<circle class="fp-score-fill" cx="58" cy="58" r="46" pathLength="100" stroke-dasharray="100" stroke-dashoffset="' + (100 - Math.max(0, Math.min(100, value))).toFixed(1) + '" transform="rotate(-90 58 58)"></circle>' +
+        '</svg>' +
+        '<span class="fp-score-center"><span class="fp-score-value">' + five + '</span><span class="fp-score-grade">' + (LANG === 'en' ? 'Grade ' : 'Note ') + escapeHtml(item.score.band) + '</span></span>' +
+      '</span>' +
+      '<span class="fp-score-cap">' + (LANG === 'en' ? 'Finanzpal Score' : 'Finanzpal-Score') + '</span>' +
     '</a>';
   }
 
@@ -260,14 +282,14 @@
       var rows = items.map(function (item) {
         return '<tr class="' + (item.recommended ? 'pick' : '') + '">' +
           '<td><div class="broker-cell"><div class="broker-mark" style="' + (item.color ? 'background:' + item.color + ';' : '') + '">' + escapeHtml(item.initials) + '</div><div>' +
-            (item.recommended ? '<div class="broker-name linked">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div><span class="broker-tag">' + STR.pick + '</span>' : '<div class="broker-name">' + escapeHtml(item.name) + scoreBadgeHtml(item) + '</div>') +
+            (item.recommended ? '<div class="broker-name linked">' + escapeHtml(item.name) + '</div><span class="broker-tag">' + STR.pick + '</span>' : '<div class="broker-name">' + escapeHtml(item.name) + '</div>') +
           '</div></div></td>' +
           '<td class="num-cell">' + escapeHtml(item.netzwerk) + '</td>' +
           '<td class="num-cell">' + item.jahresgebuehr + (item.bedingung ? '<div class="cell-sub">' + escapeHtml(item.bedingung) + '</div>' : '') + '</td>' +
           '<td class="num-cell">' + item.fremdwaehrung + '</td>' +
           '<td class="num-cell">' + item.abhebung + '</td>' +
           '<td>' + ratingHtml(item) + '</td>' +
-          '<td><a href="' + item.affiliateUrl + '" class="' + (item.recommended ? 'cta-btn2' : 'cta-btn2 secondary') + '" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a></td>' +
+          '<td class="cta-score-cell">' + scoreBadgeHtml(item) + '<a href="' + item.affiliateUrl + '" class="' + (item.recommended ? 'cta-btn2' : 'cta-btn2 secondary') + '" rel="sponsored nofollow" aria-label="' + escapeHtml(STR.ctaAria(item.name)) + '">' + STR.cta + '</a></td>' +
           '</tr>';
       }).join('');
       return '<div class="table-scroll"><table class="compare"><thead><tr>' +

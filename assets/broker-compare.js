@@ -34,7 +34,7 @@
     reviewLink: 'Read our full review →',
     provider: 'Provider',
     scoreTooltip: function (b) {
-      return 'Finanzpal Score: Account fee ' + b.depotgebuehr + ' · ETF savings plan offer ' + b.etfSparplaene + ' · Cash interest ' + b.guthabenzins + ' · Min. savings rate ' + b.mindestsparrate + ' (each out of 100). Methodology: ueber-uns.html#finanzpal-score';
+      return 'Finanzpal Score: Account fee ' + b.depotgebuehr + ' · ETF savings plan offer ' + b.etfSparplaene + ' · Cash interest ' + b.guthabenzins + ' · Min. savings rate ' + b.mindestsparrate + ' (each out of 5). Methodology: ueber-uns.html#finanzpal-score';
     },
     scoreLabels: { depotgebuehr: 'Account fee', etfSparplaene: 'ETF savings plan offer', guthabenzins: 'Cash interest', mindestsparrate: 'Min. savings rate' }
   } : {
@@ -70,7 +70,7 @@
     reviewLink: 'Unseren ausführlichen Test lesen →',
     provider: 'Anbieter',
     scoreTooltip: function (b) {
-      return 'Finanzpal-Score: Depotgebühr ' + b.depotgebuehr + ' · ETF-Sparplan-Angebot ' + b.etfSparplaene + ' · Guthabenzins ' + b.guthabenzins + ' · Mindestsparrate ' + b.mindestsparrate + ' (je von 100). Methodik: ueber-uns.html#finanzpal-score';
+      return 'Finanzpal-Score: Depotgebühr ' + b.depotgebuehr + ' · ETF-Sparplan-Angebot ' + b.etfSparplaene + ' · Guthabenzins ' + b.guthabenzins + ' · Mindestsparrate ' + b.mindestsparrate + ' (je von 5). Methodik: ueber-uns.html#finanzpal-score';
     },
     scoreLabels: { depotgebuehr: 'Depotgebühr', etfSparplaene: 'ETF-Sparplan-Angebot', guthabenzins: 'Guthabenzins', mindestsparrate: 'Mindestsparrate' }
   };
@@ -90,21 +90,43 @@
     return rows;
   }
 
+  // Finanzpal-Score is computed 0-100 (data/*.json); the UI shows it out of 5
+  // (value / 20, one decimal, locale decimal separator). Raw 0-100 values stay
+  // in data-score-rows / data-score-value — assets/score-popover.js converts
+  // them the same way for its panel.
+  function toFive(n) {
+    var v = Math.round(Number(n) / 20 * 10) / 10;
+    if (Number(n) < 100 && v > 4.9) v = 4.9; // never show a perfect 5,0 for a non-perfect score
+    var s = v.toFixed(1);
+    return LANG === 'en' ? s : s.replace('.', ',');
+  }
+  function breakdownToFive(b) {
+    var o = {};
+    for (var k in b) { if (Object.prototype.hasOwnProperty.call(b, k)) o[k] = toFive(b[k]); }
+    return o;
+  }
+
   // Premium-gradient score badge — see assets/compare.js for the shared
   // rationale/markup this mirrors.
   function scoreBadgeHtml(item) {
     if (!item.score) return '';
     var band = (item.score.band || '').toLowerCase();
     var value = item.score.value;
-    var title = STR.scoreTooltip(item.score.breakdown || {});
+    var title = STR.scoreTooltip(breakdownToFive(item.score.breakdown || {}));
     var rowsJson = escapeHtml(JSON.stringify(scoreBreakdownRows(item.score.breakdown || {})));
+    var five = toFive(value);
     var ariaLabel = LANG === 'en'
-      ? 'Finanzpal Score ' + value + ', grade ' + item.score.band
-      : 'Finanzpal-Score ' + value + ', Note ' + item.score.band;
+      ? 'Finanzpal Score ' + five + ' out of 5, grade ' + item.score.band
+      : 'Finanzpal-Score ' + five + ' von 5, Note ' + item.score.band;
     return '<a class="fp-score-badge band-' + band + '" href="ueber-uns.html#finanzpal-score" title="' + escapeHtml(title) + '" aria-label="' + escapeHtml(ariaLabel) + '" data-score-value="' + value + '" data-score-band="' + escapeHtml(item.score.band) + '" data-score-rows=\'' + rowsJson + '\' aria-haspopup="dialog" aria-expanded="false">' +
-      '<span class="fp-score-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#2FBF7F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>' +
-      '<span class="fp-score-grade">' + escapeHtml(item.score.band) + '</span>' +
-      '<span class="fp-score-value">' + value + '</span>' +
+      '<span class="fp-score-disc">' +
+        '<svg class="fp-score-ringsvg" viewBox="0 0 116 116" aria-hidden="true">' +
+          '<circle class="fp-score-track" cx="58" cy="58" r="46" pathLength="100"></circle>' +
+          '<circle class="fp-score-fill" cx="58" cy="58" r="46" pathLength="100" stroke-dasharray="100" stroke-dashoffset="' + (100 - Math.max(0, Math.min(100, value))).toFixed(1) + '" transform="rotate(-90 58 58)"></circle>' +
+        '</svg>' +
+        '<span class="fp-score-center"><span class="fp-score-value">' + five + '</span><span class="fp-score-grade">' + (LANG === 'en' ? 'Grade ' : 'Note ') + escapeHtml(item.score.band) + '</span></span>' +
+      '</span>' +
+      '<span class="fp-score-cap">' + (LANG === 'en' ? 'Finanzpal Score' : 'Finanzpal-Score') + '</span>' +
     '</a>';
   }
 
