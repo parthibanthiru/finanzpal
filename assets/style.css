@@ -651,7 +651,7 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
    gradient end-stop and into the hover/focus glow; .band-* sets only that
    one variable so every other rule here stays shared. */
 .fp-score-badge {
-  display: inline-flex; align-items: center; gap: 10px; margin-left: 10px; vertical-align: middle;
+  display: flex; width: fit-content; max-width: 100%; box-sizing: border-box; align-items: center; gap: 10px; margin: 8px 0 2px;
   text-decoration: none; cursor: pointer; border-radius: 14px; padding: 10px 20px 10px 12px;
   background: linear-gradient(135deg, #0F2A3D 0%, var(--fp-badge-accent) 100%);
   box-shadow: 0 4px 14px rgba(15, 42, 61, 0.3);
@@ -663,6 +663,16 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .fp-score-icon svg { display: block; }
 .fp-score-grade { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: #fff; line-height: 1; }
 .fp-score-badge .fp-score-value { font-family: var(--font-body); font-weight: 700; font-size: 19.5px; color: #fff; line-height: 1; opacity: 0.92; }
+/* Layout: the badge always sits on its own line under the provider name
+   (tables and cards alike) so it never wraps unpredictably beside it; on
+   phone widths it scales down a step so it doesn't dominate the card. */
+@media (max-width: 480px) {
+  .fp-score-badge { gap: 8px; padding: 8px 16px 8px 10px; border-radius: 12px; }
+  .fp-score-icon { width: 24px; height: 24px; }
+  .fp-score-icon svg { width: 14px; height: 14px; }
+  .fp-score-grade { font-size: 16px; }
+  .fp-score-badge .fp-score-value { font-size: 16.5px; }
+}
 .fp-score-badge.band-a { --fp-badge-accent: var(--green-deep); }
 .fp-score-badge.band-b { --fp-badge-accent: var(--teal); }
 .fp-score-badge.band-c { --fp-badge-accent: var(--gold); }

@@ -518,6 +518,9 @@ allen sechs Renderern (`assets/compare.js`,
 identisch; Gradient/Icon/Größe kommen zentral aus den
 `.fp-score-badge`/`.fp-score-icon`/`.fp-score-grade`-Regeln in
 `assets/style.css`, sodass eine künftige Stiländerung nur dort passiert.
+Platzierung: das Badge steht immer in einer eigenen Zeile unter dem Anbieternamen
+(Tabellen wie Karten; `display: flex; width: fit-content`), und wird unter 480px
+Breite eine Stufe kleiner dargestellt.
 Der Haken-Icon-Look nähert sich bewusster einem Siegel/Zertifikat an als der
 alte Ring — das ist hier Absicht (auf Nutzerwunsch „Premium"-Design), bleibt
 aber auf die eigene Methodik begrenzt: Tooltip + `aria-label` nennen
