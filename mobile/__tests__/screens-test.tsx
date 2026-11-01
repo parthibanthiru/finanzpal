@@ -16,6 +16,7 @@ import { NO_FILTERS, etfs, filterEtfs, options } from '@/lib/etf';
 import { scoreRows } from '@/lib/scoreLabels';
 import { search } from '@/lib/search';
 import { targetOf } from '@/lib/push';
+import { hasLogo } from '@/components/ProviderMark';
 
 import HomeScreen from '@/app/(app)/vergleiche/index';
 import CategoryScreen from '@/app/(app)/vergleiche/[id]';
@@ -257,6 +258,20 @@ describe.each(LANGS)('interactions (%s)', (lang) => {
     expect(screen.getAllByLabelText(t.card.favRemove)).toHaveLength(1);
     expect(screen.getAllByLabelText(t.card.favAdd)).toHaveLength(before - 1);
   });
+});
+
+it('Every provider logo the website data uses is in the app', () => {
+  let n = 0;
+  for (const c of CATEGORIES) {
+    for (const l of LANGS) {
+      for (const it of getBundled(c.file, l).items) {
+        if (!it.logo) continue;
+        expect([c.file, it.id, hasLogo(it.logo)]).toEqual([c.file, it.id, true]);
+        n++;
+      }
+    }
+  }
+  expect(n).toBeGreaterThan(20);
 });
 
 it('Push messages use the same comparison names as the app', () => {

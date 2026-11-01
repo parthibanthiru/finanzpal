@@ -11,7 +11,7 @@
 //     mobile/data/score-labels.json
 // Runs automatically before `npm start` (prestart). The copies are committed, so cloud
 // builds (EAS) work without the website folder next to them.
-import { copyFileSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -227,6 +227,59 @@ if (ratgeber.de && ratgeber.en && ratgeber.de.articles.map((a) => a.page).join()
 }
 writeFileSync(join(dest, 'ratgeber.json'), JSON.stringify(ratgeber, null, 2) + '\n');
 
+// 6. Provider logos: every assets/logos/*.svg a data file points to (item.logo), as SVG text in
+//    data/logos.json (path → markup), so the app shows the same logos as the website.
+// Phone SVG renderers are stricter than browsers: drop editor metadata (Inkscape/Sodipodi, RDF),
+// make sure the root has a viewBox, and leave the size to the app (root width/height removed).
+// Internal ids get a per-logo prefix, so two logos on one (web) page can't swap gradients.
+function cleanSvg(src, prefix) {
+  let s = src
+    .replace(/<\?xml[^>]*>|<!DOCTYPE[^>]*>|<!--[\s\S]*?-->/g, '')
+    .replace(/<metadata[\s\S]*?<\/metadata>/g, '')
+    .replace(/<sodipodi:namedview[\s\S]*?(\/>|<\/sodipodi:namedview>)/g, '')
+    .replace(/\s(sodipodi|inkscape):[\w-]+="[^"]*"/g, '')
+    .replace(/>\s+</g, '><')
+    .trim();
+  s = s.replace(/<svg\b[^>]*>/, (root) => {
+    const num = (a) => {
+      const m = root.match(new RegExp(`\\s${a}="([\\d.]+)(px)?"`));
+      return m ? m[1] : null;
+    };
+    const w = num('width');
+    const h = num('height');
+    let r = root.replace(/\s(width|height)="[^"]*"/g, '');
+    if (!/viewBox=/.test(r) && w && h) r = r.replace('<svg', `<svg viewBox="0 0 ${w} ${h}"`);
+    return r;
+  });
+  const ids = [...s.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
+  for (const id of ids) {
+    const esc = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    s = s
+      .replace(new RegExp(`(\\sid=")${esc}"`, 'g'), `$1${prefix}-${id}"`)
+      .replace(new RegExp(`url\\(#${esc}\\)`, 'g'), `url(#${prefix}-${id})`)
+      .replace(new RegExp(`(href=")#${esc}"`, 'g'), `$1#${prefix}-${id}"`);
+  }
+  return s;
+}
+const logos = {};
+for (const f of readdirSync(join(site, 'data'))) {
+  if (!f.endsWith('.json')) continue;
+  for (const item of JSON.parse(readFileSync(join(site, 'data', f), 'utf8')).items ?? []) {
+    if (!item.logo || logos[item.logo]) continue;
+    const file = join(site, item.logo);
+    if (!/^assets\/logos\/[\w.-]+\.svg$/.test(item.logo) || !existsSync(file)) {
+      missing.push(`${f}: logo ${item.logo}`);
+      continue;
+    }
+    logos[item.logo] = cleanSvg(readFileSync(file, 'utf8'), 'fp-' + item.logo.replace(/^.*\/|\.svg$/g, ''));
+  }
+}
+const logoKeys = Object.keys(logos).sort();
+writeFileSync(join(dest, 'logos.json'), JSON.stringify(Object.fromEntries(logoKeys.map((k) => [k, logos[k]])), null, 1) + '\n');
+
+console.log(
+  `[sync-data] ${logoKeys.length} Anbieter-Logos übernommen.`
+);
 console.log(
   `[sync-data] ${n} Datendateien (DE + EN), ${counts.de} + ${counts.en} Hinweistexte (DE + EN), ` +
     `${ratgeber.de?.articles.length ?? 0} Ratgeber-Artikel übernommen.`

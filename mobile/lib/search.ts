@@ -7,7 +7,7 @@ import type { Lang, Strings } from './i18n';
 import type { Etf } from './etf';
 
 export type Hit =
-  | { kind: 'provider'; key: string; title: string; sub: string; categoryId: string; itemId: string; color?: string; initials?: string }
+  | { kind: 'provider'; key: string; title: string; sub: string; categoryId: string; itemId: string; color?: string; initials?: string; logo?: string }
   | { kind: 'etf'; key: string; title: string; sub: string; isin: string; color?: string; initials?: string }
   | { kind: 'page'; key: string; title: string; sub: string; route?: string; sitePage?: string; icon: string };
 
@@ -46,7 +46,7 @@ function buildIndex(lang: Lang, t: Strings): Entry[] {
     const cat = t.categories[c.id];
     for (const it of getBundled(c.file, lang).items) {
       add(
-        { kind: 'provider', key: `${c.id}:${it.id}`, title: it.name, sub: cat.title, categoryId: c.id, itemId: it.id, color: it.color, initials: it.initials },
+        { kind: 'provider', key: `${c.id}:${it.id}`, title: it.name, sub: cat.title, categoryId: c.id, itemId: it.id, color: it.color, initials: it.initials, logo: it.logo },
         it.name, it.anbieter, it.initials, it.id.replace(/-/g, ' '), cat.title
       );
     }

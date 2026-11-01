@@ -6,6 +6,7 @@ import { CATEGORIES, getCategory } from '@/lib/categories';
 import { useI18n } from '@/lib/i18n';
 import { getBundled, type Item } from '@/lib/data';
 import { FavoriteButton, ScoreBadge } from '@/components/ProviderCard';
+import { ProviderMark } from '@/components/ProviderMark';
 import { fonts, makeStyles, radius, spacing, useColors } from '@/components/theme';
 
 type Row = { category: string; itemId: string; item?: Item };
@@ -62,11 +63,13 @@ export default function MerklisteScreen() {
                     router.push({ pathname: '/vergleiche/[id]', params: { id: r.category, focus: r.itemId, from: 'merkliste' } })
                   }
                 >
-                  <View style={[styles.avatar, { backgroundColor: r.item?.color ?? colors.slate }]}>
-                    <Text style={styles.avatarText} numberOfLines={1} adjustsFontSizeToFit>
-                      {r.item?.initials ?? '?'}
-                    </Text>
-                  </View>
+                  <ProviderMark
+                    logo={r.item?.logo}
+                    initials={r.item?.initials ?? '?'}
+                    color={r.item?.color ?? colors.slate}
+                    name={r.item?.name ?? r.itemId}
+                    size={40}
+                  />
                   <View style={{ flex: 1 }}>
                     <Text style={styles.name}>{r.item?.name ?? r.itemId}</Text>
                     {!r.item && <Text style={styles.gone}>{t.favorites.gone}</Text>}
@@ -90,8 +93,6 @@ const useStyles = makeStyles((colors) => ({
     borderWidth: 1, borderColor: colors.border, padding: spacing.md, marginBottom: spacing.sm,
   },
   rowMain: { flex: 1, flexDirection: 'row', alignItems: 'center' },
-  avatar: { width: 40, height: 40, borderRadius: 10, alignItems: 'center', justifyContent: 'center', marginRight: spacing.md, paddingHorizontal: 3 },
-  avatarText: { color: '#fff', fontWeight: '700', fontSize: 13 },
   name: { fontFamily: fonts.display, fontSize: 17, color: colors.text },
   gone: { fontSize: 12, color: colors.danger, marginTop: 2 },
   empty: { alignItems: 'center', paddingTop: spacing.xl, paddingHorizontal: spacing.md },

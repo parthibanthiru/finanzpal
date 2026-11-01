@@ -8,6 +8,7 @@ import { useI18n } from '@/lib/i18n';
 import { getBundled } from '@/lib/data';
 import { Answers, CATEGORY_KEYS, CATEGORY_META, QUESTIONS, loadAnswers, topPick } from '@/lib/finanzCheck';
 import { Hit, search } from '@/lib/search';
+import { ProviderMark } from '@/components/ProviderMark';
 import { openSite } from '@/lib/site';
 import { PREVIEW } from '@/lib/preview';
 import { fonts, makeStyles, radius, spacing, useColors } from '@/components/theme';
@@ -119,9 +120,13 @@ function SearchResults({ query }: { query: string }) {
                 {h.kind === 'page' ? (
                   <Text style={styles.icon}>{h.icon}</Text>
                 ) : (
-                  <View style={[styles.avatar, { backgroundColor: h.color ?? '#64748b' }]}>
-                    <Text style={styles.avatarText}>{h.initials ?? h.title.slice(0, 2)}</Text>
-                  </View>
+                  <ProviderMark
+                    logo={h.kind === 'provider' ? h.logo : undefined}
+                    initials={h.initials ?? h.title.slice(0, 2)}
+                    color={h.color ?? '#64748b'}
+                    name={h.title}
+                    size={36}
+                  />
                 )}
                 <View style={{ flex: 1 }}>
                   <Text style={styles.hitTitle} numberOfLines={2}>{h.title}</Text>
@@ -272,7 +277,5 @@ const useStyles = makeStyles((colors) => ({
   searchClear: { position: 'absolute', right: 12 },
   searchClearText: { fontSize: 24, color: colors.muted },
   searchCount: { color: colors.muted, fontSize: 13, marginBottom: spacing.md },
-  avatar: { width: 36, height: 36, borderRadius: 9, alignItems: 'center', justifyContent: 'center', marginRight: spacing.md },
-  avatarText: { color: '#fff', fontWeight: '700', fontSize: 12 },
   hitTitle: { fontSize: 16, fontWeight: '600', color: colors.text },
 }));

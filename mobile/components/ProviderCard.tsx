@@ -5,6 +5,7 @@ import { ScoreBreakdown } from './ScoreBreakdown';
 import type { Field } from '@/lib/categories';
 import { isRealLink, openSite } from '@/lib/site';
 import { getLang, useT } from '@/lib/i18n';
+import { ProviderMark } from './ProviderMark';
 import { bandColors, bandTextColor, fonts, makeStyles, radius, spacing, useColors } from './theme';
 
 /**
@@ -74,11 +75,7 @@ export function ProviderCard({
       </View>
 
       <View style={styles.head}>
-        <View style={[styles.avatar, { backgroundColor: item.color ?? colors.ink }]}>
-          <Text style={styles.avatarText} numberOfLines={1} adjustsFontSizeToFit>
-            {item.initials ?? item.name.slice(0, 2).toUpperCase()}
-          </Text>
-        </View>
+        <ProviderMark logo={item.logo} initials={item.initials} color={item.color} name={item.name} />
         <View style={{ flex: 1 }}>
           <Text style={styles.name}>{item.name}</Text>
           {item.anbieter ? <Text style={styles.anbieter}>{item.anbieter}</Text> : null}
@@ -147,8 +144,6 @@ const useStyles = makeStyles((colors) => ({
     overflow: 'hidden',
   },
   head: { flexDirection: 'row', alignItems: 'center', marginBottom: spacing.sm },
-  avatar: { width: 44, height: 44, borderRadius: 10, alignItems: 'center', justifyContent: 'center', marginRight: spacing.md, paddingHorizontal: 3 },
-  avatarText: { color: '#fff', fontWeight: '700', fontSize: 14 },
   name: { fontFamily: fonts.display, fontSize: 18, color: colors.text, fontWeight: '600' },
   anbieter: { fontSize: 12, color: colors.muted },
   rating: { fontSize: 13, color: colors.muted, marginTop: 2 },

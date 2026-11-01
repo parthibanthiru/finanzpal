@@ -9,6 +9,7 @@ import {
 import { useI18n } from '@/lib/i18n';
 import { isRealLink } from '@/lib/site';
 import { ScoreBadge } from '@/components/ProviderCard';
+import { ProviderMark } from '@/components/ProviderMark';
 import { fonts, makeStyles, radius, spacing, useColors } from '@/components/theme';
 
 type Pick = { cat: string; item: Item };
@@ -115,11 +116,7 @@ export default function FinanzCheckScreen() {
             <View key={cat} style={styles.card}>
               <Text style={styles.catLabel}>{t.check.categories[cat]}</Text>
               <View style={styles.head}>
-                <View style={[styles.avatar, { backgroundColor: item.color ?? colors.primaryDark }]}>
-                  <Text style={styles.avatarText} numberOfLines={1} adjustsFontSizeToFit>
-                    {item.initials}
-                  </Text>
-                </View>
+                <ProviderMark logo={item.logo} initials={item.initials} color={item.color ?? colors.primaryDark} name={item.name} size={40} />
                 <Text style={styles.name}>{item.name}</Text>
                 {item.score && <ScoreBadge score={item.score} file={CATEGORY_META[cat].file} name={item.name} />}
               </View>
@@ -174,8 +171,6 @@ const useStyles = makeStyles((colors) => ({
   },
   catLabel: { fontSize: 12, fontWeight: '700', color: colors.muted, textTransform: 'uppercase', letterSpacing: 0.6, marginBottom: spacing.sm },
   head: { flexDirection: 'row', alignItems: 'center', marginBottom: spacing.sm },
-  avatar: { width: 40, height: 40, borderRadius: 10, alignItems: 'center', justifyContent: 'center', marginRight: spacing.md, paddingHorizontal: 3 },
-  avatarText: { color: '#fff', fontWeight: '700', fontSize: 13 },
   name: { flex: 1, fontFamily: fonts.display, fontSize: 18, color: colors.text },
   row: { flexDirection: 'row', paddingVertical: 6, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border },
   k: { flex: 1, color: colors.muted, fontSize: 13 },
