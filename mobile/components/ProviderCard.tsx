@@ -1,18 +1,24 @@
 import { useState } from 'react';
+import Svg, { Circle, Defs, LinearGradient, Stop } from 'react-native-svg';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { Item, Score } from '@/lib/data';
 import { ScoreBreakdown } from './ScoreBreakdown';
 import type { Field } from '@/lib/categories';
 import { isRealLink, openSite } from '@/lib/site';
 import { getLang, useT } from '@/lib/i18n';
+import { toFive } from '@/lib/scoreLabels';
 import { ProviderMark } from './ProviderMark';
-import { bandColors, bandTextColor, fonts, makeStyles, radius, spacing, useColors } from './theme';
+import { bandColors, fonts, makeStyles, radius, spacing, useColors } from './theme';
 
 /**
- * Finanzpal-Score badge: same signal as the website's ring badge (0–100 + band A–D).
- * Tapping it opens the breakdown sheet (like the website's score popover).
+ * Finanzpal-Score badge — the website's medallion (design "Option 10"): gradient disc in
+ * navy -> band colour, white progress ring (fill = score/100), score out of 5 in the centre,
+ * "Note A" underneath. Tapping it opens the breakdown sheet (like the website's score popover).
  * `file` = data file of the comparison (picks the factor labels), `name` = provider name.
  */
+const DISC = 68;
+const RING_R = 29;
+const RING_C = 2 * Math.PI * RING_R;
 export function ScoreBadge({ score, file, name }: { score: Score; file: string; name: string }) {
   const t = useT();
   const styles = useStyles();
@@ -20,18 +26,38 @@ export function ScoreBadge({ score, file, name }: { score: Score; file: string; 
   const [open, setOpen] = useState(false);
   const { value, band } = score;
   const c = bandColors(colors)[band] ?? colors.slate;
+  const five = toFive(value);
+  const gradId = `fpScoreGrad${band}`; // one gradient per band: ids are global on web
+  const pct = Math.max(0, Math.min(100, value)) / 100;
   return (
     <>
       <Pressable
         onPress={() => setOpen(true)}
         accessibilityRole="button"
-        accessibilityLabel={t.card.scoreA11y(Math.round(value), band)}
+        accessibilityLabel={t.card.scoreA11y(five, band)}
         accessibilityHint={t.card.scoreShow}
-        style={[styles.score, { borderColor: c }]}
+        style={styles.score}
         hitSlop={6}
       >
-        <Text style={[styles.scoreValue, { color: c }]}>{Math.round(value)}</Text>
-        <Text style={[styles.scoreBand, { backgroundColor: c, color: bandTextColor(colors, band) }]}>{band}</Text>
+        <Svg width={DISC} height={DISC} viewBox={`0 0 ${DISC} ${DISC}`}>
+          <Defs>
+            <LinearGradient id={gradId} x1="0" y1="0" x2="1" y2="1">
+              <Stop offset="0" stopColor="#0F2A3D" />
+              <Stop offset="1" stopColor={c} />
+            </LinearGradient>
+          </Defs>
+          <Circle cx={DISC / 2} cy={DISC / 2} r={DISC / 2} fill={`url(#${gradId})`} />
+          <Circle cx={DISC / 2} cy={DISC / 2} r={RING_R} stroke="rgba(255,255,255,0.2)" strokeWidth={4} fill="none" />
+          <Circle
+            cx={DISC / 2} cy={DISC / 2} r={RING_R} stroke="#fff" strokeWidth={4} fill="none" strokeLinecap="round"
+            strokeDasharray={`${RING_C}`} strokeDashoffset={RING_C * (1 - pct)}
+            transform={`rotate(-90 ${DISC / 2} ${DISC / 2})`}
+          />
+        </Svg>
+        <View style={styles.scoreCenter} pointerEvents="none">
+          <Text style={styles.scoreValue}>{five}</Text>
+          <Text style={styles.scoreBand}>{t.card.scoreBand(band)}</Text>
+        </View>
       </Pressable>
       <ScoreBreakdown visible={open} onClose={() => setOpen(false)} score={score} file={file} name={name} />
     </>
@@ -147,9 +173,10 @@ const useStyles = makeStyles((colors) => ({
   name: { fontFamily: fonts.display, fontSize: 18, color: colors.text, fontWeight: '600' },
   anbieter: { fontSize: 12, color: colors.muted },
   rating: { fontSize: 13, color: colors.muted, marginTop: 2 },
-  score: { flexDirection: 'row', alignItems: 'center', borderWidth: 2, borderRadius: 999, paddingLeft: 9, paddingRight: 3, paddingVertical: 3, marginLeft: spacing.sm },
-  scoreValue: { fontWeight: '800', fontSize: 15, marginRight: 5 },
-  scoreBand: { color: colors.onPrimary, fontWeight: '800', fontSize: 12, width: 20, height: 20, borderRadius: 10, textAlign: 'center', lineHeight: 20, overflow: 'hidden' },
+  score: { width: DISC, height: DISC, marginLeft: spacing.sm },
+  scoreCenter: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, alignItems: 'center', justifyContent: 'center' },
+  scoreValue: { fontFamily: fonts.display, fontWeight: '700', fontSize: 20, lineHeight: 22, color: '#fff' },
+  scoreBand: { fontSize: 8, fontWeight: '700', letterSpacing: 0.5, textTransform: 'uppercase', color: 'rgba(255,255,255,0.8)', marginTop: 1 },
   row: { flexDirection: 'row', paddingVertical: 7, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border },
   label: { flex: 1, color: colors.muted, fontSize: 13, paddingRight: spacing.sm },
   value: { color: colors.text, fontSize: 14, fontWeight: '500' },

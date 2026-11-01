@@ -261,7 +261,7 @@ export const de = {
 
   card: {
     recommended: 'Unsere Empfehlung',
-    scoreA11y: (value: number, band: string) => `Finanzpal-Score ${value} von 100, Note ${band}. Wie berechnen wir das?`,
+    scoreA11y: (value: string, band: string) => `Finanzpal-Score ${value} von 5, Note ${band}. Wie berechnen wir das?`,
     ratingA11y: (rating: string) => `Bewertung ${rating} von 5`,
     details: 'Details',
     toProvider: 'Zum Anbieter ›',
@@ -271,8 +271,8 @@ export const de = {
     // score breakdown sheet = assets/score-popover.js
     scoreTitle: 'Finanzpal-Score',
     scoreBand: (band: string) => `Note ${band}`,
-    scoreOf100: '/ 100',
-    scoreEach: 'Jeder Faktor von 0 bis 100 — zusammen ergeben sie den Score.',
+    scoreOf5: '/ 5',
+    scoreEach: 'Jeder Faktor von 0 bis 5 — zusammen ergeben sie den Score.',
     scoreMethodology: 'Zur Methodik →',
     scoreClose: 'Schließen',
     scoreShow: 'Score-Aufschlüsselung anzeigen',

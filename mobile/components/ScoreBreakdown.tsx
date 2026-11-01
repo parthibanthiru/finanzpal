@@ -2,12 +2,12 @@ import { Modal, Pressable, Text, View } from 'react-native';
 import type { Score } from '@/lib/data';
 import { useI18n } from '@/lib/i18n';
 import { openSite } from '@/lib/site';
-import { scoreRows } from '@/lib/scoreLabels';
+import { scoreRows, toFive } from '@/lib/scoreLabels';
 import { bandColors, bandTextColor, fonts, makeStyles, radius, spacing, useColors } from './theme';
 
 /**
  * Score breakdown sheet — the app version of the website's score popover
- * (assets/score-popover.js): total out of 100 with grade, one bar per factor, methodology link.
+ * (assets/score-popover.js): total out of 5 with grade, one bar per factor, methodology link.
  */
 export function ScoreBreakdown({
   visible, onClose, score, file, name,
@@ -34,19 +34,19 @@ export function ScoreBreakdown({
           </Pressable>
         </View>
         <View style={styles.total}>
-          <Text style={[styles.totalValue, { color: c }]}>{Math.round(score.value)}</Text>
-          <Text style={styles.of100}>{t.card.scoreOf100}</Text>
+          <Text style={[styles.totalValue, { color: c }]}>{toFive(score.value, lang)}</Text>
+          <Text style={styles.of100}>{t.card.scoreOf5}</Text>
           <Text style={[styles.band, { backgroundColor: c, color: bandTextColor(colors, score.band) }]}>
             {t.card.scoreBand(score.band)}
           </Text>
         </View>
         {rows.map((r) => (
-          <View key={r.key} style={styles.row} accessible accessibilityLabel={`${r.label}: ${Math.round(r.value)} ${t.card.scoreOf100}`}>
+          <View key={r.key} style={styles.row} accessible accessibilityLabel={`${r.label}: ${toFive(r.value, lang)} ${t.card.scoreOf5}`}>
             <Text style={styles.label}>{r.label}</Text>
             <View style={styles.bar}>
               <View style={[styles.fill, { width: `${Math.max(0, Math.min(100, r.value))}%`, backgroundColor: c }]} />
             </View>
-            <Text style={styles.value}>{Math.round(r.value)}</Text>
+            <Text style={styles.value}>{toFive(r.value, lang)}</Text>
           </View>
         ))}
         <Text style={styles.each}>{t.card.scoreEach}</Text>

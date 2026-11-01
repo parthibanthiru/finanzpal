@@ -525,7 +525,7 @@ ist in allen sechs Renderern (`assets/compare.js`,
 `assets/{girokonto,broker,kinderdepot,kreditkarte,steuer}-compare.js`)
 identisch; Optik kommt zentral aus `.fp-score-*` in `assets/style.css`.
 Bewusst keine Wörter wie „Hervorragend" — die Methodik definiert nur die
-Bänder A–D. **Die App (`mobile/`) zeigt den Score noch als 0–100-Chip (offen).**
+Bänder A–D. Die App (`mobile/components/ProviderCard.tsx` `ScoreBadge`, `ScoreBreakdown.tsx`, `toFive()` in `mobile/lib/scoreLabels.ts`) zeigt dasselbe Medaillon (react-native-svg) und denselben /5-Wert. In dieser Sitzung konnte die App wegen fehlendem npm-Zugriff nicht per `tsc`/`jest` geprüft werden — das übernimmt die App-CI.
 Tooltip + `aria-label` nennen weiterhin ausdrücklich „Finanzpal-Score" und
 verlinken auf `ueber-uns.html#finanzpal-score`, nie „Zertifiziert";
 `assets/score-popover.js` reagiert nur auf `.fp-score-badge` und die

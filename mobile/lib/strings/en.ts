@@ -258,7 +258,7 @@ export const en: Strings = {
 
   card: {
     recommended: 'Our recommendation',
-    scoreA11y: (value: number, band: string) => `Finanzpal Score ${value} out of 100, grade ${band}. How do we calculate it?`,
+    scoreA11y: (value: string, band: string) => `Finanzpal Score ${value} out of 5, grade ${band}. How do we calculate it?`,
     ratingA11y: (rating: string) => `Rating ${rating} out of 5`,
     details: 'Details',
     toProvider: 'View offer ›',
@@ -267,8 +267,8 @@ export const en: Strings = {
     favRemove: 'Remove from watchlist',
     scoreTitle: 'Finanzpal Score',
     scoreBand: (band: string) => `Grade ${band}`,
-    scoreOf100: '/ 100',
-    scoreEach: 'Each factor from 0 to 100 — together they make up the score.',
+    scoreOf5: '/ 5',
+    scoreEach: 'Each factor from 0 to 5 — together they make up the score.',
     scoreMethodology: 'Full methodology →',
     scoreClose: 'Close',
     scoreShow: 'Show score breakdown',
