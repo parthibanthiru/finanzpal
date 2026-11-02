@@ -917,15 +917,19 @@ die **Vergleichstabelle**:
 
 ## Bekannte offene Punkte (bewusste Entscheidungen, nicht vergessen)
 
-1. **Consorsbank-Kreditkarte: Kartenbezeichnung und Konditionen prüfen.**
-   Unser Eintrag „Consorsbank Visa Karte" (0 €, 0 % Fremdwährung) ließ sich
-   nicht bestätigen: Laut kreditkarte24.de (Stand 17.10.2026) ist die
-   kostenlose Kreditkarte der Consorsbank die „Visa Gold Light"
-   (Charge-Karte), die kostenlose Visa Debit kostet außerhalb der Eurozone
-   2,10 %, und Finanzflusss Bewertung (4,1) bezieht sich auf die
-   kostenpflichtige Visa Gold (108 €/Jahr). Die Sterne-Bewertung ist
-   entfernt (`rating: null`), die Bedingung weist auf die offene Prüfung hin;
-   vor Launch auf consorsbank.de verifizieren und den Eintrag korrigieren.
+1. **Consorsbank-Kreditkarte: aus Drittquellen korrigiert, Anbieter-Bestätigung
+   steht noch aus (Stand 2026-11-02).** Der Eintrag heißt jetzt „Consorsbank
+   Visa Gold Light (Charge-Karte)": dauerhaft kostenlos, 0 % Fremdwährung,
+   weltweit kostenlose Abhebung (Tageslimit 1.000 €), Monatsumsatz wird
+   vollständig vom Consorsbank-Girokonto abgebucht, setzt ein Girokonto voraus
+   — laut capitalo.de (Stand 8.10.2026) und mobiflip.de. Nicht belegte
+   Altangaben (Abrechnungstermin, Hotel/Mietwagen „geeignet") wurden entfernt.
+   **consorsbank.de selbst war aus der Sitzung nicht abrufbar**, deshalb bleibt
+   `scoreHold` gesetzt (kein Score), `rating: null`, und der Hinweis unter der
+   Tabelle sagt offen, dass die Konditionen aus Drittquellen stammen. Offen:
+   auf consorsbank.de gegenprüfen, dann `scoreHold` entfernen und
+   `tools/compute_scores.py` laufen lassen. (Die kostenpflichtige Visa Gold,
+   108 €/Jahr, ist ein anderes Produkt — Finanzflusss 4,1 bezieht sich darauf.)
 2. **Alle `affiliateUrl`-Felder in `data/*.json` sind noch `"#"`.** Noch keine
    echten Partnerlinks (siehe Launch-Liste unten).
 3. **Herkunft der Broker-Ratings (★, z. B. 4,3 / 5) ist nicht dokumentiert.**
@@ -939,7 +943,13 @@ die **Vergleichstabelle**:
    offengelegte Alternative dazu (siehe „Finanzpal-Score" oben); die
    Sterne-Bewertung selbst steht aber weiterhin unverändert daneben — ob
    sie ganz entfernt, dokumentiert oder dauerhaft parallel zum Score
-   gezeigt wird, ist noch offen.
+   gezeigt wird, ist noch offen. **Stand 2026-11-02:** Eine externe Quelle
+   für die Zahlen ließ sich per Websuche nicht finden; deshalb ist die Spalte
+   in der Broker-Vergleichsliste jetzt ausdrücklich „Finanzpal-Einschätzung"
+   (EN „Finanzpal assessment") statt neutral „Bewertung", passend zu den
+   Detailseiten und zu `ueber-uns.html#finanzpal-score` (dort steht offen,
+   dass sie nicht gesondert dokumentiert ist). Die App zeigt die Sterne
+   weiterhin ohne Beschriftung neben dem Namen (offen).
 4. **Kredite-Schnellrechner und Filter-Chips waren rein dekorativ (behoben
    2026-10-25).** `kredite.html`/`en/` zeigte eine statische Vorschau des
    Schnellrechners (Werte als `<div>`, kein Klick-Handler) und die drei

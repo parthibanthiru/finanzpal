@@ -16,8 +16,8 @@ import { bandColors, fonts, makeStyles, radius, spacing, useColors } from './the
  * "Note A" underneath. Tapping it opens the breakdown sheet (like the website's score popover).
  * `file` = data file of the comparison (picks the factor labels), `name` = provider name.
  */
-const DISC = 68;
-const RING_R = 29;
+const DISC = 56;
+const RING_R = 24;
 const RING_C = 2 * Math.PI * RING_R;
 export function ScoreBadge({ score, file, name }: { score: Score; file: string; name: string }) {
   const t = useT();
@@ -47,9 +47,9 @@ export function ScoreBadge({ score, file, name }: { score: Score; file: string; 
             </LinearGradient>
           </Defs>
           <Circle cx={DISC / 2} cy={DISC / 2} r={DISC / 2} fill={`url(#${gradId})`} />
-          <Circle cx={DISC / 2} cy={DISC / 2} r={RING_R} stroke="rgba(255,255,255,0.2)" strokeWidth={4} fill="none" />
+          <Circle cx={DISC / 2} cy={DISC / 2} r={RING_R} stroke="rgba(255,255,255,0.2)" strokeWidth={3.5} fill="none" />
           <Circle
-            cx={DISC / 2} cy={DISC / 2} r={RING_R} stroke="#fff" strokeWidth={4} fill="none" strokeLinecap="round"
+            cx={DISC / 2} cy={DISC / 2} r={RING_R} stroke="#fff" strokeWidth={3.5} fill="none" strokeLinecap="round"
             strokeDasharray={`${RING_C}`} strokeDashoffset={RING_C * (1 - pct)}
             transform={`rotate(-90 ${DISC / 2} ${DISC / 2})`}
           />
@@ -175,8 +175,8 @@ const useStyles = makeStyles((colors) => ({
   rating: { fontSize: 13, color: colors.muted, marginTop: 2 },
   score: { width: DISC, height: DISC, marginLeft: spacing.sm },
   scoreCenter: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, alignItems: 'center', justifyContent: 'center' },
-  scoreValue: { fontFamily: fonts.display, fontWeight: '700', fontSize: 20, lineHeight: 22, color: '#fff' },
-  scoreBand: { fontSize: 8, fontWeight: '700', letterSpacing: 0.5, textTransform: 'uppercase', color: 'rgba(255,255,255,0.8)', marginTop: 1 },
+  scoreValue: { fontFamily: fonts.display, fontWeight: '700', fontSize: 17, lineHeight: 19, color: '#fff' },
+  scoreBand: { fontSize: 7, fontWeight: '700', letterSpacing: 0.5, textTransform: 'uppercase', color: 'rgba(255,255,255,0.8)', marginTop: 1 },
   row: { flexDirection: 'row', paddingVertical: 7, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border },
   label: { flex: 1, color: colors.muted, fontSize: 13, paddingRight: spacing.sm },
   value: { color: colors.text, fontSize: 14, fontWeight: '500' },
