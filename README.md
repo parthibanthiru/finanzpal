@@ -105,6 +105,7 @@ finanzpal/
 │   ├── versicherungen-filter.js    Filter-Chips auf versicherungen.html, über alle 5 Reiter hinweg
 │   │                                (gleiches "fpcompare:rendered"-Event, auch bei Reiter-Wechsel)
 │   ├── kk-skeleton.js              Lade-Skeleton für Kreditkarten-/Depot-Karten
+│   ├── filter-collapse.js          Mobil (≤860px): Filter-Seitenleiste hinter „Filter“-Button mit Zähler aktiver Filter
 │   ├── compare-bar.js              Fixierte „Vergleichen"-Leiste (Mehrfachauswahl → Vergleich)
 │   ├── sparplanrechner.js          Logik für Sparplanrechner & Zinseszinsrechner
 │   ├── kreditrechner.js            Annuitätenformel für den Kreditrechner
