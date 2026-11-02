@@ -34,11 +34,14 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
 
 ## Work list (in order)
 
-- [ ] **1. Connect the app to the Finanzpal Supabase project.** Default `EXPO_PUBLIC_SUPABASE_URL` /
+- [x] **1. Connect the app to the Finanzpal Supabase project.** Default `EXPO_PUBLIC_SUPABASE_URL` /
       key in `eas.json` (preview + production) and `.env.example`; keep preview mode independent.
       Check with `list_tables` whether the schema exists (profiles, messages, favorites,
       push_tokens); if not, mark blocked on "Run schema.sql" below but still do the config.
       Auth settings to document for Parthiban: Site URL / redirect `finanzpal://auth-callback`.
+      — 2026-11-02: URL + publishable key are the defaults in `eas.json` (preview + production) and
+      `.env.example`; web preview unchanged. `list_tables` still empty → schema step stays open
+      below. Auth URL settings documented in mobile/README.md §1.
 - [ ] **2. Chatbot as a Supabase Edge Function `chat`.** Same contract as `lib/api.ts`
       (`POST {sessionId, message, history, language}` → `{reply, category?}`), checks the user's JWT,
       calls the Anthropic Messages API with secret `ANTHROPIC_API_KEY` (model from secret
@@ -76,6 +79,9 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
 
 - [ ] **Run `mobile/supabase/schema.sql` once** in Supabase → project Finanzpal → SQL Editor (paste
       the file, Run). Verify: Table Editor shows profiles, messages, favorites, push_tokens.
+      (Checked 2026-11-02: still no tables.)
+- [ ] Supabase → Authentication → URL Configuration: Site URL `finanzpal://auth-callback`, Redirect
+      URLs `finanzpal://**` and `exp://**`; Providers → Email: "Confirm email" on.
 - [ ] Anthropic API key → Supabase → Edge Functions → Secrets `ANTHROPIC_API_KEY` (paid per use).
 - [ ] Expo account + `npx eas init` in `mobile/` (adds `extra.eas.projectId`), then
       `eas build -p android --profile preview` for a test APK.
@@ -89,3 +95,5 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
 
 - 2026-11-01: Supabase project "Finanzpal" created (free, eu-central-1). Schema not applied yet —
   the connector's confirmation step can't be answered from a scheduled/remote session.
+- 2026-11-02: Item 1 done — app builds default to the Finanzpal Supabase project (eas.json,
+  .env.example). Schema still not applied (list_tables empty).

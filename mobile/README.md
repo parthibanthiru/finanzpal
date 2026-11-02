@@ -124,18 +124,24 @@ Commits that only touch `mobile/` don't trigger a Netlify deploy (`netlify.toml`
 `/mobile/*` is never served on the website.
 
 ## 1. Supabase (10 min)
-1. Create a free project at supabase.com – choose region **Frankfurt (eu-central-1)**.
-2. SQL Editor → paste `supabase/schema.sql` → Run.
-3. Authentication → Providers → Email: enabled, "Confirm email" on.
+The project already exists: **Finanzpal** (org "Parthiban's Org", Frankfurt / eu-central-1), URL
+`https://xliitgcsiikzxppazbfa.supabase.co`. Its URL + publishable key are the defaults in `.env.example` and
+in `eas.json` (preview + production builds) — the publishable key is public by design, row level security
+protects the data. The web preview (`EXPO_PUBLIC_PREVIEW=1`) still never talks to Supabase.
+
+Still to do once in the dashboard:
+1. SQL Editor → paste `supabase/schema.sql` → Run (creates profiles, messages, favorites, push_tokens).
+2. Authentication → Providers → Email: enabled, "Confirm email" on.
+3. Authentication → URL Configuration: **Site URL** `finanzpal://auth-callback`; **Redirect URLs** add
+   `finanzpal://**` and `exp://**` (the app sends `finanzpal://auth-callback`, Expo Go `exp://…/--/auth-callback`).
 4. Authentication → Email Templates: translate the confirmation / reset mails to German (optional but recommended).
-5. Project Settings → API: copy **Project URL** and **anon public key**.
 
 ## 2. Run the app
 Needs Node 20+ on your computer and the **Expo Go** app on your phone (Play Store / App Store).
 
 ```bash
 cd mobile
-cp .env.example .env          # fill in the Supabase values + backend URL
+cp .env.example .env          # Supabase values are pre-filled; set the backend URL
 npm install                   # versions are pinned to Expo SDK 57
 npx expo start
 ```
