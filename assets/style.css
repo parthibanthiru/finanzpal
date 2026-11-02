@@ -206,6 +206,7 @@ nav.top a.active { color: var(--ink); border-bottom-color: var(--green); }
 .newsletter-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .newsletter h2 { font-family: var(--font-display); font-weight: 500; font-size: 24px; margin: 0 0 6px; }
 .newsletter p { color: var(--ink-soft); font-size: 14.5px; margin: 0; max-width: 42ch; }
+.newsletter-soon { display: inline-block; font-size: 13px; font-weight: 600; color: var(--green-deep); background: var(--tag-bg); border-radius: 100px; padding: 6px 14px; }
 .newsletter-form { display: flex; gap: 8px; }
 .newsletter-form input { border: 1px solid var(--line); border-radius: 6px; padding: 11px 14px; font-size: 14px; font-family: var(--font-body); background: var(--bg-raised); color: var(--ink); min-width: 220px; }
 .newsletter-form button { border: none; border-radius: 6px; padding: 11px 18px; background: var(--green-deep); color: #fff; font-weight: 600; font-size: 14px; }
@@ -818,3 +819,19 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .deal-empty h3 { font-family: var(--font-display); font-weight: 500; font-size: 21px; margin: 0 0 10px; }
 .deal-empty p { color: var(--ink-soft); max-width: 60ch; margin: 0 auto 22px; }
 .deal-empty-links { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+
+/* Home page, phones: fewer dead gaps, compact Ratgeber cards, no empty grid cell */
+@media (max-width: 980px) { .cat-grid .cat-card:last-child:nth-child(3n+2) { grid-column: span 2; } }
+@media (max-width: 780px) {
+  .cat-grid .cat-card:last-child:nth-child(3n+2) { grid-column: auto; }
+  .cat-grid .cat-card:last-child:nth-child(odd) { grid-column: span 2; }
+  .cat-card { min-height: 0; padding: 18px 16px 20px; }
+  .featured { padding: 40px 0; }
+  .calc-teaser { padding: 24px 0 40px; }
+  .section-head { margin-bottom: 16px; }
+  .section-head h2 { font-size: 24px; }
+  .guide-grid { gap: 14px; }
+  .guide-card { display: grid; grid-template-columns: 72px 1fr; column-gap: 14px; row-gap: 2px; align-items: start; }
+  .guide-card .guide-thumb { grid-row: 1 / span 3; aspect-ratio: 1; width: 72px; }
+  .newsletter { padding: 32px 0; }
+}

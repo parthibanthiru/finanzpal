@@ -1055,9 +1055,10 @@ Commit-Nachricht):
 4. **"Zum Anbieter"-Buttons verlinken.** Alle Affiliate-CTAs sind aktuell
    `href="#"` mit `rel="sponsored nofollow"` vorbereitet — echte Partnerlinks
    in den JSON-Dateien unter `affiliateUrl` eintragen.
-5. **Newsletter-Formular hat kein Backend.** Das Eingabefeld auf der
-   Startseite (`.newsletter-form`) sammelt aktuell nichts — ESP (z. B. Brevo,
-   Mailchimp) anbinden, sobald entschieden.
+5. **Newsletter hat kein Backend.** Auf der Startseite steht statt des
+   Formulars nur die Pille „Newsletter folgt in Kürze“ (`.newsletter-soon`,
+   DE + EN) — Formular wieder einbauen (CSS `.newsletter-form` ist noch da)
+   und ESP (z. B. Brevo, Mailchimp) anbinden, sobald entschieden.
 6. **Netlify-SSO-Gate entfernen**, sobald die Seite öffentlich gehen soll
    (aktuell bewusst dahinter, nur fürs Team sichtbar).
 7. Entscheidung zu den bekannten offenen Punkten oben treffen.
