@@ -736,7 +736,7 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .fp-profil-banner button { background: none; border: none; color: var(--green-deep); font-size: 15px; line-height: 1; cursor: pointer; padding: 0; flex-shrink: 0; }
 .cc-compare-check { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-soft); margin-bottom: 10px; cursor: pointer; }
 .cc-compare-check input { margin: 0; cursor: pointer; }
-.kk-compare-bar { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%) translateY(140%); display: flex; align-items: center; gap: 18px; background: var(--logo-ink); color: #fff; border-radius: 100px; padding: 12px 10px 12px 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); z-index: 400; transition: transform 0.25s ease; }
+.kk-compare-bar { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(160%); display: flex; align-items: center; gap: 18px; background: var(--logo-ink); color: #fff; border-radius: 100px; padding: 12px 10px 12px 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); z-index: 400; transition: transform 0.25s ease; }
 .kk-compare-bar.visible { transform: translateX(-50%) translateY(0); }
 .kk-compare-count { font-size: 13.5px; font-weight: 600; white-space: nowrap; }
 .kk-compare-actions { display: flex; align-items: center; gap: 8px; }
@@ -834,4 +834,10 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
   .guide-card { display: grid; grid-template-columns: 72px 1fr; column-gap: 14px; row-gap: 2px; align-items: start; }
   .guide-card .guide-thumb { grid-row: 1 / span 3; aspect-ratio: 1; width: 72px; }
   .newsletter { padding: 32px 0; }
+}
+
+/* Compare checkbox: comfortable tap target on touch screens */
+@media (max-width: 860px) {
+  .cc-compare-check { font-size: 14px; padding: 6px 0; gap: 10px; }
+  .cc-compare-check input { width: 20px; height: 20px; }
 }
