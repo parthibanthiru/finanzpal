@@ -42,7 +42,7 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
       — 2026-11-02: URL + publishable key are the defaults in `eas.json` (preview + production) and
       `.env.example`; web preview unchanged. `list_tables` still empty → schema step stays open
       below. Auth URL settings documented in mobile/README.md §1.
-- [ ] **2. Chatbot as a Supabase Edge Function `chat`.** Same contract as `lib/api.ts`
+- [x] **2. Chatbot as a Supabase Edge Function `chat`.** Same contract as `lib/api.ts`
       (`POST {sessionId, message, history, language}` → `{reply, category?}`), checks the user's JWT,
       calls the Anthropic Messages API with secret `ANTHROPIC_API_KEY` (model from secret
       `CHAT_MODEL`, default `claude-haiku-5-5`), system prompt: Finanzpal's role (general
@@ -52,6 +52,9 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
       answers 503 and the app shows a friendly "chat not set up yet" text (DE/EN). Code in
       `supabase/functions/chat/`, app `EXPO_PUBLIC_API_URL` → the functions URL. Deploy with the
       connector if it works without a confirmation; otherwise leave deploy steps for Parthiban.
+      — 2026-11-02: function written + deployed (v1, verify_jwt on); `chat_usage` + `bump_chat_usage`
+      in schema.sql; app defaults to `{SUPABASE_URL}/functions/v1/chat`, 503/404 → "not set up yet",
+      429 → daily limit (DE/EN), tests in `__tests__/api-test.ts`. Answers once key + schema exist.
 - [ ] **3. Wide logos.** Wordmarks (ING DiBa, norisbank, Openbank, justTRADE, Trade Republic) are
       tiny in the square chip — give logos with aspect ratio > 2 a wider chip (from the viewBox),
       same height; check in the web preview.
@@ -83,6 +86,8 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
 - [ ] Supabase → Authentication → URL Configuration: Site URL `finanzpal://auth-callback`, Redirect
       URLs `finanzpal://**` and `exp://**`; Providers → Email: "Confirm email" on.
 - [ ] Anthropic API key → Supabase → Edge Functions → Secrets `ANTHROPIC_API_KEY` (paid per use).
+      The function `chat` is already deployed; it starts answering once this secret exists and
+      schema.sql has run.
 - [ ] Expo account + `npx eas init` in `mobile/` (adds `extra.eas.projectId`), then
       `eas build -p android --profile preview` for a test APK.
 - [ ] Google sign-in: Google Cloud OAuth client + enable Google provider in Supabase (see
@@ -97,3 +102,5 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
   the connector's confirmation step can't be answered from a scheduled/remote session.
 - 2026-11-02: Item 1 done — app builds default to the Finanzpal Supabase project (eas.json,
   .env.example). Schema still not applied (list_tables empty).
+- 2026-11-02: Item 2 done — chat Edge Function deployed to Finanzpal (connector deploy needed no
+  confirmation); waits for ANTHROPIC_API_KEY + schema.sql.

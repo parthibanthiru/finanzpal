@@ -2,7 +2,18 @@ import { supabase } from '@/lib/supabase';
 import { getLang, strings } from '@/lib/i18n';
 import { PREVIEW } from '@/lib/preview';
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL ?? '';
+const SUPABASE_URL = (process.env.EXPO_PUBLIC_SUPABASE_URL ?? '').replace(/\/$/, '');
+
+/**
+ * Where the chat goes. Default: the Supabase Edge Function `chat` of the configured project
+ * (supabase/functions/chat). EXPO_PUBLIC_API_URL can point to another backend instead:
+ * a Supabase functions URL (…/functions/v1) gets `/chat`, any other server `/api/chat`.
+ */
+export function chatEndpoint(apiUrl = process.env.EXPO_PUBLIC_API_URL ?? '', supabaseUrl = SUPABASE_URL): string {
+  const base = apiUrl.trim().replace(/\/$/, '');
+  if (!base || base.includes('YOUR-')) return supabaseUrl ? `${supabaseUrl}/functions/v1/chat` : '';
+  return /\/functions\/v1$/.test(base) ? `${base}/chat` : `${base}/api/chat`;
+}
 
 export type ChatReply = {
   reply: string;
@@ -21,7 +32,7 @@ export const HISTORY_LIMIT = 10;
  * knows which user is asking (see backend-auth/requireUser.js).
  *
  * Backend contract:
- *   POST /api/chat  { sessionId, message, history, language }  ->  { reply, category? }
+ *   POST {endpoint}  { sessionId, message, history, language }  ->  { reply, category? }
  * `history` = the last few saved messages, so the bot keeps context even after an app
  * restart or a backend restart (see backend-auth/chatHistory.js).
  * `language` = "de" or "en" (the app's language), so the bot can answer in the same language.
@@ -34,12 +45,13 @@ export async function sendChatMessage(
 ): Promise<ChatReply> {
   const t = strings().chat;
   if (PREVIEW) throw new Error(strings().preview.chat);
-  if (!API_URL) throw new Error(t.noApiUrl);
+  const endpoint = chatEndpoint();
+  if (!endpoint) throw new Error(t.noApiUrl);
 
   const { data } = await supabase.auth.getSession();
   const token = data.session?.access_token;
 
-  const res = await fetch(`${API_URL}/api/chat`, {
+  const res = await fetch(endpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -49,6 +61,13 @@ export async function sendChatMessage(
   });
 
   if (res.status === 401) throw new Error(t.sessionExpired);
+  // 503 = Edge Function deployed but no API key / schema yet; 404 = function not deployed yet.
+  if (res.status === 503 || res.status === 404) throw new Error(t.notConfigured);
+  if (res.status === 429) throw new Error(t.dailyLimit);
+  if (res.status === 400) {
+    const body = (await res.json().catch(() => null)) as { error?: string } | null;
+    if (body?.error === 'too_long') throw new Error(t.tooLong);
+  }
   if (!res.ok) throw new Error(t.serverError(res.status));
   return (await res.json()) as ChatReply;
 }

@@ -1281,6 +1281,12 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   aus). Braucht einmalig Supabase-Tabelle, EAS-Projekt und zwei GitHub-Secrets —
   bis dahin Probelauf ohne Versand. **Offener Punkt:** noch nicht eingerichtet
   (siehe `mobile/README.md`, Abschnitt 7).
+- **Chat:** läuft als Supabase Edge Function `mobile/supabase/functions/chat/` (Login-Prüfung,
+  Tageslimit pro Nutzer in Tabelle `chat_usage`, Anthropic-API mit Finanzpal-Systemprompt: nur
+  allgemeine Infos, keine Anlageberatung, keine erfundenen Zinsen — verweist auf die Vergleiche).
+  Seit 02.11.2026 im Projekt Finanzpal deployt. **Offener Punkt:** Secret `ANTHROPIC_API_KEY`
+  fehlt und `schema.sql` ist noch nicht ausgeführt; bis dahin zeigt die App
+  „Chat ist noch nicht eingerichtet" (siehe `mobile/README.md`, Abschnitt 3).
 - **Überweisen:** am 24.10.2026 in eine eigene App ausgelagert („Money Transfer",
   Arbeitstitel; eigenes GitHub-Repo, eigenes Design, eigene Supabase-Konten). Nicht mehr
   Teil dieser App.

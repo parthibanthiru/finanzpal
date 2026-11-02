@@ -532,6 +532,9 @@ export const de = {
     noApiUrl: 'EXPO_PUBLIC_API_URL ist nicht gesetzt (.env).',
     sessionExpired: 'Sitzung abgelaufen. Bitte melde dich erneut an.',
     serverError: (status: number) => `Server-Fehler (${status}). Bitte später erneut versuchen.`,
+    notConfigured: 'Der Chat ist noch nicht eingerichtet. Die Vergleiche und Rechner kannst du schon nutzen.',
+    dailyLimit: 'Du hast dein Tageslimit für den Chat erreicht. Morgen geht es weiter.',
+    tooLong: 'Deine Nachricht ist zu lang. Bitte fasse dich etwas kürzer.',
   },
 
   profile: {

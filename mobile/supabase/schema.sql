@@ -164,3 +164,37 @@ revoke all on function public.register_push_token(text, text, text) from public,
 grant execute on function public.register_push_token(text, text, text) to authenticated;
 revoke all on function public.unregister_push_token(text) from public, anon;
 grant execute on function public.unregister_push_token(text) to authenticated;
+
+-- ─────────────────────────────────────────────────────────────
+-- v0.13: chatbot daily limit (Edge Function supabase/functions/chat)
+-- Safe to run again on an existing project.
+-- One row per user and UTC day. Only the Edge Function (service role) writes it; users can
+-- read their own count.
+-- ─────────────────────────────────────────────────────────────
+create table if not exists public.chat_usage (
+  user_id  uuid not null references auth.users(id) on delete cascade,
+  day      date not null default (now() at time zone 'utc')::date,
+  count    integer not null default 0,
+  primary key (user_id, day)
+);
+
+alter table public.chat_usage enable row level security;
+
+drop policy if exists "Users read own chat usage" on public.chat_usage;
+create policy "Users read own chat usage"
+  on public.chat_usage for select using (auth.uid() = user_id);
+
+-- Adds one message to today's count and returns the new count (atomic).
+create or replace function public.bump_chat_usage(p_user uuid)
+returns integer
+language sql
+security definer set search_path = public
+as $$
+  insert into public.chat_usage (user_id, day, count)
+  values (p_user, (now() at time zone 'utc')::date, 1)
+  on conflict (user_id, day) do update set count = public.chat_usage.count + 1
+  returning count;
+$$;
+
+revoke all on function public.bump_chat_usage(uuid) from public, anon, authenticated;
+grant execute on function public.bump_chat_usage(uuid) to service_role;

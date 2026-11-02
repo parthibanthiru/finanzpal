@@ -527,6 +527,9 @@ export const en: Strings = {
     noApiUrl: 'EXPO_PUBLIC_API_URL is not set (.env).',
     sessionExpired: 'Session expired. Please sign in again.',
     serverError: (status: number) => `Server error (${status}). Please try again later.`,
+    notConfigured: "The chat isn't set up yet. You can already use the comparisons and calculators.",
+    dailyLimit: "You've reached today's chat limit. You can continue tomorrow.",
+    tooLong: 'Your message is too long. Please keep it a bit shorter.',
   },
 
   profile: {

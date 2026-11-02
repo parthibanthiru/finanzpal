@@ -149,12 +149,27 @@ Scan the QR code with Expo Go (Android) or the iPhone camera. Phone and computer
 
 > You can test iOS from Windows this way – no Mac needed until you publish.
 
-## 3. Connect the chatbot backend
-In your existing `finanzpal-chatbot` server:
-1. `npm install @supabase/supabase-js`, copy `backend-auth/requireUser.js` next to `server.js`.
-2. Protect the route: `app.post('/api/chat', requireUser, handler)`.
-3. Make sure it accepts `{ sessionId, message }` and returns `{ reply }` – or change `lib/api.ts` to match your route.
-4. In the app's `.env`, set `EXPO_PUBLIC_API_URL` to your computer's LAN IP (e.g. `http://192.168.0.23:3000`), not `localhost`.
+## 3. Chatbot (Supabase Edge Function `chat`)
+The chat runs as a Supabase Edge Function: `supabase/functions/chat/index.ts`. It checks the user's login,
+counts messages per user and day (table `chat_usage`, from `schema.sql`), and asks the Anthropic API with a
+Finanzpal system prompt (general information only, no individual advice, no invented rates — points to the
+comparisons; answers in the app's language). Contract: `POST {sessionId, message, history, language}` →
+`{reply}`.
+
+The app's default endpoint is `{EXPO_PUBLIC_SUPABASE_URL}/functions/v1/chat` (`EXPO_PUBLIC_API_URL` in
+`eas.json` / `.env.example`). A different backend still works: set `EXPO_PUBLIC_API_URL` to its base URL
+and the app calls `/api/chat` there (`backend-auth/` has the old Node/Express helpers).
+
+Answers the app turns into friendly texts (DE/EN): 503 or 404 → "chat isn't set up yet", 429 → daily
+limit reached, 401 → session expired.
+
+Setup (once):
+1. Run `supabase/schema.sql` (adds `chat_usage` + `bump_chat_usage`).
+2. Supabase → Edge Functions → Secrets: `ANTHROPIC_API_KEY` (paid per use). Optional: `CHAT_MODEL`
+   (default `claude-haiku-5-5`), `CHAT_DAILY_LIMIT` (default 30 messages per user per day).
+3. Deploy (already done on 2026-11-02 — redo after changing the code): Supabase → Edge Functions → `chat`, paste
+   `supabase/functions/chat/index.ts` — or with the CLI from `mobile/`:
+   `npx supabase functions deploy chat --project-ref xliitgcsiikzxppazbfa`.
 
 ## 4. Google & Apple sign-in + chat history (v0.2)
 

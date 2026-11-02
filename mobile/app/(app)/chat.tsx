@@ -157,6 +157,7 @@ export default function ChatScreen() {
           placeholder={t.chat.placeholder}
           placeholderTextColor={colors.muted}
           multiline
+          maxLength={2000}
           onSubmitEditing={() => send(input)}
         />
         <Pressable
