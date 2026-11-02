@@ -1,8 +1,8 @@
 // Chat client (lib/api.ts): endpoint choice and the friendly texts for the Edge Function's answers.
-import { afterEach, describe, expect, it, jest } from '@jest/globals';
+import { afterEach, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import { chatEndpoint, sendChatMessage } from '@/lib/api';
-import { strings } from '@/lib/i18n';
+import { setCurrentLang, strings } from '@/lib/i18n';
 
 const SB = 'https://xliitgcsiikzxppazbfa.supabase.co';
 
@@ -23,6 +23,7 @@ describe('chatEndpoint', () => {
 describe('sendChatMessage', () => {
   const realFetch = global.fetch;
   process.env.EXPO_PUBLIC_API_URL = `${SB}/functions/v1`;
+  beforeAll(() => setCurrentLang('de'));
   afterEach(() => {
     global.fetch = realFetch;
   });
