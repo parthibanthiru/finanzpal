@@ -165,13 +165,25 @@
 
     function renderProgress() {
       progressBar.style.width = Math.min(100, (step / QUESTIONS.length) * 100) + '%';
+      setRing(step, QUESTIONS.length);
+    }
+
+    // Score-ring motif (same geometry as the Finanzpal-Score medallion):
+    // built once, then only the dash offset + label change so the fill animates.
+    function setRing(done, total) {
       if (!stepDotsEl) return;
-      var dots = '';
-      for (var i = 0; i < QUESTIONS.length; i++) {
-        var cls = 'fc-step-dot' + (i < step ? ' is-done' : '') + (i === step ? ' is-current' : '');
-        dots += '<span class="' + cls + '"></span>';
+      var ring = stepDotsEl.querySelector('.fc-ring');
+      if (!ring) {
+        stepDotsEl.innerHTML = '<svg class="fc-ring" viewBox="0 0 116 116" width="64" height="64" role="img">' +
+          '<circle class="fc-ring-track" cx="58" cy="58" r="46"/>' +
+          '<circle class="fc-ring-fill" cx="58" cy="58" r="46" pathLength="100" transform="rotate(-90 58 58)"/>' +
+          '<text class="fc-ring-text" x="58" y="68" text-anchor="middle"></text></svg>';
+        ring = stepDotsEl.querySelector('.fc-ring');
       }
-      stepDotsEl.innerHTML = dots;
+      var finished = done >= total;
+      ring.querySelector('.fc-ring-fill').style.strokeDashoffset = String(100 - Math.min(100, (done / total) * 100));
+      ring.querySelector('.fc-ring-text').textContent = finished ? '\u2713' : (done + 1) + '/' + total;
+      ring.setAttribute('aria-label', finished ? (LANG === 'en' ? 'All questions answered' : 'Alle Fragen beantwortet') : (LANG === 'en' ? 'Question ' : 'Frage ') + (done + 1) + (LANG === 'en' ? ' of ' : ' von ') + total);
     }
 
     function renderQuestion() {
@@ -274,9 +286,7 @@
     function renderResult() {
       if (app) app.classList.add('is-result');
       progressBar.style.width = '100%';
-      if (stepDotsEl) {
-        stepDotsEl.innerHTML = QUESTIONS.map(function () { return '<span class="fc-step-dot is-done"></span>'; }).join('');
-      }
+      setRing(QUESTIONS.length, QUESTIONS.length);
       area.innerHTML = '<p class="calc-disclaimer">' + STR.loading + '</p>';
 
       Promise.all(CATEGORY_KEYS.map(function (cat) {

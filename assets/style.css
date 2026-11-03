@@ -553,7 +553,7 @@ h3.quiz-question { font-family: var(--font-display); font-weight: 500; font-size
 .fc-quiz-box::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--green-deep), var(--gold)); }
 .fc-quiz-box.is-result { max-width: 880px; }
 .fc-progress-wrap { margin-bottom: 22px; }
-.fc-step-dots { display: flex; gap: 6px; justify-content: center; margin-top: 12px; }
+.fc-step-dots { display: flex; justify-content: center; margin-top: 12px; }
 .fc-step-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--line); transition: background 0.2s ease, transform 0.2s ease; }
 .fc-step-dot.is-done { background: var(--green-deep); }
 .fc-step-dot.is-current { background: var(--green-deep); transform: scale(1.4); }
@@ -861,3 +861,11 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .fp-maths-drawer[hidden] { display: none; }
 .fp-maths-body { padding: 14px 18px; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
 .fp-maths-body p { margin: 0; }
+
+/* Finanz-Check progress ring (replaces the step dots) */
+.fc-ring { display: block; }
+.fc-ring circle { fill: none; stroke-width: 9; }
+.fc-ring-track { stroke: var(--line); }
+.fc-ring-fill { stroke: var(--green-deep); stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 0.5s ease; }
+.fc-ring-text { font-family: var(--font-display); font-weight: 600; font-size: 30px; fill: var(--green-deep); }
+@media (prefers-reduced-motion: reduce) { .fc-ring-fill { transition: none; } }
