@@ -10,7 +10,8 @@
     if (!aside || aside.getAttribute('data-fp-collapse') === '1') return;
     aside.setAttribute('data-fp-collapse', '1');
     var isEn = (document.documentElement.lang || 'de').toLowerCase().indexOf('en') === 0;
-    var LABEL = isEn ? 'Filters' : 'Filter';
+    var LABEL_BASE = isEn ? 'Filters' : 'Filter';
+    var LABEL_PRIO = isEn ? 'Filters & priorities' : 'Filter & Prioritäten';
     var ACTIVE = function (n) { return isEn ? n + ' active' : n + ' aktiv'; };
     if (!aside.id) aside.id = 'kk-filters-panel';
 
@@ -33,6 +34,7 @@
     function render() {
       var open = !aside.classList.contains('fp-collapsed');
       var n = activeCount();
+      var LABEL = aside.querySelector('.fp-prio') ? LABEL_PRIO : LABEL_BASE;
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       btn.innerHTML = '<span>' + LABEL + '</span>' +
         (n ? '<span class="kk-filter-badge">' + ACTIVE(n) + '</span>' : '') +
@@ -46,5 +48,6 @@
       aside.addEventListener(ev, function () { setTimeout(render, 0); });
     });
     render();
+    window.addEventListener('load', render); // priority sliders are injected after DOMContentLoaded
   });
 })();
