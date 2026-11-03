@@ -84,7 +84,7 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
 
 - [ ] **Run `mobile/supabase/schema.sql` once** in Supabase → project Finanzpal → SQL Editor (paste
       the file, Run). Verify: Table Editor shows profiles, messages, favorites, push_tokens.
-      (Checked 2026-11-02: still no tables.)
+      (Checked 2026-11-03: still no tables.)
 - [ ] Supabase → Authentication → URL Configuration: Site URL `finanzpal://auth-callback`, Redirect
       URLs `finanzpal://**` and `exp://**`; Providers → Email: "Confirm email" on.
 - [ ] Anthropic API key → Supabase → Edge Functions → Secrets `ANTHROPIC_API_KEY` (paid per use).
@@ -106,4 +106,5 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
   .env.example). Schema still not applied (list_tables empty).
 - 2026-11-02: Item 2 done — chat Edge Function deployed to Finanzpal (connector deploy needed no
   confirmation); waits for ANTHROPIC_API_KEY + schema.sql.
-- 2026-11-03: Item 3 done — wordmark logos get wider chips. Sync check: no website changes to mirror.
+- 2026-11-03: Item 3 done — wordmark logos get wider chips (CI green after two test fixes; web preview
+  republished). Sync check: no website changes to mirror. Schema still not applied.
