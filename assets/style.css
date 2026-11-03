@@ -842,3 +842,14 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
   .cc-compare-check { font-size: 14px; padding: 6px 0; gap: 10px; }
   .cc-compare-check input { width: 20px; height: 20px; }
 }
+
+/* Frische-Stempel (assets/freshness.js) */
+[data-fp-fresh] { display: flex !important; align-items: center; gap: 8px; font-size: 18px !important; line-height: 1.25; }
+.fp-fresh-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; background: var(--teal); }
+[data-fp-fresh="fresh"] .fp-fresh-dot { animation: fp-fresh-pulse 2s ease-out 3; }
+[data-fp-fresh="aging"] .fp-fresh-dot { background: var(--gold); }
+[data-fp-fresh="aging"] .fp-fresh-text { color: color-mix(in srgb, var(--gold) 55%, var(--ink)); }
+[data-fp-fresh="stale"] .fp-fresh-dot { background: transparent; border: 2px solid var(--ink-soft); box-sizing: border-box; }
+[data-fp-fresh="stale"] .fp-fresh-text { color: var(--ink-soft); }
+@keyframes fp-fresh-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal) 45%, transparent); } 70% { box-shadow: 0 0 0 9px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+@media (prefers-reduced-motion: reduce) { [data-fp-fresh="fresh"] .fp-fresh-dot { animation: none; } }
