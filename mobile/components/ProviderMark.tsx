@@ -27,7 +27,7 @@ export function chipWidth(logo: string | null | undefined, size: number): number
   const aspect = logoAspect(logo);
   if (aspect <= WIDE_LOGO_ASPECT) return size;
   const inner = size - 2 * CHIP_PADDING;
-  return Math.round(Math.min(inner * aspect + 2 * CHIP_PADDING, size * MAX_CHIP_WIDTH));
+  return Math.floor(Math.min(inner * aspect + 2 * CHIP_PADDING, size * MAX_CHIP_WIDTH));
 }
 
 /**

@@ -289,7 +289,7 @@ it('Wordmark logos get a wider chip of the same height, square logos stay square
     }
   }
   expect(wide).toBeGreaterThanOrEqual(5); // ING, norisbank, Openbank, justTRADE, Trade Republic, …
-  expect(chipWidth('assets/logos/trade-republic.svg', 40)).toBe(Math.round(40 * MAX_CHIP_WIDTH));
+  expect(chipWidth('assets/logos/trade-republic.svg', 40)).toBe(Math.floor(40 * MAX_CHIP_WIDTH));
   expect(chipWidth(null, 44)).toBe(44);
 
   render(<ProviderMark logo="assets/logos/ing.svg" name="ING" size={44} />);
