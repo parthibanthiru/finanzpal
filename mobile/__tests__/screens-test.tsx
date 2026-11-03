@@ -16,7 +16,7 @@ import { NO_FILTERS, etfs, filterEtfs, options } from '@/lib/etf';
 import { scoreRows } from '@/lib/scoreLabels';
 import { search } from '@/lib/search';
 import { targetOf } from '@/lib/push';
-import { hasLogo } from '@/components/ProviderMark';
+import { MAX_CHIP_WIDTH, ProviderMark, chipWidth, hasLogo, logoAspect } from '@/components/ProviderMark';
 
 import HomeScreen from '@/app/(app)/vergleiche/index';
 import CategoryScreen from '@/app/(app)/vergleiche/[id]';
@@ -272,6 +272,32 @@ it('Every provider logo the website data uses is in the app', () => {
     }
   }
   expect(n).toBeGreaterThan(20);
+});
+
+it('Wordmark logos get a wider chip of the same height, square logos stay square', () => {
+  const LOGOS: Record<string, string> = require('../data/logos.json');
+  let wide = 0;
+  for (const logo of Object.keys(LOGOS)) {
+    const a = logoAspect(logo);
+    expect([logo, a > 0 && Number.isFinite(a)]).toEqual([logo, true]);
+    const w = chipWidth(logo, 44);
+    if (a > 2) {
+      wide++;
+      expect([logo, w > 44 && w <= 44 * MAX_CHIP_WIDTH]).toEqual([logo, true]);
+    } else {
+      expect([logo, w]).toEqual([logo, 44]);
+    }
+  }
+  expect(wide).toBeGreaterThanOrEqual(5); // ING, norisbank, Openbank, justTRADE, Trade Republic, …
+  expect(chipWidth('assets/logos/trade-republic.svg', 40)).toBe(Math.round(40 * MAX_CHIP_WIDTH));
+  expect(chipWidth(null, 44)).toBe(44);
+
+  render(<ProviderMark logo="assets/logos/ing.svg" name="ING" size={44} />);
+  const flat = (s: unknown): Record<string, unknown> =>
+    Array.isArray(s) ? Object.assign({}, ...s.map(flat)) : ((s ?? {}) as Record<string, unknown>);
+  const style = flat(screen.getByTestId('provider-logo').props.style);
+  expect(style.height).toBe(44);
+  expect(style.width).toBe(chipWidth('assets/logos/ing.svg', 44));
 });
 
 it('Push messages use the same comparison names as the app', () => {

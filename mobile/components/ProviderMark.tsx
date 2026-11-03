@@ -9,6 +9,27 @@ const LOGOS: Record<string, string> = require('../data/logos.json');
 
 export const hasLogo = (logo?: string | null) => !!logo && !!LOGOS[logo];
 
+/** Width ÷ height of a logo, read from its SVG viewBox (1 when unknown). */
+export function logoAspect(logo?: string | null): number {
+  const svg = logo ? LOGOS[logo] : undefined;
+  const vb = svg?.match(/<svg[^>]*\sviewBox="([^"]+)"/)?.[1].trim().split(/[\s,]+/).map(Number);
+  return vb && vb.length === 4 && vb[2] > 0 && vb[3] > 0 ? vb[2] / vb[3] : 1;
+}
+
+const CHIP_PADDING = 5;
+/** Wordmarks wider than this get a wider chip instead of shrinking inside the square. */
+export const WIDE_LOGO_ASPECT = 2;
+/** A wide chip grows to at most this many times its height. */
+export const MAX_CHIP_WIDTH = 2.4;
+
+/** Chip width for a logo at a given chip height: square, or wider for wordmarks (same height). */
+export function chipWidth(logo: string | null | undefined, size: number): number {
+  const aspect = logoAspect(logo);
+  if (aspect <= WIDE_LOGO_ASPECT) return size;
+  const inner = size - 2 * CHIP_PADDING;
+  return Math.round(Math.min(inner * aspect + 2 * CHIP_PADDING, size * MAX_CHIP_WIDTH));
+}
+
 /**
  * The provider's mark: its logo on a white chip like the website's `.logo-chip`
  * (white in dark mode too, so brand colours stay right), otherwise the coloured initials box.
@@ -23,7 +44,10 @@ export const ProviderMark = memo(function ProviderMark({
   const box = { width: size, height: size, borderRadius: Math.round(size * 0.23) };
   if (logo && LOGOS[logo]) {
     return (
-      <View style={[styles.box, styles.chip, box]} accessible={false} importantForAccessibility="no-hide-descendants">
+      <View
+        testID="provider-logo"
+        style={[styles.box, styles.chip, box, { width: chipWidth(logo, size) }]}
+        accessible={false} importantForAccessibility="no-hide-descendants">
         <SvgCss xml={LOGOS[logo]} width="100%" height="100%" />
       </View>
     );
@@ -39,6 +63,6 @@ export const ProviderMark = memo(function ProviderMark({
 
 const useStyles = makeStyles((colors) => ({
   box: { alignItems: 'center', justifyContent: 'center', marginRight: spacing.md, paddingHorizontal: 3 },
-  chip: { backgroundColor: '#fff', borderWidth: 1, borderColor: colors.border, padding: 5 },
+  chip: { backgroundColor: '#fff', borderWidth: 1, borderColor: colors.border, padding: CHIP_PADDING },
   initials: { color: '#fff', fontWeight: '700' },
 }));

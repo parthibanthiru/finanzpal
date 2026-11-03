@@ -8,7 +8,9 @@ same comparison data, same disclosure texts, same calculator math and the same d
 - **Provider logos**: the same logos as the website (`assets/logos/*.svg`, wherever a data item has `logo`) on a
   white chip, otherwise the coloured initials box as before: comparisons, Finanz-Check, Merkliste, search. The sync
   copies them into `data/logos.json`, cleaned for phone SVG renderers (no editor metadata, viewBox set, path line
-  breaks flattened, ids prefixed per logo); `components/ProviderMark.tsx` draws them with `react-native-svg`.
+  breaks flattened, ids prefixed per logo); `components/ProviderMark.tsx` draws them with `react-native-svg`
+  on a square chip; wordmarks wider than 2:1 (from the SVG viewBox — ING, norisbank, Openbank, justTRADE, Trade Republic,
+  flatex, Smartbroker, Scalable) get a wider chip of the same height, at most 2.4× the height.
 - **Notifications** (Profil → Mitteilungen, opt-in): one short message when a comparison gets a new provider or
   a new guide is published, in the language the app is set to; tapping it opens the comparison at that provider
   or the guide. Changed rates or fees never trigger one, and messages carry names only. Needs one-time setup

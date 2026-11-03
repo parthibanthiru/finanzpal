@@ -55,9 +55,11 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
       — 2026-11-02: function written + deployed (v1, verify_jwt on); `chat_usage` + `bump_chat_usage`
       in schema.sql; app defaults to `{SUPABASE_URL}/functions/v1/chat`, 503/404 → "not set up yet",
       429 → daily limit (DE/EN), tests in `__tests__/api-test.ts`. Answers once key + schema exist.
-- [ ] **3. Wide logos.** Wordmarks (ING DiBa, norisbank, Openbank, justTRADE, Trade Republic) are
+- [x] **3. Wide logos.** Wordmarks (ING DiBa, norisbank, Openbank, justTRADE, Trade Republic) are
       tiny in the square chip — give logos with aspect ratio > 2 a wider chip (from the viewBox),
       same height; check in the web preview.
+      — 2026-11-03: `chipWidth()` in ProviderMark (viewBox aspect > 2 → wider chip, max 2.4× height);
+      8 wordmarks affected; screen test added; checked in the web preview.
 - [ ] **4. Login/registration polish against the real project.** Error texts for real Supabase
       responses (email confirmation required, rate limits), "check your inbox" state after
       sign-up, password reset deep link. Screen tests for these states.
@@ -104,3 +106,4 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
   .env.example). Schema still not applied (list_tables empty).
 - 2026-11-02: Item 2 done — chat Edge Function deployed to Finanzpal (connector deploy needed no
   confirmation); waits for ANTHROPIC_API_KEY + schema.sql.
+- 2026-11-03: Item 3 done — wordmark logos get wider chips. Sync check: no website changes to mirror.
