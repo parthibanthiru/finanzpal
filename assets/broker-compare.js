@@ -1,6 +1,7 @@
 (function () {
   var LANG = document.documentElement.lang === 'en' ? 'en' : 'de';
   var PREFIX = LANG === 'en' ? '../' : '';
+  var priority = null; // shared priority sliders (assets/priority-match.js), set up in init()
   var STR = LANG === 'en' ? {
     count: function (n, total) { return n + ' of ' + total + ' brokers'; },
     reset: 'Reset filters',
@@ -164,6 +165,7 @@
       '<div class="cc-badges"><span class="cc-badge">' + escapeHtml(item.name) + '</span>' +
       (item.recommended ? '<span class="cc-badge debit">' + escapeHtml(STR.recommended) + '</span>' : '') +
       (item.depotgebuehrBedingungslos ? '<span class="cc-badge debit">' + escapeHtml(STR.depotfree) + '</span>' : '') +
+      (priority ? priority.chipHtml(item) : '') +
       '</div>' +
       '<div class="cc-body">' +
       cardArtHtml(item) +
@@ -204,6 +206,10 @@
     var rateSelect = document.getElementById('broker-rate-select');
 
     var allItems = [];
+    priority = window.fpPriority.create({
+      lang: LANG, factors: ['depotgebuehr', 'etfSparplaene', 'guthabenzins', 'mindestsparrate'], labels: STR.scoreLabels, sortSelect: sortSelect,
+      defaultSort: 'rate', idPrefix: 'broker', toFive: toFive, onChange: function () { render(); }
+    });
 
     function applyFilters(items) {
       var maxRate = parseFloat(rateSelect.value);
@@ -217,7 +223,9 @@
 
     function applySort(items) {
       var sorted = items.slice();
-      if (sortSelect.value === 'name') {
+      if (sortSelect.value === 'match') {
+        sorted.sort(priority.compare);
+      } else if (sortSelect.value === 'name') {
         sorted.sort(function (a, b) { return a.name.localeCompare(b.name); });
       } else if (sortSelect.value === 'zins') {
         sorted.sort(function (a, b) { return (b.guthabenzins || 0) - (a.guthabenzins || 0); });
@@ -255,6 +263,7 @@
       zinsCheck.checked = false;
       rateSelect.value = 'alle';
       sortSelect.value = 'rate';
+      priority.reset();
       render();
     });
 

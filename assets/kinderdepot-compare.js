@@ -1,6 +1,7 @@
 (function () {
   var LANG = document.documentElement.lang === 'en' ? 'en' : 'de';
   var PREFIX = LANG === 'en' ? '../' : '';
+  var priority = null; // shared priority sliders (assets/priority-match.js), set up in init()
   var STR = LANG === 'en' ? {
     count: function (n, total) { return n + ' of ' + total + ' children\'s accounts'; },
     reset: 'Reset filters',
@@ -141,6 +142,7 @@
       '<article class="kk-card" id="' + escapeHtml(item.id) + '">' +
       '<div class="cc-badges"><span class="cc-badge">' + escapeHtml(item.name) + '</span>' +
       (!item.parentDepotRequired ? '<span class="cc-badge debit">' + escapeHtml(STR.noParentDepot) + '</span>' : '') +
+      (priority ? priority.chipHtml(item) : '') +
       '</div>' +
       '<div class="cc-body">' +
       cardArtHtml(item) +
@@ -176,6 +178,10 @@
     var rateSelect = document.getElementById('kinderdepot-rate-select');
 
     var allItems = [];
+    priority = window.fpPriority.create({
+      lang: LANG, factors: ['depotgebuehr', 'mindestsparrate', 'guthabenzins', 'elternAufwand'], labels: STR.scoreLabels, sortSelect: sortSelect,
+      defaultSort: 'rate', idPrefix: 'kinderdepot', toFive: toFive, onChange: function () { render(); }
+    });
 
     function applyFilters(items) {
       var maxRate = parseFloat(rateSelect.value);
@@ -188,7 +194,9 @@
 
     function applySort(items) {
       var sorted = items.slice();
-      if (sortSelect.value === 'name') {
+      if (sortSelect.value === 'match') {
+        sorted.sort(priority.compare);
+      } else if (sortSelect.value === 'name') {
         sorted.sort(function (a, b) { return a.name.localeCompare(b.name); });
       } else {
         sorted.sort(function (a, b) { return a.mindestsparrate - b.mindestsparrate; });
@@ -221,6 +229,7 @@
       noParentCheck.checked = false;
       rateSelect.value = 'alle';
       sortSelect.value = 'rate';
+      priority.reset();
       render();
     });
 
