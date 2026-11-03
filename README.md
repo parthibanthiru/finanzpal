@@ -107,6 +107,7 @@ finanzpal/
 │   ├── kk-skeleton.js              Lade-Skeleton für Kreditkarten-/Depot-Karten
 │   ├── filter-collapse.js          Mobil (≤860px): Filter-Seitenleiste hinter „Filter“-Button mit Zähler aktiver Filter
 │   ├── freshness.js                Frische-Stempel: Datenstand (Monat) als Punkt + Monatsname im Vertrauensband
+│   ├── maths-drawer.js             „Woher kommen die Zahlen?“-Schublade: spiegelt den Hinweistext (.disclosure-note) neben die Ergebnisse
 │   ├── compare-bar.js              Fixierte „Vergleichen"-Leiste (Mehrfachauswahl → Vergleich)
 │   ├── sparplanrechner.js          Logik für Sparplanrechner & Zinseszinsrechner
 │   ├── kreditrechner.js            Annuitätenformel für den Kreditrechner

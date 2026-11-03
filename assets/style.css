@@ -853,3 +853,11 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 [data-fp-fresh="stale"] .fp-fresh-text { color: var(--ink-soft); }
 @keyframes fp-fresh-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal) 45%, transparent); } 70% { box-shadow: 0 0 0 9px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
 @media (prefers-reduced-motion: reduce) { [data-fp-fresh="fresh"] .fp-fresh-dot { animation: none; } }
+
+/* "Woher kommen die Zahlen?" drawer (assets/maths-drawer.js) */
+.fp-maths-toggle { background: none; border: none; padding: 10px 4px; margin-left: 10px; font: inherit; font-size: 13.5px; font-weight: 600; color: var(--green-deep); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 44px; }
+.fp-maths-toggle:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; border-radius: 4px; }
+.fp-maths-drawer { margin: 0 0 16px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px; }
+.fp-maths-drawer[hidden] { display: none; }
+.fp-maths-body { padding: 14px 18px; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+.fp-maths-body p { margin: 0; }
