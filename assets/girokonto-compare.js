@@ -27,7 +27,11 @@
       scoreTooltip: function (b) {
         return 'Finanzpal-Score: Kontoführung ' + b.kontofuehrung + ' · Dispozins ' + b.dispozins + ' · Guthabenzins ' + b.guthabenzins + ' · Karte & Flexibilität ' + b.karteFlexibilitaet + ' (je von 5). Methodik: ueber-uns.html#finanzpal-score';
       },
-      scoreLabels: { kontofuehrung: 'Kontoführung', dispozins: 'Dispozins', guthabenzins: 'Guthabenzins', karteFlexibilitaet: 'Karte & Flexibilität' }
+      scoreLabels: { kontofuehrung: 'Kontoführung', dispozins: 'Dispozins', guthabenzins: 'Guthabenzins', karteFlexibilitaet: 'Karte & Flexibilität' },
+      prioTitle: 'Was ist dir wichtig?',
+      prioHint: 'Regler nach rechts = wichtiger. Die Liste sortiert sich nach deinem Match; der Finanzpal-Score bleibt unverändert.',
+      sortMatch: 'Sortieren: Mein Match',
+      match: function (n) { return 'Dein Match ' + n; }
     },
     en: {
       loading: 'Loading comparison data …',
@@ -50,7 +54,11 @@
       scoreTooltip: function (b) {
         return 'Finanzpal Score: Account fee ' + b.kontofuehrung + ' · Overdraft rate ' + b.dispozins + ' · Cash interest ' + b.guthabenzins + ' · Card & flexibility ' + b.karteFlexibilitaet + ' (each out of 5). Methodology: ueber-uns.html#finanzpal-score';
       },
-      scoreLabels: { kontofuehrung: 'Account fee', dispozins: 'Overdraft rate', guthabenzins: 'Cash interest', karteFlexibilitaet: 'Card & flexibility' }
+      scoreLabels: { kontofuehrung: 'Account fee', dispozins: 'Overdraft rate', guthabenzins: 'Cash interest', karteFlexibilitaet: 'Card & flexibility' },
+      prioTitle: 'What matters to you?',
+      prioHint: 'Slide right = more important. The list re-sorts by your match; the Finanzpal Score itself never changes.',
+      sortMatch: 'Sort: My match',
+      match: function (n) { return 'Your match ' + n; }
     }
   }[LANG];
 
@@ -141,6 +149,43 @@
     var allItems = [];
     var expanded = {};
 
+    // Personal match: weighted average of the item's real Finanzpal-Score factor
+    // values (0-100) using the visitor's slider weights. Needs no extra data.
+    var FACTORS = ['kontofuehrung', 'dispozins', 'guthabenzins', 'karteFlexibilitaet'];
+    var weights = {};
+    FACTORS.forEach(function (k) { weights[k] = 0; });
+    function matchOf(item) {
+      var b = item.score && item.score.breakdown;
+      if (!b) return null;
+      var sum = 0, tot = 0;
+      FACTORS.forEach(function (k) { if (weights[k] > 0 && typeof b[k] === 'number') { sum += weights[k] * b[k]; tot += weights[k]; } });
+      return tot > 0 ? sum / tot : null;
+    }
+    function prioActive() { return FACTORS.some(function (k) { return weights[k] > 0; }); }
+
+    var matchOpt = document.createElement('option');
+    matchOpt.value = 'match';
+    matchOpt.textContent = STR.sortMatch;
+    sortSelect.appendChild(matchOpt);
+
+    var asideEl = document.querySelector('.kk-filters');
+    var prio = document.createElement('div');
+    prio.className = 'kk-filter-group fp-prio';
+    prio.innerHTML = '<h3>' + STR.prioTitle + '</h3>' + FACTORS.map(function (k) {
+      return '<label class="fp-prio-row" for="giro-prio-' + k + '"><span>' + STR.scoreLabels[k] + '</span>' +
+        '<input type="range" min="0" max="100" step="25" value="0" id="giro-prio-' + k + '" data-prio="' + k + '"></label>';
+    }).join('') + '<p class="fp-prio-hint">' + STR.prioHint + '</p>';
+    var firstGroup = asideEl && asideEl.querySelector('.kk-filter-group');
+    if (asideEl && firstGroup) asideEl.insertBefore(prio, firstGroup);
+    Array.prototype.forEach.call(prio.querySelectorAll('input[data-prio]'), function (inp) {
+      inp.addEventListener('input', function () {
+        weights[inp.getAttribute('data-prio')] = Number(inp.value);
+        if (prioActive()) sortSelect.value = 'match';
+        else if (sortSelect.value === 'match') sortSelect.value = 'preis';
+        render();
+      });
+    });
+
     function applyFilters(items) {
       var networks = Array.prototype.filter.call(netzwerkChecks, function (c) { return c.checked; }).map(function (c) { return c.value; });
       var maxDispo = parseFloat(dispoSelect.value);
@@ -157,7 +202,8 @@
     function sortItems(items) {
       var mode = sortSelect.value;
       var copy = items.slice();
-      if (mode === 'name') copy.sort(function (a, b) { return a.name.localeCompare(b.name); });
+      if (mode === 'match') copy.sort(function (a, b) { var x = matchOf(a), y = matchOf(b); return (y == null ? -1 : y) - (x == null ? -1 : x); });
+      else if (mode === 'name') copy.sort(function (a, b) { return a.name.localeCompare(b.name); });
       else if (mode === 'dispo') copy.sort(function (a, b) { return (a.dispozins == null ? 99 : a.dispozins) - (b.dispozins == null ? 99 : b.dispozins); });
       else copy.sort(function (a, b) { return a.kontofuehrungSort - b.kontofuehrungSort; });
       return copy;
@@ -173,6 +219,7 @@
       return '<div class="kk-card" id="' + escapeHtml(item.id) + '">' +
         '<div class="cc-badges"><span class="cc-badge debit">' + escapeHtml(item.anbieter) + '</span>' +
           (item.bedingungslos ? '<span class="cc-badge">' + (LANG === 'en' ? 'Unconditionally free' : 'Bedingungslos kostenlos') + '</span>' : '') +
+          (matchOf(item) != null ? '<span class="cc-badge fp-match-chip">' + STR.match(toFive(matchOf(item))) + '</span>' : '') +
         '</div>' +
         '<div class="cc-body">' +
           cardArtHtml(item) +
@@ -226,6 +273,8 @@
       guthabenzinsCheck.checked = false;
       dispoSelect.value = 'alle';
       sortSelect.value = 'preis';
+      FACTORS.forEach(function (k) { weights[k] = 0; });
+      Array.prototype.forEach.call(prio.querySelectorAll('input[data-prio]'), function (i) { i.value = 0; });
       render();
     });
 

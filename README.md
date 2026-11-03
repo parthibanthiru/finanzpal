@@ -1064,6 +1064,7 @@ Commit-Nachricht):
 6. **Netlify-SSO-Gate entfernen**, sobald die Seite öffentlich gehen soll
    (aktuell bewusst dahinter, nur fürs Team sichtbar).
 7. Entscheidung zu den bekannten offenen Punkten oben treffen.
+8. **Prioritäts-Regler („Was ist dir wichtig?“) nur auf dem Girokonto-Vergleich** (`girokonto-compare.js`, nutzt die echten Score-Faktoren; „Dein Match“-Chip + Sortierung „Mein Match“). Ausrollen auf Broker/Kreditkarte/Kinderdepot und in die App (`mobile/`) ist offen.
 
 **Erledigt:** Echtes Logo eingebunden (2026-10-23) — das FP5-Icon
 (`assets/favicon.svg`, `assets/icon-512.png`) war bereits das fertige Icon aus

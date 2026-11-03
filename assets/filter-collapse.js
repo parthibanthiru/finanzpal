@@ -25,6 +25,7 @@
     function activeCount() {
       var n = 0;
       Array.prototype.forEach.call(aside.querySelectorAll('input[type=checkbox]:checked, input[type=radio]:checked'), function () { n++; });
+      Array.prototype.forEach.call(aside.querySelectorAll('input[type=range]'), function (r) { if (Number(r.value) > 0) n++; });
       Array.prototype.forEach.call(aside.querySelectorAll('select'), function (s) { if (s.selectedIndex > 0) n++; });
       Array.prototype.forEach.call(aside.querySelectorAll('.etf-chip.active'), function (c) { if (c.getAttribute('data-value') !== 'Alle') n++; });
       return n;

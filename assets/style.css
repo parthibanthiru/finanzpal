@@ -869,3 +869,10 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .fc-ring-fill { stroke: var(--green-deep); stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 0.5s ease; }
 .fc-ring-text { font-family: var(--font-display); font-weight: 600; font-size: 30px; fill: var(--green-deep); }
 @media (prefers-reduced-motion: reduce) { .fc-ring-fill { transition: none; } }
+
+/* Priority sliders + personal match chip (Girokonto) */
+.fp-prio-row { display: flex; flex-direction: column; gap: 2px; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+.fp-prio-row input[type=range] { width: 100%; min-height: 36px; margin: 0; accent-color: var(--green-deep); }
+.fp-prio-row input[type=range]:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+.fp-prio-hint { margin: 4px 0 0; font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
+.cc-badge.fp-match-chip { background: var(--green-deep); color: var(--bg-raised); }
