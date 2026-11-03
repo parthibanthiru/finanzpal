@@ -295,7 +295,7 @@ it('Wordmark logos get a wider chip of the same height, square logos stay square
   render(<ProviderMark logo="assets/logos/ing.svg" name="ING" size={44} />);
   const flat = (s: unknown): Record<string, unknown> =>
     Array.isArray(s) ? Object.assign({}, ...s.map(flat)) : ((s ?? {}) as Record<string, unknown>);
-  const style = flat(screen.getByTestId('provider-logo').props.style);
+  const style = flat(screen.getByTestId('provider-logo', { includeHiddenElements: true }).props.style);
   expect(style.height).toBe(44);
   expect(style.width).toBe(chipWidth('assets/logos/ing.svg', 44));
 });
