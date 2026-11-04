@@ -7,10 +7,12 @@ import { DataFile, formatUpdated, loadData } from '@/lib/data';
 import { openSite } from '@/lib/site';
 import { disclosure } from '@/lib/disclosures';
 import { ProviderCard } from '@/components/ProviderCard';
+import { byMatch, matchValue, prioActive, PRIO_STEPS, type Weights } from '@/lib/priority';
+import { factorLabel, toFive } from '@/lib/scoreLabels';
 import { useFavorites } from '@/context/FavoritesProvider';
 import { makeStyles, radius, spacing, useColors } from '@/components/theme';
 
-type Sort = 'standard' | 'score';
+type Sort = 'standard' | 'score' | 'match';
 
 export default function CategoryScreen() {
   const styles = useStyles();
@@ -25,18 +27,41 @@ export default function CategoryScreen() {
   const cat = getCategory(String(id));
   const [data, setData] = useState<DataFile | null>(null);
   const [sort, setSort] = useState<Sort>('standard');
+  const [weights, setWeights] = useState<Weights>({});
+  const [prioOpen, setPrioOpen] = useState(false);
 
   useEffect(() => {
     if (cat) loadData(cat.file, lang).then(setData);
   }, [cat?.file, lang]);
 
   const hasScores = !!data?.items.some((i) => i.score);
+  // Priority factors = the score breakdown keys of the first scored item (same order as the website).
+  const factorKeys = useMemo(
+    () => Object.keys(data?.items.find((i) => i.score?.breakdown)?.score?.breakdown ?? {}),
+    [data],
+  );
+  const setWeight = (key: string, level: number) => {
+    const next = { ...weights, [key]: level };
+    setWeights(next);
+    if (prioActive(next)) setSort('match');
+    else if (sort === 'match') setSort('standard');
+  };
+  const resetWeights = () => {
+    setWeights({});
+    if (sort === 'match') setSort('standard');
+  };
   const items = useMemo(() => {
     if (!data) return [];
     // "standard" = the website's own order (independent of commissions, see disclosure).
+    if (sort === 'match') return [...data.items].sort(byMatch(weights));
     if (sort === 'score') return [...data.items].sort((a, b) => (b.score?.value ?? -1) - (a.score?.value ?? -1));
     return data.items;
-  }, [data, sort]);
+  }, [data, sort, weights]);
+
+  const matchOf = (item: { score?: { value: number; band: 'A' | 'B' | 'C' | 'D'; breakdown?: Record<string, number> } }) => {
+    const m = matchValue(item.score, weights);
+    return m == null ? undefined : t.compare.matchOf(toFive(m, lang));
+  };
 
   const focusIndex = focus ? items.findIndex((i) => i.id === focus) : -1;
   useEffect(() => {
@@ -84,6 +109,45 @@ export default function CategoryScreen() {
                   ))}
                 </View>
               )}
+              {hasScores && factorKeys.length > 0 && (
+                <View style={styles.prio}>
+                  <Pressable onPress={() => setPrioOpen((o) => !o)} accessibilityRole="button" accessibilityState={{ expanded: prioOpen }}>
+                    <Text style={styles.prioHead}>{t.compare.prioToggle} {prioOpen ? '▴' : '▾'}</Text>
+                  </Pressable>
+                  {prioOpen && (
+                    <View>
+                      {factorKeys.map((key) => {
+                        const label = factorLabel(cat.file, key, lang);
+                        return (
+                          <View key={key} style={styles.prioRow}>
+                            <Text style={styles.prioLabel}>{label}</Text>
+                            <View style={styles.prioSteps}>
+                              {Array.from({ length: PRIO_STEPS + 1 }, (_, level) => (
+                                <Pressable
+                                  key={level}
+                                  onPress={() => setWeight(key, level)}
+                                  accessibilityRole="button"
+                                  accessibilityLabel={t.compare.prioLevel(label, level)}
+                                  accessibilityState={{ selected: (weights[key] ?? 0) === level }}
+                                  style={[styles.prioStep, (weights[key] ?? 0) === level && styles.prioStepOn]}
+                                >
+                                  <Text style={[styles.prioStepText, (weights[key] ?? 0) === level && { color: colors.onPrimary }]}>{level}</Text>
+                                </Pressable>
+                              ))}
+                            </View>
+                          </View>
+                        );
+                      })}
+                      <Text style={styles.prioHint}>{t.compare.prioHint}</Text>
+                      {prioActive(weights) && (
+                        <Pressable onPress={resetWeights} accessibilityRole="button">
+                          <Text style={styles.link}>{t.compare.prioReset}</Text>
+                        </Pressable>
+                      )}
+                    </View>
+                  )}
+                </View>
+              )}
             </View>
           }
           renderItem={({ item }) => (
@@ -92,6 +156,7 @@ export default function CategoryScreen() {
               file={cat.file}
               fields={cat.fields(item, t)}
               highlight={item.id === focus ? highlightLabel : undefined}
+              match={matchOf(item)}
               favorite={isFavorite(cat.id, item.id)}
               onToggleFavorite={() => toggleFavorite(cat.id, item.id)}
             />
@@ -134,6 +199,15 @@ const useStyles = makeStyles((colors) => ({
   chip: { borderWidth: 1, borderColor: colors.primary, borderRadius: 999, paddingVertical: 5, paddingHorizontal: 12 },
   chipOn: { backgroundColor: colors.primary },
   chipText: { color: colors.primary, fontWeight: '600', fontSize: 13 },
+  prio: { marginBottom: spacing.md, borderWidth: 1, borderColor: colors.border, borderRadius: radius.sm, padding: spacing.sm + 4 },
+  prioHead: { color: colors.primary, fontWeight: '700', fontSize: 14 },
+  prioRow: { marginTop: spacing.sm + 2 },
+  prioLabel: { color: colors.text, fontSize: 14, marginBottom: 4 },
+  prioSteps: { flexDirection: 'row', gap: spacing.sm },
+  prioStep: { flex: 1, minHeight: 44, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.primary, borderRadius: radius.sm },
+  prioStepOn: { backgroundColor: colors.primary },
+  prioStepText: { color: colors.primary, fontWeight: '700', fontSize: 14 },
+  prioHint: { color: colors.muted, fontSize: 12, lineHeight: 17, marginVertical: spacing.sm },
   disclosure: { fontSize: 12, color: colors.muted, lineHeight: 17, marginTop: spacing.sm },
   footerLinks: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, marginTop: spacing.md },
   link: { color: colors.primary, fontWeight: '600', textDecorationLine: 'underline', fontSize: 14 },

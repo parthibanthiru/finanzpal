@@ -36,7 +36,7 @@ same comparison data, same disclosure texts, same calculator math and the same d
 - **Vergleiche** (home tab): all 13 comparisons from the website: Girokonto, Tagesgeld, Kreditkarte,
   Broker & Depot, Kinderdepot, Ratenkredit, Baufinanzierung, the 5 insurance types, Steuerprogramm.
   Provider cards with the website's fields, caveats (ⓘ), "Unsere Empfehlung", ratings, **Finanzpal-Score**
-  (0–100 + A–D, sortable) and the page's own "Werbung"/disclosure text.
+  (0–100 + A–D, sortable; shown out of 5), a "Was ist dir wichtig?" panel (0–4 importance per score factor → "Dein Match" badge + sort, `lib/priority.ts`, mirrors the website's `assets/priority-match.js`) and the page's own "Werbung"/disclosure text.
   "Zum Anbieter" appears only once an item has a real affiliate link (all are `#` placeholders today).
 - **Rechner**: all 7 website calculators built in: Sparplan, Zinseszins, Kredit, Baufinanzierung,
   Brutto-Netto (Steuerklasse I, 2026), Altersvorsorge, Haushaltsbuch. Same formulas, defaults, ranges and

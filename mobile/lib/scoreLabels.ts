@@ -12,6 +12,10 @@ export function scoreRows(file: string, score: Score, lang: Lang = getLang()): S
   return Object.entries(score.breakdown ?? {}).map(([key, value]) => ({ key, label: labels[key] ?? key, value }));
 }
 
+export function factorLabel(file: string, key: string, lang: Lang = getLang()): string {
+  return LABELS[lang][file]?.[key] ?? key;
+}
+
 /**
  * Scores are stored 0-100 (data/*.json) but shown out of 5, like on the website
  * (assets/compare.js toFive()): value / 20, one decimal, locale separator, and never

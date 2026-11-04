@@ -84,9 +84,9 @@ export function FavoriteButton({ active, onPress }: { active: boolean; onPress: 
 }
 
 export function ProviderCard({
-  item, file, fields, highlight, favorite, onToggleFavorite,
+  item, file, fields, highlight, match, favorite, onToggleFavorite,
 }: {
-  item: Item; file: string; fields: Field[]; highlight?: string; favorite?: boolean; onToggleFavorite?: () => void;
+  item: Item; file: string; fields: Field[]; highlight?: string; match?: string; favorite?: boolean; onToggleFavorite?: () => void;
 }) {
   const t = useT();
   const styles = useStyles();
@@ -98,6 +98,7 @@ export function ProviderCard({
       <View style={styles.badges}>
         {highlight ? <Text style={[styles.recommended, styles.highlightBadge]}>{highlight}</Text> : null}
         {item.recommended && <Text style={styles.recommended}>{t.card.recommended}</Text>}
+        {match ? <Text style={[styles.recommended, styles.matchBadge]}>{match}</Text> : null}
       </View>
 
       <View style={styles.head}>
@@ -157,6 +158,7 @@ const useStyles = makeStyles((colors) => ({
   favIcon: { fontSize: 24, color: colors.muted, lineHeight: 28 },
   badges: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   highlightBadge: { backgroundColor: colors.ink, color: colors.smile },
+  matchBadge: { backgroundColor: colors.primary, color: colors.onPrimary },
   recommended: {
     alignSelf: 'flex-start',
     backgroundColor: colors.tag,
