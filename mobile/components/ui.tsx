@@ -56,7 +56,7 @@ export function Input({ label, ...props }: TextInputProps & { label: string }) {
   return (
     <View style={{ marginBottom: spacing.md }}>
       <Text style={styles.label}>{label}</Text>
-      <TextInput placeholderTextColor={colors.muted} style={styles.input} {...props} />
+      <TextInput placeholderTextColor={colors.muted} style={styles.input} accessibilityLabel={label} {...props} />
     </View>
   );
 }

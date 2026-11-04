@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabase';
 import { deleteBuchungen } from '@/lib/haushaltsbuch';
 import { disablePush } from '@/lib/push';
 import { strings } from '@/lib/i18n';
+import { friendlyAuthError as friendlyError, isUnconfirmed } from '@/lib/authErrors';
 import { PREVIEW, PREVIEW_SESSION } from '@/lib/preview';
 
 // Closes the login popup correctly when running as a web app.
@@ -20,8 +21,14 @@ type AuthContextValue = {
   session: Session | null;
   user: User | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<string | null>;
-  signUp: (email: string, password: string, name: string) => Promise<string | null>;
+  /** `unconfirmed`: the account exists but the email link hasn't been clicked yet. */
+  signIn: (email: string, password: string) => Promise<{ error: string | null; unconfirmed?: boolean }>;
+  /** `needsConfirmation`: Supabase sent a confirmation email; no session until it's clicked. */
+  signUp: (email: string, password: string, name: string) => Promise<{ error: string | null; needsConfirmation?: boolean }>;
+  resendConfirmation: (email: string) => Promise<string | null>;
+  /** Exchanges the one-time `code` from an email link (confirmation or password reset) for a session. */
+  completeEmailLink: (code: string) => Promise<string | null>;
+  updatePassword: (password: string) => Promise<string | null>;
   signInWithGoogle: () => Promise<string | null>;
   signInWithApple: () => Promise<string | null>;
   resetPassword: (email: string) => Promise<string | null>;
@@ -31,19 +38,11 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-// Map Supabase's English errors to friendly German messages.
-// Supabase's English error messages -> friendly messages in the app's current language.
-function friendlyError(message: string): string {
-  const e = strings().auth.errors;
-  const m = message.toLowerCase();
-  if (m.includes('invalid login credentials')) return e.invalidLogin;
-  if (m.includes('email not confirmed')) return e.emailNotConfirmed;
-  if (m.includes('already registered')) return e.alreadyRegistered;
-  if (m.includes('password should be at least')) return e.passwordTooShort;
-  if (m.includes('rate limit')) return e.rateLimit;
-  if (m.includes('network')) return e.network;
-  return message;
-}
+// Where the links in Supabase's emails lead back into the app
+// (finanzpal://auth-callback and finanzpal://reset-password; exp://…/--/… in Expo Go).
+// Both must be allowed in Supabase → Authentication → URL Configuration (finanzpal://**).
+export const confirmRedirect = () => Linking.createURL('auth-callback');
+export const resetRedirect = () => Linking.createURL('reset-password');
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(PREVIEW ? PREVIEW_SESSION : null);
@@ -68,16 +67,40 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     async signIn(email, password) {
       const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
-      return error ? friendlyError(error.message) : null;
+      if (!error) return { error: null };
+      return { error: friendlyError(error), unconfirmed: isUnconfirmed(error) };
     },
 
     async signUp(email, password, name) {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email: email.trim(),
         password,
-        options: { data: { full_name: name.trim() } },
+        options: { data: { full_name: name.trim() }, emailRedirectTo: confirmRedirect() },
       });
-      return error ? friendlyError(error.message) : null;
+      if (error) return { error: friendlyError(error) };
+      // With "Confirm email" on, Supabase returns no session until the link is clicked. For an
+      // address that already has an account it also answers like this (without saying so), so the
+      // "check your inbox" screen mentions logging in / resetting the password as well.
+      return { error: null, needsConfirmation: !data?.session };
+    },
+
+    async resendConfirmation(email) {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email.trim(),
+        options: { emailRedirectTo: confirmRedirect() },
+      });
+      return error ? friendlyError(error) : null;
+    },
+
+    async completeEmailLink(code) {
+      const { error } = await supabase.auth.exchangeCodeForSession(code);
+      return error ? friendlyError(error) : null;
+    },
+
+    async updatePassword(password) {
+      const { error } = await supabase.auth.updateUser({ password });
+      return error ? friendlyError(error) : null;
     },
 
     // Google: opens Google's login page in a secure in-app browser (works on Android and iOS).
@@ -88,7 +111,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         provider: 'google',
         options: { redirectTo, skipBrowserRedirect: true },
       });
-      if (error || !data?.url) return friendlyError(error?.message ?? strings().auth.errors.googleFailed);
+      if (error || !data?.url) return error ? friendlyError(error) : strings().auth.errors.googleFailed;
 
       const result = await WebBrowser.openAuthSessionAsync(data.url, redirectTo);
       if (result.type !== 'success') return null; // cancelled / dismissed
@@ -100,7 +123,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!code) return strings().auth.errors.googleFailed;
 
       const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
-      return exchangeError ? friendlyError(exchangeError.message) : null;
+      return exchangeError ? friendlyError(exchangeError) : null;
     },
 
     // Apple: native iOS sheet (Face ID / Touch ID). Not offered on Android.
@@ -118,7 +141,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           provider: 'apple',
           token: credential.identityToken,
         });
-        if (error) return friendlyError(error.message);
+        if (error) return friendlyError(error);
 
         // Apple only sends the user's name on the very first sign-in – store it right away.
         const fullName = [credential.fullName?.givenName, credential.fullName?.familyName]
@@ -136,8 +159,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     },
 
     async resetPassword(email) {
-      const { error } = await supabase.auth.resetPasswordForEmail(email.trim());
-      return error ? friendlyError(error.message) : null;
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: resetRedirect() });
+      return error ? friendlyError(error) : null;
     },
 
     async signOut() {
@@ -151,7 +174,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     async deleteAccount() {
       const userId = session?.user.id;
       const { error } = await supabase.rpc('delete_own_account');
-      if (error) return friendlyError(error.message);
+      if (error) return friendlyError(error);
       if (userId) await deleteBuchungen(userId); // budget entries stored only on this device
       await supabase.auth.signOut();
       return null;

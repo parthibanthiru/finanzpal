@@ -115,6 +115,8 @@ jest.mock('@/lib/supabase', () => {
         signUp: async () => ({ error: null }),
         signOut: async () => ({ error: null }),
         resetPasswordForEmail: async () => ({ error: null }),
+        resend: async () => ({ error: null }),
+        exchangeCodeForSession: async () => ({ data: { session }, error: null }),
         updateUser: async () => ({ error: null }),
         startAutoRefresh() {},
         stopAutoRefresh() {},

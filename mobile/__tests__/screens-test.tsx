@@ -37,6 +37,9 @@ import ProfileScreen from '@/app/(app)/profile';
 import LoginScreen from '@/app/(auth)/login';
 import RegisterScreen from '@/app/(auth)/register';
 import ForgotPasswordScreen from '@/app/(auth)/forgot-password';
+import ResetPasswordScreen from '@/app/(auth)/reset-password';
+import AuthCallbackScreen from '@/app/(auth)/auth-callback';
+import { friendlyAuthError } from '@/lib/authErrors';
 import { ThemeProvider } from '@/context/ThemeProvider';
 import { LanguageProvider } from '@/context/LanguageProvider';
 import { AuthProvider } from '@/context/AuthProvider';
@@ -92,6 +95,10 @@ const CASES: Case[] = [
   { name: 'Login', Screen: LoginScreen, expect: (t) => t.auth.login.title },
   { name: 'Registrieren', Screen: RegisterScreen, expect: (t) => t.auth.register.title },
   { name: 'Passwort vergessen', Screen: ForgotPasswordScreen, expect: (t) => t.auth.forgot.title },
+  { name: 'Neues Passwort (Link ok)', Screen: ResetPasswordScreen, params: { code: 'c1' }, expect: (t) => t.auth.reset.subtitle },
+  { name: 'Neues Passwort (Link abgelaufen)', Screen: ResetPasswordScreen, params: { error_code: 'otp_expired' }, expect: (t) => t.auth.errors.linkInvalid },
+  { name: 'E-Mail-Link (wird geprüft)', Screen: AuthCallbackScreen, params: { code: 'c2' }, expect: (t) => t.auth.callback.checking },
+  { name: 'E-Mail-Link (fehlgeschlagen)', Screen: AuthCallbackScreen, params: {}, expect: (t) => t.auth.callback.failed },
 ];
 
 describe.each(LANGS)('every screen renders (%s)', (lang) => {
@@ -257,6 +264,118 @@ describe.each(LANGS)('interactions (%s)', (lang) => {
     await settle(1);
     expect(screen.getAllByLabelText(t.card.favRemove)).toHaveLength(1);
     expect(screen.getAllByLabelText(t.card.favAdd)).toHaveLength(before - 1);
+  });
+});
+
+describe.each(LANGS)('sign-in flows against Supabase (%s)', (lang) => {
+  const t = strings(lang);
+  const auth = () => require('@/lib/supabase').supabase.auth;
+
+  it('Registrieren: with "Confirm email" on, shows the check-your-inbox state and can resend', async () => {
+    const signUp = jest.spyOn(auth(), 'signUp').mockResolvedValue({ data: { user: {}, session: null }, error: null } as never);
+    const resend = jest.spyOn(auth(), 'resend');
+    await renderScreen(RegisterScreen, { lang });
+    fireEvent.changeText(screen.getByLabelText(t.auth.register.name), 'Max');
+    fireEvent.changeText(screen.getByLabelText(t.auth.email), ' max@beispiel.de ');
+    fireEvent.changeText(screen.getByLabelText(t.auth.register.password), 'geheim123');
+    fireEvent.changeText(screen.getByLabelText(t.auth.register.password2), 'geheim123');
+    fireEvent.press(screen.getByRole('checkbox'));
+    fireEvent.press(screen.getByText(t.auth.register.submit));
+    await settle(2);
+    expect(signUp).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: 'max@beispiel.de',
+        options: expect.objectContaining({ emailRedirectTo: 'finanzpal://auth-callback' }),
+      })
+    );
+    expect(screen.getByText(t.auth.register.inboxTitle)).toBeTruthy();
+    expect(screen.getByText(t.auth.register.inboxText('max@beispiel.de'))).toBeTruthy();
+    fireEvent.press(screen.getByText(t.auth.register.resend));
+    await settle(2);
+    expect(resend).toHaveBeenCalledWith(expect.objectContaining({ type: 'signup', email: 'max@beispiel.de' }));
+    expect(screen.getByText(t.auth.register.resent)).toBeTruthy();
+    expectCleanText();
+  });
+
+  it('Login: unconfirmed email shows the right text and a resend button', async () => {
+    jest.spyOn(auth(), 'signInWithPassword').mockResolvedValue({
+      error: { message: 'Email not confirmed', code: 'email_not_confirmed', status: 400 },
+    } as never);
+    const resend = jest.spyOn(auth(), 'resend');
+    await renderScreen(LoginScreen, { lang });
+    expect(screen.queryByText(t.auth.login.resend)).toBeNull();
+    fireEvent.changeText(screen.getByLabelText(t.auth.email), 'max@beispiel.de');
+    fireEvent.changeText(screen.getByLabelText(t.auth.password), 'geheim123');
+    fireEvent.press(screen.getByText(t.auth.login.submit));
+    await settle(2);
+    expect(screen.getByText(t.auth.errors.emailNotConfirmed)).toBeTruthy();
+    fireEvent.press(screen.getByText(t.auth.login.resend));
+    await settle(2);
+    expect(resend).toHaveBeenCalledWith(expect.objectContaining({ type: 'signup', email: 'max@beispiel.de' }));
+    expect(screen.getByText(t.auth.login.resent)).toBeTruthy();
+    expect(screen.queryByText(t.auth.login.resend)).toBeNull();
+  });
+
+  it('Passwort vergessen: the email link leads back into the app; email rate limit has its own text', async () => {
+    const reset = jest.spyOn(auth(), 'resetPasswordForEmail').mockResolvedValueOnce({
+      data: null,
+      error: { message: 'email rate limit exceeded', code: 'over_email_send_rate_limit', status: 429 },
+    } as never);
+    await renderScreen(ForgotPasswordScreen, { lang });
+    fireEvent.changeText(screen.getByLabelText(t.auth.email), 'max@beispiel.de');
+    fireEvent.press(screen.getByText(t.auth.forgot.submit));
+    await settle(2);
+    expect(reset).toHaveBeenCalledWith('max@beispiel.de', { redirectTo: 'finanzpal://reset-password' });
+    expect(screen.getByText(t.auth.errors.rateLimitEmail)).toBeTruthy();
+    fireEvent.press(screen.getByText(t.auth.forgot.submit));
+    await settle(2);
+    expect(screen.getByText(t.auth.forgot.done)).toBeTruthy();
+  });
+
+  it('Neues Passwort: exchanges the link code once, checks the input, saves the password', async () => {
+    const exchange = jest.spyOn(auth(), 'exchangeCodeForSession');
+    const update = jest.spyOn(auth(), 'updateUser');
+    await renderScreen(ResetPasswordScreen, { lang, params: { code: 'abc' } });
+    expect(exchange).toHaveBeenCalledTimes(1);
+    expect(exchange).toHaveBeenCalledWith('abc');
+    fireEvent.changeText(screen.getByLabelText(t.auth.reset.password), 'neuesPasswort1');
+    fireEvent.changeText(screen.getByLabelText(t.auth.reset.password2), 'anderes');
+    fireEvent.press(screen.getByText(t.auth.reset.submit));
+    await settle(1);
+    expect(screen.getByText(t.auth.register.errMismatch)).toBeTruthy();
+    expect(update).not.toHaveBeenCalled();
+    fireEvent.changeText(screen.getByLabelText(t.auth.reset.password2), 'neuesPasswort1');
+    fireEvent.press(screen.getByText(t.auth.reset.submit));
+    await settle(2);
+    expect(update).toHaveBeenCalledWith({ password: 'neuesPasswort1' });
+    expect(screen.getByText(t.auth.reset.done)).toBeTruthy();
+    fireEvent.press(screen.getByText(t.auth.reset.continue));
+    expect(require('expo-router').__router.replace).toHaveBeenCalledWith('/');
+  });
+
+  it('Neues Passwort: an expired code shows the link-expired text', async () => {
+    jest.spyOn(auth(), 'exchangeCodeForSession').mockResolvedValueOnce({
+      data: { session: null },
+      error: { message: 'invalid flow state, no valid flow state found', code: 'flow_state_not_found', status: 404 },
+    } as never);
+    await renderScreen(ResetPasswordScreen, { lang, params: { code: 'old' } });
+    expect(screen.getByText(t.auth.errors.linkInvalid)).toBeTruthy();
+    expect(screen.queryByLabelText(t.auth.reset.password)).toBeNull();
+  });
+
+  it('Supabase error codes map to the app texts (unknown ones get a neutral text, not English)', () => {
+    require('@/lib/i18n').setCurrentLang(lang);
+    const e = t.auth.errors;
+    expect(friendlyAuthError({ code: 'invalid_credentials', message: 'Invalid login credentials' })).toBe(e.invalidLogin);
+    expect(friendlyAuthError({ code: 'user_already_exists', message: 'User already registered' })).toBe(e.alreadyRegistered);
+    expect(friendlyAuthError({ code: 'weak_password', message: 'Password should be at least 8 characters.' })).toBe(e.passwordTooShort);
+    expect(friendlyAuthError({ code: 'weak_password', message: 'Password is known to be weak and easy to guess' })).toBe(e.weakPassword);
+    expect(friendlyAuthError({ code: 'same_password', message: 'x' })).toBe(e.samePassword);
+    expect(friendlyAuthError({ code: 'over_request_rate_limit', message: 'x', status: 429 })).toBe(e.rateLimit);
+    expect(friendlyAuthError({ message: 'For security purposes, you can only request this after 42 seconds.' })).toBe(e.rateLimitEmail);
+    expect(friendlyAuthError({ code: 'otp_expired', message: 'Email link is invalid or has expired' })).toBe(e.linkInvalid);
+    expect(friendlyAuthError({ name: 'AuthRetryableFetchError', message: 'Failed to fetch' })).toBe(e.network);
+    expect(friendlyAuthError({ code: 'unexpected_failure', message: 'Database error saving new user' })).toBe(e.generic);
   });
 });
 

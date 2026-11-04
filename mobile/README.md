@@ -60,7 +60,9 @@ same comparison data, same disclosure texts, same calculator math and the same d
 ```
 mobile/
   app/_layout.tsx                 auth gate: logged out → /login, logged in → /vergleiche
-  app/(auth)/…                    login, register, forgot-password
+  app/(auth)/…                    login, register (→ "check your inbox" + resend), forgot-password,
+                                  reset-password + auth-callback (targets of the email links)
+  lib/authErrors.ts               Supabase auth error codes → DE/EN texts
   app/(app)/vergleiche/           home (search, Finanz-Check card, categories), finanz-check, [id] comparison,
                                   etf (ETF-Suche), merkliste
   app/(app)/rechner/              calculator list + 7 calculators
@@ -136,6 +138,9 @@ Still to do once in the dashboard:
 2. Authentication → Providers → Email: enabled, "Confirm email" on.
 3. Authentication → URL Configuration: **Site URL** `finanzpal://auth-callback`; **Redirect URLs** add
    `finanzpal://**` and `exp://**` (the app sends `finanzpal://auth-callback`, Expo Go `exp://…/--/auth-callback`).
+   Email links: sign-up confirmation → `finanzpal://auth-callback?code=…` (signs in), password reset →
+   `finanzpal://reset-password?code=…` (new-password screen). Both use PKCE, so the link must be opened on the
+   device that requested it; on another device the app explains this (the address is confirmed anyway).
 4. Authentication → Email Templates: translate the confirmation / reset mails to German (optional but recommended).
 
 ## 2. Run the app

@@ -1312,6 +1312,10 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   `mobile/supabase/schema.sql` dort einmal im SQL Editor ausführen; unter Authentication →
   URL Configuration Site URL `finanzpal://auth-callback` und Redirect URLs `finanzpal://**`,
   `exp://**` eintragen (siehe `mobile/README.md` §1).
+- **App-Anmeldung:** Registrierung zeigt „Schau in dein Postfach" (mit „E-Mail erneut senden"),
+  Login bietet bei unbestätigter Adresse das erneute Senden an, die Links aus den Supabase-Mails
+  öffnen die App (`auth-callback` meldet an, `reset-password` setzt ein neues Passwort).
+  Supabase-Fehler (z. B. E-Mail-Limit, abgelaufener Link) erscheinen als eigene DE/EN-Texte.
 - **Anbieter-Logos:** Die App zeigt dieselben Logos wie die Website
   (`assets/logos/*.svg`, per Sync nach `mobile/data/logos.json`). Neues Logo oder
   geändertes `logo`-Feld → `cd mobile && npm run sync-data`.

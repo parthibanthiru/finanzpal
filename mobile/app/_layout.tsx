@@ -67,8 +67,11 @@ function AuthGate() {
   useEffect(() => {
     if (loading) return;
     const inAuthGroup = segments[0] === '(auth)';
+    // The password-reset screen needs the session from its email link but must stay open
+    // until the new password is saved.
+    const settingPassword = (segments as string[])[1] === 'reset-password';
     if (!session && !inAuthGroup) router.replace('/login');
-    else if (session && inAuthGroup) router.replace('/');
+    else if (session && inAuthGroup && !settingPassword) router.replace('/');
   }, [session, loading, segments]);
 
   if (loading) {

@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Link } from 'expo-router';
 import { useAuth } from '@/context/AuthProvider';
 import { AuthScreen } from '@/components/AuthScreen';
-import { Button, ErrorText, Input } from '@/components/ui';
+import { Button, ErrorText, InfoText, Input } from '@/components/ui';
 import { SocialButtons } from '@/components/SocialButtons';
 import { LegalLinks } from '@/components/LegalLinks';
 import { makeStyles, spacing, useColors } from '@/components/theme';
@@ -13,25 +13,45 @@ export default function LoginScreen() {
   const t = useT();
   const styles = useStyles();
   const colors = useColors();
-  const { signIn } = useAuth();
+  const { signIn, resendConfirmation } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
+  const [unconfirmed, setUnconfirmed] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
 
   async function onSubmit() {
     if (!email || !password) return setError(t.auth.login.missing);
     setError(null);
+    setInfo(null);
     setLoading(true);
-    const err = await signIn(email, password);
+    const res = await signIn(email, password);
     setLoading(false);
-    if (err) setError(err);
+    setUnconfirmed(!!res.unconfirmed);
+    if (res.error) setError(res.error);
     // On success the AuthGate redirects automatically.
+  }
+
+  // Account exists but the confirmation link was never clicked → send it again.
+  async function onResend() {
+    setResending(true);
+    const err = await resendConfirmation(email);
+    setResending(false);
+    if (err) return setError(err);
+    setError(null);
+    setUnconfirmed(false);
+    setInfo(t.auth.login.resent);
   }
 
   return (
     <AuthScreen showBrand title={t.auth.login.title} subtitle={t.auth.login.subtitle}>
       <ErrorText message={error} />
+      <InfoText message={info} />
+      {unconfirmed && (
+        <Button title={t.auth.login.resend} onPress={onResend} loading={resending} variant="secondary" />
+      )}
       <Input
         label={t.auth.email}
         value={email}

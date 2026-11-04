@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useAuth } from '@/context/AuthProvider';
 import { AuthScreen } from '@/components/AuthScreen';
 import { Button, ErrorText, InfoText, Input } from '@/components/ui';
@@ -14,7 +15,8 @@ export default function RegisterScreen() {
   const t = useT();
   const colors = useColors();
   const styles = useStyles();
-  const { signUp } = useAuth();
+  const { signUp, resendConfirmation } = useAuth();
+  const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,6 +25,9 @@ export default function RegisterScreen() {
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  // set after a successful sign-up that still needs the email link → "check your inbox" state
+  const [sentTo, setSentTo] = useState<string | null>(null);
+  const [resending, setResending] = useState(false);
 
   async function onSubmit() {
     setError(null);
@@ -33,16 +38,44 @@ export default function RegisterScreen() {
     if (!accepted) return setError(t.auth.register.errConsent);
 
     setLoading(true);
-    const err = await signUp(email, password, name);
+    const res = await signUp(email, password, name);
     setLoading(false);
+    if (res.error) return setError(res.error);
+    if (res.needsConfirmation) setSentTo(email.trim());
+    // otherwise a session exists and the AuthGate opens the app
+  }
+
+  async function onResend() {
+    if (!sentTo) return;
+    setError(null);
+    setResending(true);
+    const err = await resendConfirmation(sentTo);
+    setResending(false);
     if (err) return setError(err);
-    setInfo(t.auth.register.done);
+    setInfo(t.auth.register.resent);
+  }
+
+  if (sentTo) {
+    return (
+      <AuthScreen title={t.auth.register.inboxTitle} subtitle={t.auth.register.inboxText(sentTo)}>
+        <ErrorText message={error} />
+        <InfoText message={info} />
+        <Text style={styles.hint}>{t.auth.register.inboxHint}</Text>
+        <Button title={t.auth.register.toLogin} onPress={() => router.replace('/login')} />
+        <Button
+          title={t.auth.register.resend}
+          onPress={onResend}
+          loading={resending}
+          disabled={!!info}
+          variant="secondary"
+        />
+      </AuthScreen>
+    );
   }
 
   return (
     <AuthScreen title={t.auth.register.title} subtitle={t.auth.register.subtitle}>
       <ErrorText message={error} />
-      <InfoText message={info} />
       <Input label={t.auth.register.name} value={name} onChangeText={setName} autoComplete="name" placeholder={t.auth.register.namePlaceholder} />
       <Input
         label={t.auth.email}
@@ -81,8 +114,8 @@ export default function RegisterScreen() {
           {t.auth.register.consentAfter}
         </Text>
       </Pressable>
-      <Button title={t.auth.register.submit} onPress={onSubmit} loading={loading} disabled={!!info} />
-      {!info && <SocialButtons onError={setError} />}
+      <Button title={t.auth.register.submit} onPress={onSubmit} loading={loading} />
+      <SocialButtons onError={setError} />
       <Text style={styles.legal}>{t.auth.register.socialNote}</Text>
       <LegalLinks />
     </AuthScreen>
@@ -105,5 +138,6 @@ const useStyles = makeStyles((colors) => ({
   checkboxOn: { backgroundColor: colors.primary },
   checkText: { flex: 1, color: colors.muted, fontSize: 14, lineHeight: 20 },
   inlineLink: { color: colors.primary, fontWeight: '600', textDecorationLine: 'underline' },
+  hint: { color: colors.muted, fontSize: 14, lineHeight: 20, marginBottom: spacing.md },
   legal: { color: colors.muted, fontSize: 12, textAlign: 'center', marginTop: spacing.md },
 }));
