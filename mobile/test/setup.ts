@@ -64,7 +64,7 @@ jest.mock('expo-apple-authentication', () => ({
   AppleAuthenticationScope: { FULL_NAME: 0, EMAIL: 1 },
 }));
 jest.mock('expo-linking', () => ({
-  createURL: () => 'finanzpal://auth-callback',
+  createURL: (path: string) => `finanzpal://${path}`,
   parse: () => ({ queryParams: {} }),
   openURL: jest.fn(),
 }));
