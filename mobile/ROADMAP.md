@@ -60,9 +60,12 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
       same height; check in the web preview.
       — 2026-11-03: `chipWidth()` in ProviderMark (viewBox aspect > 2 → wider chip, max 2.4× height);
       8 wordmarks affected; screen test added; checked in the web preview.
-- [ ] **4. Login/registration polish against the real project.** Error texts for real Supabase
+- [x] **4. Login/registration polish against the real project.** Error texts for real Supabase
       responses (email confirmation required, rate limits), "check your inbox" state after
       sign-up, password reset deep link. Screen tests for these states.
+      — 2026-11-04: `lib/authErrors.ts` maps Supabase error codes to DE/EN texts; sign-up → "check
+      your inbox" + resend; login offers resend for unconfirmed accounts; email links open
+      `auth-callback` (sign-in) / `reset-password` (new password, PKCE code); 12 new screen tests.
 - [ ] **5. Store listing texts (DE + EN).** `mobile/store/`: app name, subtitle, short + long
       description, keywords, category, support/privacy URLs (placeholders until the domain), data
       safety / privacy-label answers derived from what the app actually stores (Supabase tables,
@@ -84,9 +87,11 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
 
 - [ ] **Run `mobile/supabase/schema.sql` once** in Supabase → project Finanzpal → SQL Editor (paste
       the file, Run). Verify: Table Editor shows profiles, messages, favorites, push_tokens.
-      (Checked 2026-11-03: still no tables.)
+      (Checked 2026-11-04: still no tables.)
 - [ ] Supabase → Authentication → URL Configuration: Site URL `finanzpal://auth-callback`, Redirect
-      URLs `finanzpal://**` and `exp://**`; Providers → Email: "Confirm email" on.
+      URLs `finanzpal://**` and `exp://**`; Providers → Email: "Confirm email" on. (The app's email
+      links go to `finanzpal://auth-callback` and `finanzpal://reset-password` — both covered by
+      `finanzpal://**`.)
 - [ ] Anthropic API key → Supabase → Edge Functions → Secrets `ANTHROPIC_API_KEY` (paid per use).
       The function `chat` is already deployed; it starts answering once this secret exists and
       schema.sql has run.
@@ -108,3 +113,6 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
   confirmation); waits for ANTHROPIC_API_KEY + schema.sql.
 - 2026-11-03: Item 3 done — wordmark logos get wider chips (CI green after two test fixes; web preview
   republished). Sync check: no website changes to mirror. Schema still not applied.
+- 2026-11-04: Item 4 done — sign-up/login/password-reset flows for the real project (CI green after
+  one test-mock fix; auth screens aren't in the web preview, so no republish). Sync check: website
+  changes were priority sliders/home hero only, nothing to mirror. Schema still not applied.
