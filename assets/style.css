@@ -893,3 +893,17 @@ tr.etf-detail-row .side-facts { border-top: none; margin-top: 0; padding-top: 10
 .home-hero .finder-option:focus-visible { outline: 2px solid var(--green); outline-offset: -2px; }
 @media (max-width: 600px) { .home-masthead { margin-bottom: 20px; } }
 @media (max-width: 480px) { .hero.home-hero h1 { font-size: clamp(31px, 9.5vw, 40px); } .home-masthead { font-size: 10.5px; } }
+
+/* Home sections, "Editorial" direction: ruled headers, text-first Ratgeber cards (desktop/tablet;
+   phones keep the compact row layout above). */
+.categories .section-head, .guides .section-head { border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+.categories .section-head h2, .guides .section-head h2 { font-size: clamp(24px, 3vw, 30px); }
+@media (min-width: 781px) {
+  .guides .guide-grid { gap: 32px; }
+  .guides .guide-card { border-top: 2px solid var(--ink); padding-top: 16px; gap: 8px; }
+  .guides .guide-thumb { aspect-ratio: auto; width: 40px; height: 40px; border-radius: 10px; margin-bottom: 4px; }
+  .guides .guide-thumb .cat-icon { width: 22px; height: 22px; }
+  .guides .guide-card h3 { font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.2; }
+  .guides .guide-card:hover h3 { text-decoration: underline; text-underline-offset: 3px; }
+  .guides .guide-card p { font-size: 14.5px; line-height: 1.5; }
+}
