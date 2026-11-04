@@ -1065,7 +1065,7 @@ Commit-Nachricht):
 6. **Netlify-SSO-Gate entfernen**, sobald die Seite öffentlich gehen soll
    (aktuell bewusst dahinter, nur fürs Team sichtbar).
 7. Entscheidung zu den bekannten offenen Punkten oben treffen.
-8. **Prioritäts-Regler („Was ist dir wichtig?“)** laufen auf Girokonto, Broker, Kinderdepot und Kreditkarte über `assets/priority-match.js` (Kreditkarte: ohne Sortier-Auswahl, sortiert nach Match, solange ein Regler > 0 ist; Karten ohne Score, z. B. Consorsbank, bekommen keinen Match). In der App (`mobile/lib/priority.ts`, Panel auf den Vergleichs-Screens) als 0–4-Stufen statt Schieberegler; auf einem Gerät/Web-Preview noch nicht visuell geprüft (nur CI: tsc + Jest).
+8. **Prioritäts-Regler („Was ist dir wichtig?“)** laufen auf Girokonto, Broker, Kinderdepot und Kreditkarte über `assets/priority-match.js` (Kreditkarte: ohne Sortier-Auswahl, sortiert nach Match, solange ein Regler > 0 ist; Karten ohne Score, z. B. Consorsbank, bekommen keinen Match). In der App (`mobile/lib/priority.ts`, Panel auf den Vergleichs-Screens) als 0–4-Stufen statt Schieberegler; im Web-Preview geprüft (Kreditkarten: Panel öffnen, Stufe wählen → „Dein Match“-Badge + Sortierung), auf einem echten Gerät noch nicht.
 
 **Erledigt:** Echtes Logo eingebunden (2026-10-23) — das FP5-Icon
 (`assets/favicon.svg`, `assets/icon-512.png`) war bereits das fertige Icon aus
