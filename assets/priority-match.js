@@ -5,7 +5,7 @@
 //
 //   var pm = fpPriority.create({
 //     lang: 'de'|'en', factors: ['a','b'], labels: {a:'…'}, sortSelect: <select>,
-//     defaultSort: 'rate', idPrefix: 'giro', toFive: fn, onChange: render
+//     defaultSort: 'rate' (sortSelect/defaultSort optional), idPrefix: 'giro', toFive: fn, onChange: render
 //   });
 //   pm.matchOf(item) -> 0-100 or null;  pm.chipHtml(item);  pm.reset();
 (function () {
@@ -48,10 +48,14 @@
       return (y == null ? -1 : y) - (x == null ? -1 : x);
     }
 
-    var opt = document.createElement('option');
-    opt.value = 'match';
-    opt.textContent = S.sort;
-    o.sortSelect.appendChild(opt);
+    // sortSelect is optional (the Kreditkarte page has none: it just sorts by
+    // match while any slider is above 0).
+    if (o.sortSelect) {
+      var opt = document.createElement('option');
+      opt.value = 'match';
+      opt.textContent = S.sort;
+      o.sortSelect.appendChild(opt);
+    }
 
     var panel = document.createElement('div');
     panel.className = 'kk-filter-group fp-prio';
@@ -67,8 +71,10 @@
     Array.prototype.forEach.call(panel.querySelectorAll('input[data-prio]'), function (inp) {
       inp.addEventListener('input', function () {
         weights[inp.getAttribute('data-prio')] = Number(inp.value);
-        if (active()) o.sortSelect.value = 'match';
-        else if (o.sortSelect.value === 'match') o.sortSelect.value = o.defaultSort;
+        if (o.sortSelect) {
+          if (active()) o.sortSelect.value = 'match';
+          else if (o.sortSelect.value === 'match') o.sortSelect.value = o.defaultSort;
+        }
         o.onChange();
       });
     });

@@ -108,7 +108,7 @@ finanzpal/
 │   ├── filter-collapse.js          Mobil (≤860px): Filter-Seitenleiste hinter „Filter“-Button mit Zähler aktiver Filter
 │   ├── freshness.js                Frische-Stempel: Datenstand (Monat) als Punkt + Monatsname im Vertrauensband
 │   ├── maths-drawer.js             „Woher kommen die Zahlen?“-Schublade: spiegelt den Hinweistext (.disclosure-note) neben die Ergebnisse
-│   ├── priority-match.js           „Was ist dir wichtig?“-Regler + „Dein Match“ (Girokonto, Broker, Kinderdepot; nutzt die echten Score-Faktoren)
+│   ├── priority-match.js           „Was ist dir wichtig?“-Regler + „Dein Match“ (Girokonto, Broker, Kinderdepot, Kreditkarte; nutzt die echten Score-Faktoren)
 │   ├── compare-bar.js              Fixierte „Vergleichen"-Leiste (Mehrfachauswahl → Vergleich)
 │   ├── sparplanrechner.js          Logik für Sparplanrechner & Zinseszinsrechner
 │   ├── kreditrechner.js            Annuitätenformel für den Kreditrechner
@@ -1065,7 +1065,7 @@ Commit-Nachricht):
 6. **Netlify-SSO-Gate entfernen**, sobald die Seite öffentlich gehen soll
    (aktuell bewusst dahinter, nur fürs Team sichtbar).
 7. Entscheidung zu den bekannten offenen Punkten oben treffen.
-8. **Prioritäts-Regler („Was ist dir wichtig?“)** laufen auf Girokonto, Broker und Kinderdepot über `assets/priority-match.js`. Offen: Kreditkarte (eigene Sortierlogik) und die App (`mobile/`).
+8. **Prioritäts-Regler („Was ist dir wichtig?“)** laufen auf Girokonto, Broker, Kinderdepot und Kreditkarte über `assets/priority-match.js` (Kreditkarte: ohne Sortier-Auswahl, sortiert nach Match, solange ein Regler > 0 ist; Karten ohne Score, z. B. Consorsbank, bekommen keinen Match). Offen: die App (`mobile/`).
 
 **Erledigt:** Echtes Logo eingebunden (2026-10-23) — das FP5-Icon
 (`assets/favicon.svg`, `assets/icon-512.png`) war bereits das fertige Icon aus

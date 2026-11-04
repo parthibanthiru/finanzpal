@@ -5,6 +5,7 @@
 (function () {
   var LANG = (document.documentElement.lang || 'de').toLowerCase().indexOf('en') === 0 ? 'en' : 'de';
   var PREFIX = LANG === 'en' ? '../' : '';
+  var priority = null; // shared priority sliders (assets/priority-match.js), set up in init()
 
   var STR = {
     de: {
@@ -187,6 +188,10 @@
     var googlePayCheck = document.getElementById('kk-filter-google');
 
     var allItems = [];
+    priority = window.fpPriority.create({
+      lang: LANG, factors: ['jahresgebuehr', 'abhebung', 'ohneBedingungen', 'zinsfreieTage'], labels: STR.scoreLabels,
+      idPrefix: 'kk', toFive: toFive, onChange: function () { render(); }
+    });
     var view = 'cards';
     var expanded = {};
     var layoutEl = document.querySelector('.kk-layout');
@@ -251,6 +256,7 @@
           '<span class="cc-badge' + (isDebit ? ' debit' : '') + '">' + (isDebit ? STR.typeDebit : STR.typeCredit) + '</span>' +
           (item.ohneBedingungen ? '<span class="cc-badge">' + STR.filterOhneBedingungen + '</span>' : '') +
           (item.recommended ? '<span class="cc-badge">' + STR.pick + '</span>' : '') +
+          (priority ? priority.chipHtml(item) : '') +
         '</div>' +
         '<div class="cc-body">' +
           cardArtHtml(item) +
@@ -299,6 +305,7 @@
 
     function render() {
       var filtered = applyFilters(allItems);
+      if (priority.active()) filtered = filtered.slice().sort(priority.compare);
       countEl.textContent = STR.resultCount(filtered.length, allItems.length);
       if (!filtered.length) {
         resultsEl.innerHTML = '<p class="kk-empty">' + STR.noResults + '</p>';
@@ -335,6 +342,7 @@
       ohneBedingungenCheck.checked = false;
       applePayCheck.checked = false;
       googlePayCheck.checked = false;
+      priority.reset();
       render();
     });
 
