@@ -1316,6 +1316,12 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   Login bietet bei unbestätigter Adresse das erneute Senden an, die Links aus den Supabase-Mails
   öffnen die App (`auth-callback` meldet an, `reset-password` setzt ein neues Passwort).
   Supabase-Fehler (z. B. E-Mail-Limit, abgelaufener Link) erscheinen als eigene DE/EN-Texte.
+- **Store-Eintrag:** `mobile/store/listing.json` (Name, Untertitel, Kurz-/Langbeschreibung,
+  Keywords, Kategorie, URLs, DE + EN; Längen und „keine Zinssätze/Preise“ prüft
+  `mobile/__tests__/store-test.ts`), `mobile/store/privacy.md` (Antworten für Google Play
+  „Datensicherheit“ und Apple „App-Datenschutz“). **Offen:** `{SITE}`/`{SUPPORT_EMAIL}` sind
+  Platzhalter bis zur Domain; die Datenschutzerklärung deckt die App (Supabase, Anthropic,
+  Expo-Push) noch nicht ab.
 - **Anbieter-Logos:** Die App zeigt dieselben Logos wie die Website
   (`assets/logos/*.svg`, per Sync nach `mobile/data/logos.json`). Neues Logo oder
   geändertes `logo`-Feld → `cd mobile && npm run sync-data`.

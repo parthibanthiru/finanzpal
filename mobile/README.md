@@ -88,6 +88,8 @@ mobile/
   tools/sync-data.mjs             refreshes data/ from the website
   context/AuthProvider.tsx, lib/supabase.ts, lib/api.ts, lib/history.ts
   supabase/schema.sql, backend-auth/
+  store/                          store listing texts DE+EN (listing.json), Data safety / App Privacy answers
+                                  (privacy.md), screenshots — see store/README.md
 ```
 
 ## Roadmap
@@ -225,7 +227,8 @@ eas build:configure
 eas build -p android          # .aab for Google Play (one-time 25 USD account)
 eas build -p ios              # needs Apple Developer account, 99 USD/year
 ```
-Before store release you need: a privacy policy URL (Datenschutzerklärung), an Impressum, app icons in `assets/`, and – if you add Google/Apple sign-in – Apple requires "Sign in with Apple" whenever another social login is offered.
+Store texts and the Data safety / App Privacy answers are ready in `store/` (see `store/README.md`).
+Before store release you need: a privacy policy URL that covers the app (see `store/privacy.md`) (Datenschutzerklärung), an Impressum, app icons in `assets/`, and – if you add Google/Apple sign-in – Apple requires "Sign in with Apple" whenever another social login is offered.
 
 ## Web preview (no phone, no account)
 `.github/workflows/mobile-web-preview.yml` builds the app as a web page on every push to `mobile/` (and on

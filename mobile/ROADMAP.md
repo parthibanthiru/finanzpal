@@ -66,10 +66,13 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
       — 2026-11-04: `lib/authErrors.ts` maps Supabase error codes to DE/EN texts; sign-up → "check
       your inbox" + resend; login offers resend for unconfirmed accounts; email links open
       `auth-callback` (sign-in) / `reset-password` (new password, PKCE code); 12 new screen tests.
-- [ ] **5. Store listing texts (DE + EN).** `mobile/store/`: app name, subtitle, short + long
+- [x] **5. Store listing texts (DE + EN).** `mobile/store/`: app name, subtitle, short + long
       description, keywords, category, support/privacy URLs (placeholders until the domain), data
       safety / privacy-label answers derived from what the app actually stores (Supabase tables,
       device storage, push tokens). No claims the app can't back up.
+      — 2026-11-05: `store/listing.json` (DE+EN texts, category, URL placeholders `{SITE}`),
+      `store/privacy.md` (data table + Play Data safety / Apple App Privacy answers),
+      `store/README.md`; `__tests__/store-test.ts` checks limits + no rates/prices.
 - [ ] **6. Store screenshots.** From the web preview with Playwright at phone sizes (6.7" iPhone,
       Android phone), DE + EN, light mode: home, a comparison, score breakdown, Finanz-Check result,
       a calculator. Save under `mobile/store/screenshots/`.
@@ -87,7 +90,7 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
 
 - [ ] **Run `mobile/supabase/schema.sql` once** in Supabase → project Finanzpal → SQL Editor (paste
       the file, Run). Verify: Table Editor shows profiles, messages, favorites, push_tokens.
-      (Checked 2026-11-04: still no tables.)
+      (Checked 2026-11-05: still no tables.)
 - [ ] Supabase → Authentication → URL Configuration: Site URL `finanzpal://auth-callback`, Redirect
       URLs `finanzpal://**` and `exp://**`; Providers → Email: "Confirm email" on. (The app's email
       links go to `finanzpal://auth-callback` and `finanzpal://reset-password` — both covered by
@@ -100,6 +103,9 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
 - [ ] Google sign-in: Google Cloud OAuth client + enable Google provider in Supabase (see
       `mobile/README.md` §4); Apple sign-in needs the Apple Developer account (99 USD/yr).
 - [ ] GitHub secrets `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (push notifications).
+- [ ] Datenschutzerklärung (DE+EN) extended to cover the app: data and processors listed in
+      `mobile/store/privacy.md` (Supabase, Anthropic, Expo push), incl. in-app account deletion.
+      Needs a legal decision, so the agent doesn't write it.
 - [ ] After company registration: domain, Datenschutz + Impressum online, Google Play (25 USD) and
       Apple Developer accounts, store submission.
 
@@ -116,3 +122,5 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
 - 2026-11-04: Item 4 done — sign-up/login/password-reset flows for the real project (CI green after
   one test-mock fix; auth screens aren't in the web preview, so no republish). Sync check: website
   changes were priority sliders/home hero only, nothing to mirror. Schema still not applied.
+- 2026-11-05: Item 5 done — store listing texts DE+EN and Data safety / App Privacy answers in
+  `mobile/store/`. Sync check: nothing to mirror. Schema still not applied.
