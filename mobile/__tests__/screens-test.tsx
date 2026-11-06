@@ -203,6 +203,16 @@ describe.each(LANGS)('interactions (%s)', (lang) => {
     expectCleanText();
   });
 
+  it('Home: category rows and the ETF row are buttons that open their screen', async () => {
+    await renderScreen(HomeScreen, { lang });
+    const router = require('expo-router').__router;
+    router.push.mockClear();
+    fireEvent.press(screen.getByText(t.categories.girokonto.title));
+    expect(router.push).toHaveBeenCalledWith({ pathname: '/vergleiche/[id]', params: { id: 'girokonto' } });
+    fireEvent.press(screen.getByText(t.etf.title));
+    expect(router.push).toHaveBeenCalledWith('/vergleiche/etf');
+  });
+
   it('ETF-Suche opened from the search shows just that ETF', async () => {
     await renderScreen(EtfScreen, { lang, params: { q: 'IE00B4L5Y983' } });
     expect(screen.getByText(t.etf.count(1))).toBeTruthy();

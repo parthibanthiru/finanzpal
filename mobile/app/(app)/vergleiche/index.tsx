@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Link, useFocusEffect, useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { useAuth } from '@/context/AuthProvider';
 import { useFavorites } from '@/context/FavoritesProvider';
 import { CATEGORIES, GROUPS } from '@/lib/categories';
@@ -187,6 +187,7 @@ export default function VergleicheScreen() {
 function HomeContent() {
   const { t, lang } = useI18n();
   const styles = useStyles();
+  const router = useRouter();
   return (
     <>
       <FinanzCheckCard />
@@ -202,32 +203,39 @@ function HomeContent() {
             {cats.map((c) => {
               const count = getBundled(c.file, lang).items.length;
               return (
-                <Link key={c.id} href={{ pathname: '/vergleiche/[id]', params: { id: c.id } }} asChild>
-                  <Pressable style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]}>
-                    <Text style={styles.icon}>{c.icon}</Text>
-                    <View style={{ flex: 1 }}>
-                      <Text style={styles.title}>{t.categories[c.id].title}</Text>
-                      <Text style={styles.sub}>
-                        {t.categories[c.id].subtitle} · {t.common.providers(count)}
-                      </Text>
-                    </View>
-                    <Text style={styles.chevron}>›</Text>
-                  </Pressable>
-                </Link>
+                // Plain Pressable + router.push: <Link asChild> drops a style *function* on web,
+                // which left these rows unstyled in the web preview.
+                <Pressable
+                  key={c.id}
+                  style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]}
+                  onPress={() => router.push({ pathname: '/vergleiche/[id]', params: { id: c.id } })}
+                  accessibilityRole="button"
+                >
+                  <Text style={styles.icon}>{c.icon}</Text>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.title}>{t.categories[c.id].title}</Text>
+                    <Text style={styles.sub}>
+                      {t.categories[c.id].subtitle} · {t.common.providers(count)}
+                    </Text>
+                  </View>
+                  <Text style={styles.chevron}>›</Text>
+                </Pressable>
               );
             })}
             {group === 'Broker' && (
               // ETF-Suche sits in the website's Broker menu too
-              <Link href="/vergleiche/etf" asChild>
-                <Pressable style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]}>
-                  <Text style={styles.icon}>🔎</Text>
-                  <View style={{ flex: 1 }}>
-                    <Text style={styles.title}>{t.etf.title}</Text>
-                    <Text style={styles.sub}>{t.etf.homeSub(getBundled('etf', lang).items.length)}</Text>
-                  </View>
-                  <Text style={styles.chevron}>›</Text>
-                </Pressable>
-              </Link>
+              <Pressable
+                style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]}
+                onPress={() => router.push('/vergleiche/etf')}
+                accessibilityRole="button"
+              >
+                <Text style={styles.icon}>🔎</Text>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.title}>{t.etf.title}</Text>
+                  <Text style={styles.sub}>{t.etf.homeSub(getBundled('etf', lang).items.length)}</Text>
+                </View>
+                <Text style={styles.chevron}>›</Text>
+              </Pressable>
             )}
           </View>
         );
