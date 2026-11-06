@@ -73,9 +73,12 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
       — 2026-11-05: `store/listing.json` (DE+EN texts, category, URL placeholders `{SITE}`),
       `store/privacy.md` (data table + Play Data safety / Apple App Privacy answers),
       `store/README.md`; `__tests__/store-test.ts` checks limits + no rates/prices.
-- [ ] **6. Store screenshots.** From the web preview with Playwright at phone sizes (6.7" iPhone,
+- [x] **6. Store screenshots.** From the web preview with Playwright at phone sizes (6.7" iPhone,
       Android phone), DE + EN, light mode: home, a comparison, score breakdown, Finanz-Check result,
       a calculator. Save under `mobile/store/screenshots/`.
+      — 2026-11-06: 20 shots (iPhone 1290×2796, Android 1080×2160, DE+EN × 5 screens) via
+      `tools/store-screenshots.mjs`; fixed on the way: unstyled home category rows on web, and
+      "Openbank" breaking mid-word on 360 dp phones. Re-take before submission (shows that day's data).
 - [ ] **7. Release build config.** `eas.json` profiles (development, preview APK, production),
       app version/build numbers, Android permissions minimal, iOS `infoPlist` usage strings, notification
       icon (white monochrome PNG generated from the logo). `expo-doctor` clean.
@@ -90,7 +93,7 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
 
 - [ ] **Run `mobile/supabase/schema.sql` once** in Supabase → project Finanzpal → SQL Editor (paste
       the file, Run). Verify: Table Editor shows profiles, messages, favorites, push_tokens.
-      (Checked 2026-11-05: still no tables.)
+      (Checked 2026-11-06: still no tables.)
 - [ ] Supabase → Authentication → URL Configuration: Site URL `finanzpal://auth-callback`, Redirect
       URLs `finanzpal://**` and `exp://**`; Providers → Email: "Confirm email" on. (The app's email
       links go to `finanzpal://auth-callback` and `finanzpal://reset-password` — both covered by
@@ -124,3 +127,6 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
   changes were priority sliders/home hero only, nothing to mirror. Schema still not applied.
 - 2026-11-05: Item 5 done — store listing texts DE+EN and Data safety / App Privacy answers in
   `mobile/store/`. Sync check: nothing to mirror. Schema still not applied.
+- 2026-11-06: Item 6 done — store screenshots DE+EN for iPhone 6.7" and Android phone; two visual
+  fixes found while taking them (home rows on web, narrow-phone logo chips). CI green after one test
+  fix; web preview republished. Sync check: nothing to mirror. Schema still not applied.
