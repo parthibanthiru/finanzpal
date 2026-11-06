@@ -1322,6 +1322,11 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   „Datensicherheit“ und Apple „App-Datenschutz“). **Offen:** `{SITE}`/`{SUPPORT_EMAIL}` sind
   Platzhalter bis zur Domain; die Datenschutzerklärung deckt die App (Supabase, Anthropic,
   Expo-Push) noch nicht ab.
+- **Store-Screenshots:** `mobile/store/screenshots/<gerät>/<de|en>/` – je 5 Bilder (Vergleiche,
+  Tagesgeld-Vergleich, Score-Aufschlüsselung, Finanz-Check-Ergebnis, Zinseszinsrechner) für
+  iPhone 6,7" (1290×2796) und Android (1080×2160), erzeugt aus der Web-Vorschau mit
+  `node mobile/tools/store-screenshots.mjs <web-preview-ordner>`. Sie zeigen die Daten vom
+  Aufnahmetag („Stand …“) – vor der Store-Einreichung neu erzeugen.
 - **Anbieter-Logos:** Die App zeigt dieselben Logos wie die Website
   (`assets/logos/*.svg`, per Sync nach `mobile/data/logos.json`). Neues Logo oder
   geändertes `logo`-Feld → `cd mobile && npm run sync-data`.

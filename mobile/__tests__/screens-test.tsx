@@ -16,7 +16,7 @@ import { NO_FILTERS, etfs, filterEtfs, options } from '@/lib/etf';
 import { scoreRows } from '@/lib/scoreLabels';
 import { search } from '@/lib/search';
 import { targetOf } from '@/lib/push';
-import { MAX_CHIP_WIDTH, ProviderMark, chipWidth, hasLogo, logoAspect } from '@/components/ProviderMark';
+import { MAX_CHIP_WIDTH, NARROW_MAX_CHIP_WIDTH, ProviderMark, chipWidth, hasLogo, logoAspect } from '@/components/ProviderMark';
 
 import HomeScreen from '@/app/(app)/vergleiche/index';
 import CategoryScreen from '@/app/(app)/vergleiche/[id]';
@@ -423,6 +423,9 @@ it('Wordmark logos get a wider chip of the same height, square logos stay square
   expect(wide).toBeGreaterThanOrEqual(5); // ING, norisbank, Openbank, justTRADE, Trade Republic, …
   expect(chipWidth('assets/logos/trade-republic.svg', 40)).toBe(Math.floor(40 * MAX_CHIP_WIDTH));
   expect(chipWidth(null, 44)).toBe(44);
+  // narrow phones: wide chips are capped lower, square ones stay square
+  expect(chipWidth('assets/logos/trade-republic.svg', 44, NARROW_MAX_CHIP_WIDTH)).toBe(Math.floor(44 * NARROW_MAX_CHIP_WIDTH));
+  expect(chipWidth(null, 44, NARROW_MAX_CHIP_WIDTH)).toBe(44);
 
   render(<ProviderMark logo="assets/logos/ing.svg" name="ING" size={44} />);
   const flat = (s: unknown): Record<string, unknown> =>

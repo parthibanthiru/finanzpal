@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, useWindowDimensions } from 'react-native';
 import { SvgCss } from 'react-native-svg/css';
 import { makeStyles, spacing, useColors } from './theme';
 
@@ -21,13 +21,17 @@ const CHIP_PADDING = 5;
 export const WIDE_LOGO_ASPECT = 2;
 /** A wide chip grows to at most this many times its height. */
 export const MAX_CHIP_WIDTH = 2.4;
+/** On narrow phones (< NARROW_SCREEN dp wide) wide chips stay smaller, so a one-word provider name
+ *  next to the logo, score and heart still fits on one line (360 dp showed "Openba-nk"). */
+export const NARROW_SCREEN = 400;
+export const NARROW_MAX_CHIP_WIDTH = 1.8;
 
 /** Chip width for a logo at a given chip height: square, or wider for wordmarks (same height). */
-export function chipWidth(logo: string | null | undefined, size: number): number {
+export function chipWidth(logo: string | null | undefined, size: number, maxFactor = MAX_CHIP_WIDTH): number {
   const aspect = logoAspect(logo);
   if (aspect <= WIDE_LOGO_ASPECT) return size;
   const inner = size - 2 * CHIP_PADDING;
-  return Math.floor(Math.min(inner * aspect + 2 * CHIP_PADDING, size * MAX_CHIP_WIDTH));
+  return Math.floor(Math.min(inner * aspect + 2 * CHIP_PADDING, size * maxFactor));
 }
 
 /**
@@ -41,12 +45,14 @@ export const ProviderMark = memo(function ProviderMark({
 }) {
   const styles = useStyles();
   const colors = useColors();
+  const { width: screenWidth } = useWindowDimensions();
+  const maxFactor = screenWidth < NARROW_SCREEN ? NARROW_MAX_CHIP_WIDTH : MAX_CHIP_WIDTH;
   const box = { width: size, height: size, borderRadius: Math.round(size * 0.23) };
   if (logo && LOGOS[logo]) {
     return (
       <View
         testID="provider-logo"
-        style={[styles.box, styles.chip, box, { width: chipWidth(logo, size) }]}
+        style={[styles.box, styles.chip, box, { width: chipWidth(logo, size, maxFactor) }]}
         accessible={false} importantForAccessibility="no-hide-descendants">
         <SvgCss xml={LOGOS[logo]} width="100%" height="100%" />
       </View>
