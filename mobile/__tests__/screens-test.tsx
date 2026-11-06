@@ -207,9 +207,12 @@ describe.each(LANGS)('interactions (%s)', (lang) => {
     await renderScreen(HomeScreen, { lang });
     const router = require('expo-router').__router;
     router.push.mockClear();
-    fireEvent.press(screen.getByText(t.categories.girokonto.title));
+    // the Finanz-Check picks above can show the same name — the category row is the last one
+    const giro = screen.getAllByText(t.categories.girokonto.title);
+    fireEvent.press(giro[giro.length - 1]);
     expect(router.push).toHaveBeenCalledWith({ pathname: '/vergleiche/[id]', params: { id: 'girokonto' } });
-    fireEvent.press(screen.getByText(t.etf.title));
+    const etf = screen.getAllByText(t.etf.title);
+    fireEvent.press(etf[etf.length - 1]);
     expect(router.push).toHaveBeenCalledWith('/vergleiche/etf');
   });
 
