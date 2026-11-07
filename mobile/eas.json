@@ -3,11 +3,7 @@
     "appVersionSource": "remote"
   },
   "build": {
-    "preview": {
-      "distribution": "internal",
-      "android": {
-        "buildType": "apk"
-      },
+    "base": {
       "env": {
         "EXPO_PUBLIC_SUPABASE_URL": "https://xliitgcsiikzxppazbfa.supabase.co",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_CaMuP9DFbFbeTLf2J1SNTw_rXmuNPgb",
@@ -16,16 +12,37 @@
         "EXPO_PUBLIC_DATA_LIVE": "0"
       }
     },
+    "development": {
+      "extends": "base",
+      "developmentClient": true,
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": false
+      }
+    },
+    "preview": {
+      "extends": "base",
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
     "production": {
+      "extends": "base",
+      "autoIncrement": true,
       "android": {
         "buildType": "app-bundle"
-      },
-      "env": {
-        "EXPO_PUBLIC_SUPABASE_URL": "https://xliitgcsiikzxppazbfa.supabase.co",
-        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_CaMuP9DFbFbeTLf2J1SNTw_rXmuNPgb",
-        "EXPO_PUBLIC_API_URL": "https://xliitgcsiikzxppazbfa.supabase.co/functions/v1",
-        "EXPO_PUBLIC_SITE_URL": "https://finanzpal.netlify.app",
-        "EXPO_PUBLIC_DATA_LIVE": "0"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "android": {
+        "track": "internal",
+        "releaseStatus": "draft"
       }
     }
   }

@@ -4,7 +4,7 @@ The Finanzpal app, built with Expo SDK 57 / React Native 0.86 + TypeScript: one 
 It lives in `mobile/` inside the website repo and uses the **website as its single source of truth**:
 same comparison data, same disclosure texts, same calculator math and the same design tokens.
 
-**What's in it (v0.12)**
+**What's in it (v1.0.0, release config ready — see section 6)**
 - **Provider logos**: the same logos as the website (`assets/logos/*.svg`, wherever a data item has `logo`) on a
   white chip, otherwise the coloured initials box as before: comparisons, Finanz-Check, Merkliste, search. The sync
   copies them into `data/logos.json`, cleaned for phone SVG renderers (no editor metadata, viewBox set, path line
@@ -133,7 +133,7 @@ Commits that only touch `mobile/` don't trigger a Netlify deploy (`netlify.toml`
 ## 1. Supabase (10 min)
 The project already exists: **Finanzpal** (org "Parthiban's Org", Frankfurt / eu-central-1), URL
 `https://xliitgcsiikzxppazbfa.supabase.co`. Its URL + publishable key are the defaults in `.env.example` and
-in `eas.json` (preview + production builds) — the publishable key is public by design, row level security
+in `eas.json` (all build profiles) — the publishable key is public by design, row level security
 protects the data. The web preview (`EXPO_PUBLIC_PREVIEW=1`) still never talks to Supabase.
 
 Still to do once in the dashboard:
@@ -221,17 +221,34 @@ Until you change the backend, everything keeps working as before.
 Both pages must be online before you submit to Google Play or the App Store.
 
 ## 6. Publishing (later)
+Release config is ready (checked by `__tests__/release-config-test.ts`):
+- **Version** `1.0.0` in `app.json` (and `package.json`) — the store version users see; raise it per release.
+  Build numbers (Android `versionCode`, iOS `buildNumber`) are kept by EAS (`appVersionSource: remote`) and
+  bumped automatically for every production build.
+- **Build profiles** (`eas.json`, all extend `base` = the Finanzpal Supabase defaults):
+  `development` (dev client for testing push / native code, APK, internal), `preview` (test APK to install
+  directly, internal), `production` (`.aab` for Google Play / iOS store build, auto-incremented build number).
+  `submit.production` uploads Android builds to the Play Console's internal track as a draft.
+- **Permissions:** Android asks for nothing beyond what the used modules need (internet, notifications);
+  camera, microphone, location, storage, media and contacts are explicitly blocked. iOS needs no usage
+  strings (no camera/photos/location/contacts); `ITSAppUsesNonExemptEncryption: false` answers the export
+  compliance question (HTTPS only).
+- **Notification icon:** `assets/notification-icon.png` (white on transparent, 96×96), made from `assets/icon.png`
+  with `python3 tools/make-notification-icon.py` — re-run it if the icon changes.
+
 ```bash
 npm install -g eas-cli
 eas login
-eas build:configure
-eas build -p android          # .aab for Google Play (one-time 25 USD account)
-eas build -p ios              # needs Apple Developer account, 99 USD/year
+npx eas init                                  # once: links the Expo project (writes extra.eas.projectId)
+eas build -p android --profile preview        # test APK
+eas build -p android --profile production     # .aab for Google Play (one-time 25 USD account)
+eas build -p ios --profile production         # needs Apple Developer account, 99 USD/year
+eas submit -p android --profile production    # optional: upload to the internal test track
 ```
 Store texts, the Data safety / App Privacy answers and the screenshots (DE + EN, iPhone 6.7" and
 Android phone) are ready in `store/` (see `store/README.md`; re-take the screenshots right before a
 submission with `node tools/store-screenshots.mjs <web-preview build dir>` — they show that day's data).
-Before store release you need: a privacy policy URL that covers the app (see `store/privacy.md`) (Datenschutzerklärung), an Impressum, app icons in `assets/`, and – if you add Google/Apple sign-in – Apple requires "Sign in with Apple" whenever another social login is offered.
+Before store release you need: a privacy policy URL that covers the app (see `store/privacy.md`) (Datenschutzerklärung), an Impressum, and – if you add Google/Apple sign-in – Apple requires "Sign in with Apple" whenever another social login is offered.
 
 ## Web preview (no phone, no account)
 `.github/workflows/mobile-web-preview.yml` builds the app as a web page on every push to `mobile/` (and on
@@ -270,8 +287,8 @@ Without the secrets the workflow is a dry run: the run summary lists the message
 Actions → "App push notifications" → Run workflow with two commits (dry run is on by default).
 Message texts (DE/EN) live in `tools/notify-new-data.mjs`; comparison names in `tools/push-categories.json`
 (the screen tests check they match the app). Tests: `node --test tools/notify-new-data.test.mjs` (also in CI).
-Android notifications use the app icon; a white monochrome `notification-icon.png` can be added to the
-`expo-notifications` plugin in `app.json` later for a cleaner status-bar icon.
+Android shows `assets/notification-icon.png` (white "FP" + smile on transparent) in the status bar, tinted
+with the brand colour.
 
 ## 8. Money transfer → separate app
 

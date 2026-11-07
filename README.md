@@ -1327,6 +1327,13 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   iPhone 6,7" (1290×2796) und Android (1080×2160), erzeugt aus der Web-Vorschau mit
   `node mobile/tools/store-screenshots.mjs <web-preview-ordner>`. Sie zeigen die Daten vom
   Aufnahmetag („Stand …“) – vor der Store-Einreichung neu erzeugen.
+- **Release-Build:** App-Version 1.0.0 (`mobile/app.json`); Build-Nummern zählt EAS selbst hoch.
+  `mobile/eas.json` hat die Profile `development` (Dev-Client), `preview` (Test-APK) und
+  `production` (.aab / iOS-Store-Build). Android fragt keine Zusatzrechte an (Kamera, Mikrofon,
+  Standort, Speicher, Kontakte gesperrt), iOS braucht keine Berechtigungstexte.
+  Benachrichtigungs-Icon `mobile/assets/notification-icon.png` (weiß, aus dem App-Icon per
+  `python3 mobile/tools/make-notification-icon.py`). Prüft `mobile/__tests__/release-config-test.ts`.
+  **Offen:** `npx eas init` + erster Build brauchen Parthibans Expo-Konto.
 - **Anbieter-Logos:** Die App zeigt dieselben Logos wie die Website
   (`assets/logos/*.svg`, per Sync nach `mobile/data/logos.json`). Neues Logo oder
   geändertes `logo`-Feld → `cd mobile && npm run sync-data`.

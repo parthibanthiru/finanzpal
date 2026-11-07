@@ -79,9 +79,13 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
       — 2026-11-06: 20 shots (iPhone 1290×2796, Android 1080×2160, DE+EN × 5 screens) via
       `tools/store-screenshots.mjs`; fixed on the way: unstyled home category rows on web, and
       "Openbank" breaking mid-word on 360 dp phones. Re-take before submission (shows that day's data).
-- [ ] **7. Release build config.** `eas.json` profiles (development, preview APK, production),
+- [x] **7. Release build config.** `eas.json` profiles (development, preview APK, production),
       app version/build numbers, Android permissions minimal, iOS `infoPlist` usage strings, notification
       icon (white monochrome PNG generated from the logo). `expo-doctor` clean.
+      — 2026-11-07: profiles development (dev client) / preview APK / production .aab (auto build number),
+      version 1.0.0, Android permissions `[]` + camera/mic/location/storage/contacts blocked, iOS export
+      flag (no usage strings needed), `assets/notification-icon.png` via `tools/make-notification-icon.py`;
+      `__tests__/release-config-test.ts`; expo-doctor 21/21.
 - [ ] **8. Accessibility + robustness pass.** Every pressable has a label/role, font scaling up to
       200 % doesn't clip (check in web preview with bigger text), offline behaviour (bundled data,
       friendly errors), empty states. Fix what's found, add tests.
@@ -93,7 +97,7 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
 
 - [ ] **Run `mobile/supabase/schema.sql` once** in Supabase → project Finanzpal → SQL Editor (paste
       the file, Run). Verify: Table Editor shows profiles, messages, favorites, push_tokens.
-      (Checked 2026-11-06: still no tables.)
+      (Checked 2026-11-07: still no tables.)
 - [ ] Supabase → Authentication → URL Configuration: Site URL `finanzpal://auth-callback`, Redirect
       URLs `finanzpal://**` and `exp://**`; Providers → Email: "Confirm email" on. (The app's email
       links go to `finanzpal://auth-callback` and `finanzpal://reset-password` — both covered by
@@ -130,3 +134,5 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
 - 2026-11-06: Item 6 done — store screenshots DE+EN for iPhone 6.7" and Android phone; two visual
   fixes found while taking them (home rows on web, narrow-phone logo chips). CI green after one test
   fix; web preview republished. Sync check: nothing to mirror. Schema still not applied.
+- 2026-11-07: Item 7 done — release build config (EAS profiles, version 1.0.0, minimal permissions,
+  notification icon, config test). Sync check: nothing to mirror. Schema still not applied.
