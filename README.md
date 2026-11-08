@@ -1307,7 +1307,9 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   Arbeitstitel; eigenes GitHub-Repo, eigenes Design, eigene Supabase-Konten). Nicht mehr
   Teil dieser App.
 - **Fahrplan:** `mobile/ROADMAP.md` — was bis zur fertigen App fehlt; ein täglicher
-  Agent arbeitet die Liste ab. Supabase-Projekt „Finanzpal" (Frankfurt) ist angelegt und
+  Agent arbeitet die Liste ab (seit 08.11.2026 erledigt; er prüft nur noch den Website-Sync).
+  **`mobile/RELEASE.md`** = Klick-für-Klick-Checkliste für alles, was Parthiban selbst tun muss
+  (Datenbank, Login-URLs, API-Key, Expo-Build, Domain/öffentliche Rechtsseiten, Datenschutz, Stores). Supabase-Projekt „Finanzpal" (Frankfurt) ist angelegt und
   als Standard in `mobile/.env.example` / `mobile/eas.json` eingetragen. **Offene Punkte:**
   `mobile/supabase/schema.sql` dort einmal im SQL Editor ausführen; unter Authentication →
   URL Configuration Site URL `finanzpal://auth-callback` und Redirect URLs `finanzpal://**`,
@@ -1338,7 +1340,8 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   Checkbox …) und einen Namen für Screenreader (Karten-Buttons nennen den Anbieter, z. B.
   „Details: DKB“); Textfelder und Schalter haben Labels. Feste Höhen, die bei großer
   Systemschrift abschneiden würden, sind Mindesthöhen; nur grafische Elemente (Score-Medaillon,
-  Herz, Checkbox-Haken) wachsen begrenzt mit. Offline laufen Vergleiche und Rechner aus den
+  Herz, Checkbox-Haken) wachsen begrenzt mit, die Tab-Leiste gar nicht; ab 150 % Schrift stehen in
+  den Anbieter-Karten Bezeichnung und Wert untereinander. Offline laufen Vergleiche und Rechner aus den
   mitgelieferten Daten; Chat und Merkliste zeigen dann einen eigenen Hinweis (Merkliste mit
   „Erneut versuchen“) statt eines technischen Fehlers. Geprüft in `mobile/__tests__/screens-test.tsx`
   (Abschnitte „accessibility“ und „offline“).

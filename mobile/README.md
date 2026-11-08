@@ -89,9 +89,13 @@ mobile/
   tools/store-screenshots.mjs     store screenshots from the web preview build (Playwright) → store/screenshots/
   context/AuthProvider.tsx, lib/supabase.ts, lib/api.ts, lib/history.ts
   supabase/schema.sql, backend-auth/
+  RELEASE.md, ROADMAP.md          release checklist for Parthiban; the build agent's work list + log
   store/                          store listing texts DE+EN (listing.json), Data safety / App Privacy answers
                                   (privacy.md), screenshots — see store/README.md
 ```
+
+## Release checklist
+`RELEASE.md` — everything that still needs Parthiban (accounts, keys, legal), click by click and in order.
 
 ## Roadmap
 `ROADMAP.md` lists what's left until the app is finished, in order. A daily scheduled agent ("Finanzpal app
@@ -110,7 +114,8 @@ element needs a role (`accessibilityRole`) and a name (its visible text or `acce
 switch a label — so new buttons need a role or the check fails. Offline tests cover the chat ("no internet connection"
 text), a failed Merkliste load (error + retry instead of the empty state) and the bundled data. Large system text:
 fixed heights around text are `minHeight`; only fixed-size graphics (score disc, heart, checkbox tick) cap their text
-with `maxFontSizeMultiplier`. A failing step also posts its last 200 output lines
+with `maxFontSizeMultiplier`; the tab bar doesn't scale (`tabBarAllowFontScaling: false`), and from 150 % system text
+provider cards put each label above its value (`STACK_FONT_SCALE`). A failing step also posts its last 200 output lines
 as an annotation on the commit (`tools/ci-step.sh`). Results: the commit's ✓/✗ on GitHub, or the
 repo's **Actions** tab.
 

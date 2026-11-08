@@ -86,18 +86,29 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
       version 1.0.0, Android permissions `[]` + camera/mic/location/storage/contacts blocked, iOS export
       flag (no usage strings needed), `assets/notification-icon.png` via `tools/make-notification-icon.py`;
       `__tests__/release-config-test.ts`; expo-doctor 21/21.
-- [ ] **8. Accessibility + robustness pass.** Every pressable has a label/role, font scaling up to
+- [x] **8. Accessibility + robustness pass.** Every pressable has a label/role, font scaling up to
       200 % doesn't clip (check in web preview with bigger text), offline behaviour (bundled data,
       friendly errors), empty states. Fix what's found, add tests.
-- [ ] **9. Release checklist.** `mobile/RELEASE.md`: exact click-by-click steps for everything in
+      — 2026-11-08: roles on all ~40 unlabelled pressables (+ checked/selected state), labels on text
+      fields/switches, card buttons name the provider; 200 % check in the web preview → tab bar no
+      longer scales, sort chips wrap, card rows stack from 150 %; chat offline text + Merkliste load
+      error with retry (DE/EN). Accessibility scan + offline tests in screens-test.tsx.
+- [x] **9. Release checklist.** `mobile/RELEASE.md`: exact click-by-click steps for everything in
       "Needs Parthiban", in order, with what the agent already prepared. Then the work list is done:
       from then on each run only does the "Every run first" sync and reports "nothing to do" briefly.
+      — 2026-11-08: `mobile/RELEASE.md` — Part A backend (schema, auth URLs, API key), B test build
+      (Expo, APK, push, Google), C stores (domain + public legal pages, Datenschutz, accounts, submit).
+      **Work list done.**
 
 ## Needs Parthiban (agent skips these; ticks them only when it can verify they're done)
 
+Click-by-click steps for all of these, in order: `mobile/RELEASE.md`. New finding (2026-11-08): the
+app opens website pages (Datenschutz, Impressum, Ratgeber), so they must be reachable without the
+Netlify login before store submission — RELEASE.md step C1 (the agent leaves the gate on until told).
+
 - [ ] **Run `mobile/supabase/schema.sql` once** in Supabase → project Finanzpal → SQL Editor (paste
       the file, Run). Verify: Table Editor shows profiles, messages, favorites, push_tokens.
-      (Checked 2026-11-07: still no tables.)
+      (Checked 2026-11-08: still no tables.)
 - [ ] Supabase → Authentication → URL Configuration: Site URL `finanzpal://auth-callback`, Redirect
       URLs `finanzpal://**` and `exp://**`; Providers → Email: "Confirm email" on. (The app's email
       links go to `finanzpal://auth-callback` and `finanzpal://reset-password` — both covered by
@@ -136,3 +147,7 @@ Status: `[ ]` open · `[x]` done · `[~]` blocked (reason in the note)
   fix; web preview republished. Sync check: nothing to mirror. Schema still not applied.
 - 2026-11-07: Item 7 done — release build config (EAS profiles, version 1.0.0, minimal permissions,
   notification icon, config test). Sync check: nothing to mirror. Schema still not applied.
+- 2026-11-08: Items 8 + 9 done — accessibility/offline pass (CI red once on an old test matching the
+  old heart label, fixed; large-text fixes from the 200 % web-preview check; preview republished) and
+  `mobile/RELEASE.md`. Work list complete; from now on runs only do the sync check. Sync check:
+  nothing to mirror. Schema still not applied.
