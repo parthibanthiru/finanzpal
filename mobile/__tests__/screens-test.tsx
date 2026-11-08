@@ -61,6 +61,8 @@ afterEach(() => {
   expect(errors).toEqual([]);
 });
 
+const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 function expectCleanText() {
   const bad = visibleText(screen.toJSON()).filter((s) => /undefined|NaN|\[object Object\]/.test(s));
   expect(bad).toEqual([]);
@@ -272,11 +274,13 @@ describe.each(LANGS)('interactions (%s)', (lang) => {
 
   it('Merkliste: the heart on a provider card toggles', async () => {
     await renderScreen(CategoryScreen, { lang, params: { id: 'tagesgeld' } });
-    const before = screen.getAllByLabelText(t.card.favAdd).length;
-    fireEvent.press(screen.getAllByLabelText(t.card.favAdd)[0]);
+    // the heart's label names the provider: "Auf die Merkliste: DKB"
+    const add = () => screen.getAllByLabelText(new RegExp(`^${esc(t.card.favAdd)}: `));
+    const before = add().length;
+    fireEvent.press(add()[0]);
     await settle(1);
-    expect(screen.getAllByLabelText(t.card.favRemove)).toHaveLength(1);
-    expect(screen.getAllByLabelText(t.card.favAdd)).toHaveLength(before - 1);
+    expect(screen.getAllByLabelText(new RegExp(`^${esc(t.card.favRemove)}: `))).toHaveLength(1);
+    expect(add()).toHaveLength(before - 1);
   });
 });
 
