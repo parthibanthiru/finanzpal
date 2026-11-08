@@ -51,14 +51,20 @@ export async function sendChatMessage(
   const { data } = await supabase.auth.getSession();
   const token = data.session?.access_token;
 
-  const res = await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    body: JSON.stringify({ sessionId, message, history: history.slice(-HISTORY_LIMIT), language: getLang() }),
-  });
+  let res: Response;
+  try {
+    res = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({ sessionId, message, history: history.slice(-HISTORY_LIMIT), language: getLang() }),
+    });
+  } catch {
+    // fetch only rejects when no response arrived at all: offline, DNS, flight mode …
+    throw new Error(t.offline);
+  }
 
   if (res.status === 401) throw new Error(t.sessionExpired);
   // 503 = Edge Function deployed but no API key / schema yet; 404 = function not deployed yet.
@@ -69,5 +75,7 @@ export async function sendChatMessage(
     if (body?.error === 'too_long') throw new Error(t.tooLong);
   }
   if (!res.ok) throw new Error(t.serverError(res.status));
-  return (await res.json()) as ChatReply;
+  const reply = (await res.json().catch(() => null)) as ChatReply | null;
+  if (!reply?.reply) throw new Error(t.serverError(res.status));
+  return reply;
 }

@@ -43,7 +43,7 @@ export default function KreditScreen() {
       <Text style={calcStyles.section}>{L.chart}</Text>
       <BarChart bars={bars} bottomLabel={L.balance} topLabel={L.repaid} />
 
-      <Pressable onPress={() => router.push({ pathname: '/vergleiche/[id]', params: { id: 'kredite' } })} style={{ marginTop: spacing.lg }}>
+      <Pressable onPress={() => router.push({ pathname: '/vergleiche/[id]', params: { id: 'kredite' } })} style={{ marginTop: spacing.lg }} accessibilityRole="button">
         <Text style={{ color: colors.primary, fontWeight: '700', fontSize: 15 }}>{L.compare}</Text>
       </Pressable>
 

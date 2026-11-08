@@ -22,7 +22,7 @@ export default function RatgeberScreen() {
     <ScrollView style={{ backgroundColor: colors.bg }} contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }}>
       <Text style={styles.intro}>{t.guides.intro}</Text>
       {GUIDES[lang].articles.map((a) => (
-        <Pressable key={a.page} style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]} onPress={() => openSite(a.page)}>
+        <Pressable key={a.page} style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]} onPress={() => openSite(a.page)} accessibilityRole="link">
           <View style={[styles.stripe, { backgroundColor: accents[a.cat] ?? colors.primary }]} />
           <View style={{ flex: 1, padding: spacing.md }}>
             <Text style={[styles.cat, { color: accents[a.cat] ?? colors.primary }]}>{a.catLabel}</Text>

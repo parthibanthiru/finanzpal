@@ -30,7 +30,7 @@ function FinanzCheckCard() {
 
   if (!answers) {
     return (
-      <Pressable style={({ pressed }) => [styles.fc, pressed && { opacity: 0.9 }]} onPress={() => router.push('/vergleiche/finanz-check')}>
+      <Pressable style={({ pressed }) => [styles.fc, pressed && { opacity: 0.9 }]} onPress={() => router.push('/vergleiche/finanz-check')} accessibilityRole="button">
         <Text style={styles.fcKicker}>{t.home.fcKicker}</Text>
         <Text style={styles.fcTitle}>{t.home.fcTitle}</Text>
         <Text style={styles.fcSub}>{t.home.fcSub(QUESTIONS.length)}</Text>
@@ -53,6 +53,7 @@ function FinanzCheckCard() {
             key={cat}
             style={styles.pickRow}
             onPress={() => router.push({ pathname: '/vergleiche/[id]', params: { id: meta.routeId, focus: item.id } })}
+            accessibilityRole="button"
           >
             <Text style={styles.pickCat}>{t.check.categories[cat]}</Text>
             <Text style={styles.pickName} numberOfLines={1}>
@@ -63,10 +64,10 @@ function FinanzCheckCard() {
         );
       })}
       <View style={styles.fcLinks}>
-        <Pressable onPress={() => router.push({ pathname: '/vergleiche/finanz-check', params: { show: 'result' } })}>
+        <Pressable onPress={() => router.push({ pathname: '/vergleiche/finanz-check', params: { show: 'result' } })} accessibilityRole="button">
           <Text style={styles.fcLink}>{t.home.fcDetails}</Text>
         </Pressable>
-        <Pressable onPress={() => router.push('/vergleiche/finanz-check')}>
+        <Pressable onPress={() => router.push('/vergleiche/finanz-check')} accessibilityRole="button">
           <Text style={styles.fcLink}>{t.home.fcRestart}</Text>
         </Pressable>
       </View>
@@ -83,7 +84,7 @@ function MerklisteRow() {
   const { favorites } = useFavorites();
   const n = favorites.length;
   return (
-    <Pressable style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]} onPress={() => router.push('/vergleiche/merkliste')}>
+    <Pressable style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]} onPress={() => router.push('/vergleiche/merkliste')} accessibilityRole="button">
       <Text style={[styles.icon, { color: n ? colors.danger : colors.muted }]}>{n ? '♥' : '♡'}</Text>
       <View style={{ flex: 1 }}>
         <Text style={styles.title}>{t.home.favTitle}</Text>

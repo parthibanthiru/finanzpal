@@ -322,6 +322,8 @@ export const de = {
     emptyText:
       'Tippe in einem Vergleich auf das Herz bei einem Anbieter, um ihn hier zu speichern. Deine Merkliste ist mit deinem Konto verbunden und auf all deinen Geräten verfügbar.',
     emptyBtn: 'Zu den Vergleichen',
+    loadFailed: 'Deine Merkliste konnte nicht geladen werden. Bitte prüfe deine Internetverbindung.',
+    retry: 'Erneut versuchen',
     saveFailed: 'Das hat leider nicht geklappt. Bitte prüfe deine Internetverbindung und versuche es erneut.',
   },
 
@@ -567,6 +569,7 @@ export const de = {
     send: 'Senden',
     noApiUrl: 'EXPO_PUBLIC_API_URL ist nicht gesetzt (.env).',
     sessionExpired: 'Sitzung abgelaufen. Bitte melde dich erneut an.',
+    offline: 'Keine Internetverbindung. Bitte prüfe deine Verbindung und versuche es erneut.',
     serverError: (status: number) => `Server-Fehler (${status}). Bitte später erneut versuchen.`,
     notConfigured: 'Der Chat ist noch nicht eingerichtet. Die Vergleiche und Rechner kannst du schon nutzen.',
     dailyLimit: 'Du hast dein Tageslimit für den Chat erreicht. Morgen geht es weiter.',

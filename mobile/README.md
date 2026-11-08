@@ -105,7 +105,12 @@ there too.
 The screen tests (`npm test`, `__tests__/screens-test.tsx`) render every screen in German and English, light and
 dark, and fail on errors, `undefined`/`NaN` in visible text or a missing disclosure; they also click through the
 Finanz-Check (one top pick per category), a calculator, the Haushaltsbuch, ETF filters, the home search, the score
-breakdown, the Merkliste heart and the language switch. A failing step also posts its last 200 output lines
+breakdown, the Merkliste heart and the language switch. An accessibility scan checks every screen: each tappable
+element needs a role (`accessibilityRole`) and a name (its visible text or `accessibilityLabel`), each text field and
+switch a label — so new buttons need a role or the check fails. Offline tests cover the chat ("no internet connection"
+text), a failed Merkliste load (error + retry instead of the empty state) and the bundled data. Large system text:
+fixed heights around text are `minHeight`; only fixed-size graphics (score disc, heart, checkbox tick) cap their text
+with `maxFontSizeMultiplier`. A failing step also posts its last 200 output lines
 as an annotation on the commit (`tools/ci-step.sh`). Results: the commit's ✓/✗ on GitHub, or the
 repo's **Actions** tab.
 

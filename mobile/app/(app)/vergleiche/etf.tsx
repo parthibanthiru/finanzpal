@@ -192,7 +192,7 @@ export default function EtfScreen() {
       ListFooterComponent={
         <View>
           {disclosure('etf') ? <Text style={styles.disclosure}>{disclosure('etf')}</Text> : null}
-          <Pressable onPress={() => openSite('etf-suche.html')} style={{ marginTop: spacing.md }}>
+          <Pressable onPress={() => openSite('etf-suche.html')} style={{ marginTop: spacing.md }} accessibilityRole="link">
             <Text style={styles.link}>{t.compare.onSite}</Text>
           </Pressable>
         </View>

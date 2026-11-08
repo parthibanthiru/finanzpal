@@ -62,4 +62,14 @@ describe('sendChatMessage', () => {
     respond(401, {});
     await expect(send()).rejects.toThrow(t.sessionExpired);
   });
+  it('shows a friendly offline text when no response arrives', async () => {
+    global.fetch = jest.fn(async () => {
+      throw new TypeError('Network request failed');
+    }) as unknown as typeof fetch;
+    await expect(send()).rejects.toThrow(t.offline);
+  });
+  it('treats an empty or broken 200 answer as a server error, not a blank bubble', async () => {
+    respond(200, {});
+    await expect(send()).rejects.toThrow(t.serverError(200));
+  });
 });

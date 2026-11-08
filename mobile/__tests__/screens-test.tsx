@@ -473,3 +473,110 @@ it('Profil: switching the language changes the whole screen', async () => {
   expect(screen.queryByText(strings('de').profile.signedInAs)).toBeNull();
 });
 
+
+// ── Accessibility: every tappable element is announced as what it is (button, link,
+// checkbox …) with a name, and every text field / switch has a label. A screen reader reads
+// the visible text of a button as its name, so a label is only required where there is none.
+type Node = { type: unknown; props: Record<string, any>; children: (Node | string)[] };
+const textOf = (n: Node | string): string =>
+  typeof n === 'string' ? n : n.props?.accessibilityElementsHidden ? '' : (n.children ?? []).map(textOf).join('');
+const nameOf = (n: Node) => String(n.props.accessibilityLabel ?? n.props['aria-label'] ?? '').trim() || textOf(n).trim();
+const roleOf = (n: Node) => n.props.accessibilityRole ?? n.props.role;
+
+let tappablesSeen = 0;
+function a11yProblems(root: Node): string[] {
+  const out: string[] = [];
+  const walk = (n: Node | string) => {
+    if (typeof n === 'string' || !n) return;
+    if (typeof n.type === 'string') {
+      const where = `<${n.type}> "${nameOf(n).slice(0, 40)}"`;
+      // Pressable / TouchableOpacity render a host View that carries the press handlers
+      const tappable = n.type === 'View' && typeof n.props.onClick === 'function' && typeof n.props.onResponderRelease === 'function';
+      if (tappable) tappablesSeen++;
+      if (tappable && !roleOf(n)) out.push(`no role: ${where}`);
+      if (tappable && !nameOf(n)) out.push(`no name: ${where}`);
+      if (/TextInput/.test(n.type) && !(n.props.accessibilityLabel ?? n.props['aria-label'])) out.push(`text field without label: ${where}`);
+      if (/Switch/.test(n.type) && !(n.props.accessibilityLabel ?? n.props['aria-label'])) out.push(`switch without label: ${where}`);
+    }
+    (n.children ?? []).forEach(walk);
+  };
+  walk(root);
+  return [...new Set(out)];
+}
+
+describe.each(LANGS)('accessibility (%s)', (lang) => {
+  const t = strings(lang);
+  it.each(CASES.map((c) => [c.name, c] as const))('%s: roles and labels', async (_name, c) => {
+    await renderScreen(c.Screen, { lang, params: c.params });
+    expect(a11yProblems(screen.UNSAFE_root as unknown as Node)).toEqual([]);
+  });
+
+  it('Finanz-Check result and a Haushaltsbuch entry: roles and labels', async () => {
+    const { unmount } = await renderScreen(FinanzCheckScreen, { lang });
+    for (const q of QUESTIONS) fireEvent.press(screen.getByText(label(q.options[0].label, lang)));
+    await screen.findByText(t.check.resultTitle);
+    expect(a11yProblems(screen.UNSAFE_root as unknown as Node)).toEqual([]);
+    unmount();
+
+    await renderScreen(HaushaltsbuchScreen, { lang });
+    fireEvent.changeText(screen.getByLabelText(`${t.calc.haushalt.amount} (€)`), '5');
+    fireEvent.press(screen.getByText(t.calc.haushalt.add));
+    await settle(1);
+    expect(a11yProblems(screen.UNSAFE_root as unknown as Node)).toEqual([]);
+  });
+
+  it('provider cards name the provider on their buttons', async () => {
+    const c = CATEGORIES[0];
+    const first = getBundled(c.file, lang).items[0];
+    await renderScreen(CategoryScreen, { lang, params: { id: c.id } });
+    expect(screen.getAllByLabelText(`${t.card.favAdd}: ${first.name}`).length).toBeGreaterThan(0);
+    // the scan above really finds the buttons (guards against a check that passes on nothing)
+    tappablesSeen = 0;
+    expect(a11yProblems(screen.UNSAFE_root as unknown as Node)).toEqual([]);
+    expect(tappablesSeen).toBeGreaterThan(5);
+  });
+});
+
+describe.each(LANGS)('offline (%s)', (lang) => {
+  const t = strings(lang);
+  const realFetch = global.fetch;
+  afterEach(() => {
+    global.fetch = realFetch;
+  });
+
+  it('Chat: no connection shows a friendly message, not a technical error', async () => {
+    process.env.EXPO_PUBLIC_API_URL = 'https://xliitgcsiikzxppazbfa.supabase.co/functions/v1';
+    global.fetch = jest.fn(async () => {
+      throw new TypeError('Network request failed');
+    }) as unknown as typeof fetch;
+    await renderScreen(ChatScreen, { lang });
+    fireEvent.changeText(screen.getByLabelText(t.chat.placeholder), 'Was ist Tagesgeld?');
+    fireEvent.press(screen.getByLabelText(t.chat.send));
+    await settle();
+    expect(screen.getByText(`⚠️ ${t.chat.offline}`)).toBeTruthy();
+    expect(visibleText(screen.toJSON()).join(' ')).not.toContain('Network request failed');
+  });
+
+  it('Merkliste: a failed load says so (with retry) instead of "your list is empty"', async () => {
+    const fav = require('@/lib/favorites');
+    const spy = jest.spyOn(fav, 'fetchFavorites').mockRejectedValue(new Error('Network request failed'));
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
+    await renderScreen(MerklisteScreen, { lang });
+    expect(screen.getByText(t.favorites.loadFailed)).toBeTruthy();
+    expect(screen.queryByText(t.favorites.emptyTitle)).toBeNull();
+    spy.mockResolvedValue([]);
+    fireEvent.press(screen.getByText(t.favorites.retry));
+    await settle();
+    expect(screen.queryByText(t.favorites.loadFailed)).toBeNull();
+    expect(screen.getByText(t.favorites.emptyTitle)).toBeTruthy();
+  });
+
+  it('comparisons and calculators work from the bundled data alone', async () => {
+    global.fetch = jest.fn(async () => {
+      throw new TypeError('Network request failed');
+    }) as unknown as typeof fetch;
+    for (const c of CATEGORIES) expect(getBundled(c.file, lang).items.length).toBeGreaterThan(0);
+    await renderScreen(KreditScreen, { lang });
+    expect(screen.getByText(formatEURCents(calcLoan(10000, 4, 48).payment))).toBeTruthy();
+  });
+});

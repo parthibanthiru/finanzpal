@@ -101,7 +101,13 @@ export default function CategoryScreen() {
                 <View style={styles.sortRow}>
                   <Text style={styles.sortLabel}>{t.compare.sortLabel}</Text>
                   {(['standard', 'score'] as Sort[]).map((s) => (
-                    <Pressable key={s} onPress={() => setSort(s)} style={[styles.chip, sort === s && styles.chipOn]}>
+                    <Pressable
+                      key={s}
+                      onPress={() => setSort(s)}
+                      style={[styles.chip, sort === s && styles.chipOn]}
+                      accessibilityRole="button"
+                      accessibilityState={{ selected: sort === s }}
+                    >
                       <Text style={[styles.chipText, sort === s && { color: colors.onPrimary }]}>
                         {s === 'standard' ? t.compare.sortStandard : t.compare.sortScore}
                       </Text>
@@ -166,11 +172,11 @@ export default function CategoryScreen() {
               {disclosure(cat.file) ? <Text style={styles.disclosure}>{disclosure(cat.file)}</Text> : null}
               <View style={styles.footerLinks}>
                 {hasScores && (
-                  <Pressable onPress={() => openSite('ueber-uns.html#finanzpal-score')}>
+                  <Pressable onPress={() => openSite('ueber-uns.html#finanzpal-score')} accessibilityRole="link">
                     <Text style={styles.link}>{t.compare.scoreHow}</Text>
                   </Pressable>
                 )}
-                <Pressable onPress={() => openSite(cat.page)}>
+                <Pressable onPress={() => openSite(cat.page)} accessibilityRole="link">
                   <Text style={styles.link}>{t.compare.onSite}</Text>
                 </Pressable>
               </View>

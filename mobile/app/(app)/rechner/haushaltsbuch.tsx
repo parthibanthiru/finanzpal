@@ -83,7 +83,7 @@ export default function HaushaltsbuchScreen() {
       <Text style={styles.hint}>{L.fixkosten.hint}</Text>
       <View style={styles.chips}>
         {FIXKOSTEN.map((f) => (
-          <Pressable key={f.id} style={styles.chip} onPress={() => applyFixkosten(f.id, f.kategorie)}>
+          <Pressable key={f.id} style={styles.chip} onPress={() => applyFixkosten(f.id, f.kategorie)} accessibilityRole="button">
             <Text style={styles.chipText}>{fixkostenLabel(f.id, t)}</Text>
           </Pressable>
         ))}
@@ -101,7 +101,14 @@ export default function HaushaltsbuchScreen() {
       />
       <ChoiceField label={L.category} value={kategorie} onChange={setKategorie} options={KATEGORIEN[typ].map((k) => ({ value: k, label: katLabel(k, t) }))} />
       <Text style={styles.label}>{L.description}</Text>
-      <TextInput style={styles.input} value={beschreibung} onChangeText={setBeschreibung} placeholder={L.descPlaceholder} placeholderTextColor={colors.muted} />
+      <TextInput
+        style={styles.input}
+        value={beschreibung}
+        onChangeText={setBeschreibung}
+        placeholder={L.descPlaceholder}
+        placeholderTextColor={colors.muted}
+        accessibilityLabel={L.description}
+      />
       <Text style={styles.label}>{L.amount}</Text>
       <View style={styles.amountRow}>
         <TextInput
@@ -112,6 +119,7 @@ export default function HaushaltsbuchScreen() {
           keyboardType="decimal-pad"
           placeholder={L.amountPlaceholder}
           placeholderTextColor={colors.muted}
+          accessibilityLabel={`${L.amount} (€)`}
           onSubmitEditing={add}
         />
         <Text style={styles.euro}>€</Text>
@@ -156,8 +164,9 @@ export default function HaushaltsbuchScreen() {
             <Pressable
               onPress={() => update(items.filter((x) => x.id !== tx.id))}
               style={styles.del}
-              accessibilityLabel={t.common.delete}
+              accessibilityLabel={`${t.common.delete}: ${tx.beschreibung || katLabel(tx.kategorie, t)}, ${formatEURCents(Math.abs(tx.betrag))}`}
               hitSlop={8}
+              accessibilityRole="button"
             >
               <Text style={{ color: colors.muted, fontSize: 18 }}>×</Text>
             </Pressable>
@@ -165,7 +174,7 @@ export default function HaushaltsbuchScreen() {
         ))
       )}
       {sorted.length > 0 && (
-        <Pressable onPress={reset} style={{ marginTop: spacing.md }}>
+        <Pressable onPress={reset} style={{ marginTop: spacing.md }} accessibilityRole="button">
           <Text style={{ color: colors.danger, fontWeight: '600' }}>{L.deleteAll}</Text>
         </Pressable>
       )}

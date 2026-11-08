@@ -318,6 +318,8 @@ export const en: Strings = {
     emptyText:
       'In any comparison, tap the heart next to a provider to save it here. Your watchlist is linked to your account and available on all your devices.',
     emptyBtn: 'Go to comparisons',
+    loadFailed: 'Your watchlist could not be loaded. Please check your internet connection.',
+    retry: 'Try again',
     saveFailed: "That didn't work. Please check your internet connection and try again.",
   },
 
@@ -562,6 +564,7 @@ export const en: Strings = {
     send: 'Send',
     noApiUrl: 'EXPO_PUBLIC_API_URL is not set (.env).',
     sessionExpired: 'Session expired. Please sign in again.',
+    offline: 'No internet connection. Please check your connection and try again.',
     serverError: (status: number) => `Server error (${status}). Please try again later.`,
     notConfigured: "The chat isn't set up yet. You can already use the comparisons and calculators.",
     dailyLimit: "You've reached today's chat limit. You can continue tomorrow.",

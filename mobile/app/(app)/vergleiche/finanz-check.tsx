@@ -94,14 +94,15 @@ export default function FinanzCheckScreen() {
                 key={o.id}
                 onPress={() => choose(QUESTIONS[step].id, o.id)}
                 style={({ pressed }) => [styles.option, selected && styles.optionSelected, pressed && { opacity: 0.85 }]}
-                accessibilityRole="button"
+                accessibilityRole="radio"
+                accessibilityState={{ checked: selected }}
               >
                 <Text style={[styles.optionText, selected && { color: colors.primaryDark }]}>{label(o.label, lang)}</Text>
               </Pressable>
             );
           })}
           {step > 0 && (
-            <Pressable onPress={() => setStep(step - 1)} style={{ marginTop: spacing.md }}>
+            <Pressable onPress={() => setStep(step - 1)} style={{ marginTop: spacing.md }} accessibilityRole="button">
               <Text style={styles.link}>{t.check.back}</Text>
             </Pressable>
           )}
@@ -131,18 +132,19 @@ export default function FinanzCheckScreen() {
                   onPress={() =>
                     router.push({ pathname: '/vergleiche/[id]', params: { id: CATEGORY_META[cat].routeId, focus: item.id } })
                   }
+                  accessibilityRole="button"
                 >
                   <Text style={styles.link}>{t.check.seeAll}</Text>
                 </Pressable>
                 {isRealLink(item.affiliateUrl) && (
-                  <Pressable style={styles.cta} onPress={() => Linking.openURL(item.affiliateUrl!)}>
+                  <Pressable style={styles.cta} onPress={() => Linking.openURL(item.affiliateUrl!)} accessibilityRole="link">
                     <Text style={styles.ctaText}>{t.check.cta}</Text>
                   </Pressable>
                 )}
               </View>
             </View>
           ))}
-          <Pressable style={styles.restart} onPress={restart}>
+          <Pressable style={styles.restart} onPress={restart} accessibilityRole="button">
             <Text style={styles.restartText}>{t.check.restart}</Text>
           </Pressable>
           <Text style={styles.note}>{t.check.note}</Text>

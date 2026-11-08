@@ -1334,6 +1334,14 @@ im selben Repo unter `mobile/`. Sie nutzt die Website als einzige Datenquelle:
   Benachrichtigungs-Icon `mobile/assets/notification-icon.png` (weiß, aus dem App-Icon per
   `python3 mobile/tools/make-notification-icon.py`). Prüft `mobile/__tests__/release-config-test.ts`.
   **Offen:** `npx eas init` + erster Build brauchen Parthibans Expo-Konto.
+- **Barrierefreiheit & offline:** Jedes antippbare Element hat eine Rolle (Button, Link,
+  Checkbox …) und einen Namen für Screenreader (Karten-Buttons nennen den Anbieter, z. B.
+  „Details: DKB“); Textfelder und Schalter haben Labels. Feste Höhen, die bei großer
+  Systemschrift abschneiden würden, sind Mindesthöhen; nur grafische Elemente (Score-Medaillon,
+  Herz, Checkbox-Haken) wachsen begrenzt mit. Offline laufen Vergleiche und Rechner aus den
+  mitgelieferten Daten; Chat und Merkliste zeigen dann einen eigenen Hinweis (Merkliste mit
+  „Erneut versuchen“) statt eines technischen Fehlers. Geprüft in `mobile/__tests__/screens-test.tsx`
+  (Abschnitte „accessibility“ und „offline“).
 - **Anbieter-Logos:** Die App zeigt dieselben Logos wie die Website
   (`assets/logos/*.svg`, per Sync nach `mobile/data/logos.json`). Neues Logo oder
   geändertes `logo`-Feld → `cd mobile && npm run sync-data`.

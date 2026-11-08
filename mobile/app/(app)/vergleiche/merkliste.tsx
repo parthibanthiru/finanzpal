@@ -16,7 +16,7 @@ export default function MerklisteScreen() {
   const colors = useColors();
   const { t, lang } = useI18n();
   const router = useRouter();
-  const { favorites, loading, toggleFavorite, reload } = useFavorites();
+  const { favorites, loading, loadError, toggleFavorite, reload } = useFavorites();
 
   // Group by comparison, in the same order as the comparison list.
   const groups = useMemo(() => {
@@ -41,12 +41,20 @@ export default function MerklisteScreen() {
       contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }}
       refreshControl={<RefreshControl refreshing={loading} onRefresh={reload} tintColor={colors.primary} />}
     >
-      {groups.length === 0 ? (
+      {loadError && (
+        <View style={styles.errorBox} accessibilityRole="alert">
+          <Text style={styles.errorText}>{t.favorites.loadFailed}</Text>
+          <Pressable onPress={reload} style={styles.retryBtn} accessibilityRole="button">
+            <Text style={styles.retryText}>{t.favorites.retry}</Text>
+          </Pressable>
+        </View>
+      )}
+      {groups.length === 0 && loadError ? null : groups.length === 0 ? (
         <View style={styles.empty}>
           <Text style={styles.emptyIcon}>♡</Text>
           <Text style={styles.emptyTitle}>{t.favorites.emptyTitle}</Text>
           <Text style={styles.emptyText}>{t.favorites.emptyText}</Text>
-          <Pressable onPress={() => router.back()} style={styles.emptyBtn}>
+          <Pressable onPress={() => router.back()} style={styles.emptyBtn} accessibilityRole="button">
             <Text style={styles.emptyBtnText}>{t.favorites.emptyBtn}</Text>
           </Pressable>
         </View>
@@ -59,6 +67,8 @@ export default function MerklisteScreen() {
                 <Pressable
                   style={styles.rowMain}
                   disabled={!r.item}
+                  accessibilityRole="button"
+                  accessibilityState={{ disabled: !r.item }}
                   onPress={() =>
                     router.push({ pathname: '/vergleiche/[id]', params: { id: r.category, focus: r.itemId, from: 'merkliste' } })
                   }
@@ -76,7 +86,7 @@ export default function MerklisteScreen() {
                   </View>
                   {r.item?.score && <ScoreBadge score={r.item.score} file={getCategory(r.category)?.file ?? r.category} name={r.item.name} />}
                 </Pressable>
-                <FavoriteButton active onPress={() => toggleFavorite(r.category, r.itemId)} />
+                <FavoriteButton active onPress={() => toggleFavorite(r.category, r.itemId)} name={r.item?.name ?? r.itemId} />
               </View>
             ))}
           </View>
@@ -101,4 +111,11 @@ const useStyles = makeStyles((colors) => ({
   emptyText: { fontSize: 14, color: colors.muted, textAlign: 'center', lineHeight: 20, marginTop: spacing.sm },
   emptyBtn: { marginTop: spacing.lg, borderWidth: 1, borderColor: colors.primary, borderRadius: radius.md, paddingVertical: 10, paddingHorizontal: 18 },
   emptyBtnText: { color: colors.primary, fontWeight: '700' },
+  errorBox: {
+    backgroundColor: colors.card, borderRadius: radius.md, borderWidth: 1, borderColor: colors.danger,
+    padding: spacing.md, marginBottom: spacing.md,
+  },
+  errorText: { fontSize: 14, color: colors.text, lineHeight: 20 },
+  retryBtn: { alignSelf: 'flex-start', marginTop: spacing.sm, paddingVertical: 6 },
+  retryText: { color: colors.primary, fontWeight: '700' },
 }));

@@ -7,6 +7,8 @@ import { strings } from '@/lib/i18n';
 type FavoritesContextValue = {
   favorites: Favorite[];          // newest first
   loading: boolean;
+  /** True when the last load failed (offline …) — the list may be stale or incomplete. */
+  loadError: boolean;
   isFavorite: (category: string, itemId: string) => boolean;
   toggleFavorite: (category: string, itemId: string) => void;
   reload: () => Promise<void>;
@@ -18,16 +20,20 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [favorites, setFavorites] = useState<Favorite[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState(false);
 
   const reload = useCallback(async () => {
     if (!user) {
       setFavorites([]);
+      setLoadError(false);
       return;
     }
     setLoading(true);
     try {
       setFavorites(await fetchFavorites());
+      setLoadError(false);
     } catch (e) {
+      setLoadError(true);
       console.warn('[Finanzpal] Merkliste konnte nicht geladen werden:', (e as Error)?.message);
     } finally {
       setLoading(false);
@@ -64,7 +70,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <FavoritesContext.Provider value={{ favorites, loading, isFavorite, toggleFavorite, reload }}>{children}</FavoritesContext.Provider>
+    <FavoritesContext.Provider value={{ favorites, loading, loadError, isFavorite, toggleFavorite, reload }}>{children}</FavoritesContext.Provider>
   );
 }
 

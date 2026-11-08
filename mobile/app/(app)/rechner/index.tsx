@@ -27,7 +27,7 @@ export default function RechnerScreen() {
   return (
     <ScrollView contentContainerStyle={{ padding: spacing.md, paddingBottom: spacing.xl }}>
       {RECHNER.map((r) => (
-        <Pressable key={r.route} style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]} onPress={() => router.push(r.route)}>
+        <Pressable key={r.route} style={({ pressed }) => [styles.card, pressed && { opacity: 0.85 }]} onPress={() => router.push(r.route)} accessibilityRole="button">
           <Text style={styles.icon}>{r.icon}</Text>
           <View style={{ flex: 1 }}>
             <Text style={styles.title}>{t.calc.list[r.key].title}</Text>

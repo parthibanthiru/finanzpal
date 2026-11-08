@@ -72,8 +72,15 @@ export default function ChatScreen() {
     <Tabs.Screen
       options={{
         headerRight: () => (
-          <Pressable onPress={confirmClear} style={{ paddingHorizontal: spacing.md }} accessibilityLabel={t.chat.newChat}>
-            <Text style={{ color: '#fff', fontWeight: '600', fontSize: 15 }}>{t.chat.newShort}</Text>
+          <Pressable
+            onPress={confirmClear}
+            style={{ paddingHorizontal: spacing.md, minHeight: 44, justifyContent: 'center' }}
+            accessibilityRole="button"
+            accessibilityLabel={t.chat.newChat}
+          >
+            <Text style={{ color: '#fff', fontWeight: '600', fontSize: 15 }} maxFontSizeMultiplier={1.5}>
+              {t.chat.newShort}
+            </Text>
           </Pressable>
         ),
       }}
@@ -139,7 +146,7 @@ export default function ChatScreen() {
             {messages.length === 1 && (
               <View style={styles.chips}>
                 {t.chat.topics.map((topic) => (
-                  <Pressable key={topic} style={styles.chip} onPress={() => send(t.chat.topicMessage(topic))}>
+                  <Pressable key={topic} style={styles.chip} onPress={() => send(t.chat.topicMessage(topic))} accessibilityRole="button">
                     <Text style={styles.chipText}>{topic}</Text>
                   </Pressable>
                 ))}
@@ -156,6 +163,7 @@ export default function ChatScreen() {
           onChangeText={setInput}
           placeholder={t.chat.placeholder}
           placeholderTextColor={colors.muted}
+          accessibilityLabel={t.chat.placeholder}
           multiline
           maxLength={2000}
           onSubmitEditing={() => send(input)}
@@ -164,9 +172,11 @@ export default function ChatScreen() {
           style={[styles.sendBtn, (!input.trim() || sending) && { opacity: 0.4 }]}
           onPress={() => send(input)}
           disabled={!input.trim() || sending}
+          accessibilityRole="button"
           accessibilityLabel={t.chat.send}
+          accessibilityState={{ disabled: !input.trim() || sending }}
         >
-          <Text style={{ color: colors.onPrimary, fontSize: 18, fontWeight: '700' }}>➤</Text>
+          <Text style={{ color: colors.onPrimary, fontSize: 18, fontWeight: '700' }} maxFontSizeMultiplier={1.3}>➤</Text>
         </Pressable>
       </View>
     </KeyboardAvoidingView>

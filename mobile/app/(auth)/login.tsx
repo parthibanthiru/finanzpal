@@ -73,7 +73,7 @@ export default function LoginScreen() {
         onSubmitEditing={onSubmit}
       />
       <Link href="/forgot-password" asChild>
-        <Pressable style={{ alignSelf: 'flex-end', marginBottom: spacing.md }}>
+        <Pressable style={{ alignSelf: 'flex-end', marginBottom: spacing.md }} accessibilityRole="button">
           <Text style={styles.link}>{t.auth.login.forgot}</Text>
         </Pressable>
       </Link>
@@ -82,7 +82,7 @@ export default function LoginScreen() {
       <View style={styles.footer}>
         <Text style={{ color: colors.muted }}>{t.auth.login.noAccount}</Text>
         <Link href="/register" asChild>
-          <Pressable>
+          <Pressable accessibilityRole="button">
             <Text style={styles.link}>{t.auth.login.register}</Text>
           </Pressable>
         </Link>

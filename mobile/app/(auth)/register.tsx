@@ -102,9 +102,14 @@ export default function RegisterScreen() {
         autoComplete="new-password"
         textContentType="newPassword"
       />
-      <Pressable style={styles.checkRow} onPress={() => setAccepted(!accepted)} accessibilityRole="checkbox">
+      <Pressable
+        style={styles.checkRow}
+        onPress={() => setAccepted(!accepted)}
+        accessibilityRole="checkbox"
+        accessibilityState={{ checked: accepted }}
+      >
         <View style={[styles.checkbox, accepted && styles.checkboxOn]}>
-          {accepted && <Text style={{ color: colors.onPrimary, fontWeight: '800' }}>✓</Text>}
+          {accepted && <Text style={{ color: colors.onPrimary, fontWeight: '800' }} maxFontSizeMultiplier={1}>✓</Text>}
         </View>
         <Text style={styles.checkText}>
           {t.auth.register.consentBefore}

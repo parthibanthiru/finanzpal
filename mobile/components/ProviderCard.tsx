@@ -55,8 +55,9 @@ export function ScoreBadge({ score, file, name }: { score: Score; file: string; 
           />
         </Svg>
         <View style={styles.scoreCenter} pointerEvents="none">
-          <Text style={styles.scoreValue}>{five}</Text>
-          <Text style={styles.scoreBand}>{t.card.scoreBand(band)}</Text>
+          {/* fixed-size disc: text may grow a little with the system font size, not past the ring */}
+          <Text style={styles.scoreValue} maxFontSizeMultiplier={1.2}>{five}</Text>
+          <Text style={styles.scoreBand} maxFontSizeMultiplier={1.2}>{t.card.scoreBand(band)}</Text>
         </View>
       </Pressable>
       <ScoreBreakdown visible={open} onClose={() => setOpen(false)} score={score} file={file} name={name} />
@@ -64,8 +65,11 @@ export function ScoreBadge({ score, file, name }: { score: Score; file: string; 
   );
 }
 
+/** "Details" alone is ambiguous for a screen reader in a list of cards: say which provider. */
+export const withName = (label: string, name?: string) => (name ? `${label}: ${name}` : label);
+
 /** Heart toggle for the Merkliste. */
-export function FavoriteButton({ active, onPress }: { active: boolean; onPress: () => void }) {
+export function FavoriteButton({ active, onPress, name }: { active: boolean; onPress: () => void; name?: string }) {
   const t = useT();
   const styles = useStyles();
   const colors = useColors();
@@ -75,10 +79,10 @@ export function FavoriteButton({ active, onPress }: { active: boolean; onPress: 
       hitSlop={10}
       style={styles.fav}
       accessibilityRole="button"
-      accessibilityLabel={active ? t.card.favRemove : t.card.favAdd}
+      accessibilityLabel={withName(active ? t.card.favRemove : t.card.favAdd, name)}
       accessibilityState={{ selected: active }}
     >
-      <Text style={[styles.favIcon, active && { color: colors.danger }]}>{active ? '♥' : '♡'}</Text>
+      <Text style={[styles.favIcon, active && { color: colors.danger }]} maxFontSizeMultiplier={1.3}>{active ? '♥' : '♡'}</Text>
     </Pressable>
   );
 }
@@ -113,7 +117,7 @@ export function ProviderCard({
           )}
         </View>
         {item.score && <ScoreBadge score={item.score} file={file} name={item.name} />}
-        {onToggleFavorite && <FavoriteButton active={!!favorite} onPress={onToggleFavorite} />}
+        {onToggleFavorite && <FavoriteButton active={!!favorite} onPress={onToggleFavorite} name={item.name} />}
       </View>
 
       {fields.map((f) => (
@@ -128,12 +132,22 @@ export function ProviderCard({
 
       <View style={styles.actions}>
         {item.detailUrl ? (
-          <Pressable style={styles.secondaryBtn} onPress={() => openSite(item.detailUrl)}>
+          <Pressable
+            style={styles.secondaryBtn}
+            onPress={() => openSite(item.detailUrl)}
+            accessibilityRole="link"
+            accessibilityLabel={withName(t.card.details, item.name)}
+          >
             <Text style={styles.secondaryText}>{t.card.details}</Text>
           </Pressable>
         ) : null}
         {hasLink && (
-          <Pressable style={styles.primaryBtn} onPress={() => Linking.openURL(item.affiliateUrl!)}>
+          <Pressable
+            style={styles.primaryBtn}
+            onPress={() => Linking.openURL(item.affiliateUrl!)}
+            accessibilityRole="link"
+            accessibilityLabel={withName(t.card.toProvider.replace(/\s*›\s*$/, ''), item.name)}
+          >
             <Text style={styles.primaryText}>{t.card.toProvider}</Text>
           </Pressable>
         )}

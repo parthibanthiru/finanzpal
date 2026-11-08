@@ -76,7 +76,8 @@ const useStyles = makeStyles((colors) => ({
   dividerText: { marginHorizontal: spacing.md, color: colors.muted },
   appleButton: { height: 50, width: '100%', marginBottom: spacing.sm },
   googleButton: {
-    height: 50,
+    minHeight: 50, // grows with large system text instead of clipping it
+    paddingVertical: spacing.sm,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

@@ -21,7 +21,7 @@ export function ScoreBreakdown({
   const rows = scoreRows(file, score, lang);
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
-      <Pressable style={styles.backdrop} onPress={onClose} accessibilityLabel={t.card.scoreClose} />
+      <Pressable style={styles.backdrop} onPress={onClose} accessibilityRole="button" accessibilityLabel={t.card.scoreClose} />
       <View style={styles.sheet} accessibilityViewIsModal>
         <View style={styles.handle} />
         <View style={styles.headRow}>

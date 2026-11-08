@@ -24,7 +24,7 @@ export function NumberField({
     <View style={styles.field}>
       <Text style={styles.label}>{label}</Text>
       <View style={styles.row}>
-        <Pressable style={styles.step} onPress={() => onChange(round(clamp(value - step)))} accessibilityLabel={t.calc.decrease(label)}>
+        <Pressable style={styles.step} onPress={() => onChange(round(clamp(value - step)))} accessibilityLabel={t.calc.decrease(label)} accessibilityRole="button">
           <Text style={styles.stepText}>−</Text>
         </Pressable>
         <View style={styles.inputWrap}>
@@ -43,7 +43,7 @@ export function NumberField({
           />
           {!prefix && <Text style={styles.suffix}>{suffix}</Text>}
         </View>
-        <Pressable style={styles.step} onPress={() => onChange(round(clamp(value + step)))} accessibilityLabel={t.calc.increase(label)}>
+        <Pressable style={styles.step} onPress={() => onChange(round(clamp(value + step)))} accessibilityLabel={t.calc.increase(label)} accessibilityRole="button">
           <Text style={styles.stepText}>+</Text>
         </Pressable>
       </View>
@@ -140,7 +140,12 @@ export function SwitchField({ label, value, onChange }: { label: string; value: 
   return (
     <View style={[styles.field, styles.switchRow]}>
       <Text style={[styles.label, { flex: 1, marginBottom: 0, fontWeight: '500' }]}>{label}</Text>
-      <Switch value={value} onValueChange={onChange} trackColor={{ true: colors.primary, false: colors.border }} />
+      <Switch
+        value={value}
+        onValueChange={onChange}
+        trackColor={{ true: colors.primary, false: colors.border }}
+        accessibilityLabel={label}
+      />
     </View>
   );
 }
