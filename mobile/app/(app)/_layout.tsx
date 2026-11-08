@@ -3,7 +3,13 @@ import { Tabs } from 'expo-router';
 import { useColors } from '@/components/theme';
 import { useT } from '@/lib/i18n';
 
-const icon = (glyph: string) => ({ color }: { color: ColorValue }) => <Text style={{ fontSize: 20, color }}>{glyph}</Text>;
+// Tab bar: fixed height, so icons and labels don't grow with the system font size (iOS shows its
+// Large Content Viewer on long-press instead); screen content does scale.
+const icon = (glyph: string) => ({ color }: { color: ColorValue }) => (
+  <Text style={{ fontSize: 20, color }} allowFontScaling={false}>
+    {glyph}
+  </Text>
+);
 
 export default function AppLayout() {
   const colors = useColors();
@@ -18,6 +24,7 @@ export default function AppLayout() {
         headerTitleStyle: { fontWeight: '700' },
         sceneStyle: { backgroundColor: colors.bg },
         tabBarStyle: { backgroundColor: colors.card, borderTopColor: colors.border },
+        tabBarAllowFontScaling: false,
       }}
     >
       {/* Stacks with their own headers */}

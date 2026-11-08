@@ -200,7 +200,7 @@ const useStyles = makeStyles((colors) => ({
     lineHeight: 19,
     overflow: 'hidden',
   },
-  sortRow: { flexDirection: 'row', alignItems: 'center', marginBottom: spacing.md, gap: spacing.sm },
+  sortRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', marginBottom: spacing.md, gap: spacing.sm },
   sortLabel: { color: colors.muted, fontSize: 13 },
   chip: { borderWidth: 1, borderColor: colors.primary, borderRadius: 999, paddingVertical: 5, paddingHorizontal: 12 },
   chipOn: { backgroundColor: colors.primary },

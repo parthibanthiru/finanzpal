@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Svg, { Circle, Defs, LinearGradient, Stop } from 'react-native-svg';
-import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Linking, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import type { Item, Score } from '@/lib/data';
 import { ScoreBreakdown } from './ScoreBreakdown';
 import type { Field } from '@/lib/categories';
@@ -65,6 +65,9 @@ export function ScoreBadge({ score, file, name }: { score: Score; file: string; 
   );
 }
 
+/** From this system font scale on, card rows put the label above the value. */
+export const STACK_FONT_SCALE = 1.5;
+
 /** "Details" alone is ambiguous for a screen reader in a list of cards: say which provider. */
 export const withName = (label: string, name?: string) => (name ? `${label}: ${name}` : label);
 
@@ -96,6 +99,8 @@ export function ProviderCard({
   const styles = useStyles();
   const colors = useColors();
   const hasLink = isRealLink(item.affiliateUrl);
+  // Large system text (≥ 150 %): label above value, so values like "100.000 €" don't break mid-number
+  const stacked = useWindowDimensions().fontScale >= STACK_FONT_SCALE;
   const ratingText = item.rating != null ? (getLang() === 'en' ? String(item.rating) : String(item.rating).replace('.', ',')) : '';
   return (
     <View style={[styles.card, item.recommended && styles.cardRecommended, highlight && styles.cardHighlight]}>
@@ -121,9 +126,9 @@ export function ProviderCard({
       </View>
 
       {fields.map((f) => (
-        <View key={f.label} style={styles.row}>
-          <Text style={styles.label}>{f.label}</Text>
-          <View style={{ flex: 1.4 }}>
+        <View key={f.label} style={[styles.row, stacked && styles.rowStacked]} testID={stacked ? 'field-stacked' : undefined}>
+          <Text style={[styles.label, stacked && styles.labelStacked]}>{f.label}</Text>
+          <View style={stacked ? undefined : { flex: 1.4 }}>
             <Text style={styles.value}>{f.value}</Text>
             {f.note ? <Text style={styles.note}>ⓘ {f.note}</Text> : null}
           </View>
@@ -195,6 +200,8 @@ const useStyles = makeStyles((colors) => ({
   scoreBand: { fontSize: 7, fontWeight: '700', letterSpacing: 0.5, textTransform: 'uppercase', color: 'rgba(255,255,255,0.8)', marginTop: 1 },
   row: { flexDirection: 'row', paddingVertical: 7, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border },
   label: { flex: 1, color: colors.muted, fontSize: 13, paddingRight: spacing.sm },
+  rowStacked: { flexDirection: 'column' },
+  labelStacked: { flex: 0, paddingRight: 0, marginBottom: 2 },
   value: { color: colors.text, fontSize: 14, fontWeight: '500' },
   note: { color: colors.muted, fontSize: 12, marginTop: 3, lineHeight: 16 },
   actions: { flexDirection: 'row', justifyContent: 'flex-end', gap: spacing.sm, marginTop: spacing.sm },

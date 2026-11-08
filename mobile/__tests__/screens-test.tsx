@@ -541,6 +541,18 @@ describe.each(LANGS)('accessibility (%s)', (lang) => {
   });
 });
 
+it('Large system text: card rows put the label above the value', async () => {
+  const dims = require('react-native/Libraries/Utilities/useWindowDimensions');
+  const at = (fontScale: number) => jest.spyOn(dims, 'default').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale });
+  at(1);
+  const { unmount } = await renderScreen(CategoryScreen, { lang: 'de', params: { id: 'tagesgeld' } });
+  expect(screen.queryAllByTestId('field-stacked')).toHaveLength(0);
+  unmount();
+  at(2);
+  await renderScreen(CategoryScreen, { lang: 'de', params: { id: 'tagesgeld' } });
+  expect(screen.queryAllByTestId('field-stacked').length).toBeGreaterThan(0);
+});
+
 describe.each(LANGS)('offline (%s)', (lang) => {
   const t = strings(lang);
   const realFetch = global.fetch;

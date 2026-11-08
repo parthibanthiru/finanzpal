@@ -91,8 +91,8 @@ const SHOTS = [
     await visible(p, L.start).click();
     for (let i = 0; i < 12; i++) {
       await settle(p, 700);
-      // answer buttons of the current question (the first visible one each time)
-      const answer = p.locator('[role=button] >> visible=true').filter({ hasNotText: /^←|›$/ });
+      // answer options of the current question (role radio; the first visible one each time)
+      const answer = p.locator('[role=radio] >> visible=true');
       const body = await p.innerText('body');
       if (!/(Frage|Question) \d+ (von|of) \d+/.test(body)) break;
       await answer.first().click();
