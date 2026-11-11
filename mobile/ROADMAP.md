@@ -106,6 +106,9 @@ Click-by-click steps for all of these, in order: `mobile/RELEASE.md`. New findin
 app opens website pages (Datenschutz, Impressum, Ratgeber), so they must be reachable without the
 Netlify login before store submission — RELEASE.md step C1 (the agent leaves the gate on until told).
 
+- [ ] **Restore the paused Supabase project** (new 2026-11-11): free projects pause after ~1 week
+      without use; Finanzpal shows status "Paused/Inactive". Supabase → project Finanzpal →
+      "Restore project" (free). Needed before schema.sql can run and before the app's login/chat work.
 - [ ] **Run `mobile/supabase/schema.sql` once** in Supabase → project Finanzpal → SQL Editor (paste
       the file, Run). Verify: Table Editor shows profiles, messages, favorites, push_tokens.
       (Checked 2026-11-08: still no tables.)
@@ -151,3 +154,6 @@ Netlify login before store submission — RELEASE.md step C1 (the agent leaves t
   old heart label, fixed; large-text fixes from the 200 % web-preview check; preview republished) and
   `mobile/RELEASE.md`. Work list complete; from now on runs only do the sync check. Sync check:
   nothing to mirror. Schema still not applied.
+- 2026-11-11: Nothing to do on the work list. Sync check: no drift, no website changes to mirror;
+  `Mobile app check` on main green. Supabase project Finanzpal is paused (inactive) — added
+  "Restore the paused Supabase project" to Needs Parthiban.

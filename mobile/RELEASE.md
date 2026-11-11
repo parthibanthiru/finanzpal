@@ -18,7 +18,9 @@ Google Play developer account (25 USD once), Apple Developer Program (99 USD per
 Prepared: `mobile/supabase/schema.sql` (profiles, messages, favorites, push_tokens, chat_usage + the
 functions the app calls). Safe to run again later.
 
-1. Open https://supabase.com/dashboard → project **Finanzpal** (not SendWiseLab).
+1. Open https://supabase.com/dashboard → project **Finanzpal** (not SendWiseLab). If it says
+   **Paused** (free projects pause after about a week without use), click **Restore project** and
+   wait until it's green (a few minutes, free).
 2. Left menu → **SQL Editor** → **New query**.
 3. Open `mobile/supabase/schema.sql` on GitHub → **Raw** → select all → copy → paste into the editor.
 4. Click **Run** (bottom right). It should say "Success. No rows returned".
