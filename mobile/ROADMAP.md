@@ -159,3 +159,5 @@ Netlify login before store submission — RELEASE.md step C1 (the agent leaves t
   "Restore the paused Supabase project" to Needs Parthiban.
 - 2026-11-12: Nothing to do on the work list. Sync check: no drift, no website changes to mirror;
   `Mobile app check` on main green. Supabase project Finanzpal still paused (restore step open).
+- 2026-11-13: Nothing to do on the work list. Sync check: no drift, no website changes to mirror;
+  `Mobile app check` on main green. Supabase project Finanzpal still paused (restore step open).
